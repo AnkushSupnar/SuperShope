@@ -1,0 +1,38 @@
+.root{
+    -fx-background-color:#bdbdbd;
+}
+.pane{
+
+   -fx-background-radius:15px 50px 30px;
+   -fx-border-radius:  15px 50px 30px;
+   -fx-border-width:1;
+   -fx-background-color:white;
+}
+.menupane{
+    -fx-background-radius:15px 50px 30px;
+       -fx-border-radius:  15px 50px 30px 0px;
+       -fx-border-width:1;
+       -fx-background-color:red;
+}
+.menupane .glyph-icon{
+    -fx-fill:white;
+}
+
+.button{
+-fx-background-color:white;
+-fx-text-fill:black;
+-fx-font-size:16px;
+}
+.button .glyph-icon{
+	-fx-fill:black;
+}
+.button:hover {
+	-fx-background-color:#34e7e4e0;
+	-fx-text-fill:white;
+}.button:hover .glyph-icon {
+    -fx-fill:white;
+	-fx-background-color:#00e676;
+}
+.button:pressed{
+	-fx-background-color:#1de9b6;
+}

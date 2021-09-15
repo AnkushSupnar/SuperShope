@@ -1,0 +1,9 @@
+.menu:hover{
+-fx-border-color:#0fbcf9;
+-fx-border-width:0px 0px 0px 4px;
+-fx-background-color:#34e7e4e0;
+-fx-cursor:hand;
+}
+.menu:pressed{
+    -fx-background-color:white;
+}
