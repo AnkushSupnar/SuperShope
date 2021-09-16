@@ -70,6 +70,7 @@ public class AddItemController implements Initializable {
     btnSave.setOnAction(e->save());
     btnUpdate.setOnAction(e->update());
     btnClear.setOnAction(e->clear());
+    btnExit.setOnAction(e->mainPane.setVisible(false));
     }
 
     private void clear() {
@@ -129,7 +130,7 @@ public class AddItemController implements Initializable {
             }
             else
                 alert.showError("Error in Item Saving");
-
+                clear();
         }catch(Exception e)
         {
             alert.showError("Error in Saving Item "+e.getMessage());

@@ -43,7 +43,7 @@ public class Main extends Application {
 		//stageManager.switchScene(FxmlView.LOGIN);
 		//stageManager.switchScene(FxmlView.EMPLOYEE);
 		//stageManager.switchScene(FxmlView.HOME);
-		stageManager.switchScene(FxmlView.ITEM);
+		stageManager.switchScene(FxmlView.BANK);
 	}
 	private ConfigurableApplicationContext bootstrapSpringApplicationContext() {
 		SpringApplicationBuilder builder = new SpringApplicationBuilder(Main.class);

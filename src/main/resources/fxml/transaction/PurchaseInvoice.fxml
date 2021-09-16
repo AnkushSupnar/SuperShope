@@ -1,14 +1,268 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.ankush.controller.transaction.PurchaseInvoiceController"
-            prefHeight="400.0" prefWidth="600.0">
-
-</AnchorPane>
+<SplitPane fx:id="mainPane" dividerPositions="0.6277128547579299" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="742.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+  <items>
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" SplitPane.resizableWithParent="false">
+         <children>
+            <Label layoutX="284.0" layoutY="20.0" text="Purchase Party Name" AnchorPane.leftAnchor="284.0">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <HBox layoutX="10.0" layoutY="45.0" spacing="10.0" AnchorPane.leftAnchor="10.0">
+               <children>
+                  <DatePicker fx:id="date" prefHeight="32.0" prefWidth="111.0" promptText="select Date" />
+                  <TextField fx:id="txtInvoiceNo" prefHeight="32.0" prefWidth="142.0">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="txtParty" prefHeight="30.0" prefWidth="240.0">
+                     <font>
+                        <Font name="Kiran" size="20.0" />
+                     </font>
+                  </TextField>
+               </children>
+            </HBox>
+            <Label layoutX="137.0" layoutY="20.0" text="Purchase Invoice No:" AnchorPane.leftAnchor="137.0">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="15.0" layoutY="20.0" text="Invoice Date">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="15.0" layoutY="83.0" text="Item Bar Code">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <HBox layoutX="8.0" layoutY="109.0" spacing="5.0">
+               <children>
+                  <TextField fx:id="txtBarcode" prefHeight="33.0" prefWidth="127.0">
+                     <font>
+                        <Font name="Kiran" size="20.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="txtItemName" prefHeight="33.0" prefWidth="216.0" promptText="maalaacao naava">
+                     <font>
+                        <Font name="Kiran" size="20.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="txtQty" prefHeight="33.0" prefWidth="100.0" promptText="naga">
+                     <font>
+                        <Font name="Kiran" size="20.0" />
+                     </font>
+                  </TextField>
+                  <ComboBox fx:id="cmbUnit" prefHeight="32.0" prefWidth="68.0" promptText="Unit" visibleRowCount="2" />
+                  <TextField fx:id="txtRate" prefHeight="25.0" prefWidth="100.0" promptText="Baava">
+                     <font>
+                        <Font name="Kiran" size="20.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="txtAmount" prefHeight="25.0" prefWidth="100.0" promptText="ekuNa">
+                     <font>
+                        <Font name="Kiran" size="20.0" />
+                     </font>
+                  </TextField>
+               </children>
+            </HBox>
+            <Label layoutX="147.0" layoutY="83.0" text="Item Name">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="367.0" layoutY="81.0" text="Quantity">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="549.0" layoutY="83.0" text="Rate">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="653.0" layoutY="83.0" text="Amount">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="471.0" layoutY="81.0" text="Unit">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <HBox layoutX="6.0" layoutY="156.0" spacing="10.0" AnchorPane.leftAnchor="10.0">
+               <children>
+                  <Button fx:id="btnAdd" mnemonicParsing="false" stylesheets="@../css/button.css" text="ADD">
+                     <graphic>
+                        <FontAwesomeIcon glyphName="PLUS" />
+                     </graphic>
+                  </Button>
+                  <Button fx:id="btnUpdate" mnemonicParsing="false" stylesheets="@../css/button.css" text="UPDATE">
+                     <graphic>
+                        <FontAwesomeIcon glyphName="EDIT" />
+                     </graphic>
+                  </Button>
+                  <Button fx:id="btnRemove" mnemonicParsing="false" stylesheets="@../css/button.css" text="REMOVE">
+                     <graphic>
+                        <FontAwesomeIcon glyphName="CLOSE" />
+                     </graphic>
+                  </Button>
+                  <Button fx:id="btnClear" mnemonicParsing="false" stylesheets="@../css/button.css" text="CLEAR">
+                     <graphic>
+                        <FontAwesomeIcon glyphName="RECYCLE" />
+                     </graphic>
+                  </Button>
+               </children>
+            </HBox>
+            <TableView fx:id="table" layoutX="10.0" layoutY="199.0" prefHeight="362.0" prefWidth="731.0" stylesheets="@../css/tablemar.css" AnchorPane.bottomAnchor="179.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="199.0">
+              <columns>
+                <TableColumn fx:id="coSr" prefWidth="45.0" text="SR.NO" />
+                <TableColumn fx:id="colBarcode" prefWidth="120.0" text="BARCODE" />
+                  <TableColumn fx:id="colItemName" prefWidth="280.0" text="ITEM NAME" />
+                  <TableColumn fx:id="colQty" prefWidth="73.0" text="QTY" />
+                  <TableColumn fx:id="colUnit" prefWidth="45.0" text="UNIT" />
+                  <TableColumn fx:id="colRate" prefWidth="82.0" text="RATE" />
+                  <TableColumn fx:id="colAmount" prefWidth="83.0" text="AMOUNT" />
+              </columns>
+            </TableView>
+            <Pane layoutX="15.0" layoutY="481.0" prefHeight="173.0" prefWidth="731.0" style="-fx-background-color: white; -fx-border-color: red;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
+               <children>
+                  <Label layoutX="420.0" layoutY="8.0" text="NET TOTAL" />
+                  <HBox layoutX="14.0" layoutY="25.0">
+                     <children>
+                        <TextField fx:id="txtTransporting">
+                           <font>
+                              <Font name="Kiran" size="20.0" />
+                           </font>
+                        </TextField>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="+">
+                           <HBox.margin>
+                              <Insets top="10.0" />
+                           </HBox.margin>
+                        </Text>
+                        <TextField fx:id="txtWages">
+                           <font>
+                              <Font name="Kiran" size="20.0" />
+                           </font>
+                        </TextField>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="+">
+                           <HBox.margin>
+                              <Insets top="10.0" />
+                           </HBox.margin>
+                        </Text>
+                        <TextField fx:id="txtOther">
+                           <font>
+                              <Font name="Kiran" size="20.0" />
+                           </font>
+                        </TextField>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="+">
+                           <HBox.margin>
+                              <Insets top="10.0" />
+                           </HBox.margin>
+                        </Text>
+                        <TextField fx:id="txtNetTotal" editable="false" promptText="ekuNa">
+                           <font>
+                              <Font name="Kiran" size="20.0" />
+                           </font>
+                        </TextField>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="=">
+                           <HBox.margin>
+                              <Insets top="10.0" />
+                           </HBox.margin>
+                        </Text>
+                        <TextField fx:id="txtGrandTotal" promptText="ekuNa">
+                           <font>
+                              <Font name="Kiran" size="20.0" />
+                           </font>
+                        </TextField>
+                     </children>
+                  </HBox>
+                  <Label layoutX="14.0" layoutY="8.0" text="TRANSPORTING CHRGS" />
+                  <Label layoutX="152.0" layoutY="8.0" text="WAGES" />
+                  <Label layoutX="283.0" layoutY="8.0" text="OTHER CHRGS" />
+                  <Label layoutX="557.0" layoutY="8.0" text="GRAND TOTAL" />
+                  <TextField fx:id="txtDicount" layoutX="16.0" layoutY="79.0">
+                     <font>
+                        <Font name="Kiran" size="20.0" />
+                     </font>
+                  </TextField>
+                  <Label layoutX="14.0" layoutY="61.0" text="DICOUNT" />
+                  <TextField fx:id="txtPaid" layoutX="150.0" layoutY="79.0">
+                     <font>
+                        <Font name="Kiran" size="20.0" />
+                     </font>
+                  </TextField>
+                  <Label layoutX="148.0" layoutY="61.0" text="PAID AMOUNT" />
+                  <TextField fx:id="txtBank" layoutX="281.0" layoutY="79.0" prefHeight="33.0" prefWidth="185.0" promptText="ba^Mk inavaDa">
+                     <font>
+                        <Font name="Kiran" size="20.0" />
+                     </font>
+                  </TextField>
+                  <Label layoutX="279.0" layoutY="61.0" text="PAID FROM" />
+                  <HBox layoutX="15.0" layoutY="128.0" spacing="10.0">
+                     <children>
+                        <Button fx:id="btnSave" mnemonicParsing="false" stylesheets="@../css/button.css" text="SAVE">
+                           <graphic>
+                              <FontAwesomeIcon glyphName="SAVE" />
+                           </graphic>
+                        </Button>
+                        <Button fx:id="btnUpdate2" mnemonicParsing="false" stylesheets="@../css/button.css" text="UPDATE">
+                           <graphic>
+                              <FontAwesomeIcon glyphName="EDIT" />
+                           </graphic>
+                        </Button>
+                        <Button fx:id="btnClear2" mnemonicParsing="false" stylesheets="@../css/button.css" text="CLEAR">
+                           <graphic>
+                              <FontAwesomeIcon glyphName="RECYCLE" />
+                           </graphic>
+                        </Button>
+                        <Button fx:id="btnPrint" mnemonicParsing="false" stylesheets="@../css/button.css" text="PRINT">
+                           <graphic>
+                              <FontAwesomeIcon glyphName="PRINT" />
+                           </graphic>
+                        </Button>
+                        <Button fx:id="btnExit" mnemonicParsing="false" stylesheets="@../css/button.css" text="EXIT">
+                           <graphic>
+                              <FontAwesomeIcon glyphName="HOME" />
+                           </graphic>
+                        </Button>
+                     </children>
+                  </HBox>
+               </children>
+            </Pane>
+         </children></AnchorPane>
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+         <children>
+            <TableView fx:id="tableold" layoutX="192.0" layoutY="63.0" prefHeight="200.0" prefWidth="200.0" stylesheets="@../css/tablemar.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+              <columns>
+                <TableColumn fx:id="colSrNo" prefWidth="75.0" text="SR.NO" />
+                <TableColumn fx:id="colDate" prefWidth="86.0" text="DATE" />
+                  <TableColumn fx:id="colInvoiceNo" prefWidth="116.0" text="INVOICE NO" />
+                  <TableColumn fx:id="colParty" prefWidth="116.0" text="PARTY NAME" />
+                  <TableColumn fx:id="colTotal" prefWidth="79.0" text="TOTAL AMT" />
+                  <TableColumn fx:id="colPaid" prefWidth="79.0" text="PAID AMT" />
+              </columns>
+            </TableView>
+         </children></AnchorPane>
+  </items>
+</SplitPane>

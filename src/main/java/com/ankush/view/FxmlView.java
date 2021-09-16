@@ -82,6 +82,26 @@ public enum FxmlView {
         public String getFxmlFile() {
             return "/fxml/create/AddItem.fxml";
         }
+    },
+    PURCHASEINVOICE {
+        @Override
+        String getTitle() {
+            return getStringFromResourceBundle("dashboard.title");
+        }
+        @Override
+        public String getFxmlFile() {
+            return "/fxml/transaction/PurchaseInvoice.fxml";
+        }
+    },
+    BANK {
+        @Override
+        String getTitle() {
+            return getStringFromResourceBundle("dashboard.title");
+        }
+        @Override
+        public String getFxmlFile() {
+            return "/fxml/create/AddBank.fxml";
+        }
     };
     abstract String getTitle();
     public abstract String getFxmlFile();
