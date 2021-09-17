@@ -165,7 +165,12 @@ public class AddItemController implements Initializable {
                 txtItemName.requestFocus();
                 return false;
             }
-
+            if(service.getItemByName(txtItemName.getText())!=null)
+            {
+                alert.showError("Item Name Already Exist Choose another One");
+                txtItemName.requestFocus();
+                return false;
+            }
             if(txtBarCode.getText().isEmpty())
             {
                 txtBarCode.setText(""+0);

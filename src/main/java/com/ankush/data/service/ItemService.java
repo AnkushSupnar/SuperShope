@@ -41,4 +41,8 @@ public class ItemService {
             return 2;
         }
     }
+
+    public List<String>getAllItemNames(){
+        return repository.getAllItemNames();
+    }
 }

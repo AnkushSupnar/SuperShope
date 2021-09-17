@@ -3,6 +3,7 @@ package com.ankush.data.entities;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.List;
 
 @Table(name = "purchase_invoice")
@@ -15,8 +16,8 @@ public class PurchaseInvoice {
     private Long id;
     @ManyToOne
     @JoinColumn(name = "purchaseparty_id")
-    private PurchaseParty purchasePart;
-
+    private PurchaseParty purchaseParty;
+    private LocalDate date;
     private float nettotal;
     private float transporting;
     private float wages;
@@ -38,8 +39,9 @@ public class PurchaseInvoice {
         super();
     }
 
-    public PurchaseInvoice(PurchaseParty purchasePart, float nettotal, float transporting, float wages, float other, float discount, float paid, Bank bank, Login login, List<PurchaseTransaction> transactions) {
-        this.purchasePart = purchasePart;
+    public PurchaseInvoice(PurchaseParty purchaseParty,LocalDate date, float nettotal, float transporting, float wages, float other, float discount, float paid, Bank bank, Login login, List<PurchaseTransaction> transactions) {
+        this.purchaseParty = purchaseParty;
+        this.date = date;
         this.nettotal = nettotal;
         this.transporting = transporting;
         this.wages = wages;
@@ -61,11 +63,19 @@ public class PurchaseInvoice {
     }
 
     public PurchaseParty getPurchasePart() {
-        return purchasePart;
+        return purchaseParty;
     }
 
-    public void setPurchasePart(PurchaseParty purchasePart) {
-        this.purchasePart = purchasePart;
+    public void setPurchasePart(PurchaseParty purchaseParty) {
+        this.purchaseParty = purchaseParty;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
     }
 
     public float getNettotal() {
@@ -152,7 +162,8 @@ public class PurchaseInvoice {
     public String toString() {
         return "PurchaseInvoice{" +
                 "id=" + id +
-                ", purchasePart=" + purchasePart +
+                ", purchasePart=" + purchaseParty +
+                ", date=" + date +
                 ", nettotal=" + nettotal +
                 ", transporting=" + transporting +
                 ", wages=" + wages +

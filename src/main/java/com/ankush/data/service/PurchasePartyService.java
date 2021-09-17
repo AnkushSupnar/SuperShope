@@ -14,8 +14,7 @@ public class PurchasePartyService {
     {
         return repository.findAll();
     }
-    public int saveParty(PurchaseParty party)
-    {
+    public int saveParty(PurchaseParty party){
         System.out.println(party.getId());
         if(party.getId()==null)
         {
@@ -28,5 +27,8 @@ public class PurchasePartyService {
             return 2;
         }
 
+    }
+    public List<String>getAllPurchasePartyNames() {
+        return repository.getAllPurchasePartyNames();
     }
 }
