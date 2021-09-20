@@ -11,4 +11,5 @@ import java.util.List;
 public interface PurchasePartyRepository extends JpaRepository<PurchaseParty,Integer> {
     @Query("select name from PurchaseParty")
     List<String> getAllPurchasePartyNames();
+    PurchaseParty getByName(String name);
 }

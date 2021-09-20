@@ -136,12 +136,12 @@
             </HBox>
             <TableView fx:id="table" layoutX="10.0" layoutY="199.0" prefHeight="362.0" prefWidth="731.0" stylesheets="@../css/tablemar.css" AnchorPane.bottomAnchor="179.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="199.0">
               <columns>
-                <TableColumn fx:id="coSr" prefWidth="45.0" text="SR.NO" />
+                <TableColumn fx:id="colSr" prefWidth="45.0" text="SR.NO" />
                 <TableColumn fx:id="colBarcode" prefWidth="120.0" text="BARCODE" />
-                  <TableColumn fx:id="colItemName" prefWidth="280.0" text="ITEM NAME" />
-                  <TableColumn fx:id="colQty" prefWidth="73.0" text="QTY" />
-                  <TableColumn fx:id="colUnit" prefWidth="45.0" text="UNIT" />
-                  <TableColumn fx:id="colRate" prefWidth="82.0" text="RATE" />
+                  <TableColumn fx:id="colItemName" prefWidth="263.0" text="ITEM NAME" />
+                  <TableColumn fx:id="colQty" prefWidth="72.0" text="QTY" />
+                  <TableColumn fx:id="colUnit" prefWidth="68.0" text="UNIT" />
+                  <TableColumn fx:id="colRate" prefWidth="77.0" text="PRICE" />
                   <TableColumn fx:id="colAmount" prefWidth="83.0" text="AMOUNT" />
               </columns>
             </TableView>
@@ -150,7 +150,7 @@
                   <Label layoutX="420.0" layoutY="8.0" text="NET TOTAL" />
                   <HBox layoutX="14.0" layoutY="25.0">
                      <children>
-                        <TextField fx:id="txtTransporting">
+                        <TextField fx:id="txtTransporting" text="0.0">
                            <font>
                               <Font name="Kiran" size="20.0" />
                            </font>
@@ -160,7 +160,7 @@
                               <Insets top="10.0" />
                            </HBox.margin>
                         </Text>
-                        <TextField fx:id="txtWages">
+                        <TextField fx:id="txtWages" text="0.0">
                            <font>
                               <Font name="Kiran" size="20.0" />
                            </font>
@@ -170,7 +170,7 @@
                               <Insets top="10.0" />
                            </HBox.margin>
                         </Text>
-                        <TextField fx:id="txtOther">
+                        <TextField fx:id="txtOther" text="0.0">
                            <font>
                               <Font name="Kiran" size="20.0" />
                            </font>
@@ -180,7 +180,7 @@
                               <Insets top="10.0" />
                            </HBox.margin>
                         </Text>
-                        <TextField fx:id="txtNetTotal" editable="false" promptText="ekuNa">
+                        <TextField fx:id="txtNetTotal" editable="false" promptText="ekuNa" text="0.0">
                            <font>
                               <Font name="Kiran" size="20.0" />
                            </font>
@@ -190,7 +190,7 @@
                               <Insets top="10.0" />
                            </HBox.margin>
                         </Text>
-                        <TextField fx:id="txtGrandTotal" promptText="ekuNa">
+                        <TextField fx:id="txtGrandTotal" editable="false" promptText="ekuNa" text="0.0">
                            <font>
                               <Font name="Kiran" size="20.0" />
                            </font>
@@ -201,7 +201,7 @@
                   <Label layoutX="152.0" layoutY="8.0" text="WAGES" />
                   <Label layoutX="283.0" layoutY="8.0" text="OTHER CHRGS" />
                   <Label layoutX="557.0" layoutY="8.0" text="GRAND TOTAL" />
-                  <TextField fx:id="txtDicount" layoutX="16.0" layoutY="79.0">
+                  <TextField fx:id="txtDiscount" layoutX="16.0" layoutY="79.0">
                      <font>
                         <Font name="Kiran" size="20.0" />
                      </font>
@@ -213,9 +213,9 @@
                      </font>
                   </TextField>
                   <Label layoutX="148.0" layoutY="61.0" text="PAID AMOUNT" />
-                  <TextField fx:id="txtBank" layoutX="281.0" layoutY="79.0" prefHeight="33.0" prefWidth="185.0" promptText="ba^Mk inavaDa">
+                  <TextField fx:id="txtBank" layoutX="281.0" layoutY="79.0" prefHeight="33.0" prefWidth="185.0" promptText="Select Bank Name">
                      <font>
-                        <Font name="Kiran" size="20.0" />
+                        <Font size="14.0" />
                      </font>
                   </TextField>
                   <Label layoutX="279.0" layoutY="61.0" text="PAID FROM" />
@@ -253,7 +253,7 @@
          </children></AnchorPane>
     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
          <children>
-            <TableView fx:id="tableold" layoutX="192.0" layoutY="63.0" prefHeight="200.0" prefWidth="200.0" stylesheets="@../css/tablemar.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <TableView fx:id="tableold" layoutX="192.0" layoutY="60.0" prefHeight="680.0" prefWidth="443.0" stylesheets="@../css/table.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="60.0">
               <columns>
                 <TableColumn fx:id="colSrNo" prefWidth="75.0" text="SR.NO" />
                 <TableColumn fx:id="colDate" prefWidth="86.0" text="DATE" />
@@ -263,6 +263,36 @@
                   <TableColumn fx:id="colPaid" prefWidth="79.0" text="PAID AMT" />
               </columns>
             </TableView>
+            <Pane layoutX="33.0" layoutY="-64.0" prefHeight="60.0" prefWidth="443.0" AnchorPane.bottomAnchor="680.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <Label layoutX="14.0" layoutY="4.0" text="Date" />
+                  <HBox layoutX="10.0" layoutY="23.0" spacing="5.0">
+                     <children>
+                        <DatePicker fx:id="dateSearch" prefWidth="100.0" promptText="select Date" />
+                        <Button fx:id="btnShow" mnemonicParsing="false" stylesheets="@../css/smallbutton.css" text="SHOW">
+                           <graphic>
+                              <FontAwesomeIcon glyphName="SEARCH" />
+                           </graphic>
+                        </Button>
+                        <Button fx:id="btnMonth" mnemonicParsing="false" stylesheets="@../css/smallbutton.css" text="MONTH">
+                           <graphic>
+                              <FontAwesomeIcon glyphName="LAPTOP" />
+                           </graphic>
+                        </Button>
+                        <Button fx:id="btnYear" mnemonicParsing="false" stylesheets="@../css/smallbutton.css" text="YEAR">
+                           <graphic>
+                              <FontAwesomeIcon glyphName="LAPTOP" />
+                           </graphic>
+                        </Button>
+                        <Button fx:id="btnAll" mnemonicParsing="false" stylesheets="@../css/smallbutton.css" text="ALL">
+                           <graphic>
+                              <FontAwesomeIcon glyphName="LAPTOP" />
+                           </graphic>
+                        </Button>
+                     </children>
+                  </HBox>
+               </children>
+            </Pane>
          </children></AnchorPane>
   </items>
 </SplitPane>

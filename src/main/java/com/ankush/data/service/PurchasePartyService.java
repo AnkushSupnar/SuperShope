@@ -31,4 +31,8 @@ public class PurchasePartyService {
     public List<String>getAllPurchasePartyNames() {
         return repository.getAllPurchasePartyNames();
     }
+    public PurchaseParty getPartyByName(String name)
+    {
+        return repository.getByName(name);
+    }
 }

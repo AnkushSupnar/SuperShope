@@ -34,4 +34,8 @@ public class PurchaseInvoiceService {
             return 2;
         }
     }
+    public PurchaseInvoice getInvoiceById(Long id)
+    {
+        return repository.getById(id);
+    }
 }

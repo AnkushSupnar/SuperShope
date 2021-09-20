@@ -5,7 +5,7 @@ import lombok.*;
 import javax.persistence.*;
 import java.util.List;
 
-@Table(name = "purchase_transaction")
+@Table(name = "purchasetransaction")
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
@@ -16,14 +16,15 @@ public class PurchaseTransaction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
-
-    @ManyToOne
-    @JoinColumn(name = "item_id")
-    private Item item;
+    String barcode;
+    String itemname;
+    String unit;
+    Float price;
     private Float qty;
     private Float amount;
 
+
     @ManyToOne
-    @JoinColumn(name="purchaseinvoice_id")
+    @JoinColumn(name = "invoice_id")
     private PurchaseInvoice invoice;
 }

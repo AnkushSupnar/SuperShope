@@ -1,0 +1,15 @@
+.button{
+	-fx-background-color:#43a047;
+	-fx-text-fill:White;
+	-fx-font:10pt "Georgia";
+	 -fx-effect: dropshadow( one-pass-box , black , 8 , 0.0 , 2 , 0 );
+}
+.button .glyph-icon{
+	-fx-fill:white;
+}
+.button:hover {
+	-fx-background-color:#007bff;;
+}
+.button:pressed{
+	-fx-background-color:#1de9b6;
+}
