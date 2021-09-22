@@ -1,9 +1,6 @@
 package com.ankush.controller.transaction;
 
-import com.ankush.data.entities.Item;
-import com.ankush.data.entities.ItemStock;
-import com.ankush.data.entities.PurchaseInvoice;
-import com.ankush.data.entities.PurchaseTransaction;
+import com.ankush.data.entities.*;
 import com.ankush.data.service.*;
 import com.ankush.view.AlertNotification;
 import com.ankush.view.StageManager;
@@ -86,20 +83,14 @@ public class PurchaseInvoiceController implements Initializable {
     @FXML private Button btnMonth;
     @FXML private Button btnYear;
     @FXML private Button btnAll;
-    @Autowired
-    private AlertNotification alert;
-    @Autowired
-    PurchaseInvoiceService invoiceService;
-    @Autowired
-    PurchasePartyService partyService;
-    @Autowired
-    ItemService itemService;
-    @Autowired
-    BankService bankService;
-    @Autowired
-    private PurchaseTransactionService invoiceTrService;
-    @Autowired
-    private ItemStockService itemStockService;
+    @Autowired private AlertNotification alert;
+    @Autowired PurchaseInvoiceService invoiceService;
+    @Autowired PurchasePartyService partyService;
+    @Autowired ItemService itemService;
+    @Autowired BankService bankService;
+    @Autowired private PurchaseTransactionService invoiceTrService;
+    @Autowired private BankTransactionService bankTransactionService;
+    @Autowired private ItemStockService itemStockService;
     private Long invoiceid;
     private ListView listView;
     private ObservableList<String> itemNameList = FXCollections.observableArrayList();
@@ -276,7 +267,7 @@ public class PurchaseInvoiceController implements Initializable {
             System.out.println("loading data");
             trList.clear();
             trList.addAll(in.getTransactions());
-            managetTransactionList();
+            manageTransactionList();
             date.setValue(in.getDate());
             txtInvoiceNo.setText(in.getPartyinvoiceno());
             txtParty.setText(in.getPurchaseParty().getName());
@@ -311,41 +302,87 @@ public class PurchaseInvoiceController implements Initializable {
         invoice.setTransporting(Float.parseFloat(txtTransporting.getText()));
         invoice.setPaid(Float.parseFloat(txtPaid.getText()));
         invoice.setWages(Float.parseFloat(txtWages.getText()));
-
         for(int i=0;i<trList.size();i++)
         {
             trList.get(i).setInvoice(invoice);
             trList.get(i).setId(null);
-
         }
         invoice.setTransactions(trList);
-       // System.out.println(invoice);
-        List<PurchaseTransaction> oldtr = null;
+       // List<PurchaseTransaction> oldtr = null;
+        PurchaseInvoice oldInvoice = null;
+        float oldPaid=0.0f;
         if(invoiceid!=0)
         {
             invoice.setId(invoiceid);
             //getting old Transaction for updating InvoiceBill
-            oldtr =  invoiceService.getInvoiceById(invoiceid).getTransactions();
+           // oldtr =  invoiceService.getInvoiceById(invoiceid).getTransactions();
+            oldInvoice = invoiceService.getInvoiceById(invoiceid);
+            oldPaid=oldInvoice.getPaid();
+            //System.out.println("Old invoice Paid"+ oldInvoice.getPaid());
+        }
+        if(bankService.getBalanceById(invoice.getBank().getId())<invoice.getPaid())
+        {
+            alert.showError("Not sufficient Balance in Bank choose another ");
+            txtBank.requestFocus();
+            return;
         }
         int flag=0;
         flag= invoiceService.savePurchaseInvoice(invoice);
         if(flag==1)
         {
             invoiceTrService.saveTransactions(invoice.getTransactions());
+
             addInStock(invoice.getTransactions());
             addInItemMaster(invoice.getTransactions());
+            if(invoice.getPaid()>0 && bankService.reduceBankBalance(invoice.getPaid(),invoice.getBank().getId())==1)
+            {
+                BankTransaction bankTransaction = new BankTransaction();
+                bankTransaction.setBank(invoice.getBank());
+                bankTransaction.setTransactionid(invoice.getId());
+                bankTransaction.setDate(invoice.getDate());
+                bankTransaction.setDebit(invoice.getPaid());
+                bankTransaction.setCredit(0.0f);
+                bankTransaction.setParticulars("Reduce Purchase Invoice "+invoice.getId());
+                bankTransactionService.saveBankTransaction(bankTransaction);
+            }
+
+
             oldInvoiceList.clear();
             oldInvoiceList.addAll(invoiceService.getDateWisePurchaseInvoice(LocalDate.now()));
             tableold.refresh();
-            alert.showSuccess("Invoice Saved Success "+invoice.getId());
+
             trList.clear();
             tableold.refresh();
+            alert.showSuccess("Invoice Saved Success "+invoice.getId());
         }
         else if(flag==2)
         {
-            invoiceTrService.deleteTransactions(oldtr);//delete old transactions
-            reduceStock(oldtr);//reduceing old Stock
+            invoiceTrService.deleteTransactions(oldInvoice.getTransactions());//delete old transactions
+            reduceStock(oldInvoice.getTransactions());//reduceing old Stock
+            if(oldInvoice.getPaid()>0 && bankService.addBankBalance(oldInvoice.getPaid(),oldInvoice.getBank().getId())==1)
+            {
+                BankTransaction bankTransaction= new BankTransaction();
+                bankTransaction.setBank(oldInvoice.getBank());
+                bankTransaction.setTransactionid(oldInvoice.getId());
+                bankTransaction.setDate(LocalDate.now());
+                System.out.println("To credited "+oldInvoice.getPaid());
+                bankTransaction.setCredit(oldPaid);
+                bankTransaction.setDebit(0.0f);
+                bankTransaction.setParticulars("Add Purchase Invoice Edit "+oldInvoice.getId());
+                bankTransactionService.saveBankTransaction(bankTransaction);
 
+            }
+            if(invoice.getPaid()>0 && bankService.reduceBankBalance(invoice.getPaid(),invoice.getBank().getId())==1)
+            {
+                BankTransaction bankTransaction = new BankTransaction();
+                bankTransaction.setBank(invoice.getBank());
+                bankTransaction.setTransactionid(invoice.getId());
+                bankTransaction.setDate(invoice.getDate());
+                bankTransaction.setDebit(invoice.getPaid());
+                bankTransaction.setCredit(0.0f);
+                bankTransaction.setParticulars("Reduce Purchase Invoice "+invoice.getId());
+                bankTransactionService.saveBankTransaction(bankTransaction);
+            }
             invoiceTrService.saveTransactions(invoice.getTransactions());
             addInStock(invoice.getTransactions());
             addInItemMaster(invoice.getTransactions());
@@ -674,7 +711,7 @@ public class PurchaseInvoiceController implements Initializable {
            tr.setUnit("naga");
         return tr;
     }
-    private void managetTransactionList()
+    private void manageTransactionList()
     {
         Long sr= Long.valueOf(0);
         for(int i=0;i<trList.size();i++)

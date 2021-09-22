@@ -17,6 +17,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.PasswordField;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.text.Text;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,8 +37,8 @@ public class LoginController implements Initializable {
     @FXML private ComboBox<String> cmbUserName;
     @FXML private PasswordField txtPassword;
     @FXML private Button btnLogin;
-    @FXML private Button btnCancel;
     @FXML private Hyperlink linkAddEmployee;
+    @FXML private Text txtQuestion;
     @Autowired
     private LoginService loginService;
     @Autowired
@@ -49,6 +50,8 @@ public class LoginController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
+        txtQuestion.setVisible(false);
+        linkAddEmployee.setVisible(false);
         userNameList.addAll(loginService.getAllUserNames());
         try {
             if (userNameList.isEmpty()) {
@@ -84,7 +87,9 @@ public class LoginController implements Initializable {
             {
                 alert.showSuccess("Wel come "+cmbUserName.getValue());
                 commonData.setLoginUser(loginService.getLoginByUserName(cmbUserName.getValue()));
-                System.out.println(commonData.getLoginUser());
+
+                stageManager.switchScene(FxmlView.HOME);
+                stageManager.showFullScreen();
             }
             else
             {

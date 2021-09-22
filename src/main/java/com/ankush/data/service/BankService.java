@@ -33,8 +33,18 @@ public class BankService {
     public Bank getBankByBankname(String bankname){
         return repository.getBankByBankname(bankname);
     }
-    public float getBalanceById(Integer id){
-        return repository.getBalanceById(id);
+    public Float getBalanceById(Integer id){
+        return repository.getBankBalanceById(id);
+    }
+    public int addBankBalance(Float amount,int bankid)
+    {
+        repository.addBankBalance(amount,bankid);
+        return 1;
+    }
+    public int reduceBankBalance(Float amount,int bankid)
+    {
+        repository.reduceBankBalance(amount,bankid);
+        return 1;
     }
 
 }

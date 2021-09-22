@@ -2,7 +2,7 @@
 
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.effect.Bloom?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
@@ -13,14 +13,14 @@
 
 <BorderPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="643.0" stylesheets="@../css/home.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ankush.controller.home.HomeController">
    <left>
-      <AnchorPane prefHeight="534.0" prefWidth="199.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER">
+      <AnchorPane prefHeight="534.0" prefWidth="199.0" styleClass="sidebar" BorderPane.alignment="CENTER">
          <children>
             <VBox layoutX="50.0" layoutY="26.0" prefHeight="200.0" prefWidth="100.0" spacing="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
                   <HBox prefHeight="43.0" prefWidth="200.0" styleClass="menu">
                      <children>
                         <FontAwesomeIcon fill="#485460" glyphName="CIRCLE_ALT_NOTCH" size="1.5em" HBox.hgrow="ALWAYS" />
-                        <Text fontSmoothingType="LCD" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-family: Quicksan;" text="DASHBOARD">
+                        <Text fontSmoothingType="LCD" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-family: Quicksan;" styleClass="text-menu" text="DASHBOARD">
                            <HBox.margin>
                               <Insets left="10.0" />
                            </HBox.margin>
@@ -36,7 +36,7 @@
                   <HBox fx:id="menuTransaction" layoutX="10.0" layoutY="10.0" prefHeight="43.0" prefWidth="200.0" styleClass="menu">
                      <children>
                         <FontAwesomeIcon fill="#485460" glyphName="USER_PLUS" size="1.5em" HBox.hgrow="ALWAYS" />
-                        <Text fontSmoothingType="LCD" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-family: Quicksan;" text="TRANSACTION">
+                        <Text fontSmoothingType="LCD" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-family: Quicksan;" styleClass="text-menu" text="TRANSACTION">
                            <HBox.margin>
                               <Insets left="10.0" />
                            </HBox.margin>
@@ -52,7 +52,7 @@
                   <HBox fx:id="menuCreate" layoutX="10.0" layoutY="53.0" prefHeight="43.0" prefWidth="200.0" styleClass="menu">
                      <children>
                         <FontAwesomeIcon fill="#485460" glyphName="USER" size="1.5em" HBox.hgrow="ALWAYS" />
-                        <Text fontSmoothingType="LCD" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-family: Quicksan;" text="CREATE NEW">
+                        <Text fontSmoothingType="LCD" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-family: Quicksan;" styleClass="text-menu" text="CREATE NEW">
                            <HBox.margin>
                               <Insets left="10.0" />
                            </HBox.margin>
@@ -68,7 +68,7 @@
                   <HBox fx:id="menuInventary" layoutX="10.0" layoutY="96.0" prefHeight="43.0" prefWidth="200.0" styleClass="menu">
                      <children>
                         <FontAwesomeIcon fill="#485460" glyphName="MEDKIT" size="1.5em" HBox.hgrow="ALWAYS" />
-                        <Text fontSmoothingType="LCD" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-family: Quicksan;" text="INVENTARY">
+                        <Text fontSmoothingType="LCD" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-family: Quicksan;" styleClass="text-menu" text="INVENTARY">
                            <HBox.margin>
                               <Insets left="10.0" />
                            </HBox.margin>
@@ -84,7 +84,7 @@
                   <HBox fx:id="menuMaster" layoutX="10.0" layoutY="139.0" prefHeight="43.0" prefWidth="200.0" styleClass="menu">
                      <children>
                         <FontAwesomeIcon fill="#485460" glyphName="FLASK" size="1.5em" HBox.hgrow="ALWAYS" />
-                        <Text fontSmoothingType="LCD" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-family: Quicksan;" text="MASTER">
+                        <Text fontSmoothingType="LCD" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-family: Quicksan;" styleClass="text-menu" text="MASTER">
                            <HBox.margin>
                               <Insets left="10.0" />
                            </HBox.margin>
@@ -100,7 +100,7 @@
                   <HBox fx:id="menuReport" layoutX="10.0" layoutY="182.0" prefHeight="43.0" prefWidth="200.0" styleClass="menu">
                      <children>
                         <FontAwesomeIcon fill="#485460" glyphName="LINE_CHART" size="1.5em" HBox.hgrow="ALWAYS" />
-                        <Text fontSmoothingType="LCD" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-family: Quicksan;" text="REPORTS">
+                        <Text fontSmoothingType="LCD" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-family: Quicksan;" styleClass="text-menu" text="REPORTS">
                            <HBox.margin>
                               <Insets left="10.0" />
                            </HBox.margin>
@@ -118,7 +118,7 @@
                         <HBox prefHeight="43.0" prefWidth="200.0" styleClass="menu">
                            <children>
                               <FontAwesomeIcon fill="#485460" glyphName="COG" size="1.5em" HBox.hgrow="ALWAYS" />
-                              <Text fontSmoothingType="LCD" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-family: Quicksan;" text="SETTINGS">
+                              <Text fontSmoothingType="LCD" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-family: Quicksan;" styleClass="text-menu" text="SETTINGS">
                                  <HBox.margin>
                                     <Insets left="10.0" />
                                  </HBox.margin>
@@ -131,7 +131,7 @@
                         <HBox layoutX="10.0" layoutY="10.0" prefHeight="43.0" prefWidth="200.0" styleClass="menu">
                            <children>
                               <FontAwesomeIcon fill="#485460" glyphName="PHONE" size="1.5em" HBox.hgrow="ALWAYS" />
-                              <Text fontSmoothingType="LCD" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-family: Quicksan;" text="SUPPORT">
+                              <Text fontSmoothingType="LCD" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-family: Quicksan;" styleClass="text-menu" text="SUPPORT">
                                  <HBox.margin>
                                     <Insets left="10.0" />
                                  </HBox.margin>
@@ -144,7 +144,7 @@
                         <HBox layoutX="10.0" layoutY="110.0" prefHeight="43.0" prefWidth="200.0" styleClass="menu">
                            <children>
                               <FontAwesomeIcon fill="#485460" glyphName="SIGN_OUT" size="1.5em" HBox.hgrow="ALWAYS" />
-                              <Text fontSmoothingType="LCD" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-family: Quicksan;" text="LOG OUT">
+                              <Text fontSmoothingType="LCD" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-family: Quicksan;" styleClass="text-menu" text="LOG OUT">
                                  <HBox.margin>
                                     <Insets left="10.0" />
                                  </HBox.margin>
@@ -162,21 +162,8 @@
       </AnchorPane>
    </left>
    <top>
-      <AnchorPane prefHeight="57.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+      <AnchorPane prefHeight="57.0" prefWidth="600.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER">
          <children>
-            <AnchorPane layoutY="1.0" prefHeight="63.0" prefWidth="200.0" style="-fx-background-color: #536dfe;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
-               <children>
-                  <Text fill="WHITE" layoutX="65.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SHOP">
-                     <font>
-                        <Font name="Bauhaus 93" size="33.0" />
-                     </font>
-                  </Text>
-                  <FontAwesomeIcon fill="WHITE" glyphName="GLOBE" layoutX="17.0" layoutY="48.0" size="4em" />
-               </children>
-               <effect>
-                  <Bloom threshold="0.94" />
-               </effect>
-            </AnchorPane>
             <StackPane layoutX="201.0" layoutY="1.0" prefHeight="62.0" prefWidth="399.0" style="-fx-background-color: white;" AnchorPane.leftAnchor="201.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Window Title" StackPane.alignment="CENTER">
@@ -189,7 +176,7 @@
                         <Insets right="100.0" />
                      </StackPane.margin>
                   </FontAwesomeIcon>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="User Name" wrappingWidth="78.7412109375" StackPane.alignment="CENTER_RIGHT">
+                  <Text fx:id="txtUserName" strokeType="OUTSIDE" strokeWidth="0.0" text="User Name" wrappingWidth="78.7412109375" StackPane.alignment="CENTER_RIGHT">
                      <StackPane.margin>
                         <Insets right="10.0" />
                      </StackPane.margin>
@@ -199,6 +186,12 @@
                   </Text>
                </children>
             </StackPane>
+            <FontAwesomeIcon fill="#2262c6" glyphName="BITCOIN" layoutX="28.0" layoutY="43.0" size="4em" />
+            <Label alignment="CENTER" layoutX="69.0" layoutY="20.0" text="Super Shopee" textFill="#2262c6">
+               <font>
+                  <Font name="Berlin Sans FB" size="20.0" />
+               </font>
+            </Label>
          </children>
       </AnchorPane>
    </top>

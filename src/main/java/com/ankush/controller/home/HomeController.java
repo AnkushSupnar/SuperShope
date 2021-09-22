@@ -1,5 +1,6 @@
 package com.ankush.controller.home;
 
+import com.ankush.common.CommonData;
 import com.ankush.config.SpringFXMLLoader;
 import com.ankush.view.FxmlView;
 import com.ankush.view.StageManager;
@@ -9,6 +10,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Text;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,10 +33,16 @@ public class HomeController implements Initializable {
     @FXML private HBox menuInventary;
     @FXML private HBox menuMaster;
     @FXML private HBox menuReport;
+    @FXML private Text txtUserName;
+
     private Pane pane;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
+        if(CommonData.getLoginUser()!=null)
+        {
+            txtUserName.setText(CommonData.getLoginUser().getUsername());
+        }
         menuTransaction.setOnMouseClicked(e -> {
                 pane =loader.getPage("/fxml/transaction/TransactionMenu.fxml");
                 mainPane.setCenter(pane);

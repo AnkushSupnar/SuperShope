@@ -30,7 +30,7 @@ public class Bank {
     private String woner;
 
     @Column(name = "balance")
-    private float balance;
+    private Float balance;
 
 
 }
