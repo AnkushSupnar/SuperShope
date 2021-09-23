@@ -1,7 +1,22 @@
 .root{
-    -fx-background-color:#bdbdbd;
+    /*-fx-background-color:#bdbdbd;*/
 }
 .pane{
+
+   -fx-background-radius: 0px 50px 0px 0px;
+   -fx-border-radius:   0px 50px 0px 0px;
+   -fx-border-color: #F1F2F7;
+   -fx-border-width:1;
+   -fx-background-color:#2262C6;
+}
+.pane .glyph-icon{
+          -fx-fill:white;
+      }
+.headingtext{
+    -fx-font-smoothing-type: lcd;
+     -fx-fill: white;
+}
+.pane1{
 
    -fx-background-radius:15px 50px 30px;
    -fx-border-radius:  15px 50px 30px;
@@ -19,12 +34,13 @@
 }
 
 .button{
--fx-background-color:white;
--fx-text-fill:black;
+-fx-background-color:#2262C6;
+-fx-text-fill:white;
 -fx-font-size:16px;
 }
+
 .button .glyph-icon{
-	-fx-fill:black;
+	-fx-fill:white;
 }
 .button:hover {
 	-fx-background-color:#34e7e4e0;
@@ -34,5 +50,5 @@
 	-fx-background-color:#00e676;
 }
 .button:pressed{
-	-fx-background-color:#1de9b6;
+	-fx-background-color:#2262C6;
 }

@@ -1,7 +1,7 @@
 package com.ankush.data.service;
 
 import com.ankush.data.entities.PurchaseInvoice;
-import com.ankush.data.entities.PurchaseInvoiceRepository;
+import com.ankush.data.repository.PurchaseInvoiceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -38,4 +38,5 @@ public class PurchaseInvoiceService {
     {
         return repository.getById(id);
     }
+
 }

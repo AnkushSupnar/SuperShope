@@ -1,5 +1,6 @@
-package com.ankush.data.entities;
+package com.ankush.data.repository;
 
+import com.ankush.data.entities.PurchaseInvoice;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -16,10 +17,9 @@ public interface PurchaseInvoiceRepository extends JpaRepository<PurchaseInvoice
 
     List<PurchaseInvoice> findByPurchaseParty_Id(Integer id);
 
-
-
     @Query("select p from PurchaseInvoice p where p.date between ?1 and ?2 ")
     List<PurchaseInvoice> getPurchaseInvoiceByDatePeriod(LocalDate dateStart, LocalDate dateEnd);
+
 
 
 }

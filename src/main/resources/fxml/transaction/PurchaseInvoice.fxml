@@ -16,9 +16,9 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<SplitPane fx:id="mainPane" dividerPositions="0.6277128547579299" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="742.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ankush.controller.transaction.PurchaseInvoiceController">
+<SplitPane fx:id="mainPane" dividerPositions="0.6318864774624374" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ankush.controller.transaction.PurchaseInvoiceController">
   <items>
-    <AnchorPane fx:id="billingPane" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" SplitPane.resizableWithParent="false">
+    <AnchorPane fx:id="billingPane" minHeight="-Infinity" minWidth="-Infinity" SplitPane.resizableWithParent="false">
          <children>
             <Label layoutX="284.0" layoutY="20.0" text="Purchase Party Name" AnchorPane.leftAnchor="284.0">
                <font>
@@ -251,7 +251,7 @@
                </children>
             </Pane>
          </children></AnchorPane>
-    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+    <AnchorPane minHeight="0.0" minWidth="0.0">
          <children>
             <TableView fx:id="tableold" layoutX="192.0" layoutY="60.0" prefHeight="680.0" prefWidth="443.0" stylesheets="@../css/table.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="60.0">
               <columns>

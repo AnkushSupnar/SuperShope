@@ -1,8 +1,11 @@
 package com.ankush.controller.transaction;
 
 import com.ankush.controller.home.HomeController;
+import com.ankush.view.FxmlView;
 import com.ankush.view.StageManager;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +21,11 @@ public class TransactionMenuController implements Initializable {
     @Autowired
     @Lazy
     StageManager stageManager;
+    @FXML
+    private Button btnPurchaseInvoice;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+            btnPurchaseInvoice.setOnAction(e->stageManager.switchScene(FxmlView.PURCHASEINVOICE));
     }
 }

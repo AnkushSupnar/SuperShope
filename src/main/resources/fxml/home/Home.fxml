@@ -187,7 +187,7 @@
                </children>
             </StackPane>
             <FontAwesomeIcon fill="#2262c6" glyphName="BITCOIN" layoutX="28.0" layoutY="43.0" size="4em" />
-            <Label alignment="CENTER" layoutX="69.0" layoutY="20.0" text="Super Shopee" textFill="#2262c6">
+            <Label alignment="CENTER" layoutX="69.0" layoutY="20.0" text="Laxmi Super Shopee" textFill="#2262c6">
                <font>
                   <Font name="Berlin Sans FB" size="20.0" />
                </font>

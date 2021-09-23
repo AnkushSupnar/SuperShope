@@ -17,14 +17,6 @@
    <children>
       <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="400.0" style="-fx-background-color: #2262C6;">
          <children>
-            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome To">
-               <font>
-                  <Font name="Ebrima Bold" size="14.0" />
-               </font>
-               <VBox.margin>
-                  <Insets top="10.0" />
-               </VBox.margin>
-            </Text>
             <FontAwesomeIcon fill="WHITE" glyphName="PAGELINES" size="100">
                <VBox.margin>
                   <Insets bottom="10.0" />
@@ -33,6 +25,14 @@
                   <Bloom threshold="0.77" />
                </effect>
             </FontAwesomeIcon>
+            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome To">
+               <font>
+                  <Font name="Ebrima Bold" size="14.0" />
+               </font>
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+            </Text>
             <Text fill="WHITE" layoutX="116.0" layoutY="365.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Super Shopee Billing System">
                <font>
                   <Font name="Impact" size="24.0" />

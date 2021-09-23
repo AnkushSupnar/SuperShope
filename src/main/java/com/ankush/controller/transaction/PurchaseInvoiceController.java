@@ -3,6 +3,7 @@ package com.ankush.controller.transaction;
 import com.ankush.data.entities.*;
 import com.ankush.data.service.*;
 import com.ankush.view.AlertNotification;
+import com.ankush.view.FxmlView;
 import com.ankush.view.StageManager;
 import javafx.beans.property.SimpleFloatProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -27,8 +28,11 @@ import org.springframework.stereotype.Component;
 import java.net.URL;
 
 import java.time.LocalDate;
+import java.time.temporal.TemporalAdjuster;
 import java.util.List;
 import java.util.ResourceBundle;
+import static java.time.temporal.TemporalAdjusters.firstDayOfYear;
+import static java.time.temporal.TemporalAdjusters.lastDayOfYear;
 
 @Component
 public class PurchaseInvoiceController implements Initializable {
@@ -100,6 +104,7 @@ public class PurchaseInvoiceController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         this.invoiceid= Long.valueOf(0);
+        stageManager.showFullScreen();
         colSr.setCellValueFactory(new PropertyValueFactory<>("id"));
         colBarcode.setCellValueFactory(new PropertyValueFactory<>("barcode"));
         colItemName.setCellValueFactory(new PropertyValueFactory<>("itemname"));
@@ -227,7 +232,12 @@ public class PurchaseInvoiceController implements Initializable {
                 txtDiscount.setText(oldValue);
             }
         });
-        txtDiscount.setOnAction(e->{calculateGrandTotal();txtPaid.requestFocus();});
+        txtPaid.setOnAction(e->{calculateGrandTotal();txtPaid.requestFocus();});
+        txtDiscount.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d{0,100}([\\.]\\d{0,4})?")) {
+                txtDiscount.setText(oldValue);
+            }
+        });
         btnAdd.setOnAction(e->add());
         btnUpdate.setOnAction(e->update());
         btnClear.setOnAction(e->clear());
@@ -235,6 +245,48 @@ public class PurchaseInvoiceController implements Initializable {
         btnSave.setOnAction(e->save());
         btnUpdate2.setOnAction(e->update2());
         btnClear2.setOnAction(e->clear2());
+        btnExit.setOnAction(e->{
+            stageManager.switchScene(FxmlView.HOME);
+            stageManager.showFullScreen();
+        });
+        btnShow.setOnAction(e->{
+            if(dateSearch.getValue()!=null) {
+                oldInvoiceList.clear();
+                tableold.refresh();
+                oldInvoiceList.addAll(invoiceService.getDateWisePurchaseInvoice(dateSearch.getValue()));
+            }
+        });
+        btnMonth.setOnAction(e->{
+            if(dateSearch.getValue()!=null)
+            {
+                oldInvoiceList.clear();
+                tableold.refresh();
+                oldInvoiceList.addAll(invoiceService.getDatePeriodWisePurchaseInvoice(dateSearch.getValue().withDayOfMonth(1),dateSearch.getValue().withDayOfMonth(dateSearch.getValue().lengthOfMonth())));
+            }
+            else{
+                alert.showError("Select Date For Search");
+                dateSearch.requestFocus();
+            }
+        });
+        btnYear.setOnAction(e->{
+            if(dateSearch.getValue()!=null)
+            {
+                oldInvoiceList.clear();
+                oldInvoiceList.addAll(
+                        invoiceService.getDatePeriodWisePurchaseInvoice(
+                                dateSearch.getValue().with(firstDayOfYear()),
+                                dateSearch.getValue().with(lastDayOfYear())));
+            }
+            else{
+                alert.showError("Select Date For Search");
+                dateSearch.requestFocus();
+            }
+        });
+        btnAll.setOnAction(e->{
+            oldInvoiceList.clear();
+            tableold.refresh();
+            oldInvoiceList.addAll(invoiceService.getAllPurchaseInvoice());
+        });
     }
 
     private void clear2() {
