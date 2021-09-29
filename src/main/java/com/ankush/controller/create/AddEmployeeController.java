@@ -11,6 +11,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,7 @@ import org.springframework.stereotype.Component;
 public class AddEmployeeController implements FxmlController {
     private static final Logger LOG = LoggerFactory.getLogger(AddUserController.class);
     private final StageManager stageManager;
-
+    @FXML private AnchorPane mainPane;
     @FXML private TextField txtName;
     @FXML private TextField txtAddress;
     @FXML private TextField txtContact;
@@ -63,6 +64,7 @@ public class AddEmployeeController implements FxmlController {
         btnSave.setOnAction(e->save());
         btnUpadate.setOnAction(e->update());
         linkCreateUser.setOnAction(e->stageManager.switchScene(FxmlView.ADDUSER));
+        btnExit.setOnAction(e->mainPane.setVisible(false));
     }
 
     private void update() {

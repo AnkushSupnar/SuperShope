@@ -11,7 +11,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="643.0" stylesheets="@../css/home.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ankush.controller.home.HomeController">
+<BorderPane fx:id="mainPane" prefHeight="680.0" prefWidth="939.0" stylesheets="@../css/home.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ankush.controller.home.HomeController">
    <left>
       <AnchorPane prefHeight="534.0" prefWidth="199.0" styleClass="sidebar" BorderPane.alignment="CENTER">
          <children>

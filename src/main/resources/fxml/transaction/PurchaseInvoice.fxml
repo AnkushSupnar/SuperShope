@@ -16,7 +16,12 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<SplitPane fx:id="mainPane" dividerPositions="0.6318864774624374" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ankush.controller.transaction.PurchaseInvoiceController">
+<SplitPane fx:id="mainPane" dividerPositions="0.6318864774624374"
+           maxHeight="-Infinity" maxWidth="-Infinity"
+           minHeight="-Infinity" minWidth="-Infinity"
+           xmlns="http://javafx.com/javafx/16"
+           xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="com.ankush.controller.transaction.PurchaseInvoiceController">
   <items>
     <AnchorPane fx:id="billingPane" minHeight="-Infinity" minWidth="-Infinity" SplitPane.resizableWithParent="false">
          <children>
@@ -57,32 +62,16 @@
             </Label>
             <HBox layoutX="8.0" layoutY="109.0" spacing="5.0">
                <children>
-                  <TextField fx:id="txtBarcode" prefHeight="33.0" prefWidth="127.0">
+                  <TextField fx:id="txtBarcode" prefHeight="33.0" prefWidth="127.0" style="-fx-font-family: kiran; -fx-font-size: 20;">
                      <font>
                         <Font name="Kiran" size="20.0" />
                      </font>
                   </TextField>
-                  <TextField fx:id="txtItemName" prefHeight="33.0" prefWidth="216.0" promptText="maalaacao naava">
-                     <font>
-                        <Font name="Kiran" size="20.0" />
-                     </font>
-                  </TextField>
-                  <TextField fx:id="txtQty" prefHeight="33.0" prefWidth="100.0" promptText="naga">
-                     <font>
-                        <Font name="Kiran" size="20.0" />
-                     </font>
-                  </TextField>
+                  <TextField fx:id="txtItemName" prefHeight="33.0" prefWidth="216.0" promptText="maalaacao naava" style="-fx-font-family: kiran; -fx-font-size: 20;" />
+                  <TextField fx:id="txtQty" prefHeight="33.0" prefWidth="100.0" promptText="naga" style="-fx-font-family: kiran; -fx-font-size: 20;" />
                   <ComboBox fx:id="cmbUnit" prefHeight="32.0" prefWidth="68.0" promptText="Unit" visibleRowCount="2" />
-                  <TextField fx:id="txtRate" prefHeight="25.0" prefWidth="100.0" promptText="Baava">
-                     <font>
-                        <Font name="Kiran" size="20.0" />
-                     </font>
-                  </TextField>
-                  <TextField fx:id="txtAmount" prefHeight="25.0" prefWidth="100.0" promptText="ekuNa">
-                     <font>
-                        <Font name="Kiran" size="20.0" />
-                     </font>
-                  </TextField>
+                  <TextField fx:id="txtRate" prefHeight="25.0" prefWidth="100.0" promptText="Baava" style="-fx-font-family: kiran; -fx-font-size: 20;" />
+                  <TextField fx:id="txtAmount" prefHeight="25.0" prefWidth="100.0" promptText="ekuNa" style="-fx-font-family: kiran; -fx-font-size: 20;" />
                </children>
             </HBox>
             <Label layoutX="147.0" layoutY="83.0" text="Item Name">
@@ -134,7 +123,7 @@
                   </Button>
                </children>
             </HBox>
-            <TableView fx:id="table" layoutX="10.0" layoutY="199.0" prefHeight="362.0" prefWidth="731.0" stylesheets="@../css/tablemar.css" AnchorPane.bottomAnchor="179.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="199.0">
+            <TableView fx:id="table" layoutX="10.0" layoutY="199.0" prefHeight="362.0" prefWidth="731.0" AnchorPane.bottomAnchor="179.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="199.0">
               <columns>
                 <TableColumn fx:id="colSr" prefWidth="45.0" text="SR.NO" />
                 <TableColumn fx:id="colBarcode" prefWidth="120.0" text="BARCODE" />
@@ -150,68 +139,40 @@
                   <Label layoutX="420.0" layoutY="8.0" text="NET TOTAL" />
                   <HBox layoutX="14.0" layoutY="25.0">
                      <children>
-                        <TextField fx:id="txtTransporting" text="0.0">
-                           <font>
-                              <Font name="Kiran" size="20.0" />
-                           </font>
-                        </TextField>
+                        <TextField fx:id="txtTransporting" style="-fx-font-family: kiran; -fx-font-size: 20;" text="0.0" />
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="+">
                            <HBox.margin>
                               <Insets top="10.0" />
                            </HBox.margin>
                         </Text>
-                        <TextField fx:id="txtWages" text="0.0">
-                           <font>
-                              <Font name="Kiran" size="20.0" />
-                           </font>
-                        </TextField>
+                        <TextField fx:id="txtWages" style="-fx-font-family: kiran; -fx-font-size: 20;" text="0.0" />
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="+">
                            <HBox.margin>
                               <Insets top="10.0" />
                            </HBox.margin>
                         </Text>
-                        <TextField fx:id="txtOther" text="0.0">
-                           <font>
-                              <Font name="Kiran" size="20.0" />
-                           </font>
-                        </TextField>
+                        <TextField fx:id="txtOther" style="-fx-font-family: kiran; -fx-font-size: 20;" text="0.0" />
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="+">
                            <HBox.margin>
                               <Insets top="10.0" />
                            </HBox.margin>
                         </Text>
-                        <TextField fx:id="txtNetTotal" editable="false" promptText="ekuNa" text="0.0">
-                           <font>
-                              <Font name="Kiran" size="20.0" />
-                           </font>
-                        </TextField>
+                        <TextField fx:id="txtNetTotal" editable="false" promptText="ekuNa" style="-fx-font-family: kiran; -fx-font-size: 20;" text="0.0" />
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="=">
                            <HBox.margin>
                               <Insets top="10.0" />
                            </HBox.margin>
                         </Text>
-                        <TextField fx:id="txtGrandTotal" editable="false" promptText="ekuNa" text="0.0">
-                           <font>
-                              <Font name="Kiran" size="20.0" />
-                           </font>
-                        </TextField>
+                        <TextField fx:id="txtGrandTotal" editable="false" promptText="ekuNa" style="-fx-font-family: kiran; -fx-font-size: 20;" text="0.0" />
                      </children>
                   </HBox>
                   <Label layoutX="14.0" layoutY="8.0" text="TRANSPORTING CHRGS" />
                   <Label layoutX="152.0" layoutY="8.0" text="WAGES" />
                   <Label layoutX="283.0" layoutY="8.0" text="OTHER CHRGS" />
                   <Label layoutX="557.0" layoutY="8.0" text="GRAND TOTAL" />
-                  <TextField fx:id="txtDiscount" layoutX="16.0" layoutY="79.0">
-                     <font>
-                        <Font name="Kiran" size="20.0" />
-                     </font>
-                  </TextField>
+                  <TextField fx:id="txtDiscount" layoutX="16.0" layoutY="79.0" style="-fx-font-family: kiran; -fx-font-size: 20;" />
                   <Label layoutX="14.0" layoutY="61.0" text="DICOUNT" />
-                  <TextField fx:id="txtPaid" layoutX="150.0" layoutY="79.0">
-                     <font>
-                        <Font name="Kiran" size="20.0" />
-                     </font>
-                  </TextField>
+                  <TextField fx:id="txtPaid" layoutX="150.0" layoutY="79.0" style="-fx-font-family: kiran; -fx-font-size: 20;" />
                   <Label layoutX="148.0" layoutY="61.0" text="PAID AMOUNT" />
                   <TextField fx:id="txtBank" layoutX="281.0" layoutY="79.0" prefHeight="33.0" prefWidth="185.0" promptText="Select Bank Name">
                      <font>

@@ -1,7 +1,9 @@
 package com.ankush.view;
 import com.ankush.config.SpringFXMLLoader;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import org.slf4j.Logger;
 
@@ -13,6 +15,7 @@ public class StageManager {
     private static final Logger LOG = getLogger(StageManager.class);
     private final Stage primaryStage;
     private final SpringFXMLLoader springFXMLLoader;
+    private Parent viewRootNodeHierarchy;
 
     public StageManager(SpringFXMLLoader springFXMLLoader,Stage stage)
     {
@@ -21,13 +24,27 @@ public class StageManager {
     }
     public void switchScene(final FxmlView view)
     {
-        Parent viewRootNodeHierarchy = loadViewNodeHierarchy(view.getFxmlFile());
+         viewRootNodeHierarchy = loadViewNodeHierarchy(view.getFxmlFile());
+
         show(viewRootNodeHierarchy,view.getTitle());
     }
     public void showFullScreen()
     {
-        primaryStage.setMaximized(true);
+        Screen screen = Screen.getPrimary();
+        Rectangle2D bounds = screen.getVisualBounds();
+        primaryStage.setX(bounds.getMinX());
+        primaryStage.setY(bounds.getMinY());
+        primaryStage.setWidth(bounds.getWidth());
+        primaryStage.setHeight(bounds.getHeight());
 
+    }
+    public Stage getPrimaryStage()
+    {
+        return primaryStage;
+    }
+    public Parent getParent()
+    {
+        return viewRootNodeHierarchy;
     }
     private void show(Parent rootnode, String title) {
         Scene scene = prepareScene(rootnode);
@@ -35,6 +52,11 @@ public class StageManager {
         primaryStage.setScene(scene);
         primaryStage.sizeToScene();
         primaryStage.centerOnScreen();
+        if(!title.equals("Login"))
+        {
+            showFullScreen();
+        }
+        primaryStage.setOnCloseRequest(e->e.consume());
 
         try {
             primaryStage.show();

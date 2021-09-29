@@ -1,5 +1,6 @@
 package com.ankush.controller.transaction;
 
+import com.ankush.Main;
 import com.ankush.data.entities.*;
 import com.ankush.data.service.*;
 import com.ankush.view.AlertNotification;
@@ -19,6 +20,9 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
 
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.util.Callback;
 import org.controlsfx.control.textfield.TextFields;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -54,13 +58,13 @@ public class PurchaseInvoiceController implements Initializable {
     @FXML private Button btnRemove;
     @FXML private Button btnClear;
     @FXML private TableView<PurchaseTransaction> table;
-    @FXML private TableColumn<PurchaseTransaction,Long> colSr;
+    @FXML private TableColumn<PurchaseTransaction,Number> colSr;
     @FXML private TableColumn<PurchaseTransaction,String> colBarcode;
     @FXML private TableColumn<PurchaseTransaction,String> colItemName;
-    @FXML private TableColumn<PurchaseTransaction,Float> colQty;
+    @FXML private TableColumn<PurchaseTransaction,Number> colQty;
     @FXML private TableColumn<PurchaseTransaction,String> colUnit;
     @FXML private TableColumn<PurchaseTransaction,Number> colRate;
-    @FXML private TableColumn<PurchaseTransaction,Float> colAmount;
+    @FXML private TableColumn<PurchaseTransaction,Number> colAmount;
     @FXML private TextField txtTransporting;
     @FXML private TextField txtWages;
     @FXML private TextField txtOther;
@@ -79,8 +83,8 @@ public class PurchaseInvoiceController implements Initializable {
     @FXML private TableColumn<PurchaseInvoice, LocalDate> colDate;
     @FXML private TableColumn<PurchaseInvoice,String> colInvoiceNo;
     @FXML private TableColumn<PurchaseInvoice,String> colParty;
-    @FXML private TableColumn<PurchaseInvoice,Float> colTotal;
-    @FXML private TableColumn<PurchaseInvoice,Float> colPaid;
+    @FXML private TableColumn<PurchaseInvoice,Number> colTotal;
+    @FXML private TableColumn<PurchaseInvoice,Number> colPaid;
 
     @FXML private DatePicker dateSearch;
     @FXML private Button btnShow;
@@ -103,15 +107,171 @@ public class PurchaseInvoiceController implements Initializable {
     private ObservableList<PurchaseInvoice>oldInvoiceList = FXCollections.observableArrayList();
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        Font.loadFont(Main.class.getResource("/fxml/font/kiran.ttf").toExternalForm(),10);
         this.invoiceid= Long.valueOf(0);
         stageManager.showFullScreen();
         colSr.setCellValueFactory(new PropertyValueFactory<>("id"));
+        colSr.setCellFactory(new Callback<TableColumn<PurchaseTransaction,Number>, TableCell<PurchaseTransaction,Number>>() {
+            @Override
+            public TableCell call(TableColumn param) {
+                return new TableCell<PurchaseTransaction, Number>()
+                {
+                    @Override
+                    public void updateItem(Number item, boolean empty) {
+
+                        super.updateItem(item, empty);
+                        setFont(Font.font ("kiran", 25));
+                        if(isEmpty())
+                        {
+                            setText("");
+                        }
+                        else
+                        {
+
+                            setText(String.valueOf(item));
+                        }
+                    }
+                };
+            }
+        });
         colBarcode.setCellValueFactory(new PropertyValueFactory<>("barcode"));
+        colBarcode.setCellFactory(new Callback<TableColumn<PurchaseTransaction,String>, TableCell<PurchaseTransaction,String>>() {
+            @Override
+            public TableCell call(TableColumn param) {
+                return new TableCell<PurchaseTransaction, String>()
+                {
+                    @Override
+                    public void updateItem(String item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if(isEmpty())
+                        {
+                            setText("");
+                        }
+                        else
+                        {
+                            setFont(Font.font ("kiran", 25));
+                            setText(item);
+                        }
+                    }
+                };
+            }
+        });
         colItemName.setCellValueFactory(new PropertyValueFactory<>("itemname"));
+        colItemName.setCellFactory(new Callback<TableColumn<PurchaseTransaction,String>, TableCell<PurchaseTransaction,String>>() {
+            @Override
+            public TableCell call(TableColumn param) {
+                return new TableCell<PurchaseTransaction, String>()
+                {
+                    @Override
+                    public void updateItem(String item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if(isEmpty())
+                        {
+                            setText("");
+                        }
+                        else
+                        {
+                            setFont(Font.font ("kiran", 25));
+                            setText(item);
+                        }
+                    }
+                };
+            }
+        });
         colQty.setCellValueFactory(new PropertyValueFactory<>("qty"));
+        colQty.setCellFactory(new Callback<TableColumn<PurchaseTransaction,Number>, TableCell<PurchaseTransaction,Number>>() {
+            @Override
+            public TableCell call(TableColumn param) {
+                return new TableCell<PurchaseTransaction, Number>()
+                {
+                    @Override
+                    public void updateItem(Number item, boolean empty) {
+
+                        super.updateItem(item, empty);
+                        setFont(Font.font ("kiran", 25));
+                        if(isEmpty())
+                        {
+                            setText("");
+                        }
+                        else
+                        {
+
+                            setText(String.valueOf(item));
+                        }
+                    }
+                };
+            }
+        });
         colUnit.setCellValueFactory(new PropertyValueFactory<>("unit"));
+        colUnit.setCellFactory(new Callback<TableColumn<PurchaseTransaction,String>, TableCell<PurchaseTransaction,String>>() {
+            @Override
+            public TableCell call(TableColumn param) {
+                return new TableCell<PurchaseTransaction, String>()
+                {
+                    @Override
+                    public void updateItem(String item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if(isEmpty())
+                        {
+                            setText("");
+                        }
+                        else
+                        {
+                            setFont(Font.font ("kiran", 25));
+                            setText(item);
+                        }
+                    }
+                };
+            }
+        });
         colRate.setCellValueFactory(new PropertyValueFactory<>("price"));
+        colRate.setCellFactory(new Callback<TableColumn<PurchaseTransaction,Number>, TableCell<PurchaseTransaction,Number>>() {
+            @Override
+            public TableCell call(TableColumn param) {
+                return new TableCell<PurchaseTransaction, Number>()
+                {
+                    @Override
+                    public void updateItem(Number item, boolean empty) {
+
+                        super.updateItem(item, empty);
+                        setFont(Font.font ("kiran", 25));
+                        if(isEmpty())
+                        {
+                            setText("");
+                        }
+                        else
+                        {
+
+                            setText(String.valueOf(item));
+                        }
+                    }
+                };
+            }
+        });
         colAmount.setCellValueFactory(new PropertyValueFactory<>("amount"));
+        colAmount.setCellFactory(new Callback<TableColumn<PurchaseTransaction,Number>, TableCell<PurchaseTransaction,Number>>() {
+            @Override
+            public TableCell call(TableColumn param) {
+                return new TableCell<PurchaseTransaction, Number>()
+                {
+                    @Override
+                    public void updateItem(Number item, boolean empty) {
+
+                        super.updateItem(item, empty);
+                        setFont(Font.font ("kiran", 25));
+                        if(isEmpty())
+                        {
+                            setText("");
+                        }
+                        else
+                        {
+
+                            setText(String.valueOf(item));
+                        }
+                    }
+                };
+            }
+        });
         table.setItems(trList);
         item = null;
         cmbUnit.getItems().addAll("KG","NOS");
