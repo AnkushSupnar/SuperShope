@@ -44,6 +44,8 @@ public class AddItemController implements Initializable {
     @FXML private TableColumn<Item,String> colUnit;
     @FXML private TableColumn<Item,Float> colPrize;
     @FXML private TableColumn<Item,Float> colRate;
+    @FXML private Button btnShowAll;
+
     private ToggleGroup  group;
     @Autowired
     ItemService service;
@@ -63,7 +65,7 @@ public class AddItemController implements Initializable {
     colUnit.setCellValueFactory(new PropertyValueFactory<>("unit"));
     colPrize.setCellValueFactory(new PropertyValueFactory<>("price"));
     colRate.setCellValueFactory(new PropertyValueFactory<>("rate"));
-    list.addAll(service.getAllItems());
+    //list.addAll(service.getAllItems());
     table.setItems(list);
 
 
@@ -71,6 +73,11 @@ public class AddItemController implements Initializable {
     btnUpdate.setOnAction(e->update());
     btnClear.setOnAction(e->clear());
     btnExit.setOnAction(e->mainPane.setVisible(false));
+    btnShowAll.setOnAction(e->{
+        list.clear();
+        list.addAll(service.getAllItems());
+        table.refresh();
+    });
     }
 
     private void clear() {
@@ -165,7 +172,7 @@ public class AddItemController implements Initializable {
                 txtItemName.requestFocus();
                 return false;
             }
-            if(service.getItemByName(txtItemName.getText())!=null)
+            if(id==0 && service.getItemByName(txtItemName.getText())!=null)
             {
                 alert.showError("Item Name Already Exist Choose another One");
                 txtItemName.requestFocus();

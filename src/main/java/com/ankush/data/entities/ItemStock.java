@@ -27,4 +27,7 @@ public class ItemStock {
     @Column(name = "stock")
     private Float stock;
 
+    @Column(name = "unit", length = 10)
+    private String unit;
+
 }

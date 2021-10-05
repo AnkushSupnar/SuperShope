@@ -34,6 +34,7 @@ public class HomeController implements Initializable {
     @FXML private HBox menuMaster;
     @FXML private HBox menuReport;
     @FXML private Text txtUserName;
+    @FXML private HBox menuExit;
 
     private Pane pane;
     @Override
@@ -52,5 +53,10 @@ public class HomeController implements Initializable {
             mainPane.setCenter(pane);
         });
 
+        menuReport.setOnMouseClicked(e->{
+            pane =loader.getPage("/fxml/report/ReportMenu.fxml");
+            mainPane.setCenter(pane);
+        });
+        menuExit.setOnMouseClicked(e->System.exit(0));
     }
 }

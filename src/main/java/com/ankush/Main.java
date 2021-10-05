@@ -3,6 +3,7 @@ package com.ankush;
 import com.ankush.view.FxmlView;
 import com.ankush.view.StageManager;
 import javafx.application.Application;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
@@ -20,6 +21,7 @@ public class Main extends Application {
 	protected StageManager stageManager;
 
 	public static void main(String[] args) {
+
 		Application.launch(args);
 		//SpringApplication.run(Main.class, args);
 	}
@@ -40,10 +42,12 @@ public class Main extends Application {
 		springContext.close();
 	}
 	protected void displayInitialScene() {
-		//stageManager.switchScene(FxmlView.LOGIN);
+
+		stageManager.switchScene(FxmlView.LOGIN);
 		//stageManager.switchScene(FxmlView.EMPLOYEE);
-		stageManager.switchScene(FxmlView.HOME);
+		//stageManager.switchScene(FxmlView.HOME);
 		//stageManager.switchScene(FxmlView.PURCHASEINVOICE);
+		//stageManager.switchScene(FxmlView.ITEMSTOCK);
 	}
 	private ConfigurableApplicationContext bootstrapSpringApplicationContext() {
 		SpringApplicationBuilder builder = new SpringApplicationBuilder(Main.class);

@@ -1,5 +1,6 @@
 @font-face {
-src: url(“fxml/font/kiran.ttf”);
+font-family: kiran;
+src: url(kiran.ttf);
 }
 .table-view .column-header,
 .table-view .column-header-background .filler {

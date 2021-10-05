@@ -42,5 +42,25 @@ public class CreateManuController implements Initializable {
             menuPane = loader.getPage("/fxml/create/AddEmployee.fxml");
             root.setCenter(menuPane);
         });
+        btnAddBank.setOnAction(e -> {
+            root = (BorderPane) pane.getParent();
+            menuPane = loader.getPage("/fxml/create/AddBank.fxml");
+            root.setCenter(menuPane);
+        });
+        btnAddUser.setOnAction(e -> {
+            root = (BorderPane) pane.getParent();
+            menuPane = loader.getPage("/fxml/create/AddUser.fxml");
+            root.setCenter(menuPane);
+        });
+        btnAddItem.setOnAction(e -> {
+            root = (BorderPane) pane.getParent();
+            menuPane = loader.getPage("/fxml/create/AddItem.fxml");
+            root.setCenter(menuPane);
+        });
+        btnAddParty.setOnAction(e -> {
+            root = (BorderPane) pane.getParent();
+            menuPane = loader.getPage("/fxml/create/AddPurchaseParty.fxml");
+            root.setCenter(menuPane);
+        });
     }
 }

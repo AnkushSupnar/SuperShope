@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:id="mainPane" prefHeight="431.0" prefWidth="711.0" stylesheets="@../css/menu.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ankush.controller.report.ReportMenuController">
+   <children>
+      <VBox alignment="TOP_CENTER" layoutX="51.0" layoutY="55.0" prefHeight="189.0" prefWidth="220.0" styleClass="pane">
+         <children>
+            <FontAwesomeIcon glyphName="LINE_CHART" size="4em" VBox.vgrow="ALWAYS">
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+            </FontAwesomeIcon>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="headingtext" text="ITEM STOCK">
+               <font>
+                  <Font name="Lucida Console" size="16.0" />
+               </font>
+               <VBox.margin>
+                  <Insets top="5.0" />
+               </VBox.margin>
+            </Text>
+            <VBox alignment="CENTER" nodeOrientation="LEFT_TO_RIGHT">
+               <children>
+                  <Button fx:id="btnVIewStock" alignment="TOP_LEFT" lineSpacing="10.0" mnemonicParsing="false" text="VIEW ALL STOCK">
+                     <graphic>
+                        <FontAwesomeIcon glyphName="USD" />
+                     </graphic>
+                  </Button>
+                  <Button alignment="TOP_LEFT" mnemonicParsing="false" prefHeight="35.0" prefWidth="158.0" text="VIEW STOCK">
+                     <graphic>
+                        <FontAwesomeIcon glyphName="USD" />
+                     </graphic>
+                  </Button>
+               </children>
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+            </VBox>
+         </children>
+         <effect>
+            <DropShadow />
+         </effect>
+      </VBox>
+      <VBox alignment="TOP_CENTER" layoutX="294.0" layoutY="55.0" prefHeight="189.0" prefWidth="220.0" styleClass="pane">
+         <children>
+            <FontAwesomeIcon glyphName="CC_PAYPAL" size="4em" VBox.vgrow="ALWAYS">
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+            </FontAwesomeIcon>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="headingtext" text="CUSTOMER">
+               <font>
+                  <Font name="Lucida Console" size="16.0" />
+               </font>
+               <VBox.margin>
+                  <Insets top="5.0" />
+               </VBox.margin>
+            </Text>
+            <VBox alignment="CENTER" nodeOrientation="LEFT_TO_RIGHT">
+               <children>
+                  <Button alignment="TOP_LEFT" lineSpacing="10.0" mnemonicParsing="false" text="ADD EMPLOYEE">
+                     <graphic>
+                        <FontAwesomeIcon glyphName="USD" />
+                     </graphic>
+                  </Button>
+                  <Button alignment="TOP_LEFT" mnemonicParsing="false" prefHeight="35.0" text="VIEW EMPLOYEE">
+                     <graphic>
+                        <FontAwesomeIcon glyphName="USD" />
+                     </graphic>
+                  </Button>
+               </children>
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+            </VBox>
+         </children>
+         <effect>
+            <DropShadow />
+         </effect>
+      </VBox>
+   </children>
+</AnchorPane>

@@ -141,7 +141,7 @@
                               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                            </padding>
                         </HBox>
-                        <HBox layoutX="10.0" layoutY="110.0" prefHeight="43.0" prefWidth="200.0" styleClass="menu">
+                        <HBox fx:id="menuExit" layoutX="10.0" layoutY="110.0" prefHeight="43.0" prefWidth="200.0" styleClass="menu">
                            <children>
                               <FontAwesomeIcon fill="#485460" glyphName="SIGN_OUT" size="1.5em" HBox.hgrow="ALWAYS" />
                               <Text fontSmoothingType="LCD" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-family: Quicksan;" styleClass="text-menu" text="LOG OUT">

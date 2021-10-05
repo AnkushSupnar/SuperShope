@@ -16,12 +16,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<SplitPane fx:id="mainPane" dividerPositions="0.6318864774624374"
-           maxHeight="-Infinity" maxWidth="-Infinity"
-           minHeight="-Infinity" minWidth="-Infinity"
-           xmlns="http://javafx.com/javafx/16"
-           xmlns:fx="http://javafx.com/fxml/1"
-           fx:controller="com.ankush.controller.transaction.PurchaseInvoiceController">
+<SplitPane fx:id="mainPane" dividerPositions="0.6318864774624374" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ankush.controller.transaction.PurchaseInvoiceController">
   <items>
     <AnchorPane fx:id="billingPane" minHeight="-Infinity" minWidth="-Infinity" SplitPane.resizableWithParent="false">
          <children>
@@ -123,7 +118,7 @@
                   </Button>
                </children>
             </HBox>
-            <TableView fx:id="table" layoutX="10.0" layoutY="199.0" prefHeight="362.0" prefWidth="731.0" AnchorPane.bottomAnchor="179.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="199.0">
+            <TableView fx:id="table" layoutX="10.0" layoutY="199.0" prefHeight="346.0" prefWidth="738.0" AnchorPane.bottomAnchor="205.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="199.0">
               <columns>
                 <TableColumn fx:id="colSr" prefWidth="45.0" text="SR.NO" />
                 <TableColumn fx:id="colBarcode" prefWidth="120.0" text="BARCODE" />
@@ -134,7 +129,7 @@
                   <TableColumn fx:id="colAmount" prefWidth="83.0" text="AMOUNT" />
               </columns>
             </TableView>
-            <Pane layoutX="15.0" layoutY="481.0" prefHeight="173.0" prefWidth="731.0" style="-fx-background-color: white; -fx-border-color: red;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
+            <Pane layoutX="10.0" layoutY="545.0" prefHeight="164.0" prefWidth="740.0" style="-fx-background-color: white; -fx-border-color: red;" AnchorPane.bottomAnchor="41.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
                <children>
                   <Label layoutX="420.0" layoutY="8.0" text="NET TOTAL" />
                   <HBox layoutX="14.0" layoutY="25.0">
@@ -180,7 +175,7 @@
                      </font>
                   </TextField>
                   <Label layoutX="279.0" layoutY="61.0" text="PAID FROM" />
-                  <HBox layoutX="15.0" layoutY="128.0" spacing="10.0">
+                  <HBox layoutX="10.0" layoutY="120.0" spacing="10.0">
                      <children>
                         <Button fx:id="btnSave" mnemonicParsing="false" stylesheets="@../css/button.css" text="SAVE">
                            <graphic>
@@ -214,7 +209,7 @@
          </children></AnchorPane>
     <AnchorPane minHeight="0.0" minWidth="0.0">
          <children>
-            <TableView fx:id="tableold" layoutX="192.0" layoutY="60.0" prefHeight="680.0" prefWidth="443.0" stylesheets="@../css/table.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="60.0">
+            <TableView fx:id="tableold" layoutX="192.0" layoutY="60.0" prefHeight="680.0" prefWidth="443.0" stylesheets="@../css/table.css" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="60.0">
               <columns>
                 <TableColumn fx:id="colSrNo" prefWidth="75.0" text="SR.NO" />
                 <TableColumn fx:id="colDate" prefWidth="86.0" text="DATE" />

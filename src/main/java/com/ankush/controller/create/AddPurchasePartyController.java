@@ -25,6 +25,7 @@ import java.util.ResourceBundle;
 public class AddPurchasePartyController implements Initializable {
     @Autowired @Lazy
     private StageManager stageManager;
+    @FXML private AnchorPane pane;
     @FXML private AnchorPane mainPane;
     @FXML private TextField txtPartName;
     @FXML private TextField txtAddress;

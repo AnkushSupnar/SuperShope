@@ -15,6 +15,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
@@ -25,6 +26,8 @@ import java.util.ResourceBundle;
 public class AddBankController implements Initializable {
     @Autowired @Lazy
     StageManager stageManager;
+
+    @FXML private AnchorPane pane;
     @FXML private TextField txtName;
     @FXML private TextField txtIfsc;
     @FXML private TextField txtAccountNo;
@@ -78,6 +81,7 @@ public class AddBankController implements Initializable {
         btnSave.setOnAction(e->save());
         btnUpdate.setOnAction(e->update());
         btnClear.setOnAction(e->clear());
+        btnHome.setOnAction(e->pane.setVisible(false));
     }
 
     private void clear() {

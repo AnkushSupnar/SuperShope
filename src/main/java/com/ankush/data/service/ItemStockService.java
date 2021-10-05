@@ -36,4 +36,12 @@ public class ItemStockService {
             return 2;
         }
     }
+    public List<ItemStock>getAllItemStock()
+    {
+        return repository.findAll();
+    }
+    public ItemStock getItemStockByItemname(String name)
+    {
+        return repository.getByItemname(name);
+    }
 }

@@ -19,20 +19,14 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
-
-import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.util.Callback;
 import org.controlsfx.control.textfield.TextFields;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
-
-
 import java.net.URL;
-
 import java.time.LocalDate;
-import java.time.temporal.TemporalAdjuster;
 import java.util.List;
 import java.util.ResourceBundle;
 import static java.time.temporal.TemporalAdjusters.firstDayOfYear;
@@ -301,6 +295,7 @@ public class PurchaseInvoiceController implements Initializable {
             }
         });
         txtBarcode.setOnMouseClicked(e->listView.setVisible(false));
+        txtBarcode.setOnAction(e->txtItemName.requestFocus());
         txtQty.setOnMouseClicked(e->listView.setVisible(false));
         txtQty.textProperty().addListener(new ChangeListener<String>() {
             @Override
@@ -465,7 +460,6 @@ public class PurchaseInvoiceController implements Initializable {
         invoiceid= Long.valueOf(0);
 
     }
-
     private void update2() {
         try {
             if(tableold.getSelectionModel().getSelectedItem()==null){return;}
@@ -499,7 +493,6 @@ public class PurchaseInvoiceController implements Initializable {
             e.printStackTrace();
         }
     }
-
     private void save() {
         if(!validateData()) return;
         PurchaseInvoice invoice = new PurchaseInvoice();
@@ -681,7 +674,9 @@ public class PurchaseInvoiceController implements Initializable {
                     stock.setStock(tr.getQty());
                     stock.setItemname(tr.getItemname());
                     stock.setBarcode(tr.getBarcode());
+                    stock.setUnit(tr.getUnit());
                     itemStockService.saveItemStock(stock);
+
 
                 }
         }catch(Exception e)
