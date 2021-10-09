@@ -1,0 +1,28 @@
+.root {
+  -fx-body-color : #F5F5F5;
+  -fx-outer-border : #cecece;
+}
+
+.pane{
+    -fx-border-color:black;
+}
+
+.button{
+	-fx-background-color:#007bff;
+	-fx-text-fill:White;
+	-fx-font:12pt "Georgia";
+
+}
+.button .glyph-icon{
+	-fx-fill:white;
+}
+.button:hover {
+	-fx-background-color:#64dd17;
+	-fx-text-fill:white;
+}
+.button:hover .glyph-icon {
+	-fx-fill:white;
+}
+.button:pressed{
+	-fx-background-color:#007bff;
+}
