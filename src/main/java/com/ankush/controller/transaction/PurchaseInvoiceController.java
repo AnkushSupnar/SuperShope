@@ -1,6 +1,7 @@
 package com.ankush.controller.transaction;
 
 import com.ankush.Main;
+import com.ankush.common.CommonData;
 import com.ankush.data.entities.*;
 import com.ankush.data.service.*;
 import com.ankush.view.AlertNotification;
@@ -47,6 +48,7 @@ public class PurchaseInvoiceController implements Initializable {
     @FXML private ComboBox<String> cmbUnit;
     @FXML private TextField txtRate;
     @FXML private TextField txtAmount;
+    @FXML private TextField txtMrp;
     @FXML private Button btnAdd;
     @FXML private Button btnUpdate;
     @FXML private Button btnRemove;
@@ -286,6 +288,8 @@ public class PurchaseInvoiceController implements Initializable {
             @Override
             public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
                 item=null;
+
+                if(!txtBarcode.getText().equals(""))
                item = itemService.getItemByBarcode(txtBarcode.getText());
                 if(item!=null){setItem();}
                 else
@@ -300,7 +304,15 @@ public class PurchaseInvoiceController implements Initializable {
         txtQty.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                if (!newValue.matches("\\d{0,100}([\\.]\\d{0,4})?")) {
+                if (!newValue.matches("\\d{0,100}([\\.]\\d{0,6})?")) {
+                    txtQty.setText(oldValue);
+                }
+            }
+        });
+        txtMrp.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                if (!newValue.matches("\\d{0,100}([\\.]\\d{0,6})?")) {
                     txtQty.setText(oldValue);
                 }
             }
@@ -326,7 +338,7 @@ public class PurchaseInvoiceController implements Initializable {
         txtRate.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                if (!newValue.matches("\\d{0,100}([\\.]\\d{0,4})?")) {
+                if (!newValue.matches("\\d{0,100}([\\.]\\d{0,6})?")) {
                     txtRate.setText(oldValue);
                 }
             }
@@ -351,6 +363,18 @@ public class PurchaseInvoiceController implements Initializable {
                 );
                 if(e.getCode()==KeyCode.ENTER)
                 {
+                    txtMrp.requestFocus();
+                }
+            }
+        });
+        txtMrp.setOnKeyReleased(e->{
+            if(isNumber(txtMrp.getText()) && isNumber(txtMrp.getText()))
+            {
+                txtAmount.setText(
+                        String.valueOf(Float.parseFloat(txtQty.getText())*Float.parseFloat(txtRate.getText()))
+                );
+                if(e.getCode()==KeyCode.ENTER)
+                {
                     btnAdd.requestFocus();
                 }
             }
@@ -358,7 +382,7 @@ public class PurchaseInvoiceController implements Initializable {
         txtTransporting.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                if (!newValue.matches("\\d{0,100}([\\.]\\d{0,4})?")) {
+                if (!newValue.matches("\\d{0,100}([\\.]\\d{0,6})?")) {
                     txtTransporting.setText(oldValue);
                 }
             }
@@ -367,7 +391,7 @@ public class PurchaseInvoiceController implements Initializable {
         txtWages.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                if (!newValue.matches("\\d{0,100}([\\.]\\d{0,4})?")) {
+                if (!newValue.matches("\\d{0,100}([\\.]\\d{0,6})?")) {
                     txtWages.setText(oldValue);
                 }
             }
@@ -376,20 +400,20 @@ public class PurchaseInvoiceController implements Initializable {
         txtOther.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                if (!newValue.matches("\\d{0,100}([\\.]\\d{0,4})?")) {
+                if (!newValue.matches("\\d{0,100}([\\.]\\d{0,6})?")) {
                     txtOther.setText(oldValue);
                 }
             }
         });
         txtOther.setOnAction(e->{calculateGrandTotal();txtDiscount.requestFocus();});
         txtDiscount.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue.matches("\\d{0,100}([\\.]\\d{0,4})?")) {
+            if (!newValue.matches("\\d{0,100}([\\.]\\d{0,6})?")) {
                 txtDiscount.setText(oldValue);
             }
         });
         txtPaid.setOnAction(e->{calculateGrandTotal();txtPaid.requestFocus();});
         txtDiscount.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue.matches("\\d{0,100}([\\.]\\d{0,4})?")) {
+            if (!newValue.matches("\\d{0,100}([\\.]\\d{0,6})?")) {
                 txtDiscount.setText(oldValue);
             }
         });
@@ -507,6 +531,7 @@ public class PurchaseInvoiceController implements Initializable {
         invoice.setTransporting(Float.parseFloat(txtTransporting.getText()));
         invoice.setPaid(Float.parseFloat(txtPaid.getText()));
         invoice.setWages(Float.parseFloat(txtWages.getText()));
+        invoice.setLogin(CommonData.getLoginUser());
         for(int i=0;i<trList.size();i++)
         {
             trList.get(i).setInvoice(invoice);
@@ -648,12 +673,13 @@ public class PurchaseInvoiceController implements Initializable {
                     item.setUnit(tr.getUnit());
                     item.setPrice(tr.getPrice());
                     item.setBarcode(tr.getBarcode());
-                    item.setRate(0.0f);
+                    item.setRate(tr.getMrp());
                     itemService.saveItem(item);
                 }
                 else
                 {
                     item.setPrice(tr.getPrice());
+
                     itemService.saveItem(item);
                 }
 
@@ -728,6 +754,10 @@ public class PurchaseInvoiceController implements Initializable {
             txtBank.requestFocus();
             return false;
         }
+        if(txtMrp.getText().isEmpty()||txtMrp.getText().isBlank()||txtMrp.getText().equals("") && !isNumber(txtMrp.getText()))
+        {
+            txtMrp.setText(String.valueOf(0.0));
+        }
         return true;
     }
 
@@ -753,6 +783,7 @@ public class PurchaseInvoiceController implements Initializable {
         txtQty.setText("");
         txtRate.setText("");
         txtAmount.setText("");
+        txtMrp.setText(""+0.0f);
         cmbUnit.getSelectionModel().clearSelection();
         item=null;
         txtQty.requestFocus();
@@ -785,6 +816,7 @@ public class PurchaseInvoiceController implements Initializable {
             txtQty.setText(String.valueOf(tr.getQty()));
             txtRate.setText(String.valueOf(tr.getPrice()));
             txtAmount.setText(String.valueOf(tr.getAmount()));
+            txtMrp.setText(String.valueOf(tr.getMrp()));
             if(tr.getUnit().equals("ik.ga`^."))
                 cmbUnit.getSelectionModel().select(0);
             else
@@ -803,7 +835,7 @@ public class PurchaseInvoiceController implements Initializable {
         int index=-1;
         for(int i=0;i<trList.size();i++)
         {
-            if(trList.get(i).getItemname().trim().equals(tr.getItemname()) &&
+            if(trList.get(i).getItemname().trim().equals(tr.getItemname().trim()) &&
                     trList.get(i).getBarcode().equals(tr.getBarcode())){
                 System.out.println("Found Same Item");
                 index=i;
@@ -865,10 +897,12 @@ public class PurchaseInvoiceController implements Initializable {
             return false;
 
         }
+        if(!txtBarcode.getText().isEmpty()){
         Item item = itemService.getItemByBarcode(txtBarcode.getText());
         if(item!=null)
         {
-            if(!item.getItemname().equals(txtItemName.getText().trim()))
+          //  System.out.println(item);
+            if(!item.getItemname().trim().equals(txtItemName.getText().trim()))
             {
                 alert.showError("This Barcode is already registered with different Item Name Please Change Item Name");
                 txtItemName.requestFocus();
@@ -876,6 +910,7 @@ public class PurchaseInvoiceController implements Initializable {
             }
             else
                 return true;
+        }
         }
         item=null;
         item=itemService.getItemByName(txtItemName.getText().trim());
@@ -911,7 +946,7 @@ public class PurchaseInvoiceController implements Initializable {
         tr.setPrice(Float.valueOf(txtRate.getText()));
         tr.setQty(Float.parseFloat(txtQty.getText()));
         tr.setAmount(tr.getQty()*Float.parseFloat(txtRate.getText()));
-
+        tr.setMrp(Float.valueOf(txtMrp.getText()));
         if(cmbUnit.getSelectionModel().getSelectedIndex()==0)
            tr.setUnit("ik.ga`^.");
         else

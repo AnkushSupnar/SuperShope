@@ -38,12 +38,16 @@ public class BankService {
     }
     public int addBankBalance(Float amount,int bankid)
     {
-        repository.addBankBalance(amount,bankid);
+        Bank bank = repository.getById(bankid);
+        bank.setBalance(bank.getBalance()+amount);
+        repository.save(bank);
         return 1;
     }
     public int reduceBankBalance(Float amount,int bankid)
     {
-        repository.reduceBankBalance(amount,bankid);
+        Bank bank = repository.getById(bankid);
+        bank.setBalance(bank.getBalance()-amount);
+        repository.save(bank);
         return 1;
     }
 

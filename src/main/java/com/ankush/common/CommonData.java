@@ -12,7 +12,7 @@ import java.util.List;
 public class CommonData {
     public static Login loginUser;
     public static List<String>ITEMNAMES = new ArrayList<>();
-
+    public static List<String>customerNames = new ArrayList<>();
     public CommonData() {
         super();
     }

@@ -122,6 +122,16 @@ public enum FxmlView {
         public String getFxmlFile() {
             return "/fxml/transaction/BillingFrame.fxml";
         }
+    },
+    CUSTOMER {
+        @Override
+        String getTitle() {
+            return getStringFromResourceBundle("dashboard.title");
+        }
+        @Override
+        public String getFxmlFile() {
+            return "/fxml/create/AddCustomer.fxml";
+        }
     }
     ;
     abstract String getTitle();

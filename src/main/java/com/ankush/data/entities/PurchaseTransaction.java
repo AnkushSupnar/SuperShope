@@ -22,6 +22,7 @@ public class PurchaseTransaction {
     Float price;
     private Float qty;
     private Float amount;
+    private Float mrp;
 
 
     @ManyToOne

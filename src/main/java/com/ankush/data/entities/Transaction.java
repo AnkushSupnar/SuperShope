@@ -4,15 +4,15 @@ import lombok.*;
 
 import javax.persistence.*;
 
-@Table(name = "item")
+@Table(name = "transaction")
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
 @ToString
 @Builder
-public class Item {
+public class Transaction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -21,18 +21,29 @@ public class Item {
     @Column(name = "itemname")
     private String itemname;
 
-    @Column(name = "rate")
-    private float rate;
-
     @Column(name = "barcode")
     private String barcode;
 
     @Column(name = "unit")
     private String unit;
 
+    @Column(name = "quantity")
+    private Float quantity;
+
+    @Column(name = "rate")
+    private Float rate;
+
     @Column(name = "price")
-    private float price;
+    private Float price;
+
+    @Column(name = "amount")
+    private Float amount;
 
     @Column(name = "sailingprice")
-    private float sailingprice;
+    private Float sailingprice;
+
+    @ManyToOne
+    @JoinColumn(name = "billno")
+    private Bill bill;
+
 }

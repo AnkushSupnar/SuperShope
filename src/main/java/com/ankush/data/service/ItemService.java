@@ -26,7 +26,7 @@ public class ItemService {
 
     public Item getItemByBarcode(String barcode)
     {
-        return repository.getItemByBarcode(barcode);
+        return repository.getByBarcode(barcode);
     }
 
     public int saveItem(Item item){

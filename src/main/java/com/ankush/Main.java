@@ -45,6 +45,7 @@ public class Main extends Application {
 
 		//stageManager.switchScene(FxmlView.LOGIN);
 		stageManager.switchScene(FxmlView.BILLING);
+		//stageManager.switchScene(FxmlView.CUSTOMER);
 		//stageManager.switchScene(FxmlView.EMPLOYEE);
 		//stageManager.switchScene(FxmlView.HOME);
 		//stageManager.switchScene(FxmlView.PURCHASEINVOICE);

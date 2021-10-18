@@ -10,8 +10,6 @@
 .button{
 	-fx-background-color:#007bff;
 	-fx-text-fill:White;
-	-fx-font:12pt "Georgia";
-
 }
 .button .glyph-icon{
 	-fx-fill:white;

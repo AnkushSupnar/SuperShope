@@ -4,6 +4,8 @@ import com.ankush.data.entities.Item;
 import com.ankush.data.service.ItemService;
 import com.ankush.view.AlertNotification;
 import com.ankush.view.StageManager;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -32,6 +34,7 @@ public class AddItemController implements Initializable {
     @FXML private RadioButton rdbtnKg;
     @FXML private RadioButton rdbtnNos;
     @FXML private TextField txtPrice;
+    @FXML private TextField txtSailingPrice;
     @FXML private TextField txtRate;
     @FXML private Button btnSave;
     @FXML private Button btnUpdate;
@@ -43,6 +46,7 @@ public class AddItemController implements Initializable {
     @FXML private TableColumn<Item,String> colBarcode;
     @FXML private TableColumn<Item,String> colUnit;
     @FXML private TableColumn<Item,Float> colPrize;
+    @FXML private TableColumn<Item,Float> colSailingPrice;
     @FXML private TableColumn<Item,Float> colRate;
     @FXML private Button btnShowAll;
 
@@ -65,11 +69,37 @@ public class AddItemController implements Initializable {
     colUnit.setCellValueFactory(new PropertyValueFactory<>("unit"));
     colPrize.setCellValueFactory(new PropertyValueFactory<>("price"));
     colRate.setCellValueFactory(new PropertyValueFactory<>("rate"));
+    colSailingPrice.setCellValueFactory(new PropertyValueFactory<>("sailingprice"));
     //list.addAll(service.getAllItems());
     table.setItems(list);
+    txtSailingPrice.textProperty().addListener(new ChangeListener<String>() {
+        @Override
+        public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+            if (!newValue.matches("\\d{0,100}([\\.]\\d{0,4})?")) {
+                txtSailingPrice.setText(oldValue);
+            }
+        }
+    });
+    txtRate.textProperty().addListener(new ChangeListener<String>() {
+        @Override
+        public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+            if (!newValue.matches("\\d{0,100}([\\.]\\d{0,4})?")) {
+                txtRate.setText(oldValue);
+            }
+        }
+    });
+    txtPrice.textProperty().addListener(new ChangeListener<String>() {
+        @Override
+        public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+            if (!newValue.matches("\\d{0,100}([\\.]\\d{0,4})?")) {
+                txtPrice.setText(oldValue);
+            }
+        }
+    });
 
 
-    btnSave.setOnAction(e->save());
+
+        btnSave.setOnAction(e->save());
     btnUpdate.setOnAction(e->update());
     btnClear.setOnAction(e->clear());
     btnExit.setOnAction(e->mainPane.setVisible(false));
@@ -87,6 +117,7 @@ public class AddItemController implements Initializable {
         txtBarCode.setText("");
         rdbtnKg.setSelected(false);
         rdbtnNos.setSelected(false);
+        txtSailingPrice.setText("");
         id= Long.valueOf(0);
     }
 
@@ -101,6 +132,7 @@ public class AddItemController implements Initializable {
         txtRate.setText(""+item.getRate());
         txtPrice.setText(""+item.getPrice());
         txtBarCode.setText(item.getBarcode());
+        txtSailingPrice.setText(String.valueOf(item.getSailingprice()));
         if(item.getUnit().equals("ik.ga`^."))rdbtnKg.setSelected(true);
         else rdbtnNos.setSelected(true);
 
@@ -120,6 +152,7 @@ public class AddItemController implements Initializable {
             item.setBarcode(txtBarCode.getText().trim());
             item.setPrice(Float.parseFloat(txtPrice.getText().trim()));
             item.setRate(Float.parseFloat(txtRate.getText().trim()));
+            item.setSailingprice(Float.parseFloat(txtSailingPrice.getText()));
             if(rdbtnKg.isSelected())
                 item.setUnit("ik.ga`^.");
             else
@@ -222,6 +255,18 @@ public class AddItemController implements Initializable {
             {
                 alert.showError("Enter Rate In Digit");
                 txtRate.requestFocus();
+                return false;
+            }
+            if(txtSailingPrice.getText().isEmpty())
+            {
+                alert.showError("Enter Item Sailing Price");
+                txtSailingPrice.requestFocus();
+                return false;
+            }
+            if(!isNumber(txtSailingPrice.getText()))
+            {
+                alert.showError("Enter Item Sailing Price in Digit");
+                txtSailingPrice.requestFocus();
                 return false;
             }
             return true;

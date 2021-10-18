@@ -4,6 +4,7 @@ import com.ankush.data.entities.Bank;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,15 +18,15 @@ public interface BankRepository extends JpaRepository<Bank, Integer> {
     Bank getBankByBankname(String bankname);
 
     @Query("Select balance from Bank where id=:id")
-    Float getBankBalanceById(Integer id);
+    Float getBankBalanceById(@Param("id") Integer id);
 
-    @Transactional
-    @Modifying
-    @Query("update Bank set balance=balance-:amount where id=:bankid")
-    void reduceBankBalance(Float amount,int bankid);
+//    @Transactional
+//    @Modifying
+//    @Query("update Bank set balance=balance-:amount where id=:bankid")
+//    void reduceBankBalance(@Param("balance")Float amount,@Param("bankid")int bankid);
 
-    @Transactional
-    @Modifying
-    @Query("update Bank set balance=balance+:amount where id=:bankid")
-    void addBankBalance(Float amount,int bankid);
+//    @Transactional
+//    @Modifying
+//    @Query("update Bank set balance=balance+:amount where id=:bankid")
+//    void addBankBalance(@Param("amount")Float amount,@Param("bankid") int bankid);
 }

@@ -55,8 +55,8 @@ public class StageManager {
         if(!title.equals("Login"))
         {
             showFullScreen();
+            primaryStage.setOnCloseRequest(e->e.consume());
         }
-        primaryStage.setOnCloseRequest(e->e.consume());
 
         try {
             primaryStage.show();

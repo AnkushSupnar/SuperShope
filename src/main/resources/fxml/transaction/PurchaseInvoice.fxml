@@ -16,7 +16,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<SplitPane fx:id="mainPane" dividerPositions="0.6318864774624374" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ankush.controller.transaction.PurchaseInvoiceController">
+<SplitPane fx:id="mainPane" dividerPositions="0.631404958677686" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ankush.controller.transaction.PurchaseInvoiceController">
   <items>
     <AnchorPane fx:id="billingPane" minHeight="-Infinity" minWidth="-Infinity" SplitPane.resizableWithParent="false">
          <children>
@@ -55,46 +55,47 @@
                   <Font size="14.0" />
                </font>
             </Label>
-            <HBox layoutX="8.0" layoutY="109.0" spacing="5.0">
+            <HBox layoutX="8.0" layoutY="100.0">
                <children>
                   <TextField fx:id="txtBarcode" prefHeight="33.0" prefWidth="127.0" style="-fx-font-family: kiran; -fx-font-size: 20;">
                      <font>
                         <Font name="Kiran" size="20.0" />
                      </font>
                   </TextField>
-                  <TextField fx:id="txtItemName" prefHeight="33.0" prefWidth="216.0" promptText="maalaacao naava" style="-fx-font-family: kiran; -fx-font-size: 20;" />
-                  <TextField fx:id="txtQty" prefHeight="33.0" prefWidth="100.0" promptText="naga" style="-fx-font-family: kiran; -fx-font-size: 20;" />
+                  <TextField fx:id="txtItemName" prefHeight="33.0" prefWidth="210.0" promptText="maalaacao naava" style="-fx-font-family: kiran; -fx-font-size: 20;" />
+                  <TextField fx:id="txtQty" prefHeight="33.0" prefWidth="85.0" promptText="naga" style="-fx-font-family: kiran; -fx-font-size: 20;" />
                   <ComboBox fx:id="cmbUnit" prefHeight="32.0" prefWidth="68.0" promptText="Unit" visibleRowCount="2" />
-                  <TextField fx:id="txtRate" prefHeight="25.0" prefWidth="100.0" promptText="Baava" style="-fx-font-family: kiran; -fx-font-size: 20;" />
-                  <TextField fx:id="txtAmount" prefHeight="25.0" prefWidth="100.0" promptText="ekuNa" style="-fx-font-family: kiran; -fx-font-size: 20;" />
+                  <TextField fx:id="txtRate" prefHeight="25.0" prefWidth="85.0" promptText="Baava" style="-fx-font-family: kiran; -fx-font-size: 20;" />
+                  <TextField fx:id="txtMrp" layoutX="591.0" layoutY="10.0" prefHeight="25.0" prefWidth="85.0" promptText="ikMmata" style="-fx-font-family: kiran; -fx-font-size: 20;" text="0.0" />
+                  <TextField fx:id="txtAmount" prefHeight="25.0" prefWidth="85.0" promptText="ekuNa" style="-fx-font-family: kiran; -fx-font-size: 20;" />
                </children>
             </HBox>
-            <Label layoutX="147.0" layoutY="83.0" text="Item Name">
+            <Label layoutX="138.0" layoutY="83.0" text="Item Name">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <Label layoutX="367.0" layoutY="81.0" text="Quantity">
+            <Label layoutX="344.0" layoutY="83.0" text="Quantity">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <Label layoutX="549.0" layoutY="83.0" text="Rate">
+            <Label layoutX="500.0" layoutY="83.0" text="Rate">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <Label layoutX="653.0" layoutY="83.0" text="Amount">
+            <Label layoutX="583.0" layoutY="83.0" text="MRP">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <Label layoutX="471.0" layoutY="81.0" text="Unit">
+            <Label layoutX="434.0" layoutY="83.0" text="Unit">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <HBox layoutX="6.0" layoutY="156.0" spacing="10.0" AnchorPane.leftAnchor="10.0">
+            <HBox layoutX="10.0" layoutY="143.0" spacing="10.0" AnchorPane.leftAnchor="10.0">
                <children>
                   <Button fx:id="btnAdd" mnemonicParsing="false" stylesheets="@../css/button.css" text="ADD">
                      <graphic>
@@ -118,11 +119,11 @@
                   </Button>
                </children>
             </HBox>
-            <TableView fx:id="table" layoutX="10.0" layoutY="199.0" prefHeight="346.0" prefWidth="738.0" AnchorPane.bottomAnchor="205.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="199.0">
+            <TableView fx:id="table" layoutX="10.0" layoutY="179.0" prefHeight="366.0" prefWidth="741.0" AnchorPane.bottomAnchor="205.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="179.0">
               <columns>
                 <TableColumn fx:id="colSr" prefWidth="45.0" text="SR.NO" />
-                <TableColumn fx:id="colBarcode" prefWidth="120.0" text="BARCODE" />
-                  <TableColumn fx:id="colItemName" prefWidth="263.0" text="ITEM NAME" />
+                <TableColumn fx:id="colBarcode" prefWidth="148.0" text="BARCODE" />
+                  <TableColumn fx:id="colItemName" prefWidth="235.0" text="ITEM NAME" />
                   <TableColumn fx:id="colQty" prefWidth="72.0" text="QTY" />
                   <TableColumn fx:id="colUnit" prefWidth="68.0" text="UNIT" />
                   <TableColumn fx:id="colRate" prefWidth="77.0" text="PRICE" />
@@ -206,15 +207,20 @@
                   </HBox>
                </children>
             </Pane>
+            <Label layoutX="667.0" layoutY="83.0" text="Amount">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
          </children></AnchorPane>
     <AnchorPane minHeight="0.0" minWidth="0.0">
          <children>
-            <TableView fx:id="tableold" layoutX="192.0" layoutY="60.0" prefHeight="680.0" prefWidth="443.0" stylesheets="@../css/table.css" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="60.0">
+            <TableView fx:id="tableold" layoutX="192.0" layoutY="60.0" prefHeight="680.0" prefWidth="443.0" stylesheets="@../css/table.css" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="3.0" AnchorPane.topAnchor="60.0">
               <columns>
-                <TableColumn fx:id="colSrNo" prefWidth="75.0" text="SR.NO" />
-                <TableColumn fx:id="colDate" prefWidth="86.0" text="DATE" />
-                  <TableColumn fx:id="colInvoiceNo" prefWidth="116.0" text="INVOICE NO" />
-                  <TableColumn fx:id="colParty" prefWidth="116.0" text="PARTY NAME" />
+                <TableColumn fx:id="colSrNo" prefWidth="48.0" text="SR.NO" />
+                <TableColumn fx:id="colDate" prefWidth="93.0" text="DATE" />
+                  <TableColumn fx:id="colInvoiceNo" prefWidth="82.0" text="INVOICE NO" />
+                  <TableColumn fx:id="colParty" prefWidth="170.0" text="PARTY NAME" />
                   <TableColumn fx:id="colTotal" prefWidth="79.0" text="TOTAL AMT" />
                   <TableColumn fx:id="colPaid" prefWidth="79.0" text="PAID AMT" />
               </columns>
