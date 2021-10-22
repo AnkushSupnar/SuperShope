@@ -1,8 +1,10 @@
 package com.ankush.controller.home;
 
 import com.ankush.common.CommonData;
+import com.ankush.controller.print.PrintBill;
 import com.ankush.data.entities.Employee;
 import com.ankush.data.entities.Login;
+import com.ankush.data.service.BillService;
 import com.ankush.data.service.LoginService;
 import com.ankush.view.AlertNotification;
 import com.ankush.view.FxmlController;
@@ -45,6 +47,7 @@ public class LoginController implements Initializable {
     private AlertNotification alert;
     @Autowired
     private CommonData commonData;
+    @Autowired BillService billService;
     private Employee employee;
     private ObservableList<String>userNameList= FXCollections.observableArrayList();
     @Override
@@ -67,6 +70,8 @@ public class LoginController implements Initializable {
             stageManager.showFullScreen();
         });
         btnLogin.setOnAction(e->login());
+//        PrintBill printbill = new PrintBill();
+//        printbill.setBill(billService.getBillByBillNo(44));
     }
 
     private void login() {

@@ -12,6 +12,7 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @ToString
+@Builder
 public class BankTransaction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -50,5 +50,9 @@ public class BankService {
         repository.save(bank);
         return 1;
     }
+    public Bank getBankById(int id)
+    {
+        return repository.getById(id);
+    }
 
 }

@@ -11,7 +11,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @ToString
-
+@Builder
 public class ItemStock {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

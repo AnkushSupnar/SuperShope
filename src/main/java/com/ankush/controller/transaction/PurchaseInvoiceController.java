@@ -1029,6 +1029,33 @@ public class PurchaseInvoiceController implements Initializable {
                 listView.setVisible(false);
             }
         });
+        txtItemName.focusedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observableValue, Boolean aBoolean, Boolean t1) {
+                if(t1)
+                {
+                    findItem(txtItemName.getText());
+                    listView.setVisible(true);
+                }
+                else {
+                    if(listView.isFocused())
+                        return;
+                    else
+                        listView.setVisible(false);
+                }
+            }
+        });
+        listView.focusedProperty().addListener((observableValue, aBoolean, t1) -> {
+            if(t1) {
+                //in focus
+            }
+            else{
+                if(txtItemName.isFocused())
+                    return;
+                else
+                    listView.setVisible(false);
+            }
+        });
     }
     void findItem(String find) {
         //cmodel.removeAllElements();

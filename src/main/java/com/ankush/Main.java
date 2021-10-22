@@ -1,17 +1,13 @@
 package com.ankush;
 
+import com.ankush.controller.print.PrintBill;
 import com.ankush.view.FxmlView;
 import com.ankush.view.StageManager;
 import javafx.application.Application;
-import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 import java.io.IOException;
 
@@ -43,8 +39,9 @@ public class Main extends Application {
 	}
 	protected void displayInitialScene() {
 
-		//stageManager.switchScene(FxmlView.LOGIN);
-		stageManager.switchScene(FxmlView.BILLING);
+
+		stageManager.switchScene(FxmlView.LOGIN);
+		//stageManager.switchScene(FxmlView.BILLING);
 		//stageManager.switchScene(FxmlView.CUSTOMER);
 		//stageManager.switchScene(FxmlView.EMPLOYEE);
 		//stageManager.switchScene(FxmlView.HOME);

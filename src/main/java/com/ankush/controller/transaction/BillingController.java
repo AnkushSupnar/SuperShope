@@ -27,10 +27,15 @@ import org.controlsfx.control.textfield.TextFields;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
+import static java.time.DayOfWeek.MONDAY;
+import static java.time.DayOfWeek.SUNDAY;
+import static java.time.temporal.TemporalAdjusters.nextOrSame;
+import static java.time.temporal.TemporalAdjusters.previousOrSame;
 
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 @Component
@@ -86,6 +91,12 @@ public class BillingController implements Initializable {
     @FXML private TableColumn<Bill,String> colCustomer;
     @FXML private TableColumn<Bill,String> colLogin;
 
+    @FXML private DatePicker dateSearch;
+    @FXML private Button btnWeek;
+    @FXML private Button btnMonth;
+    @FXML private Button btnAll;
+
+
     //for itemName search box
     private ListView listView;
     private ObservableList<String> itemNameSearch = FXCollections.observableArrayList();
@@ -99,6 +110,8 @@ public class BillingController implements Initializable {
     @Autowired private BillService billService;
     @Autowired private LoginService loginService;
     @Autowired private PrintBill printbill;
+    @Autowired BankTransactionService bankTrService;
+
     private ObservableList<String>itemNameList = FXCollections.observableArrayList();
     private ObservableList<Transaction>trList = FXCollections.observableArrayList();
     private SuggestionProvider<String>customerNames;
@@ -120,6 +133,8 @@ public class BillingController implements Initializable {
         tableOld.setItems(billList);
 
         date.setValue(LocalDate.now());
+        dateSearch.setValue(LocalDate.now());
+        txtBank.setText(bankService.getBankById(1).getBankname());
         CommonData.customerNames.addAll(customerService.getAllCustomerNames());
         customerNames = SuggestionProvider.create(CommonData.customerNames);
         new AutoCompletionTextFieldBinding<>(txtCustomerName,customerNames);
@@ -260,50 +275,75 @@ public class BillingController implements Initializable {
         btnRemove.setOnAction(e->remove());
         btnClear.setOnAction(e->clear());
         btnUpdate.setOnAction(e->update());
-
+        dateSearch.setOnAction(e->{
+            if(date.getValue()!=null)
+            {
+                billList.clear();
+                billList.addAll(billService.getBillByDate(dateSearch.getValue()));
+            }
+        });
+        btnWeek.setOnAction(e->{
+            if(dateSearch.getValue()!=null) {
+                billList.clear();
+                billList.addAll(billService.findByDateBetween(dateSearch.getValue().with(previousOrSame(MONDAY)), date.getValue().with(nextOrSame(SUNDAY))));
+            }
+        });
+        btnMonth.setOnAction(e->{
+            if(dateSearch.getValue()!=null) {
+                billList.clear();
+                billList.addAll(billService.findByDateBetween(dateSearch.getValue().withDayOfMonth(1), dateSearch.getValue().withDayOfMonth(dateSearch.getValue().lengthOfMonth())));
+            }
+        });
         btnSave.setOnAction(e->save());
+        btnClear2.setOnAction(e->clear2());
+        btnUpdate2.setOnAction(e->update2());
+    }
+
+    private void update2() {
+        if(tableOld.getSelectionModel().getSelectedItem()==null)
+            return;
+        Bill bill = tableOld.getSelectionModel().getSelectedItem();
+        trList.clear();
+        trList.addAll(bill.getTransactions());
+        validateTrList();
+        txtBank.setText(bill.getBank().getBankname());
+        Customer cust = bill.getCustomer();
+        if(cust.getId()!=1) {
+            txtCustomerMobile.setText(bill.getCustomer().getContact());
+            txtCustomerName.setText(bill.getCustomer().getName());
+        }
+        billno=bill.getBillno();
+
+    }
+
+    private void clear2() {
+        trList.clear();
+        date.setValue(LocalDate.now());
+        txtNetTotal.setText(String.valueOf(0.0f));
+        txtOther.setText(String.valueOf(0.0f));
+        txtGrandTotal.setText(String.valueOf(0.0f));
+        txtRecived.setText(String.valueOf(0.0f));
+        txtCustomerName.setText("");
+        txtMrp.setText(String.valueOf(0.0f));
+        txtDiscount.setText(String.valueOf(0.0f));
+        txtPayble.setText(String.valueOf(0.0f));
+        txtRecived.setText(String.valueOf(0.0f));
+        txtRemaining.setText(String.valueOf(0.0f));
+        txtCustomerMobile.setText(String.valueOf(0.0f));
+        txtBank.setText(bankService.getBankById(1).getBankname());
+        billno=null;
     }
 
     private void save() {
         try {
+//            printbill = new PrintBill();
+//            printbill.setBill(billService.getBillByBillNo(42));
+            // printbill.createDoc();
             if(!validateBill())return;
             Customer custom = null;
-            System.out.println("Customer=====>"+txtCustomerName.getText());
-            if(!txtCustomerName.getText().isEmpty() ||!txtCustomerName.getText().equals("") &&customerService.getCustomerByName(txtCustomerName.getText())==null)
-            {
-                if(alert.showConfirmation("Customer Not Found","Do you want ot add ?"))
-                {
-                   if(txtCustomerMobile.getText().isEmpty())
-                   {
-                       alert.showError("Enter Customer Mobile No");
-                       return;
-                   }
-                   else{
-                       System.out.println("I am adding him");
-                       Customer customer = Customer.builder().email("")
-                               .contact(txtCustomerMobile.getText()).
-                               name(txtCustomerName.getText())
-                               .email("-")
-                               .address("-")
-                               .build();
-                       if(customerService.saveCustomer(customer)==1) {
-                           alert.showSuccess("New Customer Added Success");
-                           custom = customer;
-                       }
-                       else
-                           return;
-                   }
-                }
-                else return;
-            }
-            else
-            {
-                custom = customerService.getById(1);
-
-            }
+            custom =checkCustomer();
             if(custom==null)customerService.getCustomerByName(txtCustomerName.getText());
             float paid=0.0f,remain=0.0f;
-
             if(Float.parseFloat(txtRemaining.getText())<0.0f)
             {
                 paid = Float.parseFloat(txtRecived.getText());
@@ -321,8 +361,33 @@ public class BillingController implements Initializable {
                     .paid(paid)
                     .transactions(new ArrayList<Transaction>())
                     .build();
-            if(billno!=null)
+
+            if(billno!=null) {
                 bill.setBillno(billno);
+                //update stock add Old Stock in item stock
+                Bill oldBill = billService.getBillByBillNo(billno);
+                addBankTransaction(BankTransaction.builder()
+                        .bank(oldBill.getBank())
+                        .transactionid(oldBill.getBillno())
+                        .particulars("Edit Bill "+oldBill.getBillno())
+                        .debit(oldBill.getPaid())
+                        .credit(0.0f)
+                        .date(LocalDate.now())
+                        .build());
+                ItemStock oldStock=null;
+                for(Transaction tr:oldBill.getTransactions())
+                {
+                    oldStock = ItemStock.builder().stock(tr.getQuantity())
+                            .barcode(tr.getBarcode())
+                            .itemname(tr.getItemname())
+                            .unit(tr.getUnit())
+                            .build();
+                    stockService.saveItemStock(oldStock);
+                    System.out.println("Stock Added "+oldStock);
+                    oldStock=null;
+                }
+
+            }
             for(Transaction tr:trList)
             {
                 tr.setId(null);
@@ -332,14 +397,39 @@ public class BillingController implements Initializable {
             int result = billService.saveBill(bill);
             if(result==1)
             {
-                alert.showSuccess("Bill Save Success");
+
+                reduceStock(bill.getTransactions());
+                //Add in BankTransaction
+                addBankTransaction(BankTransaction.builder()
+                        .bank(bill.getBank())
+                        .credit(bill.getPaid())
+                        .date(bill.getDate())
+                        .debit(0.0f)
+                        .particulars("Add Bill "+bill.getBillno())
+                        .transactionid(bill.getBillno())
+                        .build());
                 //printbill = new PrintBill();
-                printbill.setBill(bill);
-                printbill.createDoc();
+               // printbill.setBill(bill);
+               // printbill.createDoc();
+                alert.showSuccess("Bill Save Success");
+                loadTodaysBills();
+                clear2();
+
             }
             else if(result==2)
             {
+                reduceStock(bill.getTransactions());
+                addBankTransaction(BankTransaction.builder()
+                        .bank(bill.getBank())
+                        .credit(bill.getPaid())
+                        .date(bill.getDate())
+                        .debit(0.0f)
+                        .particulars("Add Bill "+bill.getBillno())
+                        .transactionid(bill.getBillno())
+                        .build());
                 alert.showSuccess("Bill  Updated Success");
+                loadTodaysBills();
+                clear2();
             }
 
         }catch(Exception e){
@@ -348,6 +438,50 @@ public class BillingController implements Initializable {
         }
     }
 
+    private Customer checkCustomer() {
+        Customer customer =null;
+        if(txtCustomerName.getText().isEmpty() || txtCustomerName.getText().isBlank()|| txtCustomerName.getText().equals("")||txtCustomerName.getText().equals(null))
+        {
+            return customerService.getById(1);
+        }
+        customer=customerService.getCustomerByName(txtCustomerName.getText());
+        if(customer!=null)
+        {
+            return customer;
+        }
+        else if(alert.showConfirmation("Customer Not Found","Do You Want To Add?"))
+        {
+            customer = Customer.builder()
+                    .email("-")
+                    .contact(txtCustomerMobile.getText())
+                    .name(txtCustomerName.getText())
+                    .build();
+            customerService.saveCustomer(customer);
+            return customer;
+        }
+        return null;
+    }
+
+    void loadTodaysBills()
+    {
+        billList.clear();
+        billList.addAll(billService.getBillByDate(LocalDate.now()));
+    }
+    void reduceStock(List<Transaction> list)
+    {
+        ItemStock stock = null;
+        for(Transaction tr:list)
+        {
+            stock = ItemStock.builder()
+                    .stock((tr.getQuantity()/(-1))).itemname(tr.getItemname())
+                    .barcode(tr.getBarcode())
+                    .unit(tr.getUnit())
+                    .build();
+            System.out.println("gon a reduce stock=> "+stock);
+            stockService.saveItemStock(stock);
+            stock=null;
+        }
+    }
     private boolean validateBill() {
         if (trList.size() == 0) {
             alert.showError("No Data to Save");
@@ -384,6 +518,12 @@ public class BillingController implements Initializable {
                 result=false;
             }
             return result;
+        }
+        if(!txtCustomerName.getText().isEmpty() && txtCustomerMobile.getText().isEmpty())
+        {
+            alert.showError("Enter Customer Mobile Number");
+            txtCustomerMobile.requestFocus();
+            return false;
         }
 
         return true;
@@ -612,7 +752,13 @@ public class BillingController implements Initializable {
             {
                 return;
             }
-
+                //checking stock availability;
+            ItemStock stock = stockService.getItemStockByItemname(txtItemName.getText());
+            if(stock.getStock()<Float.parseFloat(txtQty.getText()))
+            {
+                alert.showError("Less Quantity Available "+stock.getStock()+" "+cmbUnit.getValue());
+                return;
+            }
             Transaction tr = Transaction.builder()
                     .amount(Float.parseFloat(txtAmount.getText()))
                     .id((long) (trList.size()+1))
@@ -632,6 +778,7 @@ public class BillingController implements Initializable {
         }catch(Exception e)
         {
             alert.showError("Error in Adding Item");
+            e.printStackTrace();
             return;
         }
     }
@@ -906,5 +1053,18 @@ public class BillingController implements Initializable {
                 String.valueOf(Float.parseFloat(txtRecived.getText())-Float.parseFloat(txtGrandTotal.getText()))
         );
         txtPayble.setText(txtGrandTotal.getText());
+    }
+    private void addBankTransaction(BankTransaction bankTransaction)
+    {
+        try {
+
+            bankTrService.saveBankTransaction(bankTransaction);
+            System.out.println("Saved Bank Transaction "+bankTransaction);
+            bankService.addBankBalance(bankTransaction.getCredit(),bankTransaction.getBank().getId());
+            bankService.reduceBankBalance(bankTransaction.getDebit(),bankTransaction.getBank().getId());
+        }catch(Exception e)
+        {
+            e.printStackTrace();
+        }
     }
 }
