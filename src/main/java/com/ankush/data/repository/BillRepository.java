@@ -13,4 +13,6 @@ public interface BillRepository extends JpaRepository<Bill, Long> {
     List<Bill>getByDate(LocalDate date);
 
     List<Bill>findByDateBetween(LocalDate start,LocalDate end);
+    @Query("select max(billno) from Bill")
+    Long getlastBillNo();
 }

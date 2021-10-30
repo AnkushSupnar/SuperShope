@@ -18,7 +18,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
-@Component
+//@Component
 public class PrintBill {
     @Autowired
     BillService billservice;
@@ -39,6 +39,7 @@ public class PrintBill {
     public void setBill(Bill bill) {
         this.bill = bill;
         createDoc();
+     new PrintingExample("D:\\Shopee\\bill.pdf");
     }
 
     public PrintBill() {
@@ -64,7 +65,7 @@ public class PrintBill {
         try {
             //Rectangle pagesize = new Rectangle(216f, 400f+table.getTotalHeight());
             System.out.println("table Height==" + table.getTotalHeight());
-            Rectangle pagesize = new Rectangle(230f, 1000f + table.getTotalHeight());
+            Rectangle pagesize = new Rectangle(230f, 10000f + table.getTotalHeight());
             doc = new Document(pagesize, -1f, 0f, 15f, 180f);
             OutputStream out = new FileOutputStream(new File(fileName));
             PdfWriter.getInstance(doc, out);
@@ -97,11 +98,16 @@ public class PrintBill {
         Paragraph p = new Paragraph("      laXmaI saupar maako-T", f1);
         p.setLeading(5);
         doc.add(p);
-        p = new Paragraph("     mau.paao :AMmaLnaor, taa.naovaasaa,ija.Ahmadnagar", f2);
+        p = new Paragraph("       kO. ihrabaa[- paMZrInaaqa GaavaTo vyaapaarI saMkula", f2);
         //p.setLeading(10);
         doc.add(p);
+        p = new Paragraph("           AMmaLnaor, taa.naovaasaa,ija.Ahmadnagar", f2);
+        p.setLeading(12);
+        doc.add(p);
 
-        p = new Paragraph("         maao.naM 8328394603,9960855742 ", f2);
+
+
+        p = new Paragraph("         maao.naM 9822420872,9970192697 ", f2);
         p.setLeading(12);
         doc.add(p);
         PdfPTable table = new PdfPTable(2);
@@ -133,7 +139,8 @@ public class PrintBill {
         c1.setBorder(PdfPCell.TOP);
         table.addCell(c1);
 
-        c1 = new PdfPCell(new Paragraph("Name: "+bill.getCustomer().getName(), smallBold));
+        //c1 = new PdfPCell(new Paragraph("Name: "+bill.getCustomer().getName(), smallBold));
+        c1 = new PdfPCell(new Paragraph("Name:", small));
         c1.setBorder(0);
         c1.setBorder(PdfPCell.BOTTOM);
         c1.setColspan(2);
@@ -239,6 +246,8 @@ public class PrintBill {
         c1.setBorder(PdfPCell.BOX);
         footer.addCell(c1);
 
+        if(bill.getDiscount()<0)
+            bill.setDiscount(0.0f);
         c1 = new PdfPCell(new Paragraph(""+(bill.getDiscount()), f5));
         c1.setBorder(PdfPCell.BOX);
         c1.setHorizontalAlignment(Element.ALIGN_CENTER);

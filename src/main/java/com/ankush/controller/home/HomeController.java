@@ -48,15 +48,19 @@ public class HomeController implements Initializable {
                 pane =loader.getPage("/fxml/transaction/TransactionMenu.fxml");
                 mainPane.setCenter(pane);
         });
-        menuCreate.setOnMouseClicked(e->{
-            pane =loader.getPage("/fxml/create/CreateMenu.fxml");
-            mainPane.setCenter(pane);
-        });
+//        menuCreate.setOnMouseClicked(e->{
+//            pane =loader.getPage("/fxml/create/CreateMenu.fxml");
+//            mainPane.setCenter(pane);
+//        });
 
         menuReport.setOnMouseClicked(e->{
             pane =loader.getPage("/fxml/report/ReportMenu.fxml");
             mainPane.setCenter(pane);
         });
         menuExit.setOnMouseClicked(e->System.exit(0));
+        menuMaster.setOnMouseClicked(e->{
+            pane =loader.getPage("/fxml/create/CreateMenu.fxml");
+            mainPane.setCenter(pane);
+        });
     }
 }

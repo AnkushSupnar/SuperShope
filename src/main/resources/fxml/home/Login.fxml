@@ -6,7 +6,6 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.PasswordField?>
-<?import javafx.scene.effect.Bloom?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
@@ -15,15 +14,12 @@
 
 <AnchorPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" stylesheets="@../css/login.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ankush.controller.home.LoginController">
    <children>
-      <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="400.0" style="-fx-background-color: #2262C6;">
+      <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="400.0" style="-fx-background-color: linear-gradient(to bottom, #2262C6,#E839F6);">
          <children>
             <FontAwesomeIcon fill="WHITE" glyphName="PAGELINES" size="100">
                <VBox.margin>
                   <Insets bottom="10.0" />
                </VBox.margin>
-               <effect>
-                  <Bloom threshold="0.77" />
-               </effect>
             </FontAwesomeIcon>
             <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome To">
                <font>
@@ -37,21 +33,18 @@
                <font>
                   <Font name="Impact" size="24.0" />
                </font>
-               <effect>
-                  <Bloom threshold="0.95" />
-               </effect>
             </Text>
          </children>
       </VBox>
-      <Pane layoutX="400.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="400.0" style="-fx-background-color: #ffffff;">
+      <Pane layoutX="400.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="400.0" style="-fx-background-color: linear-gradient(to top, #2262C6,#E839F6);">
          <children>
-            <FontAwesomeIcon fill="#aea1a1" glyphName="PAGELINES" layoutX="56.0" layoutY="151.0" size="80" tabSize="0" />
-            <Text fill="#aea1a1" layoutX="56.0" layoutY="189.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome Back">
+            <FontAwesomeIcon fill="WHITE" glyphName="PAGELINES" layoutX="56.0" layoutY="151.0" size="80" tabSize="0" />
+            <Text fill="WHITE" layoutX="56.0" layoutY="189.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome Back">
                <font>
                   <Font name="Impact" size="24.0" />
                </font>
             </Text>
-            <Text fill="#aea1a1" layoutX="56.0" layoutY="208.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Log in to continue">
+            <Text fill="WHITE" layoutX="56.0" layoutY="208.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Log in to continue">
                <font>
                   <Font name="Ebrima Bold" size="14.0" />
                </font>
@@ -69,9 +62,6 @@
                <font>
                   <Font name="Ebrima Bold" size="16.0" />
                </font>
-               <effect>
-                  <Bloom threshold="0.77" />
-               </effect>
             </Button>
             <Hyperlink fx:id="linkAddEmployee" layoutX="160.0" layoutY="521.0" prefHeight="24.0" prefWidth="120.0" text="Add Employee" textFill="#2262c6">
                <font>

@@ -32,4 +32,8 @@ public class BillService {
         }
     }
 
+    public Long getLastBill()
+    {
+        return repository.getlastBillNo();
+    }
 }

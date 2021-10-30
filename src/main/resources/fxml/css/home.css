@@ -18,6 +18,10 @@
     -fx-background-color:#2262C6;
 }
 .sidebar{
+    /*-fx-background-color:linear-gradient(to left,#61D8DE,#E839F6);
     -fx-background-color: #2262C6;
+    #aea1a1
+    */
+    -fx-background-color:linear-gradient(to bottom, #2262C6,#E839F6);
     -fx-background-radius: 0px 50px 0px 0px;
 }

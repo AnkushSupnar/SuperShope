@@ -15,19 +15,19 @@ import javax.persistence.*;
 public class ItemStock {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
+//    @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(name = "itemname")
+  //  @Column(name = "itemname")
     private String itemname;
 
-    @Column(name = "barcode")
+    //@Column(name = "barcode")
     private String barcode;
 
-    @Column(name = "stock")
+    //@Column(name = "stock")
     private Float stock;
 
-    @Column(name = "unit", length = 10)
+    //@Column(name = "unit", length = 10)
     private String unit;
 
 }

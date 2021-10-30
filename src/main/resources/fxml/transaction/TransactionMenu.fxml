@@ -16,7 +16,10 @@
          <children>
             <VBox alignment="TOP_CENTER" prefHeight="231.0" prefWidth="220.0" styleClass="pane">
                <children>
-                  <FontAwesomeIcon glyphName="RUPEE" size="4em" VBox.vgrow="ALWAYS" />
+                  <FontAwesomeIcon glyphName="RUPEE" size="4em" VBox.vgrow="ALWAYS">
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin></FontAwesomeIcon>
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="headingtext" text="TRANSACTIONS">
                      <font>
                         <Font name="Lucida Console" size="16.0" />
@@ -24,7 +27,7 @@
                   </Text>
                   <VBox alignment="CENTER" nodeOrientation="LEFT_TO_RIGHT">
                      <children>
-                        <Button alignment="TOP_LEFT" lineSpacing="10.0" mnemonicParsing="false" text="DAILY BILLING">
+                        <Button fx:id="btnBilling" alignment="TOP_LEFT" lineSpacing="10.0" mnemonicParsing="false" text="DAILY BILLING">
                            <graphic>
                               <FontAwesomeIcon glyphName="USD" />
                            </graphic>
@@ -46,7 +49,10 @@
             </VBox>
             <VBox alignment="TOP_CENTER" prefHeight="231.0" prefWidth="220.0" styleClass="pane">
                <children>
-                  <FontAwesomeIcon glyphName="CAR" size="4em" VBox.vgrow="ALWAYS" />
+                  <FontAwesomeIcon glyphName="CAR" size="4em" VBox.vgrow="ALWAYS">
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin></FontAwesomeIcon>
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="headingtext" text="PURCHASE INVOICE">
                      <font>
                         <Font name="Lucida Console" size="16.0" />

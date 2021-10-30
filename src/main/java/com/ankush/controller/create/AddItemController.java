@@ -12,6 +12,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -22,7 +25,12 @@ import org.springframework.stereotype.Component;
 
 import javax.swing.*;
 import java.net.URL;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Locale;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
+
 @Component
 public class AddItemController implements Initializable {
     @Autowired @Lazy
@@ -49,6 +57,12 @@ public class AddItemController implements Initializable {
     @FXML private TableColumn<Item,Float> colSailingPrice;
     @FXML private TableColumn<Item,Float> colRate;
     @FXML private Button btnShowAll;
+    @FXML private TextField txtSearch;
+    @FXML private Button btnShow;
+    //for item name Search
+    @FXML private AnchorPane sidePane;
+
+    @Autowired ItemService itemService;
 
     private ToggleGroup  group;
     @Autowired
@@ -96,7 +110,7 @@ public class AddItemController implements Initializable {
             }
         }
     });
-
+    addItemSearch();
 
 
         btnSave.setOnAction(e->save());
@@ -108,6 +122,105 @@ public class AddItemController implements Initializable {
         list.addAll(service.getAllItems());
         table.refresh();
     });
+    btnShow.setOnAction(e->show());
+    }
+
+    private void show() {
+        list.clear();
+        list.add(itemService.getItemByName(txtSearch.getText()));
+    }
+
+    private void addItemSearch() {
+        ListView listView;
+        ObservableList<String> itemNameSearch = FXCollections.observableArrayList();
+        itemNameSearch.addAll(itemService.getAllItemNames());
+        listView = new ListView();
+        listView.setStyle("-fx-font:18pt \"Kiran\"");
+        listView.setLayoutX(txtSearch.getLayoutX());
+        listView.setLayoutY(txtSearch.getLayoutY()+40);
+        listView.setPrefWidth(txtSearch.getPrefWidth());
+        sidePane.getChildren().addAll(listView);
+        listView.setVisible(false);
+        txtSearch.setOnKeyReleased(e->{
+            listView.setVisible(true);
+            if(txtSearch.getText()==null &&txtSearch.getText().isEmpty() || txtSearch.getText().equals("") || txtSearch.getText().equals(" ")) {
+                listView.getItems().clear();
+                listView.getItems().addAll(itemNameSearch);
+                return;
+            }
+                listView.getItems().clear();
+                listView.getItems().addAll(searchList(txtSearch.getText(),itemNameSearch));
+            if(e.getCode()== KeyCode.ENTER ||e.getCode()== KeyCode.DOWN) {
+                System.out.println("Pressed "+e.getCode());
+                if (listView.getItems().size() > 0) {
+                    listView.getSelectionModel().select(0);
+                    listView.requestFocus();
+                }
+            }
+        });
+        txtSearch.setOnMouseClicked(e->{
+            if(txtSearch.getText()!=null)
+            {
+                if(txtSearch.getText()==null &&txtSearch.getText().isEmpty() || txtSearch.getText().equals("") || txtSearch.getText().equals(" ")) {
+                    listView.getItems().clear();
+                    listView.getItems().addAll(itemNameSearch);
+                    listView.setVisible(true);
+                    return;
+                }
+                listView.getItems().clear();
+                listView.getItems().addAll(searchList(txtSearch.getText(),itemNameSearch));
+                if(!listView.getItems().isEmpty()) listView.setVisible(true);
+            }
+        });
+        listView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue observableValue, String o, String t1) {
+                if(listView.isFocused())
+                txtSearch.setText(t1);
+            }
+        });
+        listView.setOnKeyReleased(e->{
+            if(e.getCode()==KeyCode.BACK_SPACE)
+            {
+                txtSearch.requestFocus();
+            }
+            if(e.getCode()==KeyCode.ENTER)
+            {
+                listView.setVisible(false);
+                btnShow.requestFocus();
+            }
+        });
+        listView.setOnMouseClicked(e->{
+            if(e.getButton()== MouseButton.PRIMARY && e.getClickCount()==2)
+                listView.setVisible(false);
+        });
+        listView.focusedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observableValue, Boolean aBoolean, Boolean t1) {
+                if(t1) {
+                    //in focus
+                }
+                else{
+                    if(txtSearch.isFocused())
+                        return;
+                    else
+                        listView.setVisible(false);
+                }
+            }
+        });
+    }
+
+
+    private List<String> searchList(String text, ObservableList<String> itemNameSearch) {
+        if(text==null)
+            return itemNameSearch;
+
+
+        List<String> searchWords = Arrays.asList(text.trim().split(" "));
+        return itemNameSearch.stream().filter(input->{
+            return searchWords.stream().allMatch(word->
+                    input.toLowerCase().startsWith(word.toLowerCase()));
+        }).collect(Collectors.toList());
     }
 
     private void clear() {
@@ -213,7 +326,7 @@ public class AddItemController implements Initializable {
             }
             if(txtBarCode.getText().isEmpty())
             {
-                txtBarCode.setText(""+0);
+                txtBarCode.setText("");
             }
             if(id==0 && service.getItemByItemnameAndBarcode(txtItemName.getText().trim(),txtBarCode.getText().trim())!=null)
             {

@@ -5,6 +5,7 @@ import com.ankush.controller.print.PrintBill;
 import com.ankush.data.entities.*;
 import com.ankush.data.service.*;
 import com.ankush.view.AlertNotification;
+import com.ankush.view.FxmlView;
 import com.ankush.view.StageManager;
 import impl.org.controlsfx.autocompletion.AutoCompletionTextFieldBinding;
 import impl.org.controlsfx.autocompletion.SuggestionProvider;
@@ -14,6 +15,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -27,16 +29,19 @@ import org.controlsfx.control.textfield.TextFields;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
-import static java.time.DayOfWeek.MONDAY;
-import static java.time.DayOfWeek.SUNDAY;
-import static java.time.temporal.TemporalAdjusters.nextOrSame;
-import static java.time.temporal.TemporalAdjusters.previousOrSame;
 
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+import static java.time.DayOfWeek.MONDAY;
+import static java.time.DayOfWeek.SUNDAY;
+import static java.time.temporal.TemporalAdjusters.nextOrSame;
+import static java.time.temporal.TemporalAdjusters.previousOrSame;
 
 @Component
 public class BillingController implements Initializable {
@@ -109,7 +114,7 @@ public class BillingController implements Initializable {
     @Autowired private CustomerService customerService;
     @Autowired private BillService billService;
     @Autowired private LoginService loginService;
-    @Autowired private PrintBill printbill;
+    //@Autowired private PrintBill printbill;
     @Autowired BankTransactionService bankTrService;
 
     private ObservableList<String>itemNameList = FXCollections.observableArrayList();
@@ -117,6 +122,7 @@ public class BillingController implements Initializable {
     private SuggestionProvider<String>customerNames;
     private ObservableList<Bill>billList =FXCollections.observableArrayList();
     private Long billno;
+    private PrintBill printbill;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -127,11 +133,22 @@ public class BillingController implements Initializable {
         colDate.setCellValueFactory(new PropertyValueFactory<>("date"));
         colBillAmt.setCellValueFactory(new PropertyValueFactory<>("grandtotal"));
         colPaid.setCellValueFactory(new PropertyValueFactory<>("paid"));
-        colCustomer.setCellValueFactory(cellData->new SimpleStringProperty(cellData.getValue().getCustomer().getName()));
+       // colCustomer.setCellValueFactory(cellData->new SimpleStringProperty(cellData.getValue().getCustomer().getName()));
         colLogin.setCellValueFactory(cellData->new SimpleStringProperty(cellData.getValue().getLogin().getUsername()));
-        billList.addAll(billService.getBillByDate(LocalDate.now()));
+        //billList.addAll(billService.getBillByDate(LocalDate.now()));
+       // billList.addAll(billService.getAllBills());
         tableOld.setItems(billList);
-
+        Task<Void> task = new Task<>() {
+            @Override
+            protected Void call() {
+                billList.addAll(billService.getAllBills());
+                return null;
+            }
+        };
+        ExecutorService service = Executors.newCachedThreadPool();
+        service.execute(task);
+        service.shutdown();
+        printbill = new PrintBill();
         date.setValue(LocalDate.now());
         dateSearch.setValue(LocalDate.now());
         txtBank.setText(bankService.getBankById(1).getBankname());
@@ -297,6 +314,17 @@ public class BillingController implements Initializable {
         btnSave.setOnAction(e->save());
         btnClear2.setOnAction(e->clear2());
         btnUpdate2.setOnAction(e->update2());
+        btnHome.setOnAction(e->stageManager.switchScene(FxmlView.HOME));
+        btnPrint.setOnAction(e->{
+            if(tableOld.getSelectionModel().getSelectedItem()==null) {
+
+                printbill.setBill(billService.getBillByBillNo(billService.getLastBill()));
+                return;
+            }
+            //printbill = new PrintBill();
+            printbill.setBill(billService.getBillByBillNo(tableOld.getSelectionModel().getSelectedItem().getBillno()));
+        });
+
     }
 
     private void update2() {
@@ -306,12 +334,12 @@ public class BillingController implements Initializable {
         trList.clear();
         trList.addAll(bill.getTransactions());
         validateTrList();
-        txtBank.setText(bill.getBank().getBankname());
-        Customer cust = bill.getCustomer();
-        if(cust.getId()!=1) {
-            txtCustomerMobile.setText(bill.getCustomer().getContact());
-            txtCustomerName.setText(bill.getCustomer().getName());
-        }
+      //  txtBank.setText(bill.getBank().getBankname());
+//        Customer cust = bill.getCustomer();
+//        if(cust.getId()!=1) {
+//            txtCustomerMobile.setText(bill.getCustomer().getContact());
+//            txtCustomerName.setText(bill.getCustomer().getName());
+//        }
         billno=bill.getBillno();
 
     }
@@ -337,8 +365,8 @@ public class BillingController implements Initializable {
     private void save() {
         try {
 //            printbill = new PrintBill();
-//            printbill.setBill(billService.getBillByBillNo(42));
-            // printbill.createDoc();
+//            printbill.setBill(billService.getBillByBillNo(3));
+//            // printbill.createDoc();
             if(!validateBill())return;
             Customer custom = null;
             custom =checkCustomer();
@@ -350,8 +378,8 @@ public class BillingController implements Initializable {
             }else paid = Float.parseFloat(txtPayble.getText());
 
             Bill bill = Bill.builder()
-                    .bank(bankService.getBankByBankname(txtBank.getText()))
-                    .customer(custom)
+                    //.bank(bankService.getBankByBankname(txtBank.getText()))
+                    //.customer(custom)
                     .date(date.getValue())
                     .discount(Float.parseFloat(txtDiscount.getText()))
                     .grandtotal(Float.parseFloat(txtGrandTotal.getText()))
@@ -366,14 +394,14 @@ public class BillingController implements Initializable {
                 bill.setBillno(billno);
                 //update stock add Old Stock in item stock
                 Bill oldBill = billService.getBillByBillNo(billno);
-                addBankTransaction(BankTransaction.builder()
-                        .bank(oldBill.getBank())
-                        .transactionid(oldBill.getBillno())
-                        .particulars("Edit Bill "+oldBill.getBillno())
-                        .debit(oldBill.getPaid())
-                        .credit(0.0f)
-                        .date(LocalDate.now())
-                        .build());
+//                addBankTransaction(BankTransaction.builder()
+//                        //.bank(oldBill.getBank())
+//                        .transactionid(oldBill.getBillno())
+//                        .particulars("Edit Bill "+oldBill.getBillno())
+//                        .debit(oldBill.getPaid())
+//                        .credit(0.0f)
+//                        .date(LocalDate.now())
+//                        .build());
                 ItemStock oldStock=null;
                 for(Transaction tr:oldBill.getTransactions())
                 {
@@ -400,15 +428,15 @@ public class BillingController implements Initializable {
 
                 reduceStock(bill.getTransactions());
                 //Add in BankTransaction
-                addBankTransaction(BankTransaction.builder()
-                        .bank(bill.getBank())
-                        .credit(bill.getPaid())
-                        .date(bill.getDate())
-                        .debit(0.0f)
-                        .particulars("Add Bill "+bill.getBillno())
-                        .transactionid(bill.getBillno())
-                        .build());
-                //printbill = new PrintBill();
+//                addBankTransaction(BankTransaction.builder()
+//                        //.bank(bill.getBank())
+//                        .credit(bill.getPaid())
+//                        .date(bill.getDate())
+//                        .debit(0.0f)
+//                        .particulars("Add Bill "+bill.getBillno())
+//                        .transactionid(bill.getBillno())
+//                        .build());
+              //  printbill = new PrintBill();
                // printbill.setBill(bill);
                // printbill.createDoc();
                 alert.showSuccess("Bill Save Success");
@@ -419,15 +447,17 @@ public class BillingController implements Initializable {
             else if(result==2)
             {
                 reduceStock(bill.getTransactions());
-                addBankTransaction(BankTransaction.builder()
-                        .bank(bill.getBank())
-                        .credit(bill.getPaid())
-                        .date(bill.getDate())
-                        .debit(0.0f)
-                        .particulars("Add Bill "+bill.getBillno())
-                        .transactionid(bill.getBillno())
-                        .build());
+//                addBankTransaction(BankTransaction.builder()
+//                        .. .bank(bill.getBank())
+//                        .credit(bill.getPaid())
+//                        .date(bill.getDate())
+//                        .debit(0.0f)
+//                        .particulars("Add Bill "+bill.getBillno())
+//                        .transactionid(bill.getBillno())
+//                        .build());
                 alert.showSuccess("Bill  Updated Success");
+              //  printbill = new PrintBill();
+                //printbill.setBill(bill);
                 loadTodaysBills();
                 clear2();
             }
@@ -485,8 +515,8 @@ public class BillingController implements Initializable {
     private boolean validateBill() {
         if (trList.size() == 0) {
             alert.showError("No Data to Save");
-            printbill.setBill(billService.getBillByBillNo(31));
-            printbill.createDoc();
+           // printbill.setBill(billService.getBillByBillNo(31));
+            //printbill.createDoc();
             return false;
         }
         if(date.getValue()==null)
@@ -899,7 +929,7 @@ public class BillingController implements Initializable {
     private void createItemList() {
         listItem = new ListView();
         listItem.setStyle("-fx-font:18pt \"Kiran\"");
-        listItem.getItems().addAll(stockService.getAllItemNames());
+        listItem.getItems().addAll(stockService.getItemNameByBarcode());
         listItem.setLayoutX(2);
         listItem.setLayoutY(40);
         listItem.setPrefWidth(240);
@@ -1025,15 +1055,16 @@ public class BillingController implements Initializable {
     void findItem(String find) {
         //cmodel.removeAllElements();
         listView.getItems().clear();
-        if(find.equals("")|| find.equals(" "))
+        if(find.equals("")|| find.trim().equals(""))
         {
             listView.getItems().clear();
             listView.getItems().addAll(itemNameSearch);
             return;
-        }
+        }else listView.getItems().clear();
+
         try {
             for (int i = 0; i < itemNameSearch.size(); i++) {
-                if (itemNameSearch.get(i).startsWith(find)) {
+                if (itemNameSearch.get(i).toLowerCase().startsWith(find.toLowerCase())) {
                     listView.getItems().add(itemNameSearch.get(i));
                 }
             }

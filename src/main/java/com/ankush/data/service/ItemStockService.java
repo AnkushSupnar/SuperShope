@@ -44,4 +44,6 @@ public class ItemStockService {
     {
         return repository.getByItemname(name);
     }
+    public List<String>getItemNameByBarcode(){return repository.getItemNameByBarcode();}
+
 }

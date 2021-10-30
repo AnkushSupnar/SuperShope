@@ -23,9 +23,9 @@ public class Bill {
 
     private LocalDate date;
 
-    @ManyToOne
-    @JoinColumn(name = "customerid")
-    private Customer customer;
+//    @ManyToOne
+//    @JoinColumn(name = "customerid")
+//    private Customer customer;
 
     @ManyToOne
     @JoinColumn(name = "bankid")
