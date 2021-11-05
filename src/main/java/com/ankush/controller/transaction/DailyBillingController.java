@@ -45,7 +45,7 @@ import static java.time.temporal.TemporalAdjusters.nextOrSame;
 import static java.time.temporal.TemporalAdjusters.previousOrSame;
 
 @Component
-public class BillingController implements Initializable {
+public class DailyBillingController implements Initializable {
     @Autowired @Lazy
     StageManager stageManager;
     @FXML private AnchorPane leftPane;
@@ -102,6 +102,14 @@ public class BillingController implements Initializable {
     @FXML private Button btnMonth;
     @FXML private Button btnAll;
 
+    @FXML
+    private Tab tabDal;
+
+    @FXML
+    private Tab tabOil;
+
+    @FXML
+    private Tab tabOther;
 
     //for itemName search box
     private ListView listView;
@@ -127,6 +135,8 @@ public class BillingController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+
         createTable();
         colBillNo.setCellValueFactory(new PropertyValueFactory<>("billno"));
         colDate.setCellValueFactory(new PropertyValueFactory<>("date"));
@@ -325,7 +335,11 @@ public class BillingController implements Initializable {
             printbill.setBill(billService.getBillByBillNo(tableOld.getSelectionModel().getSelectedItem().getBillno()));
             new PrintExample("D:\\Shopee\\bill.pdf");
         });
+        itemSearch();
 
+    }
+
+    private void itemSearch() {
     }
 
     private void update2() {
@@ -365,7 +379,7 @@ public class BillingController implements Initializable {
 
     private void save() {
         try {
-          //  new PrintExample("D:\\Shopee\\bill.pdf");
+            new PrintExample("D:\\Shopee\\bill.pdf");
 //            printbill = new PrintBill();
 //            printbill.setBill(billService.getBillByBillNo(3));
 //            // printbill.createDoc();

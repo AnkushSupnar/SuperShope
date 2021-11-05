@@ -1,0 +1,15 @@
+@font-face {
+font-family: kiran;
+src: url(kiran.ttf);
+}
+.root {
+    -tab-text-color: green ;
+}
+
+.tab-label {
+    -fx-text-fill: red ;
+    -fx-font-family:'kiran';
+    -fx-font-size: 25;
+}
+.tab-pane:top .tab-header-area .headers-region .tab:top .tab-container .focus-indicator{
+}

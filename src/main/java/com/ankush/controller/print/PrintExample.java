@@ -6,6 +6,9 @@ import org.apache.pdfbox.printing.PDFPageable;
 
 import javax.print.PrintService;
 import javax.print.PrintServiceLookup;
+import javax.print.attribute.HashPrintRequestAttributeSet;
+import javax.print.attribute.PrintRequestAttributeSet;
+import javax.print.attribute.standard.PageRanges;
 import java.awt.print.PrinterJob;
 import java.io.BufferedReader;
 import java.io.File;
@@ -13,9 +16,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Properties;
 
-class PrintingExample
+public class PrintExample
 {
-    PrintingExample(String filePath)
+    public PrintExample(String filePath)
     {
         try
         {
@@ -31,10 +34,12 @@ class PrintingExample
 
             PrinterJob job = PrinterJob.getPrinterJob();
             job.setPageable(new PDFPageable(document));
+            PrintRequestAttributeSet attr = new HashPrintRequestAttributeSet();
+            attr.add(new PageRanges(1, 1)); // pages 1 to 1
             //job.setPrintService(myPrintService);
             job.setPrintService(PrintServiceLookup.lookupDefaultPrintService());
             //job.setPrintService(myPrintService);
-            job.print();
+            job.print(attr);
             document.close();
         }catch(Exception e)
         {
@@ -43,12 +48,12 @@ class PrintingExample
         }
     }
 
-    public static void main(String args[])
-    {
-        //BasicConfigurator.configure();
-        new PrintingExample("D:\\Shopee\\bill.pdf");
-
-    }
+//    public static void main(String args[])
+//    {
+//        //BasicConfigurator.configure();
+//        new PrintingExample("D:\\Shopee\\bill.pdf");
+//
+//    }
     static void changeWindowsDefaultPrinter(String printerName) {
         String cmdLine  = String.format("RUNDLL32 PRINTUI.DLL,PrintUIEntry /y /n \"%s\"", printerName);
         ProcessBuilder builder = new ProcessBuilder("cmd.exe", "/c", cmdLine );

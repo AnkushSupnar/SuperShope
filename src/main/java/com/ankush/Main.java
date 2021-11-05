@@ -39,15 +39,14 @@ public class Main extends Application {
 	}
 	protected void displayInitialScene() {
 
-
-		stageManager.switchScene(FxmlView.LOGIN);
+		//stageManager.switchScene(FxmlView.LOGIN);
 		//stageManager.switchScene(FxmlView.BILLING);
 		//stageManager.switchScene(FxmlView.CUSTOMER);
 		//stageManager.switchScene(FxmlView.EMPLOYEE);
 		//stageManager.switchScene(FxmlView.HOME);
 		//stageManager.switchScene(FxmlView.PURCHASEINVOICE);
 		//stageManager.switchScene(FxmlView.ITEMSTOCK);
-		//stageManager.switchScene(FxmlView.SALEREPORT);
+		stageManager.switchScene(FxmlView.SALEREPORT);
 		//stageManager.switchScene(FxmlView.ITEM);
 	}
 	private ConfigurableApplicationContext bootstrapSpringApplicationContext() {

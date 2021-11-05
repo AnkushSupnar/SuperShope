@@ -39,7 +39,7 @@ public class PrintBill {
     public void setBill(Bill bill) {
         this.bill = bill;
         createDoc();
-     new PrintingExample("D:\\Shopee\\bill.pdf");
+   //  new PrintingExample("D:\\Shopee\\bill.pdf");
     }
 
     public PrintBill() {
