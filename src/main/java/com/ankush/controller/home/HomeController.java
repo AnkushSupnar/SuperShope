@@ -28,6 +28,7 @@ public class HomeController implements Initializable {
     @Autowired
     SpringFXMLLoader loader;
     @FXML private BorderPane mainPane;
+    @FXML private HBox menuDashboard;
     @FXML private HBox menuTransaction;
     @FXML private HBox menuCreate;
     @FXML private HBox menuInventary;
@@ -44,6 +45,10 @@ public class HomeController implements Initializable {
         {
             txtUserName.setText(CommonData.getLoginUser().getUsername());
         }
+        menuDashboard.setOnMouseClicked(e->{
+            pane =loader.getPage("/fxml/dashboard/Dashboard.fxml");
+            mainPane.setCenter(pane);
+        });
         menuTransaction.setOnMouseClicked(e -> {
                 pane =loader.getPage("/fxml/transaction/TransactionMenu.fxml");
                 mainPane.setCenter(pane);

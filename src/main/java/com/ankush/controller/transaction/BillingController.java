@@ -31,6 +31,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -154,6 +155,13 @@ public class BillingController implements Initializable {
         CommonData.customerNames.addAll(customerService.getAllCustomerNames());
         customerNames = SuggestionProvider.create(CommonData.customerNames);
         new AutoCompletionTextFieldBinding<>(txtCustomerName,customerNames);
+        txtCustomerName.setOnAction(e->{
+            if(null!=customerService.getCustomerByName(txtCustomerName.getText()))
+            {
+                txtCustomerMobile.setText(customerService.getCustomerByName(txtCustomerName.getText()).getContact());
+            }
+
+        });
         billno= null;
         cmbUnit.getItems().addAll("KG","NOS");
         TextFields.bindAutoCompletion(txtBank,bankService.getAllBankNames());
@@ -328,6 +336,7 @@ public class BillingController implements Initializable {
 
     }
 
+
     private void update2() {
         if(tableOld.getSelectionModel().getSelectedItem()==null)
             return;
@@ -335,12 +344,12 @@ public class BillingController implements Initializable {
         trList.clear();
         trList.addAll(bill.getTransactions());
         validateTrList();
-      //  txtBank.setText(bill.getBank().getBankname());
-//        Customer cust = bill.getCustomer();
-//        if(cust.getId()!=1) {
-//            txtCustomerMobile.setText(bill.getCustomer().getContact());
-//            txtCustomerName.setText(bill.getCustomer().getName());
-//        }
+        txtBank.setText(bill.getBank().getBankname());
+        Customer cust = bill.getCustomer();
+        if(cust.getId()!=1) {
+            txtCustomerMobile.setText(bill.getCustomer().getContact());
+            txtCustomerName.setText(bill.getCustomer().getName());
+        }
         billno=bill.getBillno();
 
     }
@@ -365,10 +374,7 @@ public class BillingController implements Initializable {
 
     private void save() {
         try {
-          //  new PrintExample("D:\\Shopee\\bill.pdf");
-//            printbill = new PrintBill();
-//            printbill.setBill(billService.getBillByBillNo(3));
-//            // printbill.createDoc();
+
             if(!validateBill())return;
             Customer custom = null;
             custom =checkCustomer();
@@ -380,8 +386,8 @@ public class BillingController implements Initializable {
             }else paid = Float.parseFloat(txtPayble.getText());
 
             Bill bill = Bill.builder()
-                    //.bank(bankService.getBankByBankname(txtBank.getText()))
-                    //.customer(custom)
+                    .bank(bankService.getBankByBankname(txtBank.getText()))
+                    .customer(custom)
                     .date(date.getValue())
                     .discount(Float.parseFloat(txtDiscount.getText()))
                     .grandtotal(Float.parseFloat(txtGrandTotal.getText()))
@@ -489,8 +495,12 @@ public class BillingController implements Initializable {
                     .email("-")
                     .contact(txtCustomerMobile.getText())
                     .name(txtCustomerName.getText())
+                    .address("-")
                     .build();
             customerService.saveCustomer(customer);
+
+            customerNames.addPossibleSuggestions(customer.getName());
+
             return customer;
         }
         return null;

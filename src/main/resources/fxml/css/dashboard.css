@@ -1,0 +1,12 @@
+.main{
+-fx-background-color:white;
+}
+.tile{
+
+    -fx-border-radius: 10 10 0 0;
+    -fx-background-radius: 10 10 0 0;
+    -fx-border-color: #E5DCC3;
+}
+.tile .text{
+-fx-fill:gray;
+}

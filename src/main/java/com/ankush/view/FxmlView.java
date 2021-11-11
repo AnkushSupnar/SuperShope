@@ -60,7 +60,7 @@ public enum FxmlView {
         }
         @Override
         public String getFxmlFile() {
-            return "/fxml/home/Dashboard.fxml";
+            return "/fxml/dashboard/Dashboard.fxml";
         }
     },
     PURCHASEPARTY {
