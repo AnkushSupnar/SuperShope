@@ -47,4 +47,20 @@ public class BillService {
 
         return repository.getDateTotalBill(date);
     }
+    public int getPeriodBillCount(LocalDate start,LocalDate end)
+    {
+        return repository.getPeriodBillCount(start,end);
+    }
+    public Float getPeriodBillAmount(LocalDate start,LocalDate end)
+    {
+        if(repository.getPariodBillAmount(start,end)==null) return 0.0f;
+        else return repository.getPariodBillAmount(start,end);
+    }
+    public Float getMonthlyBillAmount(LocalDate start,LocalDate end)
+    {
+        System.out.println(start+" "+end);
+        if(repository.getMonthlyBillAmount(start,end)==null) return 0.0f;
+        else return repository.getMonthlyBillAmount(start,end);
+    }
+
 }

@@ -5,6 +5,8 @@
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.LineChart?>
 <?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
@@ -14,7 +16,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="681.0" prefWidth="1156.0" stylesheets="@../css/dashboard.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ankush.controller.dashboard.Dashboard">
+<AnchorPane prefHeight="737.0" prefWidth="1156.0" stylesheets="@../css/dashboard.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ankush.controller.dashboard.Dashboard">
    <children>
       <TabPane layoutX="10.0" layoutY="110.0" prefHeight="379.0" prefWidth="1146.0" style="-fx-background-color: white;" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <tabs>
@@ -24,14 +26,14 @@
                      <children>
                         <HBox prefHeight="81.0" prefWidth="580.0" style="-fx-background-color: white;" styleClass="tile" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
                            <children>
-                              <Pane layoutX="21.0" layoutY="21.0" prefHeight="60.0" prefWidth="167.0" styleClass="tile">
+                              <Pane layoutX="21.0" layoutY="21.0" prefHeight="60.0" prefWidth="195.0" styleClass="tile">
                                  <children>
                                     <StackPane layoutY="-1.0" prefHeight="60.0" prefWidth="84.0" style="-fx-background-color: #0275d8;">
                                        <children>
                                           <FontAwesomeIcon fill="WHITE" glyphName="CART_PLUS" size="3em" />
                                        </children>
                                     </StackPane>
-                                    <StackPane layoutX="92.0" layoutY="3.0" prefHeight="53.0" prefWidth="70.0" style="-fx-background-color: white;">
+                                    <StackPane layoutX="86.0" layoutY="3.0" prefHeight="53.0" prefWidth="101.0" style="-fx-background-color: white;">
                                        <children>
                                           <Label fx:id="lblTodaysBill" text="1000" StackPane.alignment="TOP_CENTER">
                                              <StackPane.margin>
@@ -59,14 +61,14 @@
                                     <Insets bottom="10.0" left="10.0" top="10.0" />
                                  </HBox.margin>
                               </Pane>
-                              <Pane layoutX="21.0" layoutY="21.0" prefHeight="71.0" prefWidth="167.0" styleClass="tile">
+                              <Pane layoutX="21.0" layoutY="21.0" prefHeight="71.0" prefWidth="195.0" styleClass="tile">
                                  <children>
                                     <StackPane layoutY="-1.0" prefHeight="60.0" prefWidth="84.0" style="-fx-background-color: #5cb85c;">
                                        <children>
                                           <FontAwesomeIcon fill="WHITE" glyphName="BTC" size="3em" />
                                        </children>
                                     </StackPane>
-                                    <StackPane layoutX="89.0" layoutY="4.0" prefHeight="53.0" prefWidth="70.0" style="-fx-background-color: white;">
+                                    <StackPane layoutX="89.0" layoutY="4.0" prefHeight="53.0" prefWidth="98.0" style="-fx-background-color: white;">
                                        <children>
                                           <Label fx:id="lblTodayAmount" text="1000" StackPane.alignment="TOP_CENTER">
                                              <StackPane.margin>
@@ -91,14 +93,14 @@
                                     <Insets bottom="10.0" left="10.0" top="10.0" />
                                  </HBox.margin>
                               </Pane>
-                              <Pane layoutX="21.0" layoutY="21.0" prefHeight="59.0" prefWidth="192.0" styleClass="tile">
+                              <Pane layoutX="21.0" layoutY="21.0" prefHeight="59.0" prefWidth="195.0" styleClass="tile">
                                  <children>
                                     <StackPane layoutY="-1.0" prefHeight="60.0" prefWidth="84.0" style="-fx-background-color: #FFC107;">
                                        <children>
                                           <FontAwesomeIcon fill="WHITE" glyphName="CART_PLUS" size="3em" />
                                        </children>
                                     </StackPane>
-                                    <StackPane layoutX="92.0" layoutY="3.0" prefHeight="53.0" prefWidth="90.0" style="-fx-background-color: white;">
+                                    <StackPane layoutX="85.0" layoutY="3.0" prefHeight="53.0" prefWidth="107.0" style="-fx-background-color: white;">
                                        <children>
                                           <Label fx:id="lblTodayPurchase" text="1000" StackPane.alignment="TOP_CENTER">
                                              <StackPane.margin>
@@ -108,9 +110,9 @@
                                                 <Font name="Arial Black" size="12.0" />
                                              </font>
                                           </Label>
-                                          <Label prefHeight="17.0" prefWidth="97.0" text="PURCHASES" StackPane.alignment="BOTTOM_CENTER">
+                                          <Label prefHeight="17.0" text="PURCHASES" StackPane.alignment="BOTTOM_CENTER">
                                              <StackPane.margin>
-                                                <Insets bottom="10.0" />
+                                                <Insets bottom="10.0" left="5.0" />
                                              </StackPane.margin>
                                              <font>
                                                 <Font name="Arial Black" size="12.0" />
@@ -126,14 +128,14 @@
                                     <Insets bottom="10.0" left="10.0" top="10.0" />
                                  </HBox.margin>
                               </Pane>
-                              <Pane layoutX="198.0" layoutY="21.0" prefHeight="71.0" prefWidth="167.0" styleClass="tile">
+                              <Pane layoutX="198.0" layoutY="21.0" prefHeight="71.0" prefWidth="195.0" styleClass="tile">
                                  <children>
                                     <StackPane layoutY="-1.0" prefHeight="60.0" prefWidth="84.0" style="-fx-background-color: #5cb85c;">
                                        <children>
                                           <FontAwesomeIcon fill="WHITE" glyphName="BTC" size="3em" />
                                        </children>
                                     </StackPane>
-                                    <StackPane layoutX="89.0" layoutY="4.0" prefHeight="53.0" prefWidth="70.0" style="-fx-background-color: white;">
+                                    <StackPane layoutX="89.0" layoutY="4.0" prefHeight="53.0" prefWidth="101.0" style="-fx-background-color: white;">
                                        <children>
                                           <Label fx:id="lblTodayMargin" text="1000" StackPane.alignment="TOP_CENTER">
                                              <StackPane.margin>
@@ -164,11 +166,11 @@
                   </AnchorPane>
                </content>
             </Tab>
-          <Tab text="Month Report">
+          <Tab fx:id="tabMonthly" text="Month Report">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="528.0" prefWidth="1146.0">
                      <children>
-                        <LineChart fx:id="lineChartMonth" layoutY="98.0" prefHeight="534.0" prefWidth="1146.0" title="This Month Sale" titleSide="BOTTOM" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="98.0">
+                        <LineChart fx:id="lineChartMonth" layoutY="133.0" prefHeight="499.0" prefWidth="1146.0" title="This Month Sale" titleSide="BOTTOM" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="133.0">
                           <xAxis>
                             <CategoryAxis side="BOTTOM" />
                           </xAxis>
@@ -178,16 +180,16 @@
                         </LineChart>
                         <HBox layoutX="-195.0" layoutY="42.0" prefHeight="81.0" prefWidth="580.0" style="-fx-background-color: white;" styleClass="tile" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
                            <children>
-                              <Pane layoutX="21.0" layoutY="21.0" prefHeight="60.0" prefWidth="167.0" styleClass="tile">
+                              <Pane layoutX="21.0" layoutY="21.0" prefHeight="60.0" prefWidth="195.0" styleClass="tile">
                                  <children>
                                     <StackPane layoutY="-1.0" prefHeight="60.0" prefWidth="84.0" style="-fx-background-color: #0275d8;">
                                        <children>
                                           <FontAwesomeIcon fill="WHITE" glyphName="CART_PLUS" size="3em" />
                                        </children>
                                     </StackPane>
-                                    <StackPane layoutX="92.0" layoutY="3.0" prefHeight="53.0" prefWidth="70.0" style="-fx-background-color: white;">
+                                    <StackPane layoutX="89.0" layoutY="3.0" prefHeight="53.0" prefWidth="98.0" style="-fx-background-color: white;">
                                        <children>
-                                          <Label text="1000" StackPane.alignment="TOP_CENTER">
+                                          <Label fx:id="lblMonthlyBills" text="1000" StackPane.alignment="TOP_CENTER">
                                              <StackPane.margin>
                                                 <Insets top="10.0" />
                                              </StackPane.margin>
@@ -213,16 +215,16 @@
                                     <Insets bottom="10.0" left="10.0" top="10.0" />
                                  </HBox.margin>
                               </Pane>
-                              <Pane layoutX="21.0" layoutY="21.0" prefHeight="71.0" prefWidth="167.0" styleClass="tile">
+                              <Pane layoutX="21.0" layoutY="21.0" prefHeight="71.0" prefWidth="195.0" styleClass="tile">
                                  <children>
                                     <StackPane layoutY="-1.0" prefHeight="60.0" prefWidth="84.0" style="-fx-background-color: #5cb85c;">
                                        <children>
                                           <FontAwesomeIcon fill="WHITE" glyphName="BTC" size="3em" />
                                        </children>
                                     </StackPane>
-                                    <StackPane layoutX="89.0" layoutY="4.0" prefHeight="53.0" prefWidth="70.0" style="-fx-background-color: white;">
+                                    <StackPane layoutX="89.0" layoutY="4.0" prefHeight="53.0" prefWidth="99.0" style="-fx-background-color: white;">
                                        <children>
-                                          <Label text="1000" StackPane.alignment="TOP_CENTER">
+                                          <Label fx:id="lblMonthlyAmount" text="1000" StackPane.alignment="TOP_CENTER">
                                              <StackPane.margin>
                                                 <Insets top="10.0" />
                                              </StackPane.margin>
@@ -245,16 +247,16 @@
                                     <Insets bottom="10.0" left="10.0" top="10.0" />
                                  </HBox.margin>
                               </Pane>
-                              <Pane layoutX="21.0" layoutY="21.0" prefHeight="60.0" prefWidth="167.0" styleClass="tile">
+                              <Pane layoutX="21.0" layoutY="21.0" prefHeight="59.0" prefWidth="195.0" styleClass="tile">
                                  <children>
-                                    <StackPane layoutY="-1.0" prefHeight="60.0" prefWidth="84.0" style="-fx-background-color: #0275d8;">
+                                    <StackPane layoutY="-1.0" prefHeight="60.0" prefWidth="84.0" style="-fx-background-color: #FFC107;">
                                        <children>
                                           <FontAwesomeIcon fill="WHITE" glyphName="CART_PLUS" size="3em" />
                                        </children>
                                     </StackPane>
-                                    <StackPane layoutX="92.0" layoutY="3.0" prefHeight="53.0" prefWidth="70.0" style="-fx-background-color: white;">
+                                    <StackPane layoutX="92.0" layoutY="3.0" prefHeight="53.0" prefWidth="95.0" style="-fx-background-color: white;">
                                        <children>
-                                          <Label text="1000" StackPane.alignment="TOP_CENTER">
+                                          <Label fx:id="lblMonthlyPurchase" text="1000" StackPane.alignment="TOP_CENTER">
                                              <StackPane.margin>
                                                 <Insets top="10.0" />
                                              </StackPane.margin>
@@ -262,7 +264,7 @@
                                                 <Font name="Arial Black" size="12.0" />
                                              </font>
                                           </Label>
-                                          <Label text="BILLS" StackPane.alignment="BOTTOM_CENTER">
+                                          <Label text="PURCHASE" StackPane.alignment="BOTTOM_CENTER">
                                              <StackPane.margin>
                                                 <Insets bottom="10.0" />
                                              </StackPane.margin>
@@ -280,16 +282,16 @@
                                     <Insets bottom="10.0" left="10.0" top="10.0" />
                                  </HBox.margin>
                               </Pane>
-                              <Pane layoutX="198.0" layoutY="21.0" prefHeight="71.0" prefWidth="167.0" styleClass="tile">
+                              <Pane layoutX="198.0" layoutY="21.0" prefHeight="59.0" prefWidth="195.0" styleClass="tile">
                                  <children>
                                     <StackPane layoutY="-1.0" prefHeight="60.0" prefWidth="84.0" style="-fx-background-color: #5cb85c;">
                                        <children>
                                           <FontAwesomeIcon fill="WHITE" glyphName="BTC" size="3em" />
                                        </children>
                                     </StackPane>
-                                    <StackPane layoutX="89.0" layoutY="4.0" prefHeight="53.0" prefWidth="70.0" style="-fx-background-color: white;">
+                                    <StackPane layoutX="89.0" layoutY="4.0" prefHeight="53.0" prefWidth="102.0" style="-fx-background-color: white;">
                                        <children>
-                                          <Label text="1000" StackPane.alignment="TOP_CENTER">
+                                          <Label fx:id="lblMonthlyMargin" text="1000" StackPane.alignment="TOP_CENTER">
                                              <StackPane.margin>
                                                 <Insets top="10.0" />
                                              </StackPane.margin>
@@ -297,74 +299,7 @@
                                                 <Font name="Arial Black" size="12.0" />
                                              </font>
                                           </Label>
-                                          <Label text="AMOUNT" StackPane.alignment="BOTTOM_CENTER">
-                                             <StackPane.margin>
-                                                <Insets bottom="10.0" />
-                                             </StackPane.margin>
-                                             <font>
-                                                <Font name="Arial Black" size="12.0" />
-                                             </font>
-                                          </Label>
-                                       </children>
-                                    </StackPane>
-                                 </children>
-                                 <HBox.margin>
-                                    <Insets bottom="10.0" left="10.0" top="10.0" />
-                                 </HBox.margin>
-                              </Pane>
-                              <Pane layoutX="375.0" layoutY="21.0" prefHeight="60.0" prefWidth="167.0" styleClass="tile">
-                                 <children>
-                                    <StackPane layoutY="-1.0" prefHeight="60.0" prefWidth="84.0" style="-fx-background-color: #0275d8;">
-                                       <children>
-                                          <FontAwesomeIcon fill="WHITE" glyphName="CART_PLUS" size="3em" />
-                                       </children>
-                                    </StackPane>
-                                    <StackPane layoutX="92.0" layoutY="3.0" prefHeight="53.0" prefWidth="70.0" style="-fx-background-color: white;">
-                                       <children>
-                                          <Label text="1000" StackPane.alignment="TOP_CENTER">
-                                             <StackPane.margin>
-                                                <Insets top="10.0" />
-                                             </StackPane.margin>
-                                             <font>
-                                                <Font name="Arial Black" size="12.0" />
-                                             </font>
-                                          </Label>
-                                          <Label text="BILLS" StackPane.alignment="BOTTOM_CENTER">
-                                             <StackPane.margin>
-                                                <Insets bottom="10.0" />
-                                             </StackPane.margin>
-                                             <font>
-                                                <Font name="Arial Black" size="12.0" />
-                                             </font>
-                                          </Label>
-                                       </children>
-                                       <padding>
-                                          <Insets top="1.0" />
-                                       </padding>
-                                    </StackPane>
-                                 </children>
-                                 <HBox.margin>
-                                    <Insets bottom="10.0" left="10.0" top="10.0" />
-                                 </HBox.margin>
-                              </Pane>
-                              <Pane layoutX="552.0" layoutY="21.0" prefHeight="71.0" prefWidth="167.0" styleClass="tile">
-                                 <children>
-                                    <StackPane layoutY="-1.0" prefHeight="60.0" prefWidth="84.0" style="-fx-background-color: #5cb85c;">
-                                       <children>
-                                          <FontAwesomeIcon fill="WHITE" glyphName="BTC" size="3em" />
-                                       </children>
-                                    </StackPane>
-                                    <StackPane layoutX="89.0" layoutY="4.0" prefHeight="53.0" prefWidth="70.0" style="-fx-background-color: white;">
-                                       <children>
-                                          <Label text="1000" StackPane.alignment="TOP_CENTER">
-                                             <StackPane.margin>
-                                                <Insets top="10.0" />
-                                             </StackPane.margin>
-                                             <font>
-                                                <Font name="Arial Black" size="12.0" />
-                                             </font>
-                                          </Label>
-                                          <Label text="AMOUNT" StackPane.alignment="BOTTOM_CENTER">
+                                          <Label text="MARGIN" StackPane.alignment="BOTTOM_CENTER">
                                              <StackPane.margin>
                                                 <Insets bottom="10.0" />
                                              </StackPane.margin>
@@ -381,26 +316,27 @@
                               </Pane>
                            </children>
                         </HBox>
+                        <DatePicker fx:id="dateMonth" layoutX="280.0" layoutY="104.0" prefHeight="25.0" prefWidth="158.0" AnchorPane.rightAnchor="20.0" />
                      </children>
                   </AnchorPane>
             </content>
           </Tab>
-          <Tab text="Year Report">
+          <Tab fx:id="tabYearly" text="Year Report">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
                         <HBox prefHeight="81.0" prefWidth="580.0" style="-fx-background-color: white;" styleClass="tile" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
                            <children>
-                              <Pane layoutX="21.0" layoutY="21.0" prefHeight="60.0" prefWidth="167.0" styleClass="tile">
+                              <Pane layoutX="21.0" layoutY="21.0" prefHeight="60.0" prefWidth="195.0" styleClass="tile">
                                  <children>
                                     <StackPane layoutY="-1.0" prefHeight="60.0" prefWidth="84.0" style="-fx-background-color: #0275d8;">
                                        <children>
                                           <FontAwesomeIcon fill="WHITE" glyphName="CART_PLUS" size="3em" />
                                        </children>
                                     </StackPane>
-                                    <StackPane layoutX="92.0" layoutY="3.0" prefHeight="53.0" prefWidth="70.0" style="-fx-background-color: white;">
+                                    <StackPane layoutX="86.0" layoutY="3.0" prefHeight="53.0" prefWidth="103.0" style="-fx-background-color: white;">
                                        <children>
-                                          <Label text="1000" StackPane.alignment="TOP_CENTER">
+                                          <Label fx:id="lblYearBills" text="1000" StackPane.alignment="TOP_CENTER">
                                              <StackPane.margin>
                                                 <Insets top="10.0" />
                                              </StackPane.margin>
@@ -426,16 +362,16 @@
                                     <Insets bottom="10.0" left="10.0" top="10.0" />
                                  </HBox.margin>
                               </Pane>
-                              <Pane layoutX="21.0" layoutY="21.0" prefHeight="71.0" prefWidth="167.0" styleClass="tile">
+                              <Pane layoutX="21.0" layoutY="21.0" prefHeight="71.0" prefWidth="195.0" styleClass="tile">
                                  <children>
                                     <StackPane layoutY="-1.0" prefHeight="60.0" prefWidth="84.0" style="-fx-background-color: #5cb85c;">
                                        <children>
                                           <FontAwesomeIcon fill="WHITE" glyphName="BTC" size="3em" />
                                        </children>
                                     </StackPane>
-                                    <StackPane layoutX="89.0" layoutY="4.0" prefHeight="53.0" prefWidth="70.0" style="-fx-background-color: white;">
+                                    <StackPane layoutX="86.0" layoutY="3.0" prefHeight="53.0" prefWidth="104.0" style="-fx-background-color: white;">
                                        <children>
-                                          <Label text="1000" StackPane.alignment="TOP_CENTER">
+                                          <Label fx:id="lblYearAmount" text="1000" StackPane.alignment="TOP_CENTER">
                                              <StackPane.margin>
                                                 <Insets top="10.0" />
                                              </StackPane.margin>
@@ -458,16 +394,16 @@
                                     <Insets bottom="10.0" left="10.0" top="10.0" />
                                  </HBox.margin>
                               </Pane>
-                              <Pane layoutX="21.0" layoutY="21.0" prefHeight="60.0" prefWidth="167.0" styleClass="tile">
+                              <Pane layoutX="21.0" layoutY="21.0" prefHeight="60.0" prefWidth="195.0" styleClass="tile">
                                  <children>
-                                    <StackPane layoutY="-1.0" prefHeight="60.0" prefWidth="84.0" style="-fx-background-color: #0275d8;">
+                                    <StackPane layoutY="-1.0" prefHeight="60.0" prefWidth="84.0" style="-fx-background-color: #FFC107;">
                                        <children>
                                           <FontAwesomeIcon fill="WHITE" glyphName="CART_PLUS" size="3em" />
                                        </children>
                                     </StackPane>
-                                    <StackPane layoutX="92.0" layoutY="3.0" prefHeight="53.0" prefWidth="70.0" style="-fx-background-color: white;">
+                                    <StackPane layoutX="85.0" layoutY="3.0" prefHeight="53.0" prefWidth="106.0" style="-fx-background-color: white;">
                                        <children>
-                                          <Label text="1000" StackPane.alignment="TOP_CENTER">
+                                          <Label fx:id="lblYearPurchase" text="1000" StackPane.alignment="TOP_CENTER">
                                              <StackPane.margin>
                                                 <Insets top="10.0" />
                                              </StackPane.margin>
@@ -475,7 +411,7 @@
                                                 <Font name="Arial Black" size="12.0" />
                                              </font>
                                           </Label>
-                                          <Label text="BILLS" StackPane.alignment="BOTTOM_CENTER">
+                                          <Label text="PURCHASE" StackPane.alignment="BOTTOM_CENTER">
                                              <StackPane.margin>
                                                 <Insets bottom="10.0" />
                                              </StackPane.margin>
@@ -493,16 +429,16 @@
                                     <Insets bottom="10.0" left="10.0" top="10.0" />
                                  </HBox.margin>
                               </Pane>
-                              <Pane layoutX="198.0" layoutY="21.0" prefHeight="71.0" prefWidth="167.0" styleClass="tile">
+                              <Pane layoutX="198.0" layoutY="21.0" prefHeight="71.0" prefWidth="195.0" styleClass="tile">
                                  <children>
                                     <StackPane layoutY="-1.0" prefHeight="60.0" prefWidth="84.0" style="-fx-background-color: #5cb85c;">
                                        <children>
                                           <FontAwesomeIcon fill="WHITE" glyphName="BTC" size="3em" />
                                        </children>
                                     </StackPane>
-                                    <StackPane layoutX="89.0" layoutY="4.0" prefHeight="53.0" prefWidth="70.0" style="-fx-background-color: white;">
+                                    <StackPane layoutX="85.0" layoutY="4.0" prefHeight="53.0" prefWidth="107.0" style="-fx-background-color: white;">
                                        <children>
-                                          <Label text="1000" StackPane.alignment="TOP_CENTER">
+                                          <Label fx:id="lblYearMargin" text="1000" StackPane.alignment="TOP_CENTER">
                                              <StackPane.margin>
                                                 <Insets top="10.0" />
                                              </StackPane.margin>
@@ -510,74 +446,7 @@
                                                 <Font name="Arial Black" size="12.0" />
                                              </font>
                                           </Label>
-                                          <Label text="AMOUNT" StackPane.alignment="BOTTOM_CENTER">
-                                             <StackPane.margin>
-                                                <Insets bottom="10.0" />
-                                             </StackPane.margin>
-                                             <font>
-                                                <Font name="Arial Black" size="12.0" />
-                                             </font>
-                                          </Label>
-                                       </children>
-                                    </StackPane>
-                                 </children>
-                                 <HBox.margin>
-                                    <Insets bottom="10.0" left="10.0" top="10.0" />
-                                 </HBox.margin>
-                              </Pane>
-                              <Pane layoutX="375.0" layoutY="21.0" prefHeight="60.0" prefWidth="167.0" styleClass="tile">
-                                 <children>
-                                    <StackPane layoutY="-1.0" prefHeight="60.0" prefWidth="84.0" style="-fx-background-color: #0275d8;">
-                                       <children>
-                                          <FontAwesomeIcon fill="WHITE" glyphName="CART_PLUS" size="3em" />
-                                       </children>
-                                    </StackPane>
-                                    <StackPane layoutX="92.0" layoutY="3.0" prefHeight="53.0" prefWidth="70.0" style="-fx-background-color: white;">
-                                       <children>
-                                          <Label text="1000" StackPane.alignment="TOP_CENTER">
-                                             <StackPane.margin>
-                                                <Insets top="10.0" />
-                                             </StackPane.margin>
-                                             <font>
-                                                <Font name="Arial Black" size="12.0" />
-                                             </font>
-                                          </Label>
-                                          <Label text="BILLS" StackPane.alignment="BOTTOM_CENTER">
-                                             <StackPane.margin>
-                                                <Insets bottom="10.0" />
-                                             </StackPane.margin>
-                                             <font>
-                                                <Font name="Arial Black" size="12.0" />
-                                             </font>
-                                          </Label>
-                                       </children>
-                                       <padding>
-                                          <Insets top="1.0" />
-                                       </padding>
-                                    </StackPane>
-                                 </children>
-                                 <HBox.margin>
-                                    <Insets bottom="10.0" left="10.0" top="10.0" />
-                                 </HBox.margin>
-                              </Pane>
-                              <Pane layoutX="552.0" layoutY="21.0" prefHeight="71.0" prefWidth="167.0" styleClass="tile">
-                                 <children>
-                                    <StackPane layoutY="-1.0" prefHeight="60.0" prefWidth="84.0" style="-fx-background-color: #5cb85c;">
-                                       <children>
-                                          <FontAwesomeIcon fill="WHITE" glyphName="BTC" size="3em" />
-                                       </children>
-                                    </StackPane>
-                                    <StackPane layoutX="89.0" layoutY="4.0" prefHeight="53.0" prefWidth="70.0" style="-fx-background-color: white;">
-                                       <children>
-                                          <Label text="1000" StackPane.alignment="TOP_CENTER">
-                                             <StackPane.margin>
-                                                <Insets top="10.0" />
-                                             </StackPane.margin>
-                                             <font>
-                                                <Font name="Arial Black" size="12.0" />
-                                             </font>
-                                          </Label>
-                                          <Label text="AMOUNT" StackPane.alignment="BOTTOM_CENTER">
+                                          <Label text="MARGIN" StackPane.alignment="BOTTOM_CENTER">
                                              <StackPane.margin>
                                                 <Insets bottom="10.0" />
                                              </StackPane.margin>
@@ -594,6 +463,16 @@
                               </Pane>
                            </children>
                         </HBox>
+                        <LineChart fx:id="lineChartYear" layoutX="10.0" layoutY="108.0" prefHeight="295.0" prefWidth="1126.0" titleSide="BOTTOM" AnchorPane.bottomAnchor="295.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="108.0">
+                          <xAxis>
+                            <CategoryAxis side="BOTTOM" />
+                          </xAxis>
+                          <yAxis>
+                            <NumberAxis label="Sale in Rupees" side="LEFT" />
+                          </yAxis>
+                        </LineChart>
+                        <DatePicker fx:id="date" layoutX="8.0" layoutY="96.0" prefHeight="25.0" prefWidth="133.0" AnchorPane.rightAnchor="25.0" />
+                        <PieChart fx:id="pichartYear" layoutX="5.0" layoutY="383.0" prefHeight="310.0" prefWidth="692.0" AnchorPane.bottomAnchor="5.0" AnchorPane.topAnchor="383.0" />
                      </children>
                   </AnchorPane>
             </content>
