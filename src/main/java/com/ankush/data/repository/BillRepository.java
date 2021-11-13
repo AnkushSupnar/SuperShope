@@ -15,4 +15,15 @@ public interface BillRepository extends JpaRepository<Bill, Long> {
     List<Bill>findByDateBetween(LocalDate start,LocalDate end);
     @Query("select max(billno) from Bill")
     Long getlastBillNo();
+
+    @Query("select sum(grandtotal) from Bill where date=:date")
+    Float getDateTotalSale(LocalDate date);
+
+    @Query("select count(billno) from Bill where date=:date")
+    int getDateTotalBill(LocalDate date);
+
+
+
+
+
 }

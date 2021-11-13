@@ -36,4 +36,15 @@ public class BillService {
     {
         return repository.getlastBillNo();
     }
+
+    public Float getDateTotalSale(LocalDate date)
+    {
+        if(repository.getDateTotalSale(date)==null) return 0.0f;
+        else
+        return repository.getDateTotalSale(date);
+    }
+    public int getDateTotalBill(LocalDate date){
+
+        return repository.getDateTotalBill(date);
+    }
 }

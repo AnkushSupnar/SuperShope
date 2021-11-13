@@ -98,7 +98,7 @@ public class PrintBill {
         Paragraph p = new Paragraph("      laXmaI saupar maako-T", f1);
         p.setLeading(5);
         doc.add(p);
-        p = new Paragraph("       kO. ihrabaa[- paMZrInaaqa GaavaTo vyaapaarI saMkula", f2);
+        p = new Paragraph("       ihrabaa[- paMZrInaaqa GaavaTo vyaapaarI saMkula", f2);
         //p.setLeading(10);
         doc.add(p);
         p = new Paragraph("           AMmaLnaor, taa.naovaasaa,ija.Ahmadnagar", f2);
@@ -140,7 +140,7 @@ public class PrintBill {
         table.addCell(c1);
 
         //c1 = new PdfPCell(new Paragraph("Name: "+bill.getCustomer().getName(), smallBold));
-        c1 = new PdfPCell(new Paragraph("Name:", small));
+        c1 = new PdfPCell(new Paragraph("Name:"+bill.getCustomer().getName(), small));
         c1.setBorder(0);
         c1.setBorder(PdfPCell.BOTTOM);
         c1.setColspan(2);
