@@ -3,12 +3,17 @@ package com.ankush.controller.print;
 import ch.qos.logback.classic.BasicConfigurator;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.printing.PDFPageable;
+import org.apache.pdfbox.printing.PDFPrintable;
+import org.apache.pdfbox.printing.Scaling;
 
 import javax.print.PrintService;
 import javax.print.PrintServiceLookup;
 import javax.print.attribute.HashPrintRequestAttributeSet;
 import javax.print.attribute.PrintRequestAttributeSet;
 import javax.print.attribute.standard.PageRanges;
+import java.awt.print.Book;
+import java.awt.print.PageFormat;
+import java.awt.print.Paper;
 import java.awt.print.PrinterJob;
 import java.io.BufferedReader;
 import java.io.File;
@@ -22,10 +27,11 @@ public class PrintExample
     {
         try
         {
+
            // Properties prop = CommonMethods.loadPropertiesFile();
            // changeWindowsDefaultPrinter(prop.getProperty("Bill.printer"));
             PDDocument document = PDDocument.load(new File(filePath));
-
+            //PDFPrintable printable = new PDFPrintable(document,Scaling.ACTUAL_SIZE);
             //PrintService myPrintService = findPrintService(prop.getProperty("Bill.printer"));
             //PrintService myPrintService = findPrintService("EPSON TM-T82X Receipt");
             //PrintService myPrintService = findPrintService("Star BSC10");
@@ -35,12 +41,39 @@ public class PrintExample
             PrinterJob job = PrinterJob.getPrinterJob();
             job.setPageable(new PDFPageable(document));
             PrintRequestAttributeSet attr = new HashPrintRequestAttributeSet();
-            attr.add(new PageRanges(1, 1)); // pages 1 to 1
+            attr.add(new PageRanges(1, 2)); // pages 1 to 1
             //job.setPrintService(myPrintService);
             job.setPrintService(PrintServiceLookup.lookupDefaultPrintService());
             //job.setPrintService(myPrintService);
             job.print(attr);
             document.close();
+
+//            PDDocument doc = PDDocument.load(new File(filePath));
+//            PDFPrintable printable = new PDFPrintable(doc,Scaling.ACTUAL_SIZE);
+//            PrinterJob job = PrinterJob.getPrinterJob();
+//            job.setPrintable(printable);
+//            job.print();
+
+//            PDDocument doc = PDDocument.load(new File(filePath));
+//            PrinterJob job = PrinterJob.getPrinterJob();
+//
+//// define custom paper
+//            Paper paper = new Paper();
+//            paper.setSize(1306, 1396); // 1/72 inch
+//            paper.setImageableArea(0, 0, paper.getWidth(), paper.getHeight()); // no margins
+//
+//// custom page format
+//            PageFormat pageFormat = new PageFormat();
+//            pageFormat.setPaper(paper);
+//
+//// override the page format
+//            Book book = new Book();
+//// append all pages
+//            book.append(new PDFPrintable(doc, Scaling.SHRINK_TO_FIT), pageFormat, doc.getNumberOfPages());
+//            job.setPageable(book);
+//
+//            job.print();
+
         }catch(Exception e)
         {
             System.out.println(e.getMessage());

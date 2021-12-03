@@ -27,12 +27,14 @@ public class PrintBill {
     public static final String fontname = "D:\\Shopee\\kiran.ttf";
     //public static java.awt.Font fontname = new java.awt.Font("/fxm/font/kiran.ttf");
     Font f1 = FontFactory.getFont(fontname, BaseFont.IDENTITY_H, BaseFont.EMBEDDED, 30f, Font.BOLD);//, BaseColor.BLACK);
-    Font f2 = FontFactory.getFont(fontname, BaseFont.IDENTITY_H, BaseFont.EMBEDDED, 16f, Font.NORMAL, BaseColor.BLACK);
-    Font f3 = FontFactory.getFont(fontname, BaseFont.IDENTITY_H, BaseFont.EMBEDDED, 16f, Font.NORMAL, BaseColor.BLACK);
-    Font f4 = FontFactory.getFont(fontname, BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED, 12f, Font.NORMAL, BaseColor.BLACK);
+    Font f2 = FontFactory.getFont(fontname, BaseFont.IDENTITY_H, BaseFont.EMBEDDED, 14f, Font.NORMAL, BaseColor.BLUE);
+    Font f3 = FontFactory.getFont(fontname, BaseFont.IDENTITY_H, BaseFont.EMBEDDED, 16f, Font.BOLD, BaseColor.BLACK);
+    Font f4 = FontFactory.getFont(fontname, BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED, 12f, Font.BOLD, BaseColor.BLACK);
     Font f5 = FontFactory.getFont(fontname, BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED, 18f, Font.BOLD, BaseColor.BLACK);
     private static Font smallBold = new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.NORMAL);
     private static Font small = new Font(Font.FontFamily.COURIER, 8, Font.BOLD);
+    private static Font smallMedium = new Font(Font.FontFamily.COURIER, 10, Font.BOLD);
+    private static Font extrasmall = new Font(Font.FontFamily.COURIER, 3, Font.BOLD);
 
     Bill bill;
 
@@ -48,7 +50,7 @@ public class PrintBill {
 
     public void createDoc() {
         //this.bill=bill;
-        float left = 30;
+        float left = 0;
         float right = 0;
         float top = 20;
         float bottom = 0;
@@ -96,19 +98,19 @@ public class PrintBill {
 
     private void addHeader() throws DocumentException {
         Paragraph p = new Paragraph("      laXmaI saupar maako-T", f1);
-        p.setLeading(5);
+        p.setLeading(4);
         doc.add(p);
-        p = new Paragraph("       ihrabaa[- paMZrInaaqa GaavaTo vyaapaarI saMkula", f2);
+        p = new Paragraph("             ihrabaa[- paMZrInaaqa GaavaTo vyaapaarI saMkula", f2);
         //p.setLeading(10);
         doc.add(p);
-        p = new Paragraph("           AMmaLnaor, taa.naovaasaa,ija.Ahmadnagar", f2);
+        p = new Paragraph("               AMmaLnaor, taa.naovaasaa,ija.Ahmadnagar", f2);
         p.setLeading(12);
         doc.add(p);
 
 
 
-        p = new Paragraph("         maao.naM 9822420872,9970192697 ", f2);
-        p.setLeading(12);
+        p = new Paragraph("               maao.naM 9822420872,9970192697 ", f2);
+        p.setLeading(10);
         doc.add(p);
         PdfPTable table = new PdfPTable(2);
         table.setTotalWidth(new float[]{150, 100});
@@ -140,12 +142,13 @@ public class PrintBill {
         table.addCell(c1);
 
         //c1 = new PdfPCell(new Paragraph("Name: "+bill.getCustomer().getName(), smallBold));
-        c1 = new PdfPCell(new Paragraph("Name:"+bill.getCustomer().getName(), small));
+        c1 = new PdfPCell(new Paragraph("Name:"+bill.getCustomer().getName(), smallBold));
         c1.setBorder(0);
         c1.setBorder(PdfPCell.BOTTOM);
         c1.setColspan(2);
         table.addCell(c1);
-        p = new Paragraph("        ");
+
+        p = new Paragraph("        ",extrasmall);
         doc.add(p);
         doc.add(table);
 
@@ -154,7 +157,7 @@ public class PrintBill {
     private PdfPTable addData() throws DocumentException {
 
         PdfPTable table = new PdfPTable(6);
-        table.setTotalWidth(new float[]{35, 140, 60, 50, 60, 60});
+        table.setTotalWidth(new float[]{35, 140, 60, 50, 70, 60});
         PdfPCell c1 = new PdfPCell(new Paragraph("k` ", f4));
         c1.setHorizontalAlignment(Element.ALIGN_LEFT);
 
@@ -172,13 +175,13 @@ public class PrintBill {
         c1.setBorder(PdfPCell.BOTTOM);
         table.addCell(c1);
 
-        c1 = new PdfPCell(new Paragraph("ikMmata", f4));
+        c1 = new PdfPCell(new Paragraph("MRP", smallMedium));
         c1.setHorizontalAlignment(Element.ALIGN_LEFT);
         c1.setBorder(PdfPCell.BOTTOM);
         table.addCell(c1);
 
         c1 = new PdfPCell(new Paragraph("dr", f4));
-        c1.setHorizontalAlignment(Element.ALIGN_LEFT);
+        c1.setHorizontalAlignment(Element.ALIGN_CENTER);
         c1.setBorder(PdfPCell.BOTTOM);
         table.addCell(c1);
 
@@ -213,7 +216,7 @@ public class PrintBill {
             table.addCell(c1);
 
             c1 = new PdfPCell(new Paragraph(String.valueOf(tr.getSailingprice()), f4));
-            c1.setHorizontalAlignment(Element.ALIGN_LEFT);
+            c1.setHorizontalAlignment(Element.ALIGN_CENTER);
             c1.setBorder(PdfPCell.NO_BORDER);
             table.addCell(c1);
 
@@ -224,14 +227,14 @@ public class PrintBill {
         }
         //addFooter
         PdfPTable footer = new PdfPTable(3);
-        footer.setTotalWidth(new float[]{200, 300, 300});
+        footer.setTotalWidth(new float[]{500, 500, 500});
 
         c1 = new PdfPCell(new Paragraph("ikMmata ", f4));
         c1.setHorizontalAlignment(Element.ALIGN_LEFT);
         c1.setBorder(PdfPCell.NO_BORDER);
         footer.addCell(c1);
 
-        c1 = new PdfPCell(new Paragraph("Discount", smallBold));
+        c1 = new PdfPCell(new Paragraph("ekUNa bacata", f4));
         c1.setBorder(PdfPCell.NO_BORDER);
         c1.setHorizontalAlignment(Element.ALIGN_LEFT);
         footer.addCell(c1);

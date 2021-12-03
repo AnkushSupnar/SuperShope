@@ -1,9 +1,13 @@
 package com.ankush.controller.dashboard;
 
 import com.ankush.data.entities.Bill;
+import com.ankush.data.entities.Item;
+import com.ankush.data.entities.ItemStock;
 import com.ankush.data.entities.Transaction;
 import com.ankush.data.service.BillService;
+import com.ankush.data.service.ItemStockService;
 import com.ankush.view.StageManager;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -11,20 +15,26 @@ import javafx.fxml.Initializable;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
-import javafx.scene.control.Tab;
-import javafx.scene.control.Tooltip;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import net.bytebuddy.asm.Advice;
+import org.springframework.beans.PropertyValue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ThreadLocalRandom;
+import java.util.concurrent.TimeUnit;
+
 @Component
 public class Dashboard implements Initializable {
     @Autowired
@@ -33,8 +43,22 @@ public class Dashboard implements Initializable {
     @FXML private DatePicker date;
     @FXML private DatePicker dateMonth;
 
-    @FXML
-    private Tab tabMonthly;
+    @FXML private LineChart<?, ?> dailyLineChart;
+    @FXML private DatePicker dateToday;
+
+    @FXML private TableView<ItemStock> tableNos;
+    @FXML private TableColumn<ItemStock,String> colItemName;
+    @FXML private TableColumn<ItemStock,Integer> colSrno;
+    @FXML private TableColumn<ItemStock,Float> colStock;
+    @FXML private TableColumn<ItemStock,String> colUnit;
+
+    @FXML private TableView<ItemStock> tableKg;
+    @FXML private TableColumn<ItemStock,Integer> colSr1;
+    @FXML private TableColumn<ItemStock,String> colItemName1;
+    @FXML private TableColumn<ItemStock,String> colUnit1;
+    @FXML private TableColumn<ItemStock,Float> colStock1;
+
+    @FXML private Tab tabMonthly;
     @FXML private Label lblTodayAmount;
     @FXML private Label lblTodaysBill;
     @FXML private Label lblTodayPurchase;
@@ -54,16 +78,28 @@ public class Dashboard implements Initializable {
     @FXML private Label lblYearMargin;
     @FXML private PieChart pichartYear;
     ObservableList<PieChart.Data>yearPichartData = FXCollections.observableArrayList();
-
-
-    @FXML
-    private Label lblYearPurchase;
-
-    @Autowired
-    BillService billService;
+    ObservableList<ItemStock>kgList = FXCollections.observableArrayList();
+    ObservableList<ItemStock>nosList = FXCollections.observableArrayList();
+    @FXML private Label lblYearPurchase;
+    @Autowired BillService billService;
+    @Autowired private ItemStockService stockService;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        colSrno.setCellValueFactory(new PropertyValueFactory<>("id"));
+        colItemName.setCellValueFactory(new PropertyValueFactory<>("itemname"));
+        colUnit.setCellValueFactory(new PropertyValueFactory<>("unit"));
+        colStock.setCellValueFactory(new PropertyValueFactory<>("stock"));
+        tableNos.setItems(nosList);
+
+        colSr1.setCellValueFactory(new PropertyValueFactory<>("id"));
+        colItemName1.setCellValueFactory(new PropertyValueFactory<>("itemname"));
+        colUnit1.setCellValueFactory(new PropertyValueFactory<>("unit"));
+        colStock1.setCellValueFactory(new PropertyValueFactory<>("stock"));
+        tableKg.setItems(kgList);
+
+
         date.setValue(LocalDate.now());
+        dateToday.setValue(LocalDate.now());
         dateMonth.setValue(LocalDate.now());
         tabMonthly.setOnSelectionChanged(e->{
             lineChartMonth.getData().clear();
@@ -88,6 +124,7 @@ public class Dashboard implements Initializable {
             yearlyReport();
         });
             dayReport();
+         dateToday.setOnAction(e->dayReport());
 
     }
 
@@ -112,10 +149,12 @@ public class Dashboard implements Initializable {
     }
     private void dayReport()
     {
-        lblTodaysBill.setText(""+billService.getDateTotalBill(LocalDate.now()));
-        lblTodayAmount.setText(""+billService.getDateTotalSale(LocalDate.now()));
+        lblTodaysBill.setText(""+billService.getDateTotalBill(dateToday.getValue()));
+        lblTodayAmount.setText(""+billService.getDateTotalSale(dateToday.getValue()));
         lblTodayPurchase.setText(""+0.0f);
-        for(Bill bill:billService.getBillByDate(LocalDate.now()))
+        dailyLineChart.getData().clear();
+
+        for(Bill bill:billService.getBillByDate(dateToday.getValue()))
         {
             for(Transaction tr:bill.getTransactions())
             {
@@ -125,8 +164,42 @@ public class Dashboard implements Initializable {
         lblTodayMargin.setText(
                 String.valueOf(Float.parseFloat(lblTodayAmount.getText())-Float.parseFloat(lblTodayPurchase.getText()))
         );
+       // dailyLineChart.getData().add(series);
+        addDataInDayPiChart(billService.getBillByDate(dateToday.getValue()));
+        kgList.addAll(stockService.getMinimumKgStock());
+        nosList.addAll(stockService.getMinimumNosStock());
+        tableNos.refresh();
+
 
     }
+    void addDataInDayPiChart(List<Bill> billList) {
+        dailyLineChart.getData().clear();
+        final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm:ss");
+        XYChart.Series series = new XYChart.Series();
+        // leKg.refresh();
+       // tabsetup a scheduled executor to periodically put data into the chart
+        ScheduledExecutorService scheduledExecutorService;
+        scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
+
+        // put dummy data onto graph per second
+        scheduledExecutorService.scheduleAtFixedRate(() -> {
+            // get a random integer between 0-10
+            Integer random = ThreadLocalRandom.current().nextInt(10);
+
+            // Update the chart
+            Platform.runLater(() -> {
+                // get current time
+                Date now = new Date();
+                // put random number with current time
+                for (Bill bill : billList) {
+                    series.getData().add(new XYChart.Data("" + bill.getBillno(), bill.getGrandtotal()));
+
+                }
+            });
+        }, 0, 10, TimeUnit.SECONDS);
+        dailyLineChart.getData().add(series);
+    }
+
     private void yearlyReport() {
         lineChartYear.getData().clear();
         pichartYear.getData().clear();

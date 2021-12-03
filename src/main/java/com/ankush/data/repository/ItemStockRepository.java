@@ -14,4 +14,11 @@ public interface ItemStockRepository extends JpaRepository<ItemStock, Long> {
     ItemStock getByItemname(String itemname);
     @Query("select itemname from ItemStock where stock>0 order by barcode")
     List<String>getItemNameByBarcode();
+
+    @Query("from ItemStock where unit='ik.ga`^.' and stock<20")
+    List<ItemStock>getMinimumKgStock();
+
+    @Query("from ItemStock where unit='naga' and stock<10")
+    List<ItemStock>getMinimumNosStock();
+
 }

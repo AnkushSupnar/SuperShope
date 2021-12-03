@@ -8,13 +8,17 @@
 <?import javafx.scene.chart.PieChart?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
 <AnchorPane prefHeight="737.0" prefWidth="1156.0" stylesheets="@../css/dashboard.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ankush.controller.dashboard.Dashboard">
    <children>
@@ -162,6 +166,61 @@
                               </Pane>
                            </children>
                         </HBox>
+                        <LineChart fx:id="dailyLineChart" layoutX="63.0" layoutY="109.0" prefHeight="264.0" prefWidth="1146.0" title="Bills" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="109.0">
+                          <xAxis>
+                            <CategoryAxis />
+                          </xAxis>
+                          <yAxis>
+                            <NumberAxis side="LEFT" />
+                          </yAxis>
+                        </LineChart>
+                        <DatePicker fx:id="dateToday" layoutX="969.0" layoutY="93.0" AnchorPane.rightAnchor="15.0" />
+                        <SplitPane dividerPositions="0.5118829981718465" layoutX="178.0" layoutY="383.0" prefHeight="315.0" prefWidth="1146.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="383.0">
+                          <items>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                                 <children>
+                                    <TableView fx:id="tableNos" layoutX="6.0" layoutY="113.0" prefHeight="277.0" prefWidth="557.0" stylesheets="@../css/tablemar.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="36.0">
+                                      <columns>
+                                        <TableColumn fx:id="colSrno" prefWidth="75.0" text="Sr.No" />
+                                        <TableColumn fx:id="colItemName" prefWidth="275.0" text="Item Name" />
+                                          <TableColumn fx:id="colUnit" prefWidth="93.0" text="Unit" />
+                                          <TableColumn fx:id="colStock" prefWidth="112.0" text="Stock" />
+                                      </columns>
+                                    </TableView>
+                                    <StackPane layoutX="161.0" layoutY="-61.0" prefHeight="38.0" prefWidth="557.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                       <children>
+                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Item Minimum Level Nos">
+                                             <font>
+                                                <Font name="Georgia" size="14.0" />
+                                             </font>
+                                          </Text>
+                                       </children>
+                                    </StackPane>
+                                 </children>
+                              </AnchorPane>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                                 <children>
+                                    <StackPane prefHeight="37.0" prefWidth="525.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                       <children>
+                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Item Minimum Level KG">
+                                             <font>
+                                                <Font name="Georgia" size="14.0" />
+                                             </font>
+                                          </Text>
+                                       </children>
+                                    </StackPane>
+                                    <TableView fx:id="tableKg" layoutY="37.0" prefHeight="277.0" prefWidth="557.0" stylesheets="@../css/tablemar.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="36.0">
+                                       <columns>
+                                          <TableColumn fx:id="colSr1" prefWidth="75.0" text="Sr.No" />
+                                          <TableColumn fx:id="colItemName1" prefWidth="251.0" text="Item Name" />
+                                          <TableColumn fx:id="colUnit1" prefWidth="92.0" text="Unit" />
+                                          <TableColumn fx:id="colStock1" prefWidth="112.0" text="Stock" />
+                                       </columns>
+                                    </TableView>
+                                 </children>
+                              </AnchorPane>
+                          </items>
+                        </SplitPane>
                      </children>
                   </AnchorPane>
                </content>

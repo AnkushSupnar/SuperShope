@@ -45,5 +45,6 @@ public class ItemStockService {
         return repository.getByItemname(name);
     }
     public List<String>getItemNameByBarcode(){return repository.getItemNameByBarcode();}
-
+    public List<ItemStock>getMinimumKgStock(){return repository.getMinimumKgStock();}
+    public List<ItemStock>getMinimumNosStock(){return repository.getMinimumNosStock();}
 }
