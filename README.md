@@ -1,5 +1,5 @@
 # 💫 About Me:
-I am currently working with Proteustech.in
+I am freelancer software developer,<br>Hire for me to develop desktop and web applications
 
 
 ## 🌐 Socials:
