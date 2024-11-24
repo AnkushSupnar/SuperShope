@@ -100,17 +100,18 @@ public class PrintBill {
         Paragraph p = new Paragraph("      laXmaI saupar maako-T", f1);
         p.setLeading(4);
         doc.add(p);
-        p = new Paragraph("             ihrabaa[- paMZrInaaqa GaavaTo vyaapaarI saMkula", f2);
+      //  p = new Paragraph("             ihrabaa[- paMZrInaaqa GaavaTo vyaapaarI saMkula", f2);
         //p.setLeading(10);
-        doc.add(p);
-        p = new Paragraph("               AMmaLnaor, taa.naovaasaa,ija.Ahmadnagar", f2);
-        p.setLeading(12);
-        doc.add(p);
+       // doc.add(p);
+        //p = new Paragraph("               AMmaLnaor, taa.naovaasaa,ija.Ahmadnagar", f2);
+        //p.setLeading(12);
+        //doc.add(p);
 
 
 
         p = new Paragraph("               maao.naM 9822420872,9970192697 ", f2);
         p.setLeading(10);
+        p.setLeading(18);
         doc.add(p);
         PdfPTable table = new PdfPTable(2);
         table.setTotalWidth(new float[]{150, 100});
@@ -156,8 +157,8 @@ public class PrintBill {
 
     private PdfPTable addData() throws DocumentException {
 
-        PdfPTable table = new PdfPTable(6);
-        table.setTotalWidth(new float[]{35, 140, 60, 50, 70, 60});
+        PdfPTable table = new PdfPTable(5);
+        table.setTotalWidth(new float[]{35, 140, 60,  70, 60});
         PdfPCell c1 = new PdfPCell(new Paragraph("k` ", f4));
         c1.setHorizontalAlignment(Element.ALIGN_LEFT);
 
@@ -178,7 +179,7 @@ public class PrintBill {
         c1 = new PdfPCell(new Paragraph("MRP", smallMedium));
         c1.setHorizontalAlignment(Element.ALIGN_LEFT);
         c1.setBorder(PdfPCell.BOTTOM);
-        table.addCell(c1);
+       // table.addCell(c1);
 
         c1 = new PdfPCell(new Paragraph("dr", f4));
         c1.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -213,7 +214,7 @@ public class PrintBill {
             c1 = new PdfPCell(new Paragraph(String.valueOf(tr.getRate()), f4));
             c1.setHorizontalAlignment(Element.ALIGN_LEFT);
             c1.setBorder(PdfPCell.NO_BORDER);
-            table.addCell(c1);
+           // table.addCell(c1);
 
             c1 = new PdfPCell(new Paragraph(String.valueOf(tr.getSailingprice()), f4));
             c1.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -226,18 +227,20 @@ public class PrintBill {
             table.addCell(c1);
         }
         //addFooter
-        PdfPTable footer = new PdfPTable(3);
-        footer.setTotalWidth(new float[]{500, 500, 500});
+        //PdfPTable footer = new PdfPTable(3);
+        PdfPTable footer = new PdfPTable(1);
+        //footer.setTotalWidth(new float[]{500, 500, 500});
+        footer.setTotalWidth(new float[]{500});
 
         c1 = new PdfPCell(new Paragraph("ikMmata ", f4));
         c1.setHorizontalAlignment(Element.ALIGN_LEFT);
         c1.setBorder(PdfPCell.NO_BORDER);
-        footer.addCell(c1);
+      //  footer.addCell(c1);
 
         c1 = new PdfPCell(new Paragraph("ekUNa bacata", f4));
         c1.setBorder(PdfPCell.NO_BORDER);
         c1.setHorizontalAlignment(Element.ALIGN_LEFT);
-        footer.addCell(c1);
+        //footer.addCell(c1);
 
         c1 = new PdfPCell(new Paragraph("ekuNa r@kma", f4));
         c1.setBorder(PdfPCell.NO_BORDER);
@@ -247,14 +250,14 @@ public class PrintBill {
         c1 = new PdfPCell(new Paragraph(""+totalmrp, f5));
         c1.setHorizontalAlignment(Element.ALIGN_CENTER);
         c1.setBorder(PdfPCell.BOX);
-        footer.addCell(c1);
+       // footer.addCell(c1);
 
         if(bill.getDiscount()<0)
             bill.setDiscount(0.0f);
         c1 = new PdfPCell(new Paragraph(""+(bill.getDiscount()), f5));
         c1.setBorder(PdfPCell.BOX);
         c1.setHorizontalAlignment(Element.ALIGN_CENTER);
-        footer.addCell(c1);
+       // footer.addCell(c1);
 
         c1 = new PdfPCell(new Paragraph(""+bill.getGrandtotal(), f5));
         c1.setBorder(PdfPCell.BOX);

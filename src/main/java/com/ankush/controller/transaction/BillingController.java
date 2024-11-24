@@ -798,6 +798,10 @@ public class BillingController implements Initializable {
             }
                 //checking stock availability;
             ItemStock stock = stockService.getItemStockByItemname(txtItemName.getText());
+            if(stock==null){
+                alert.showError("Less Quantity Available "+txtItemName.getText()+" "+cmbUnit.getValue());
+                return;
+            }
             if(stock.getStock()<Float.parseFloat(txtQty.getText()))
             {
                 alert.showError("Less Quantity Available "+stock.getStock()+" "+cmbUnit.getValue());
