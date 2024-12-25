@@ -151,7 +151,13 @@ public class BillingController implements Initializable {
         printbill = new PrintBill();
         date.setValue(LocalDate.now());
         dateSearch.setValue(LocalDate.now());
+        if(bankService.getBankByIdOptional(1).isPresent()){
         txtBank.setText(bankService.getBankById(1).getBankname());
+        }
+        else{
+            alert.showError("Please Add Bank first");
+
+        }
         CommonData.customerNames.addAll(customerService.getAllCustomerNames());
         customerNames = SuggestionProvider.create(CommonData.customerNames);
         new AutoCompletionTextFieldBinding<>(txtCustomerName,customerNames);
@@ -482,6 +488,11 @@ public class BillingController implements Initializable {
         Customer customer =null;
         if(txtCustomerName.getText().isEmpty() || txtCustomerName.getText().isBlank()|| txtCustomerName.getText().equals("")||txtCustomerName.getText().equals(null))
         {
+            if(customerService.findById(1).isEmpty()){
+                customer = new Customer();
+                customer.setName("Cash");
+                customerService.saveCustomer(customer);
+            }
             return customerService.getById(1);
         }
         customer=customerService.getCustomerByName(txtCustomerName.getText());

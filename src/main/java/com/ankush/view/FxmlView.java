@@ -23,6 +23,17 @@ public enum FxmlView {
             return "/fxml/home/Login.fxml";
         }
     },
+    CREATE {
+        @Override
+        String getTitle() {
+            return getStringFromResourceBundle("login.title");
+        }
+        @Override
+        public String getFxmlFile() {
+            return "/fxml/home/ShopeeInfo.fxml";
+        }
+    },
+
     EMPLOYEE {
         @Override
         String getTitle() {

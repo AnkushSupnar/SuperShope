@@ -7,6 +7,7 @@ import com.ankush.view.StageManager;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -27,6 +28,7 @@ public class HomeController implements Initializable {
     StageManager stageManager;
     @Autowired
     SpringFXMLLoader loader;
+    @FXML private Label lblShopeeName;
     @FXML private BorderPane mainPane;
     @FXML private HBox menuDashboard;
     @FXML private HBox menuTransaction;
@@ -41,6 +43,9 @@ public class HomeController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
+        if(CommonData.getShopeeInfo()!=null){
+            lblShopeeName.setText(CommonData.getShopeeInfo().getShopeeName());
+        }
         if(CommonData.getLoginUser()!=null)
         {
             txtUserName.setText(CommonData.getLoginUser().getUsername());

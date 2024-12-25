@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CustomerService {
@@ -18,6 +19,10 @@ public class CustomerService {
     public Customer getById(Integer id)
     {
         return repository.getById(id);
+    }
+    public Optional< Customer> findById(Integer id)
+    {
+        return repository.findById(id);
     }
     public int saveCustomer(Customer customer)
     {

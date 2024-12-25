@@ -1,10 +1,12 @@
 package com.ankush;
 
 import com.ankush.controller.print.PrintBill;
+import com.ankush.data.service.LoginService;
 import com.ankush.view.FxmlView;
 import com.ankush.view.StageManager;
 import javafx.application.Application;
 import javafx.stage.Stage;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -15,7 +17,7 @@ import java.io.IOException;
 public class Main extends Application {
 	private ConfigurableApplicationContext springContext;
 	protected StageManager stageManager;
-
+	LoginService loginService;
 	public static void main(String[] args) {
 
 		Application.launch(args);
@@ -30,6 +32,7 @@ public class Main extends Application {
 	@Override
 	public void start(Stage stage) throws Exception {
 	stageManager  = springContext.getBean(StageManager.class,stage);
+	loginService = springContext.getBean(LoginService.class);
 	displayInitialScene();
 	}
 	@Override
@@ -38,8 +41,12 @@ public class Main extends Application {
 		springContext.close();
 	}
 	protected void displayInitialScene() {
-
-		stageManager.switchScene(FxmlView.LOGIN);
+		if(loginService.getAllUserNames().isEmpty()){
+			stageManager.switchScene(FxmlView.CREATE);
+		}else {
+			stageManager.switchScene(FxmlView.LOGIN);
+		}
+		//stageManager.switchScene(FxmlView.CREATE);
 		//stageManager.switchScene(FxmlView.BILLING);
 		//stageManager.switchScene(FxmlView.CUSTOMER);
 		//stageManager.switchScene(FxmlView.EMPLOYEE);

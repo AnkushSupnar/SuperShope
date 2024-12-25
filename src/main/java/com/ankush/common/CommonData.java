@@ -1,6 +1,7 @@
 package com.ankush.common;
 
 import com.ankush.data.entities.Login;
+import com.ankush.data.entities.ShopeeInfo;
 import com.ankush.data.service.ItemStockService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -13,6 +14,7 @@ public class CommonData {
     public static Login loginUser;
     public static List<String>ITEMNAMES = new ArrayList<>();
     public static List<String>customerNames = new ArrayList<>();
+    public static ShopeeInfo shopeeInfo;
     public CommonData() {
         super();
     }
@@ -31,5 +33,11 @@ public class CommonData {
 
     public static void setITEMNAMES(List<String> ITEMNAMES) {
         CommonData.ITEMNAMES.addAll(ITEMNAMES);
+    }
+    public static void setShopeeInfo(ShopeeInfo shopeeInfo){
+        CommonData.shopeeInfo = shopeeInfo;
+    }
+    public static ShopeeInfo getShopeeInfo(){
+     return shopeeInfo;
     }
 }

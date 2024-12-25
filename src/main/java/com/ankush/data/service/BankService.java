@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class BankService {
@@ -53,6 +54,9 @@ public class BankService {
     public Bank getBankById(int id)
     {
         return repository.getById(id);
+    }
+    public Optional<Bank> getBankByIdOptional(Integer id) {
+        return repository.findById(id);
     }
 
 }

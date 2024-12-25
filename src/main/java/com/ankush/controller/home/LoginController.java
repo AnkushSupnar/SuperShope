@@ -4,8 +4,10 @@ import com.ankush.common.CommonData;
 import com.ankush.controller.print.PrintBill;
 import com.ankush.data.entities.Employee;
 import com.ankush.data.entities.Login;
+import com.ankush.data.entities.ShopeeInfo;
 import com.ankush.data.service.BillService;
 import com.ankush.data.service.LoginService;
+import com.ankush.data.service.ShopeeInfoService;
 import com.ankush.view.AlertNotification;
 import com.ankush.view.FxmlController;
 import com.ankush.view.FxmlView;
@@ -35,6 +37,8 @@ public class LoginController implements Initializable {
     private static final Logger LOG = LoggerFactory.getLogger(LoginController.class);
     @Autowired @Lazy
     StageManager stageManager;
+    @Autowired
+    private ShopeeInfoService shopeeInfoService;
     @FXML private AnchorPane mainPane;
     @FXML private ComboBox<String> cmbUserName;
     @FXML private PasswordField txtPassword;
@@ -58,20 +62,25 @@ public class LoginController implements Initializable {
         userNameList.addAll(loginService.getAllUserNames());
         try {
             if (userNameList.isEmpty()) {
+                System.out.println("No login found");
                 linkAddEmployee.setVisible(true);
+                stageManager.switchScene(FxmlView.CREATE);
+            }
+            else{
+                cmbUserName.setItems(userNameList);
+                linkAddEmployee.setOnAction(e->{
+                    stageManager.switchScene(FxmlView.EMPLOYEE);
+                    stageManager.showFullScreen();
+                });
+                btnLogin.setOnAction(e->login());
+//        PrintBill printbill = new PrintBill();
+//        printbill.setBill(billService.getBillByBillNo(44));
             }
         }catch(Exception e)
         {
             e.printStackTrace();
         }
-       cmbUserName.setItems(userNameList);
-        linkAddEmployee.setOnAction(e->{
-            stageManager.switchScene(FxmlView.EMPLOYEE);
-            stageManager.showFullScreen();
-        });
-        btnLogin.setOnAction(e->login());
-//        PrintBill printbill = new PrintBill();
-//        printbill.setBill(billService.getBillByBillNo(44));
+
     }
 
     private void login() {
@@ -91,7 +100,9 @@ public class LoginController implements Initializable {
             if(loginService.validate(cmbUserName.getValue(),txtPassword.getText())==1)
             {
                 alert.showSuccess("Wel come "+cmbUserName.getValue());
-                commonData.setLoginUser(loginService.getLoginByUserName(cmbUserName.getValue()));
+                CommonData.setLoginUser(loginService.getLoginByUserName(cmbUserName.getValue()));
+                ShopeeInfo shopeeInfo = shopeeInfoService.getShopeeInfoById(1L).orElse(null);
+                if(shopeeInfo!=null)CommonData.setShopeeInfo(shopeeInfo);
 
                 stageManager.switchScene(FxmlView.HOME);
                 stageManager.showFullScreen();
