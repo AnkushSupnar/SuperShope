@@ -1,8 +1,10 @@
 package com.ankush.controller.print;
 
 import com.ankush.data.entities.Bill;
+import com.ankush.data.entities.ShopeeInfo;
 import com.ankush.data.entities.Transaction;
 import com.ankush.data.service.BillService;
+import com.ankush.data.service.ShopeeInfoService;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.text.pdf.PdfPCell;
@@ -22,6 +24,9 @@ import java.time.format.DateTimeFormatter;
 public class PrintBill {
     @Autowired
     BillService billservice;
+
+    private ShopeeInfo shopeeInfo;
+
     Document doc;
     String fileName = "D:\\Shopee\\bill.pdf";
     public static final String fontname = "D:\\Shopee\\kiran.ttf";
@@ -46,6 +51,10 @@ public class PrintBill {
 
     public PrintBill() {
 
+    }
+
+    public void setShopeeInfo(ShopeeInfo shopeeInfo) {
+        this.shopeeInfo = shopeeInfo;
     }
 
     public void createDoc() {
@@ -97,19 +106,29 @@ public class PrintBill {
     }
 
     private void addHeader() throws DocumentException {
-        Paragraph p = new Paragraph("      laXmaI saupar maako-T", f1);
+        String shopName = "      laXmaI saupar maako-T";
+        String shopContact = "               maao.naM 9822420872,9970192697 ";
+
+        if (shopeeInfo != null) {
+            if (shopeeInfo.getShopeeName() != null && !shopeeInfo.getShopeeName().isEmpty()) {
+                shopName = "      " + shopeeInfo.getShopeeName();
+            }
+            if (shopeeInfo.getShopeeContact() != null && !shopeeInfo.getShopeeContact().isEmpty()) {
+                shopContact = "               maao.naM " + shopeeInfo.getShopeeContact() + " ";
+            }
+        }
+
+        Paragraph p = new Paragraph(shopName, f1);
         p.setLeading(4);
         doc.add(p);
-      //  p = new Paragraph("             ihrabaa[- paMZrInaaqa GaavaTo vyaapaarI saMkula", f2);
-        //p.setLeading(10);
-       // doc.add(p);
-        //p = new Paragraph("               AMmaLnaor, taa.naovaasaa,ija.Ahmadnagar", f2);
-        //p.setLeading(12);
-        //doc.add(p);
 
+        if (shopeeInfo != null && shopeeInfo.getAddress() != null && !shopeeInfo.getAddress().isEmpty()) {
+            p = new Paragraph("             " + shopeeInfo.getAddress(), f2);
+            p.setLeading(10);
+            doc.add(p);
+        }
 
-
-        p = new Paragraph("               maao.naM 9822420872,9970192697 ", f2);
+        p = new Paragraph(shopContact, f2);
         p.setLeading(10);
         p.setLeading(18);
         doc.add(p);
@@ -142,12 +161,25 @@ public class PrintBill {
         c1.setBorder(PdfPCell.TOP);
         table.addCell(c1);
 
-        //c1 = new PdfPCell(new Paragraph("Name: "+bill.getCustomer().getName(), smallBold));
-        c1 = new PdfPCell(new Paragraph("Name:"+bill.getCustomer().getName(), smallBold));
-        c1.setBorder(0);
-        c1.setBorder(PdfPCell.BOTTOM);
-        c1.setColspan(2);
-        table.addCell(c1);
+        if (bill.getCustomer() != null && bill.getCustomer().getName() != null
+                && !bill.getCustomer().getName().isEmpty() && bill.getPaid() <= 0.0f) {
+            c1 = new PdfPCell(new Paragraph("Name: " + bill.getCustomer().getName(), smallBold));
+            c1.setBorder(0);
+            c1.setColspan(2);
+            table.addCell(c1);
+
+            if (bill.getCustomer().getContact() != null && !bill.getCustomer().getContact().isEmpty()) {
+                c1 = new PdfPCell(new Paragraph("Mo: " + bill.getCustomer().getContact(), smallBold));
+                c1.setBorder(PdfPCell.BOTTOM);
+                c1.setColspan(2);
+                table.addCell(c1);
+            }
+        } else {
+            c1 = new PdfPCell(new Paragraph(" ", extrasmall));
+            c1.setBorder(PdfPCell.BOTTOM);
+            c1.setColspan(2);
+            table.addCell(c1);
+        }
 
         p = new Paragraph("        ",extrasmall);
         doc.add(p);
@@ -193,6 +225,9 @@ public class PrintBill {
         //transaction data
         int sr = 0;
         float mrp=0.0f,totalmrp=0.0f;
+        if (bill.getTransactions() == null) {
+            bill.setTransactions(new java.util.ArrayList<>());
+        }
         for (Transaction tr : bill.getTransactions()) {
             mrp += tr.getRate();
             totalmrp+=(tr.getQuantity()*tr.getRate());

@@ -1,12 +1,10 @@
 package com.ankush;
 
-import com.ankush.controller.print.PrintBill;
 import com.ankush.data.service.LoginService;
 import com.ankush.view.FxmlView;
 import com.ankush.view.StageManager;
 import javafx.application.Application;
 import javafx.stage.Stage;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -41,11 +39,13 @@ public class Main extends Application {
 		springContext.close();
 	}
 	protected void displayInitialScene() {
-		if(loginService.getAllUserNames().isEmpty()){
+		/*if(loginService.getAllUserNames().isEmpty()){
 			stageManager.switchScene(FxmlView.CREATE);
 		}else {
 			stageManager.switchScene(FxmlView.LOGIN);
-		}
+		}*/
+		stageManager.switchScene(FxmlView.LOGIN);
+		//stageManager.switchScene(FxmlView.PURCHASEINVOICE2);
 		//stageManager.switchScene(FxmlView.CREATE);
 		//stageManager.switchScene(FxmlView.BILLING);
 		//stageManager.switchScene(FxmlView.CUSTOMER);

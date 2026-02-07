@@ -32,5 +32,9 @@ public interface BillRepository extends JpaRepository<Bill, Long> {
     @Query("select sum(grandtotal) from Bill where date between :start and :end")
     Float getMonthlyBillAmount(@Param("start") LocalDate start,@Param("end") LocalDate end);
 
+    @Query("select distinct b from Bill b where b.customer.id = :customerId and b.date between :start and :end")
+    List<Bill> findByCustomerIdAndDateBetween(@Param("customerId") Integer customerId, @Param("start") LocalDate start, @Param("end") LocalDate end);
 
+    @Query("from Bill b where b.customer.id = :customerId")
+    List<Bill> findByCustomerId(@Param("customerId") Integer customerId);
 }

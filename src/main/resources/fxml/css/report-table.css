@@ -1,0 +1,70 @@
+@font-face {
+    font-family: kiran;
+    src: url(kiran.ttf);
+}
+
+.table-view {
+    -fx-background-color: transparent;
+    -fx-border-color: #C5CAE9;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+}
+
+.table-view .column-header,
+.table-view .column-header-background .filler {
+    -fx-background-color: linear-gradient(to right, #3949AB, #1A237E);
+    -fx-border-color: rgba(255,255,255,0.2);
+}
+
+.table-view .column-header .label {
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-alignment: center;
+    -fx-font-size: 12px;
+}
+
+.table-view .cell {
+    -fx-cell-size: 32;
+    -fx-alignment: CENTER_LEFT;
+    -fx-font-family: 'System';
+    -fx-font-size: 13;
+}
+
+.table-view .table-row-cell {
+    -fx-background-color: #FFFFFF;
+    -fx-border-color: #E8EAF6;
+    -fx-border-width: 0 0 1 0;
+}
+
+.table-view .table-row-cell:odd {
+    -fx-background-color: #F5F5FF;
+}
+
+.table-view .table-row-cell:selected {
+    -fx-background-color: #C5CAE9;
+}
+
+.table-view .table-row-cell:hover {
+    -fx-background-color: #E8EAF6;
+}
+
+/* scroll bar */
+.table-view .increment-button, .table-view .decrement-button {
+    -fx-background-color: transparent;
+    -fx-background-radius: 2em;
+}
+
+.table-view .scroll-bar:horizontal .track,
+.table-view .scroll-bar:vertical .track {
+    -fx-background-color: transparent;
+    -fx-border-color: #C5CAE9;
+    -fx-background-radius: 2em;
+    -fx-border-radius: 2em;
+}
+
+.table-view .scroll-bar:horizontal .thumb,
+.table-view .scroll-bar:vertical .thumb {
+    -fx-background-color: #7986CB;
+    -fx-background-insets: 2, 0, 0;
+    -fx-background-radius: 2em;
+}

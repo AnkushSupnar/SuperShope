@@ -61,10 +61,25 @@ public class LoginController implements Initializable {
         linkAddEmployee.setVisible(false);
         userNameList.addAll(loginService.getAllUserNames());
         try {
-            if (userNameList.isEmpty()) {
-                System.out.println("No login found");
+            List<ShopeeInfo> shopeeInfoList = shopeeInfoService.getAllShopeeInfo();
+            if (shopeeInfoList.isEmpty()) {
+                System.out.println("No shopee info found");
+                txtQuestion.setText("First Time?");
+                txtQuestion.setVisible(true);
+                linkAddEmployee.setText("Register Shop");
                 linkAddEmployee.setVisible(true);
-                stageManager.switchScene(FxmlView.CREATE);
+                linkAddEmployee.setOnAction(e->{
+                    stageManager.switchScene(FxmlView.CREATE);
+                });
+            }
+            else if (userNameList.isEmpty()) {
+                System.out.println("No login found");
+                txtQuestion.setVisible(true);
+                linkAddEmployee.setVisible(true);
+                linkAddEmployee.setOnAction(e->{
+                    stageManager.switchScene(FxmlView.EMPLOYEE);
+                    stageManager.showFullScreen();
+                });
             }
             else{
                 cmbUserName.setItems(userNameList);
@@ -73,8 +88,6 @@ public class LoginController implements Initializable {
                     stageManager.showFullScreen();
                 });
                 btnLogin.setOnAction(e->login());
-//        PrintBill printbill = new PrintBill();
-//        printbill.setBill(billService.getBillByBillNo(44));
             }
         }catch(Exception e)
         {

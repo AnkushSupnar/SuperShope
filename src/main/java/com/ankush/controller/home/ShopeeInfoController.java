@@ -1,5 +1,6 @@
 package com.ankush.controller.home;
 
+import com.ankush.Main;
 import com.ankush.data.entities.Employee;
 import com.ankush.data.entities.Login;
 import com.ankush.data.entities.ShopeeInfo;
@@ -11,6 +12,7 @@ import com.ankush.view.FxmlView;
 import com.ankush.view.StageManager;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.text.Font;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
@@ -124,7 +126,10 @@ public class ShopeeInfoController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-//        txtShopeeName.setStyle("-fx-font-family: 'Noto Sans Devanagari'; -fx-font-size: 14px;");
-//        txtWonerName .setStyle("-fx-font-family: 'Mukta'; -fx-font-size: 14px;");
+        Font.loadFont(Main.class.getResourceAsStream("/fxml/font/kiran.ttf"), 20);
+        String kiranStyle = "-fx-font-family: 'Kiran'; -fx-font-size: 20px;";
+        txtShopeeName.setStyle(kiranStyle);
+        txtWonerName.setStyle(kiranStyle);
+        txtAddress.setStyle(kiranStyle);
     }
 }

@@ -63,4 +63,11 @@ public class BillService {
         else return repository.getMonthlyBillAmount(start,end);
     }
 
+    public List<Bill> findByCustomerIdAndDateBetween(Integer customerId, LocalDate start, LocalDate end) {
+        return repository.findByCustomerIdAndDateBetween(customerId, start, end);
+    }
+
+    public List<Bill> findByCustomerId(Integer customerId) {
+        return repository.findByCustomerId(customerId);
+    }
 }

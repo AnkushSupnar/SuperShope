@@ -1,0 +1,72 @@
+.input-field {
+    -fx-background-color: #f8f8f8;
+    -fx-background-radius: 25;
+    -fx-border-color: #e0e0e0;
+    -fx-border-radius: 25;
+    -fx-font-size: 14px;
+    -fx-padding: 0 15 0 15;
+}
+
+.input-field:focused {
+    -fx-border-color: #2262C6;
+    -fx-background-color: white;
+}
+
+.login-button {
+    -fx-background-color: #2262C6;
+    -fx-text-fill: white;
+    -fx-background-radius: 25;
+    -fx-cursor: hand;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}
+
+.login-button:hover {
+    -fx-background-color: #1a4fa3;
+}
+
+.login-button .text {
+    -fx-fill: white;
+}
+
+.hyperlink {
+    -fx-border-color: transparent;
+    -fx-padding: 0 0 0 0;
+    -fx-text-fill: #2262C6;
+}
+
+.hyperlink:hover {
+    -fx-underline: true;
+}
+
+.combo-box-base {
+    -fx-background-color: -fx-shadow-highlight-color, -fx-outer-border, -fx-inner-border, white;
+    -fx-background-insets: 0 0 -1 0, 0, 1, 2;
+    -fx-background-radius: 25;
+}
+
+.combo-box-base:hover {
+    -fx-color: -fx-hover-base;
+}
+
+.combo-box-base:showing {
+    -fx-color: -fx-pressed-base;
+}
+
+.combo-box-base:focused {
+    -fx-background-color: -fx-focus-color, -fx-outer-border, -fx-inner-border, white;
+    -fx-background-insets: -1.4, 0, 1, 2;
+}
+
+.combo-box .list-cell {
+    -fx-padding: 0 0 0 15;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.login-button {
+    animation: fadeIn 0.5s ease-in-out forwards;
+}

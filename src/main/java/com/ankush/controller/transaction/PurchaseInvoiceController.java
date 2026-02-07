@@ -7,7 +7,6 @@ import com.ankush.data.service.*;
 import com.ankush.view.AlertNotification;
 import com.ankush.view.FxmlView;
 import com.ankush.view.StageManager;
-import javafx.beans.property.SimpleFloatProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;

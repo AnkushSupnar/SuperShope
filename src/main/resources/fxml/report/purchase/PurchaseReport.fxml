@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="rootPane" prefHeight="650.0" prefWidth="900.0"
+            style="-fx-background-color: #EDE7F6;"
+            stylesheets="@../../css/report-table.css"
+            xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.ankush.controller.report.purchase.PurchaseReportController">
+    <children>
+        <VBox spacing="0" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0"
+              AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0">
+            <children>
+
+                <!-- ===== Header with gradient ===== -->
+                <VBox alignment="CENTER" spacing="14"
+                      style="-fx-background-color: linear-gradient(to right, #1A237E, #283593, #3949AB); -fx-padding: 18 30;">
+                    <children>
+                        <HBox alignment="CENTER" spacing="10">
+                            <children>
+                                <StackPane prefHeight="32" prefWidth="32"
+                                           style="-fx-background-color: rgba(255,255,255,0.2); -fx-background-radius: 8;">
+                                    <children>
+                                        <FontAwesomeIcon fill="WHITE" glyphName="TRUCK" size="1.1em"/>
+                                    </children>
+                                </StackPane>
+                                <Label style="-fx-text-fill: WHITE; -fx-font-size: 20px; -fx-font-weight: bold;"
+                                       text="Purchase Report">
+                                    <font><Font name="System Bold" size="20.0"/></font>
+                                </Label>
+                            </children>
+                        </HBox>
+
+                        <!-- Period chip bar -->
+                        <HBox alignment="CENTER" spacing="10">
+                            <children>
+                                <HBox fx:id="chipDay" alignment="CENTER" prefHeight="34" spacing="6"
+                                      style="-fx-background-color: WHITE; -fx-background-radius: 18; -fx-padding: 6 18; -fx-cursor: hand; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 4, 0, 0, 1);">
+                                    <children>
+                                        <FontAwesomeIcon fx:id="chipDayIcon" fill="#1A237E" glyphName="CALENDAR" size="0.9em"/>
+                                        <Label fx:id="chipDayLabel"
+                                               style="-fx-text-fill: #1A237E; -fx-font-size: 12px; -fx-font-weight: bold;"
+                                               text="Day"/>
+                                    </children>
+                                </HBox>
+                                <HBox fx:id="chipMonth" alignment="CENTER" prefHeight="34" spacing="6"
+                                      style="-fx-background-color: rgba(255,255,255,0.2); -fx-background-radius: 18; -fx-padding: 6 18; -fx-cursor: hand;">
+                                    <children>
+                                        <FontAwesomeIcon fx:id="chipMonthIcon" fill="WHITE" glyphName="CALENDAR" size="0.9em"/>
+                                        <Label fx:id="chipMonthLabel"
+                                               style="-fx-text-fill: WHITE; -fx-font-size: 12px; -fx-font-weight: bold;"
+                                               text="Month"/>
+                                    </children>
+                                </HBox>
+                                <HBox fx:id="chipYear" alignment="CENTER" prefHeight="34" spacing="6"
+                                      style="-fx-background-color: rgba(255,255,255,0.2); -fx-background-radius: 18; -fx-padding: 6 18; -fx-cursor: hand;">
+                                    <children>
+                                        <FontAwesomeIcon fx:id="chipYearIcon" fill="WHITE" glyphName="CALENDAR" size="0.9em"/>
+                                        <Label fx:id="chipYearLabel"
+                                               style="-fx-text-fill: WHITE; -fx-font-size: 12px; -fx-font-weight: bold;"
+                                               text="Year"/>
+                                    </children>
+                                </HBox>
+                                <HBox fx:id="chipCustom" alignment="CENTER" prefHeight="34" spacing="6"
+                                      style="-fx-background-color: rgba(255,255,255,0.2); -fx-background-radius: 18; -fx-padding: 6 18; -fx-cursor: hand;">
+                                    <children>
+                                        <FontAwesomeIcon fx:id="chipCustomIcon" fill="WHITE" glyphName="SLIDERS" size="0.9em"/>
+                                        <Label fx:id="chipCustomLabel"
+                                               style="-fx-text-fill: WHITE; -fx-font-size: 12px; -fx-font-weight: bold;"
+                                               text="Custom"/>
+                                    </children>
+                                </HBox>
+                            </children>
+                        </HBox>
+                    </children>
+                </VBox>
+
+                <!-- ===== Controls bar ===== -->
+                <HBox alignment="CENTER_LEFT" spacing="12"
+                      style="-fx-background-color: linear-gradient(to bottom right, #FFFFFF, #E8EAF6); -fx-padding: 12 20; -fx-effect: dropshadow(gaussian, rgba(26,35,126,0.08), 6, 0, 0, 2);">
+                    <children>
+                        <!-- Dynamic date controls -->
+                        <StackPane fx:id="dateControlsPane" prefHeight="32">
+                            <children>
+                                <!-- Day mode: single DatePicker -->
+                                <HBox fx:id="dayControls" alignment="CENTER_LEFT" spacing="8">
+                                    <children>
+                                        <Label text="Date:" style="-fx-text-fill: #1A237E; -fx-font-weight: bold; -fx-font-size: 12px;"/>
+                                        <DatePicker fx:id="datePicker" prefWidth="150"
+                                                    style="-fx-background-color: white; -fx-border-color: #C5CAE9; -fx-border-radius: 6; -fx-background-radius: 6;"/>
+                                    </children>
+                                </HBox>
+
+                                <!-- Month mode -->
+                                <HBox fx:id="monthControls" alignment="CENTER_LEFT" spacing="8" visible="false">
+                                    <children>
+                                        <Label text="Month:" style="-fx-text-fill: #1A237E; -fx-font-weight: bold; -fx-font-size: 12px;"/>
+                                        <ComboBox fx:id="cmbMonth" prefWidth="120"
+                                                  style="-fx-background-color: white; -fx-border-color: #C5CAE9; -fx-border-radius: 6; -fx-background-radius: 6;"/>
+                                        <Label text="Year:" style="-fx-text-fill: #1A237E; -fx-font-weight: bold; -fx-font-size: 12px;"/>
+                                        <ComboBox fx:id="cmbMonthYear" prefWidth="90"
+                                                  style="-fx-background-color: white; -fx-border-color: #C5CAE9; -fx-border-radius: 6; -fx-background-radius: 6;"/>
+                                    </children>
+                                </HBox>
+
+                                <!-- Year mode -->
+                                <HBox fx:id="yearControls" alignment="CENTER_LEFT" spacing="8" visible="false">
+                                    <children>
+                                        <Label text="Year:" style="-fx-text-fill: #1A237E; -fx-font-weight: bold; -fx-font-size: 12px;"/>
+                                        <ComboBox fx:id="cmbYear" prefWidth="90"
+                                                  style="-fx-background-color: white; -fx-border-color: #C5CAE9; -fx-border-radius: 6; -fx-background-radius: 6;"/>
+                                    </children>
+                                </HBox>
+
+                                <!-- Custom mode -->
+                                <HBox fx:id="customControls" alignment="CENTER_LEFT" spacing="8" visible="false">
+                                    <children>
+                                        <Label text="From:" style="-fx-text-fill: #1A237E; -fx-font-weight: bold; -fx-font-size: 12px;"/>
+                                        <DatePicker fx:id="dateFrom" prefWidth="140"
+                                                    style="-fx-background-color: white; -fx-border-color: #C5CAE9; -fx-border-radius: 6; -fx-background-radius: 6;"/>
+                                        <Label text="To:" style="-fx-text-fill: #1A237E; -fx-font-weight: bold; -fx-font-size: 12px;"/>
+                                        <DatePicker fx:id="dateTo" prefWidth="140"
+                                                    style="-fx-background-color: white; -fx-border-color: #C5CAE9; -fx-border-radius: 6; -fx-background-radius: 6;"/>
+                                    </children>
+                                </HBox>
+                            </children>
+                        </StackPane>
+
+                        <!-- Spacer -->
+                        <Region HBox.hgrow="ALWAYS"/>
+
+                        <!-- Party name search -->
+                        <Label text="Party:" style="-fx-text-fill: #1A237E; -fx-font-weight: bold; -fx-font-size: 12px;"/>
+                        <TextField fx:id="txtPartyName" prefWidth="160" promptText="Search party..."
+                                   style="-fx-background-color: white; -fx-border-color: #C5CAE9; -fx-border-radius: 6; -fx-background-radius: 6; -fx-font-size: 13px;"/>
+                    </children>
+                </HBox>
+
+                <!-- ===== Action buttons bar ===== -->
+                <HBox alignment="CENTER" spacing="12"
+                      style="-fx-background-color: #EDE7F6; -fx-padding: 10 20;">
+                    <children>
+                        <Button fx:id="btnShow" mnemonicParsing="false"
+                                style="-fx-background-color: linear-gradient(to right, #3949AB, #1A237E); -fx-text-fill: white; -fx-background-radius: 8; -fx-font-size: 12px; -fx-font-weight: bold; -fx-cursor: hand; -fx-padding: 8 20; -fx-effect: dropshadow(gaussian, rgba(26,35,126,0.3), 4, 0, 0, 2);"
+                                text="Show">
+                            <graphic><FontAwesomeIcon fill="white" glyphName="SEARCH" size="1em"/></graphic>
+                        </Button>
+                        <Button fx:id="btnExportPdf" mnemonicParsing="false"
+                                style="-fx-background-color: linear-gradient(to right, #E53935, #B71C1C); -fx-text-fill: white; -fx-background-radius: 8; -fx-font-size: 12px; -fx-font-weight: bold; -fx-cursor: hand; -fx-padding: 8 20; -fx-effect: dropshadow(gaussian, rgba(183,28,28,0.3), 4, 0, 0, 2);"
+                                text="Export PDF">
+                            <graphic><FontAwesomeIcon fill="white" glyphName="FILE_TEXT" size="1em"/></graphic>
+                        </Button>
+                        <Button fx:id="btnExportExcel" mnemonicParsing="false"
+                                style="-fx-background-color: linear-gradient(to right, #2E7D32, #1B5E20); -fx-text-fill: white; -fx-background-radius: 8; -fx-font-size: 12px; -fx-font-weight: bold; -fx-cursor: hand; -fx-padding: 8 20; -fx-effect: dropshadow(gaussian, rgba(27,94,32,0.3), 4, 0, 0, 2);"
+                                text="Export Excel">
+                            <graphic><FontAwesomeIcon fill="white" glyphName="TABLE" size="1em"/></graphic>
+                        </Button>
+                        <Region HBox.hgrow="ALWAYS"/>
+                        <Button fx:id="btnBack" mnemonicParsing="false"
+                                style="-fx-background-color: rgba(26,35,126,0.1); -fx-text-fill: #1A237E; -fx-background-radius: 8; -fx-font-size: 12px; -fx-font-weight: bold; -fx-cursor: hand; -fx-padding: 8 20;"
+                                text="Back">
+                            <graphic><FontAwesomeIcon fill="#1A237E" glyphName="ARROW_LEFT" size="1em"/></graphic>
+                        </Button>
+                    </children>
+                </HBox>
+
+                <!-- ===== Table ===== -->
+                <TableView fx:id="table" VBox.vgrow="ALWAYS"
+                           style="-fx-background-color: transparent;">
+                    <columns>
+                        <TableColumn fx:id="colSr" prefWidth="40" text="Sr"/>
+                        <TableColumn fx:id="colDate" prefWidth="90" text="Date"/>
+                        <TableColumn fx:id="colParty" prefWidth="140" text="Party Name"/>
+                        <TableColumn fx:id="colInvoiceNo" prefWidth="90" text="Invoice No"/>
+                        <TableColumn fx:id="colItems" prefWidth="50" text="Items"/>
+                        <TableColumn fx:id="colNetTotal" prefWidth="85" text="Net Total"/>
+                        <TableColumn fx:id="colDiscount" prefWidth="70" text="Discount"/>
+                        <TableColumn fx:id="colGrandTotal" prefWidth="95" text="Grand Total"/>
+                        <TableColumn fx:id="colPaid" prefWidth="80" text="Paid"/>
+                        <TableColumn fx:id="colDue" prefWidth="80" text="Due"/>
+                    </columns>
+                    <VBox.margin><Insets left="15" right="15"/></VBox.margin>
+                </TableView>
+
+                <!-- ===== Summary cards ===== -->
+                <HBox alignment="CENTER" spacing="16"
+                      style="-fx-padding: 12 20;">
+                    <children>
+                        <!-- Total Invoices card -->
+                        <HBox alignment="CENTER" spacing="10" prefHeight="50"
+                              style="-fx-background-color: linear-gradient(to right, #42A5F5, #1565C0); -fx-background-radius: 10; -fx-padding: 10 22; -fx-effect: dropshadow(gaussian, rgba(21,101,192,0.3), 6, 0, 0, 2);">
+                            <children>
+                                <FontAwesomeIcon fill="WHITE" glyphName="FILE_TEXT_O" size="1.2em"/>
+                                <VBox alignment="CENTER_LEFT" spacing="2">
+                                    <children>
+                                        <Label style="-fx-text-fill: rgba(255,255,255,0.8); -fx-font-size: 10px;" text="Total Invoices"/>
+                                        <Label fx:id="lblTotalInvoices" style="-fx-text-fill: WHITE; -fx-font-size: 16px; -fx-font-weight: bold;" text="0">
+                                            <font><Font name="System Bold" size="16.0"/></font>
+                                        </Label>
+                                    </children>
+                                </VBox>
+                            </children>
+                        </HBox>
+
+                        <!-- Total Amount card -->
+                        <HBox alignment="CENTER" spacing="10" prefHeight="50"
+                              style="-fx-background-color: linear-gradient(to right, #FFA726, #E65100); -fx-background-radius: 10; -fx-padding: 10 22; -fx-effect: dropshadow(gaussian, rgba(230,81,0,0.3), 6, 0, 0, 2);">
+                            <children>
+                                <FontAwesomeIcon fill="WHITE" glyphName="INR" size="1.2em"/>
+                                <VBox alignment="CENTER_LEFT" spacing="2">
+                                    <children>
+                                        <Label style="-fx-text-fill: rgba(255,255,255,0.8); -fx-font-size: 10px;" text="Total Amount"/>
+                                        <Label fx:id="lblTotalAmount" style="-fx-text-fill: WHITE; -fx-font-size: 16px; -fx-font-weight: bold;" text="0.00">
+                                            <font><Font name="System Bold" size="16.0"/></font>
+                                        </Label>
+                                    </children>
+                                </VBox>
+                            </children>
+                        </HBox>
+
+                        <!-- Total Paid card -->
+                        <HBox alignment="CENTER" spacing="10" prefHeight="50"
+                              style="-fx-background-color: linear-gradient(to right, #66BB6A, #2E7D32); -fx-background-radius: 10; -fx-padding: 10 22; -fx-effect: dropshadow(gaussian, rgba(46,125,50,0.3), 6, 0, 0, 2);">
+                            <children>
+                                <FontAwesomeIcon fill="WHITE" glyphName="CHECK_CIRCLE" size="1.2em"/>
+                                <VBox alignment="CENTER_LEFT" spacing="2">
+                                    <children>
+                                        <Label style="-fx-text-fill: rgba(255,255,255,0.8); -fx-font-size: 10px;" text="Total Paid"/>
+                                        <Label fx:id="lblTotalPaid" style="-fx-text-fill: WHITE; -fx-font-size: 16px; -fx-font-weight: bold;" text="0.00">
+                                            <font><Font name="System Bold" size="16.0"/></font>
+                                        </Label>
+                                    </children>
+                                </VBox>
+                            </children>
+                        </HBox>
+
+                        <!-- Total Due card -->
+                        <HBox alignment="CENTER" spacing="10" prefHeight="50"
+                              style="-fx-background-color: linear-gradient(to right, #EF5350, #C62828); -fx-background-radius: 10; -fx-padding: 10 22; -fx-effect: dropshadow(gaussian, rgba(198,40,40,0.3), 6, 0, 0, 2);">
+                            <children>
+                                <FontAwesomeIcon fill="WHITE" glyphName="EXCLAMATION_CIRCLE" size="1.2em"/>
+                                <VBox alignment="CENTER_LEFT" spacing="2">
+                                    <children>
+                                        <Label style="-fx-text-fill: rgba(255,255,255,0.8); -fx-font-size: 10px;" text="Total Due"/>
+                                        <Label fx:id="lblTotalDue" style="-fx-text-fill: WHITE; -fx-font-size: 16px; -fx-font-weight: bold;" text="0.00">
+                                            <font><Font name="System Bold" size="16.0"/></font>
+                                        </Label>
+                                    </children>
+                                </VBox>
+                            </children>
+                        </HBox>
+                    </children>
+                </HBox>
+            </children>
+        </VBox>
+    </children>
+</AnchorPane>

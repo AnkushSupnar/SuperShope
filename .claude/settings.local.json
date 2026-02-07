@@ -1,0 +1,24 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(xxd:*)",
+      "Bash(mvn compile:*)",
+      "Bash(jar tf:*)",
+      "Bash(findstr:*)",
+      "Bash(python -c \"import zipfile; z=zipfile.ZipFile\\(r''C:\\\\Users\\\\Ankush\\\\.m2\\\\repository\\\\de\\\\jensd\\\\fontawesomefx\\\\8.2\\\\fontawesomefx-8.2.jar''\\); [print\\(n\\) for n in z.namelist\\(\\) if ''FontAwesomeIcon'' in n and n.endswith\\(''.class''\\)]\")",
+      "Bash(dir /s /b \"%USERPROFILE%\\\\.m2\\\\repository\\\\de\\\\jensd\\\\fontawesomefx\\\\8.2\\\\*.jar\")",
+      "Bash(powershell -Command \"Add-Type -AssemblyName System.IO.Compression.FileSystem; $zip = [System.IO.Compression.ZipFile]::OpenRead\\(\\(Get-ChildItem \"\"$env:USERPROFILE\\\\.m2\\\\repository\\\\de\\\\jensd\\\\fontawesomefx\\\\8.2\\\\fontawesomefx-8.2.jar\"\"\\).FullName\\); $entry = $zip.Entries | Where-Object { $_.Name -eq ''FontAwesomeIcon.class'' }; Write-Host $entry.FullName; $zip.Dispose\\(\\)\")",
+      "Bash(mvn dependency:build-classpath:*)",
+      "Bash(mvn exec:java:*)",
+      "Bash(javac:*)",
+      "Bash(java:*)",
+      "Bash(powershell -Command \"& { Add-Type -AssemblyName ''System.IO.Compression.FileSystem''; $jar = [System.IO.Compression.ZipFile]::OpenRead\\(''C:\\\\Users\\\\Ankush\\\\.m2\\\\repository\\\\de\\\\jensd\\\\fontawesomefx\\\\8.2\\\\fontawesomefx-8.2.jar''\\); $entry = $jar.GetEntry\\(''de/jensd/fx/glyphs/fontawesome/FontAwesomeIcon.class''\\); $stream = $entry.Open\\(\\); $reader = New-Object System.IO.StreamReader\\($stream\\); $bytes = New-Object byte[] $entry.Length; $stream.Read\\($bytes, 0, $entry.Length\\) | Out-Null; $text = [System.Text.Encoding]::ASCII.GetString\\($bytes\\); $matches = [regex]::Matches\\($text, ''[A-Z_]{3,}''\\); foreach\\($m in $matches\\) { if\\($m.Value -match ''CALENDAR|FILE_|SLIDER''\\) { Write-Host $m.Value } }; $stream.Close\\(\\); $jar.Dispose\\(\\) }\")",
+      "Bash(unzip:*)",
+      "Bash(git ls-tree:*)",
+      "Bash(git status:*)",
+      "Bash(del \"\\\\?\\\\C:\\\\Claude_workspace\\\\SuperShope\\\\nul\")",
+      "Bash(python -c \"import os; os.remove\\(r''\\\\\\\\?\\\\C:\\\\Claude_workspace\\\\SuperShope\\\\nul''\\)\")",
+      "Bash(cmd.exe /c \"dir C:\\\\Claude_workspace\\\\SuperShope\\\\nul\")"
+    ]
+  }
+}

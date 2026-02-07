@@ -104,6 +104,17 @@ public enum FxmlView {
             return "/fxml/transaction/PurchaseInvoice.fxml";
         }
     },
+    PURCHASEINVOICE2 {
+        @Override
+        String getTitle() {
+            return "Purchase Invoice 2";
+            //return getStringFromResourceBundle("dashboard.title");
+        }
+        @Override
+        public String getFxmlFile() {
+            return "/fxml/transaction/PurchaseInvoice2.fxml";
+        }
+    },
     BANK {
         @Override
         String getTitle() {
@@ -134,6 +145,16 @@ public enum FxmlView {
             return "/fxml/transaction/BillingFrame.fxml";
         }
     },
+    DAILYBILLING {
+        @Override
+        String getTitle() {
+            return getStringFromResourceBundle("dashboard.title");
+        }
+        @Override
+        public String getFxmlFile() {
+            return "/fxml/transaction/DailyBilling.fxml";
+        }
+    },
     CUSTOMER {
         @Override
         String getTitle() {
@@ -151,7 +172,7 @@ public enum FxmlView {
         }
         @Override
         public String getFxmlFile() {
-            return "/fxml/report/salesreport/DailySalesReport.fxml";
+            return "/fxml/report/salesreport/SalesReport.fxml";
         }
     }
     ;

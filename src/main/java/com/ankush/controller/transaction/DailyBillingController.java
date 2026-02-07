@@ -31,10 +31,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
+import javafx.application.Platform;
+
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -125,6 +128,7 @@ public class DailyBillingController implements Initializable {
     @Autowired private LoginService loginService;
     //@Autowired private PrintBill printbill;
     @Autowired BankTransactionService bankTrService;
+    @Autowired ShopeeInfoService shopeeInfoService;
 
     private ObservableList<String>itemNameList = FXCollections.observableArrayList();
     private ObservableList<Transaction>trList = FXCollections.observableArrayList();
@@ -135,14 +139,15 @@ public class DailyBillingController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
-
         createTable();
         colBillNo.setCellValueFactory(new PropertyValueFactory<>("billno"));
         colDate.setCellValueFactory(new PropertyValueFactory<>("date"));
         colBillAmt.setCellValueFactory(new PropertyValueFactory<>("grandtotal"));
         colPaid.setCellValueFactory(new PropertyValueFactory<>("paid"));
-       // colCustomer.setCellValueFactory(cellData->new SimpleStringProperty(cellData.getValue().getCustomer().getName()));
+        colCustomer.setCellValueFactory(cellData -> {
+            Customer cust = cellData.getValue().getCustomer();
+            return new SimpleStringProperty(cust != null ? cust.getName() : "");
+        });
         colLogin.setCellValueFactory(cellData->new SimpleStringProperty(cellData.getValue().getLogin().getUsername()));
         //billList.addAll(billService.getBillByDate(LocalDate.now()));
        // billList.addAll(billService.getAllBills());
@@ -158,9 +163,19 @@ public class DailyBillingController implements Initializable {
         service.execute(task);
         service.shutdown();
         printbill = new PrintBill();
+        List<ShopeeInfo> shopeeInfoList = shopeeInfoService.getAllShopeeInfo();
+        if (!shopeeInfoList.isEmpty()) {
+            printbill.setShopeeInfo(shopeeInfoList.get(0));
+        }
         date.setValue(LocalDate.now());
         dateSearch.setValue(LocalDate.now());
-        txtBank.setText(bankService.getBankById(1).getBankname());
+        Optional<Bank> defaultBank = bankService.getBankByIdOptional(1);
+        if(defaultBank.isEmpty()){
+            alert.showError("Please add a Bank before using Billing. Go to Create > Add Bank.");
+            Platform.runLater(()->stageManager.switchScene(FxmlView.HOME));
+            return;
+        }
+        txtBank.setText(defaultBank.get().getBankname());
         CommonData.customerNames.addAll(customerService.getAllCustomerNames());
         customerNames = SuggestionProvider.create(CommonData.customerNames);
         new AutoCompletionTextFieldBinding<>(txtCustomerName,customerNames);
@@ -194,12 +209,12 @@ public class DailyBillingController implements Initializable {
                 }
                 else
                 {
-                    if(!txtRate.getText().isEmpty() ||
-                            !txtRate.getText().equals(""+0.0f)||
+                    if(!txtRate.getText().isEmpty() &&
+                            !txtRate.getText().equals(""+0.0f)&&
                             !txtQty.getText().isEmpty()
                             )
                     {
-                        if(isNumeric(txtQty.getText()))
+                        if(isNumeric(txtQty.getText()) && isNumeric(txtRate.getText()))
                         txtAmount.setText(
                                 String.valueOf(Float.parseFloat(txtRate.getText())*Float.parseFloat(txtQty.getText()))
                         );
@@ -220,12 +235,12 @@ public class DailyBillingController implements Initializable {
                 }
                 else
                 {
-                    if(!txtRate.getText().isEmpty() ||
-                            !txtRate.getText().equals(""+0.0f)||
+                    if(!txtRate.getText().isEmpty() &&
+                            !txtRate.getText().equals(""+0.0f)&&
                             !txtQty.getText().isEmpty()
                     )
                     {
-                        if(isNumeric(txtQty.getText()))
+                        if(isNumeric(txtQty.getText()) && isNumeric(txtRate.getText()))
                             txtAmount.setText(
                                     String.valueOf(Float.parseFloat(txtRate.getText())*Float.parseFloat(txtQty.getText()))
                             );
@@ -246,9 +261,8 @@ public class DailyBillingController implements Initializable {
                 }
                 else
                 {
-                    if(!txtOther.getText().isEmpty() ||
-                            !txtOther.getText().equals(""+0.0f)||
-                            !txtOther.getText().isEmpty()&&
+                    if(!txtOther.getText().isEmpty() &&
+                            !txtOther.getText().equals(""+0.0f)&&
                                     isNumeric(txtOther.getText()))
                     {
                         if(isNumeric(txtOther.getText()))
@@ -265,12 +279,11 @@ public class DailyBillingController implements Initializable {
                 }
                 else
                 {
-                    if(!txtRecived.getText().isEmpty() ||
-                            !txtRecived.getText().equals(""+0.0f)||
-                            !txtRecived.getText().isEmpty()&&
+                    if(!txtRecived.getText().isEmpty() &&
+                            !txtRecived.getText().equals(""+0.0f)&&
                                     isNumeric(txtRecived.getText()))
                     {
-                        if(isNumeric(txtRecived.getText()))
+                        if(isNumeric(txtRecived.getText()) && isNumeric(txtGrandTotal.getText()))
                             txtRemaining.setText(
                                     String.valueOf(Float.parseFloat(txtRecived.getText())-Float.parseFloat(txtGrandTotal.getText()))
                             );
@@ -279,11 +292,9 @@ public class DailyBillingController implements Initializable {
             }
         });
         txtRate.setOnAction(e->{
-            if(!txtRate.getText().isBlank() ||
-                    !txtRate.getText().isBlank()||
-                    !txtRate.getText().equals("") &&
-                            isNumeric(txtRate.getText())&&
-                            Float.parseFloat(txtRate.getText())>0.0f)
+            if(!txtRate.getText().isBlank() &&
+                    isNumeric(txtRate.getText())&&
+                    Float.parseFloat(txtRate.getText())>0.0f)
             {
                 btnAdd.requestFocus();
             }
@@ -373,7 +384,7 @@ public class DailyBillingController implements Initializable {
         txtRecived.setText(String.valueOf(0.0f));
         txtRemaining.setText(String.valueOf(0.0f));
         txtCustomerMobile.setText(String.valueOf(0.0f));
-        txtBank.setText(bankService.getBankById(1).getBankname());
+        bankService.getBankByIdOptional(1).ifPresent(bank -> txtBank.setText(bank.getBankname()));
         billno=null;
     }
 
@@ -386,16 +397,17 @@ public class DailyBillingController implements Initializable {
             if(!validateBill())return;
             Customer custom = null;
             custom =checkCustomer();
-            if(custom==null)customerService.getCustomerByName(txtCustomerName.getText());
+            if(custom==null) custom = customerService.getCustomerByName(txtCustomerName.getText());
             float paid=0.0f,remain=0.0f;
-            if(Float.parseFloat(txtRemaining.getText())<0.0f)
+            float remainVal = isNumeric(txtRemaining.getText()) ? Float.parseFloat(txtRemaining.getText()) : 0.0f;
+            if(remainVal<0.0f)
             {
-                paid = Float.parseFloat(txtRecived.getText());
-            }else paid = Float.parseFloat(txtPayble.getText());
+                paid = isNumeric(txtRecived.getText()) ? Float.parseFloat(txtRecived.getText()) : 0.0f;
+            }else paid = isNumeric(txtPayble.getText()) ? Float.parseFloat(txtPayble.getText()) : 0.0f;
 
             Bill bill = Bill.builder()
                     //.bank(bankService.getBankByBankname(txtBank.getText()))
-                    //.customer(custom)
+                    .customer(custom)
                     .date(date.getValue())
                     .discount(Float.parseFloat(txtDiscount.getText()))
                     .grandtotal(Float.parseFloat(txtGrandTotal.getText()))
@@ -558,9 +570,11 @@ public class DailyBillingController implements Initializable {
         if(txtCustomerName.getText().isEmpty())
         {
             boolean result=true;
+            float recivedAmt = isNumeric(txtRecived.getText()) ? Float.parseFloat(txtRecived.getText()) : 0.0f;
+            float remainingAmt = isNumeric(txtRemaining.getText()) ? Float.parseFloat(txtRemaining.getText()) : 0.0f;
             if(txtRecived.getText().isEmpty()
-                    || Float.parseFloat(txtRecived.getText())<=0.0f
-                    ||Float.parseFloat(txtRemaining.getText())<0.0f)
+                    || recivedAmt<=0.0f
+                    || remainingAmt<0.0f)
             {
                 alert.showError("Enter Received Amount or Select Customer Name to Credit Bill");
                 result=false;
@@ -1095,12 +1109,12 @@ public class DailyBillingController implements Initializable {
     {
         if(!isNumeric(txtRecived.getText()))
             txtRecived.setText(String.valueOf(0.0));
-        txtGrandTotal.setText(
-                String.valueOf(Float.parseFloat(txtNetTotal.getText())+Float.parseFloat(txtOther.getText()))
-        );
-        txtRemaining.setText(
-                String.valueOf(Float.parseFloat(txtRecived.getText())-Float.parseFloat(txtGrandTotal.getText()))
-        );
+        float netTotal = isNumeric(txtNetTotal.getText()) ? Float.parseFloat(txtNetTotal.getText()) : 0.0f;
+        float other = isNumeric(txtOther.getText()) ? Float.parseFloat(txtOther.getText()) : 0.0f;
+        txtGrandTotal.setText(String.valueOf(netTotal + other));
+        float recived = isNumeric(txtRecived.getText()) ? Float.parseFloat(txtRecived.getText()) : 0.0f;
+        float grandTotal = isNumeric(txtGrandTotal.getText()) ? Float.parseFloat(txtGrandTotal.getText()) : 0.0f;
+        txtRemaining.setText(String.valueOf(recived - grandTotal));
         txtPayble.setText(txtGrandTotal.getText());
     }
     private void addBankTransaction(BankTransaction bankTransaction)

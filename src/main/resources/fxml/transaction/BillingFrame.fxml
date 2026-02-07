@@ -10,267 +10,419 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="726.0" prefWidth="1312.0" stylesheets="@../css/billing.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ankush.controller.transaction.BillingController">
+<AnchorPane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1400.0" style="-fx-background-color: #FAFAFA;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ankush.controller.transaction.BillingController">
    <children>
-      <AnchorPane fx:id="leftPane" layoutX="8.0" layoutY="14.0" prefHeight="601.0" prefWidth="240.0" styleClass="pane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <AnchorPane fx:id="leftPane" layoutX="8.0" layoutY="14.0" prefHeight="601.0" prefWidth="260.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 8; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 8, 0, 0, 2); -fx-padding: 20;" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="20.0">
          <children>
-            <Text layoutX="39.0" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Item Names">
+            <Label layoutX="20.0" layoutY="20.0" text="Quick Items" style="-fx-text-fill: #1976D2; -fx-font-size: 18px; -fx-font-weight: bold;">
                <font>
-                  <Font name="Georgia" size="20.0" />
+                  <Font name="System Bold" size="18.0" />
                </font>
-            </Text>
+               <graphic>
+                  <FontAwesomeIcon fill="#1976D2" glyphName="LIST" size="1.2em" />
+               </graphic>
+            </Label>
          </children></AnchorPane>
-      <AnchorPane layoutX="1026.0" layoutY="14.0" prefHeight="601.0" prefWidth="173.0" styleClass="pane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="1026.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <AnchorPane layoutX="1026.0" layoutY="14.0" prefHeight="601.0" prefWidth="320.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 8; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 8, 0, 0, 2); -fx-padding: 20;" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
          <children>
-            <TableView fx:id="tableOld" layoutX="3.0" layoutY="2.0" prefHeight="671.0" prefWidth="253.0" stylesheets="@../css/table.css" tableMenuButtonVisible="true" AnchorPane.bottomAnchor="54.0" AnchorPane.leftAnchor="2.0" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="1.0">
+            <Label text="Recent Bills" style="-fx-text-fill: #1976D2; -fx-font-size: 18px; -fx-font-weight: bold;" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <graphic>
+                  <FontAwesomeIcon fill="#1976D2" glyphName="HISTORY" size="1.2em" />
+               </graphic>
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <TableView fx:id="tableOld" layoutX="3.0" layoutY="2.0" prefHeight="671.0" prefWidth="280.0" style="-fx-background-color: transparent; -fx-table-cell-border-color: #E0E0E0;" tableMenuButtonVisible="true" AnchorPane.bottomAnchor="80.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="40.0">
               <columns>
-                <TableColumn fx:id="colBillNo" prefWidth="75.0" text="BILLNO" />
-                  <TableColumn fx:id="colDate" prefWidth="75.0" text="DATE" />
-                <TableColumn fx:id="colBillAmt" prefWidth="75.0" text="AMOUNT" />
-                  <TableColumn fx:id="colPaid" prefWidth="75.0" text="PAID" />
-                  <TableColumn fx:id="colCustomer" prefWidth="75.0" text="CUSTOMER" />
-                  <TableColumn fx:id="colLogin" prefWidth="75.0" text="USER" />
+                <TableColumn fx:id="colBillNo" prefWidth="50.0" text="Bill#" style="-fx-alignment: CENTER;" />
+                  <TableColumn fx:id="colDate" prefWidth="70.0" text="Date" style="-fx-alignment: CENTER;" />
+                <TableColumn fx:id="colBillAmt" prefWidth="60.0" text="Amount" style="-fx-alignment: CENTER;" />
+                  <TableColumn fx:id="colPaid" prefWidth="50.0" text="Paid" style="-fx-alignment: CENTER;" />
+                  <TableColumn fx:id="colCustomer" prefWidth="80.0" text="Customer" />
+                  <TableColumn fx:id="colLogin" prefWidth="50.0" text="User" style="-fx-alignment: CENTER;" />
               </columns>
             </TableView>
-            <HBox layoutX="7.0" layoutY="681.0" spacing="2.0" AnchorPane.bottomAnchor="10.0">
+            <HBox spacing="8.0" style="-fx-padding: 10 0 0 0;" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                <children>
-                  <DatePicker fx:id="dateSearch" prefHeight="25.0" prefWidth="99.0" promptText="Select Date" />
-                  <Button fx:id="btnWeek" mnemonicParsing="false" text="WEEK" />
-                  <Button fx:id="btnMonth" mnemonicParsing="false" text="MONTH" />
-                  <Button fx:id="btnAll" mnemonicParsing="false" text="ALL" />
+                  <DatePicker fx:id="dateSearch" prefHeight="32.0" prefWidth="120.0" promptText="Select Date" style="-fx-background-color: #F5F5F5; -fx-background-radius: 4; -fx-border-color: #E0E0E0; -fx-border-radius: 4;" />
+                  <Button fx:id="btnWeek" mnemonicParsing="false" prefHeight="32.0" style="-fx-background-color: #E3F2FD; -fx-text-fill: #1976D2; -fx-background-radius: 4; -fx-border-color: #1976D2; -fx-border-width: 1; -fx-border-radius: 4; -fx-cursor: hand;" text="Week" />
+                  <Button fx:id="btnMonth" mnemonicParsing="false" prefHeight="32.0" style="-fx-background-color: #E3F2FD; -fx-text-fill: #1976D2; -fx-background-radius: 4; -fx-border-color: #1976D2; -fx-border-width: 1; -fx-border-radius: 4; -fx-cursor: hand;" text="Month" />
+                  <Button fx:id="btnAll" mnemonicParsing="false" prefHeight="32.0" style="-fx-background-color: #E3F2FD; -fx-text-fill: #1976D2; -fx-background-radius: 4; -fx-border-color: #1976D2; -fx-border-width: 1; -fx-border-radius: 4; -fx-cursor: hand;" text="All" />
                </children>
             </HBox>
          </children></AnchorPane>
-      <Label layoutX="254.0" layoutY="5.0" text="Date" />
-      <DatePicker fx:id="date" layoutX="249.0" layoutY="22.0" prefHeight="33.0" prefWidth="118.0" promptText="select Date" />
-      <Label layoutX="370.0" layoutY="6.0" text="Customer Name" />
-      <TextField fx:id="txtCustomerName" layoutX="370.0" layoutY="22.0" prefHeight="33.0" prefWidth="268.0" promptText="Enter Customer Name">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </TextField>
-      <Label layoutX="644.0" layoutY="8.0" text="Customer Mobile No" />
-      <TextField fx:id="txtCustomerMobile" layoutX="644.0" layoutY="23.0" prefHeight="33.0" prefWidth="182.0" promptText="Enter Customer Mobile No">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </TextField>
-      <Label layoutX="252.0" layoutY="70.0" text="Bar Code" />
-      <HBox layoutX="252.0" layoutY="87.0" prefHeight="33.0" prefWidth="759.0">
+      <HBox alignment="CENTER_LEFT" layoutX="300.0" layoutY="20.0" spacing="20.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 8; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 8, 0, 0, 2); -fx-padding: 20;" AnchorPane.leftAnchor="300.0" AnchorPane.rightAnchor="360.0" AnchorPane.topAnchor="20.0">
          <children>
-            <TextField fx:id="txtBarcode" prefHeight="33.0">
-               <font>
-                  <Font name="System Bold" size="16.0" />
-               </font></TextField>
-            <TextField fx:id="txtItemName" prefHeight="33.0" prefWidth="250.0" promptText="maalaacao naava">
-               <font>
-                  <Font name="Kiran" size="20.0" />
-               </font>
-            </TextField>
-            <ComboBox fx:id="cmbUnit" prefHeight="35.0" prefWidth="90.0" promptText="Unit" />
-            <TextField fx:id="txtQty" prefHeight="33.0" prefWidth="100.0" promptText="Quantity">
-               <font>
-                  <Font name="System Bold" size="16.0" />
-               </font></TextField>
-            <TextField fx:id="txtRate" prefHeight="33.0" prefWidth="100.0" promptText="Rate">
-               <font>
-                  <Font name="System Bold" size="16.0" />
-               </font></TextField>
-            <TextField fx:id="txtAmount" editable="false" prefHeight="33.0" prefWidth="100.0" promptText="Amount">
-               <font>
-                  <Font name="System Bold" size="16.0" />
-               </font></TextField>
+            <VBox spacing="5.0">
+               <children>
+                  <Label text="Date" style="-fx-text-fill: #757575; -fx-font-size: 12px; -fx-font-weight: 500;">
+                     <graphic>
+                        <FontAwesomeIcon fill="#757575" glyphName="CALENDAR" size="0.9em" />
+                     </graphic>
+                  </Label>
+                  <DatePicker fx:id="date" prefHeight="40.0" prefWidth="140.0" promptText="Select Date" style="-fx-background-color: #F5F5F5; -fx-background-radius: 4; -fx-border-color: #E0E0E0; -fx-border-radius: 4;" />
+               </children>
+            </VBox>
+            <VBox spacing="5.0" HBox.hgrow="ALWAYS">
+               <children>
+                  <Label text="Customer Name" style="-fx-text-fill: #757575; -fx-font-size: 12px; -fx-font-weight: 500;">
+                     <graphic>
+                        <FontAwesomeIcon fill="#757575" glyphName="USER" size="0.9em" />
+                     </graphic>
+                  </Label>
+                  <TextField fx:id="txtCustomerName" prefHeight="40.0" promptText="Enter Customer Name" style="-fx-background-color: #F5F5F5; -fx-background-radius: 4; -fx-border-color: #E0E0E0; -fx-border-radius: 4; -fx-font-size: 14px;">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </TextField>
+               </children>
+            </VBox>
+            <VBox spacing="5.0">
+               <children>
+                  <Label text="Mobile Number" style="-fx-text-fill: #757575; -fx-font-size: 12px; -fx-font-weight: 500;">
+                     <graphic>
+                        <FontAwesomeIcon fill="#757575" glyphName="PHONE" size="0.9em" />
+                     </graphic>
+                  </Label>
+                  <TextField fx:id="txtCustomerMobile" prefHeight="40.0" prefWidth="180.0" promptText="Enter Mobile Number" style="-fx-background-color: #F5F5F5; -fx-background-radius: 4; -fx-border-color: #E0E0E0; -fx-border-radius: 4; -fx-font-size: 14px;">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </TextField>
+               </children>
+            </VBox>
          </children>
       </HBox>
-      <Label layoutX="450.0" layoutY="70.0" text="Item Name" />
-      <Label layoutX="681.0" layoutY="70.0" text="Unit" />
-      <Label layoutX="754.0" layoutY="70.0" text="Quantity" />
-      <Label layoutX="929.0" layoutY="70.0" text="Amount" />
-      <Label layoutX="847.0" layoutY="70.0" text="Rate" />
-      <HBox layoutX="250.0" layoutY="133.0" spacing="10.0">
+      <VBox layoutX="300.0" layoutY="110.0" spacing="15.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 8; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 8, 0, 0, 2); -fx-padding: 20;" AnchorPane.leftAnchor="300.0" AnchorPane.rightAnchor="360.0" AnchorPane.topAnchor="110.0">
          <children>
-            <Button fx:id="btnAdd" mnemonicParsing="false" text="ADD">
+            <Label text="Item Entry" style="-fx-text-fill: #1976D2; -fx-font-size: 16px; -fx-font-weight: bold;">
                <graphic>
-                  <FontAwesomeIcon glyphName="PLUS" />
+                  <FontAwesomeIcon fill="#1976D2" glyphName="SHOPPING_CART" size="1.1em" />
                </graphic>
                <font>
-                  <Font name="Georgia" size="14.0" />
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Label>
+            <HBox spacing="15.0">
+               <children>
+                  <VBox spacing="5.0" HBox.hgrow="ALWAYS">
+                     <children>
+                        <Label text="Bar Code" style="-fx-text-fill: #757575; -fx-font-size: 12px; -fx-font-weight: 500;">
+                           <graphic>
+                              <FontAwesomeIcon fill="#757575" glyphName="BARCODE" size="0.9em" />
+                           </graphic>
+                        </Label>
+                        <TextField fx:id="txtBarcode" prefHeight="40.0" style="-fx-background-color: #F5F5F5; -fx-background-radius: 4; -fx-border-color: #E0E0E0; -fx-border-radius: 4; -fx-font-size: 14px; -fx-font-weight: bold;">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </TextField>
+                     </children>
+                  </VBox>
+                  <VBox spacing="5.0" HBox.hgrow="ALWAYS">
+                     <children>
+                        <Label text="Item Name" style="-fx-text-fill: #757575; -fx-font-size: 12px; -fx-font-weight: 500;">
+                           <graphic>
+                              <FontAwesomeIcon fill="#757575" glyphName="TAG" size="0.9em" />
+                           </graphic>
+                        </Label>
+                        <TextField fx:id="txtItemName" prefHeight="40.0" promptText="Enter Item Name" style="-fx-background-color: #F5F5F5; -fx-background-radius: 4; -fx-border-color: #E0E0E0; -fx-border-radius: 4; -fx-font-size: 14px;">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </TextField>
+                     </children>
+                  </VBox>
+                  <VBox spacing="5.0">
+                     <children>
+                        <Label text="Unit" style="-fx-text-fill: #757575; -fx-font-size: 12px; -fx-font-weight: 500;">
+                           <graphic>
+                              <FontAwesomeIcon fill="#757575" glyphName="CUBE" size="0.9em" />
+                           </graphic>
+                        </Label>
+                        <ComboBox fx:id="cmbUnit" prefHeight="40.0" prefWidth="90.0" promptText="Unit" style="-fx-background-color: #F5F5F5; -fx-background-radius: 4; -fx-border-color: #E0E0E0; -fx-border-radius: 4;" />
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+            <HBox spacing="15.0">
+               <children>
+                  <VBox spacing="5.0" HBox.hgrow="ALWAYS">
+                     <children>
+                        <Label text="Quantity" style="-fx-text-fill: #757575; -fx-font-size: 12px; -fx-font-weight: 500;">
+                           <graphic>
+                              <FontAwesomeIcon fill="#757575" glyphName="SORT_NUMERIC_ASC" size="0.9em" />
+                           </graphic>
+                        </Label>
+                        <TextField fx:id="txtQty" prefHeight="40.0" promptText="Quantity" style="-fx-background-color: #F5F5F5; -fx-background-radius: 4; -fx-border-color: #E0E0E0; -fx-border-radius: 4; -fx-font-size: 14px; -fx-font-weight: bold;">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </TextField>
+                     </children>
+                  </VBox>
+                  <VBox spacing="5.0" HBox.hgrow="ALWAYS">
+                     <children>
+                        <Label text="Rate" style="-fx-text-fill: #757575; -fx-font-size: 12px; -fx-font-weight: 500;">
+                           <graphic>
+                              <FontAwesomeIcon fill="#757575" glyphName="MONEY" size="0.9em" />
+                           </graphic>
+                        </Label>
+                        <TextField fx:id="txtRate" prefHeight="40.0" promptText="Rate" style="-fx-background-color: #F5F5F5; -fx-background-radius: 4; -fx-border-color: #E0E0E0; -fx-border-radius: 4; -fx-font-size: 14px; -fx-font-weight: bold;">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </TextField>
+                     </children>
+                  </VBox>
+                  <VBox spacing="5.0" HBox.hgrow="ALWAYS">
+                     <children>
+                        <Label text="Amount" style="-fx-text-fill: #757575; -fx-font-size: 12px; -fx-font-weight: 500;">
+                           <graphic>
+                              <FontAwesomeIcon fill="#757575" glyphName="CALCULATOR" size="0.9em" />
+                           </graphic>
+                        </Label>
+                        <TextField fx:id="txtAmount" editable="false" prefHeight="40.0" promptText="Amount" style="-fx-background-color: #E8F5E8; -fx-background-radius: 4; -fx-border-color: #4CAF50; -fx-border-radius: 4; -fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #2E7D32;">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </TextField>
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+      <HBox layoutX="320.0" layoutY="270.0" spacing="15.0" AnchorPane.leftAnchor="320.0" AnchorPane.topAnchor="270.0">
+         <children>
+            <Button fx:id="btnAdd" mnemonicParsing="false" prefHeight="40.0" prefWidth="100.0" style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-background-radius: 6; -fx-font-size: 14px; -fx-font-weight: 500; -fx-cursor: hand;" text="Add">
+               <graphic>
+                  <FontAwesomeIcon fill="white" glyphName="PLUS" size="1.1em" />
+               </graphic>
+               <font>
+                  <Font name="System Regular" size="14.0" />
                </font>
             </Button>
-            <Button fx:id="btnRemove" mnemonicParsing="false" text="REMOVE">
+            <Button fx:id="btnRemove" mnemonicParsing="false" prefHeight="40.0" prefWidth="100.0" style="-fx-background-color: #F44336; -fx-text-fill: white; -fx-background-radius: 6; -fx-font-size: 14px; -fx-font-weight: 500; -fx-cursor: hand;" text="Remove">
                <graphic>
-                  <FontAwesomeIcon glyphName="CLOSE" />
+                  <FontAwesomeIcon fill="white" glyphName="TRASH" size="1.1em" />
                </graphic>
                <font>
-                  <Font name="Georgia" size="14.0" />
+                  <Font name="System Regular" size="14.0" />
                </font>
             </Button>
-            <Button fx:id="btnUpdate" mnemonicParsing="false" text="UPDATE">
+            <Button fx:id="btnUpdate" mnemonicParsing="false" prefHeight="40.0" prefWidth="100.0" style="-fx-background-color: #FF9800; -fx-text-fill: white; -fx-background-radius: 6; -fx-font-size: 14px; -fx-font-weight: 500; -fx-cursor: hand;" text="Update">
                <graphic>
-                  <FontAwesomeIcon glyphName="EDIT" />
+                  <FontAwesomeIcon fill="white" glyphName="EDIT" size="1.1em" />
                </graphic>
                <font>
-                  <Font name="Georgia" size="14.0" />
+                  <Font name="System Regular" size="14.0" />
                </font>
             </Button>
-            <Button fx:id="btnClear" layoutX="188.0" layoutY="10.0" mnemonicParsing="false" text="CLEAR">
+            <Button fx:id="btnClear" mnemonicParsing="false" prefHeight="40.0" prefWidth="100.0" style="-fx-background-color: #9E9E9E; -fx-text-fill: white; -fx-background-radius: 6; -fx-font-size: 14px; -fx-font-weight: 500; -fx-cursor: hand;" text="Clear">
                <graphic>
-                  <FontAwesomeIcon glyphName="RECYCLE" />
+                  <FontAwesomeIcon fill="white" glyphName="REFRESH" size="1.1em" />
                </graphic>
                <font>
-                  <Font name="Georgia" size="14.0" />
+                  <Font name="System Regular" size="14.0" />
                </font>
             </Button>
          </children>
       </HBox>
-      <TableView fx:id="table" layoutX="249.0" layoutY="170.0" prefHeight="346.0" prefWidth="766.0" AnchorPane.bottomAnchor="210.0" AnchorPane.topAnchor="170.0">
-        <columns>
-          <TableColumn fx:id="colSrNo" prefWidth="43.0" text="SR.NO" />
-          <TableColumn fx:id="colBarcode" prefWidth="117.0" text="BARCODE" />
-            <TableColumn fx:id="colItemName" prefWidth="239.0" text="ITEM NAME" />
-            <TableColumn fx:id="colUnit" prefWidth="51.0" text="UNIT" />
-            <TableColumn fx:id="colQty" prefWidth="77.0" text="QTY" />
-            <TableColumn fx:id="colRate" prefWidth="79.0" text="RATE" />
-            <TableColumn fx:id="colMrp" prefWidth="78.0" text="MRP" />
-            <TableColumn fx:id="colAmount" prefWidth="79.0" text="AMOUNT" />
-        </columns>
-      </TableView>
-      <Label layoutX="796.0" layoutY="535.0" text="Net Total" AnchorPane.bottomAnchor="166.0">
-         <font>
-            <Font name="System Bold" size="16.0" />
-         </font>
-      </Label>
-      <HBox layoutX="255.0" layoutY="578.0" spacing="10.0" AnchorPane.bottomAnchor="10.0">
+      <VBox layoutX="300.0" layoutY="330.0" spacing="15.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 8; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 8, 0, 0, 2); -fx-padding: 20;" AnchorPane.bottomAnchor="280.0" AnchorPane.leftAnchor="300.0" AnchorPane.rightAnchor="360.0" AnchorPane.topAnchor="330.0">
          <children>
-            <Button fx:id="btnSave" mnemonicParsing="false" text="SAVE">
+            <Label text="Bill Items" style="-fx-text-fill: #1976D2; -fx-font-size: 16px; -fx-font-weight: bold;">
                <graphic>
-                  <FontAwesomeIcon glyphName="PLUS" />
+                  <FontAwesomeIcon fill="#1976D2" glyphName="LIST_ALT" size="1.1em" />
                </graphic>
                <font>
-                  <Font name="Georgia" size="18.0" />
+                  <Font name="System Bold" size="16.0" />
                </font>
-            </Button>
-            <Button fx:id="btnPrint" mnemonicParsing="false" text="PRINT">
-               <graphic>
-                  <FontAwesomeIcon glyphName="PRINT" />
-               </graphic>
-               <font>
-                  <Font name="Georgia" size="18.0" />
-               </font>
-            </Button>
-            <Button fx:id="btnUpdate2" mnemonicParsing="false" text="UPDATE">
-               <graphic>
-                  <FontAwesomeIcon glyphName="EDIT" />
-               </graphic>
-               <font>
-                  <Font name="Georgia" size="18.0" />
-               </font>
-            </Button>
-            <Button fx:id="btnClear2" mnemonicParsing="false" text="CLEAR">
-               <graphic>
-                  <FontAwesomeIcon glyphName="RECYCLE" />
-               </graphic>
-               <font>
-                  <Font name="Georgia" size="18.0" />
-               </font>
-            </Button>
-            <Button fx:id="btnHome" layoutX="318.0" layoutY="10.0" mnemonicParsing="false" text="HOME">
-               <graphic>
-                  <FontAwesomeIcon glyphName="HOME" />
-               </graphic>
-               <font>
-                  <Font name="Georgia" size="18.0" />
-               </font>
-            </Button>
+            </Label>
+            <TableView fx:id="table" prefHeight="200.0" style="-fx-background-color: transparent; -fx-table-cell-border-color: #E0E0E0;">
+              <columns>
+                <TableColumn fx:id="colSrNo" prefWidth="50.0" text="Sr#" style="-fx-alignment: CENTER;" />
+                <TableColumn fx:id="colBarcode" prefWidth="120.0" text="Barcode" style="-fx-alignment: CENTER;" />
+                  <TableColumn fx:id="colItemName" prefWidth="200.0" text="Item Name" />
+                  <TableColumn fx:id="colUnit" prefWidth="60.0" text="Unit" style="-fx-alignment: CENTER;" />
+                  <TableColumn fx:id="colQty" prefWidth="70.0" text="Qty" style="-fx-alignment: CENTER;" />
+                  <TableColumn fx:id="colRate" prefWidth="80.0" text="Rate" style="-fx-alignment: CENTER;" />
+                  <TableColumn fx:id="colMrp" prefWidth="80.0" text="MRP" style="-fx-alignment: CENTER;" />
+                  <TableColumn fx:id="colAmount" prefWidth="90.0" text="Amount" style="-fx-alignment: CENTER;" />
+              </columns>
+            </TableView>
          </children>
-      </HBox>
-      <TextField fx:id="txtNetTotal" editable="false" layoutX="873.0" layoutY="526.0" prefHeight="25.0" prefWidth="140.0" style="-fx-background-color: #76ff03;" text="0.0" AnchorPane.bottomAnchor="156.0">
-         <font>
-            <Font name="System Bold" size="20.0" />
-         </font>
-      </TextField>
-      <Label layoutX="774.0" layoutY="583.0" text="Other Chargs" AnchorPane.bottomAnchor="118.0">
-         <font>
-            <Font name="System Bold" size="16.0" />
-         </font>
-      </Label>
-      <TextField fx:id="txtOther" layoutX="873.0" layoutY="573.0" prefHeight="25.0" prefWidth="140.0" style="-fx-background-color: #ffff00;" text="0.0" AnchorPane.bottomAnchor="109.0">
-         <font>
-            <Font name="System Bold" size="20.0" />
-         </font>
-      </TextField>
-      <Label layoutX="779.0" layoutY="630.0" text="Grand Total" AnchorPane.bottomAnchor="71.0">
-         <font>
-            <Font name="System Bold" size="16.0" />
-         </font>
-      </Label>
-      <TextField fx:id="txtGrandTotal" editable="false" layoutX="873.0" layoutY="621.0" prefHeight="25.0" prefWidth="140.0" style="-fx-background-color: #76ff03;" text="0.0" AnchorPane.bottomAnchor="61.0">
-         <font>
-            <Font name="System Bold" size="20.0" />
-         </font>
-      </TextField>
-      <Label layoutX="250.0" layoutY="528.0" text="MRP" AnchorPane.bottomAnchor="173.0">
-         <font>
-            <Font name="System Bold" size="16.0" />
-         </font>
-      </Label>
-      <TextField fx:id="txtMrp" editable="false" layoutX="250.0" layoutY="551.0" prefHeight="25.0" prefWidth="140.0" style="-fx-background-color: #76ff03;" text="0.0" AnchorPane.bottomAnchor="131.0">
-         <font>
-            <Font name="System Bold" size="20.0" />
-         </font>
-      </TextField>
-      <Label layoutX="399.0" layoutY="523.0" text="Discount" AnchorPane.bottomAnchor="173.0">
-         <font>
-            <Font name="System Bold" size="16.0" />
-         </font>
-      </Label>
-      <TextField fx:id="txtDiscount" editable="false" layoutX="397.0" layoutY="551.0" prefHeight="25.0" prefWidth="140.0" style="-fx-background-color: #ffff00;" text="0.0" AnchorPane.bottomAnchor="131.0">
-         <font>
-            <Font name="System Bold" size="20.0" />
-         </font>
-      </TextField>
-      <Label layoutX="545.0" layoutY="523.0" text="Payable" AnchorPane.bottomAnchor="173.0">
-         <font>
-            <Font name="System Bold" size="16.0" />
-         </font>
-      </Label>
-      <TextField fx:id="txtPayble" editable="false" layoutX="545.0" layoutY="551.0" prefHeight="25.0" prefWidth="140.0" style="-fx-background-color: #76ff03;" text="0.0" AnchorPane.bottomAnchor="131.0">
-         <font>
-            <Font name="System Bold" size="20.0" />
-         </font>
-      </TextField>
-      <Label layoutX="250.0" layoutY="597.0" text="Recived Amount" AnchorPane.bottomAnchor="104.0">
-         <font>
-            <Font name="System Bold" size="16.0" />
-         </font>
-      </Label>
-      <TextField fx:id="txtRecived" layoutX="250.0" layoutY="620.0" prefHeight="25.0" prefWidth="140.0" style="-fx-background-color: #76ff03;" text="0.0" AnchorPane.bottomAnchor="62.0">
-         <font>
-            <Font name="System Bold" size="20.0" />
-         </font>
-      </TextField>
-      <Label layoutX="396.0" layoutY="599.0" text="RemainingAmount" AnchorPane.bottomAnchor="104.0">
-         <font>
-            <Font name="System Bold" size="16.0" />
-         </font>
-      </Label>
-      <TextField fx:id="txtRemaining" editable="false" layoutX="396.0" layoutY="622.0" prefHeight="25.0" prefWidth="140.0" style="-fx-background-color: #76ff03;" text="0.0" AnchorPane.bottomAnchor="62.0">
-         <font>
-            <Font name="System Bold" size="20.0" />
-         </font>
-      </TextField>
-      <Label layoutX="544.0" layoutY="597.0" text="Bank Name" AnchorPane.bottomAnchor="104.0">
-         <font>
-            <Font name="System Bold" size="16.0" />
-         </font>
-      </Label>
-      <TextField fx:id="txtBank" layoutX="544.0" layoutY="620.0" prefHeight="44.0" prefWidth="216.0" AnchorPane.bottomAnchor="62.0">
-         <font>
-            <Font name="System Bold" size="20.0" />
-         </font>
-      </TextField>
+      </VBox>
+      <VBox layoutX="300.0" layoutY="550.0" spacing="20.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 8; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 8, 0, 0, 2); -fx-padding: 20;" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="300.0" AnchorPane.rightAnchor="360.0">
+         <children>
+            <Label text="Bill Summary &amp; Actions" style="-fx-text-fill: #1976D2; -fx-font-size: 16px; -fx-font-weight: bold;">
+               <graphic>
+                  <FontAwesomeIcon fill="#1976D2" glyphName="CALCULATOR" size="1.1em" />
+               </graphic>
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Label>
+            <HBox spacing="20.0">
+               <children>
+                  <VBox spacing="15.0" HBox.hgrow="ALWAYS">
+                     <children>
+                        <HBox spacing="15.0">
+                           <children>
+                              <VBox spacing="5.0" HBox.hgrow="ALWAYS">
+                                 <children>
+                                    <Label text="MRP" style="-fx-text-fill: #757575; -fx-font-size: 12px; -fx-font-weight: 500;" />
+                                    <TextField fx:id="txtMrp" editable="false" prefHeight="35.0" style="-fx-background-color: #E0F2F1; -fx-background-radius: 4; -fx-border-color: #009688; -fx-border-radius: 4; -fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #00796B;" text="0.0">
+                                       <font>
+                                          <Font name="System Bold" size="14.0" />
+                                       </font>
+                                    </TextField>
+                                 </children>
+                              </VBox>
+                              <VBox spacing="5.0" HBox.hgrow="ALWAYS">
+                                 <children>
+                                    <Label text="Discount" style="-fx-text-fill: #757575; -fx-font-size: 12px; -fx-font-weight: 500;" />
+                                    <TextField fx:id="txtDiscount" editable="false" prefHeight="35.0" style="-fx-background-color: #FCE4EC; -fx-background-radius: 4; -fx-border-color: #E91E63; -fx-border-radius: 4; -fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #C2185B;" text="0.0">
+                                       <font>
+                                          <Font name="System Bold" size="14.0" />
+                                       </font>
+                                    </TextField>
+                                 </children>
+                              </VBox>
+                              <VBox spacing="5.0" HBox.hgrow="ALWAYS">
+                                 <children>
+                                    <Label text="Payable" style="-fx-text-fill: #757575; -fx-font-size: 12px; -fx-font-weight: 500;" />
+                                    <TextField fx:id="txtPayble" editable="false" prefHeight="35.0" style="-fx-background-color: #E8EAF6; -fx-background-radius: 4; -fx-border-color: #3F51B5; -fx-border-radius: 4; -fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #303F9F;" text="0.0">
+                                       <font>
+                                          <Font name="System Bold" size="14.0" />
+                                       </font>
+                                    </TextField>
+                                 </children>
+                              </VBox>
+                              <VBox spacing="5.0" HBox.hgrow="ALWAYS">
+                                 <children>
+                                    <Label text="Net Total" style="-fx-text-fill: #757575; -fx-font-size: 12px; -fx-font-weight: 500;" />
+                                    <TextField fx:id="txtNetTotal" editable="false" prefHeight="35.0" style="-fx-background-color: #E1F5FE; -fx-background-radius: 4; -fx-border-color: #03A9F4; -fx-border-radius: 4; -fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #0288D1;" text="0.0">
+                                       <font>
+                                          <Font name="System Bold" size="14.0" />
+                                       </font>
+                                    </TextField>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </HBox>
+                        <HBox spacing="15.0">
+                           <children>
+                              <VBox spacing="5.0" HBox.hgrow="ALWAYS">
+                                 <children>
+                                    <Label text="Other Charges" style="-fx-text-fill: #757575; -fx-font-size: 12px; -fx-font-weight: 500;" />
+                                    <TextField fx:id="txtOther" prefHeight="35.0" style="-fx-background-color: #FFF8E1; -fx-background-radius: 4; -fx-border-color: #FFC107; -fx-border-radius: 4; -fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #FF8F00;" text="0.0">
+                                       <font>
+                                          <Font name="System Bold" size="14.0" />
+                                       </font>
+                                    </TextField>
+                                 </children>
+                              </VBox>
+                              <VBox spacing="5.0" HBox.hgrow="ALWAYS">
+                                 <children>
+                                    <Label text="Grand Total" style="-fx-text-fill: #757575; -fx-font-size: 12px; -fx-font-weight: 500;" />
+                                    <TextField fx:id="txtGrandTotal" editable="false" prefHeight="35.0" style="-fx-background-color: #E8F5E9; -fx-background-radius: 4; -fx-border-color: #4CAF50; -fx-border-radius: 4; -fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #388E3C;" text="0.0">
+                                       <font>
+                                          <Font name="System Bold" size="16.0" />
+                                       </font>
+                                    </TextField>
+                                 </children>
+                              </VBox>
+                              <VBox spacing="5.0" HBox.hgrow="ALWAYS">
+                                 <children>
+                                    <Label text="Received Amount" style="-fx-text-fill: #757575; -fx-font-size: 12px; -fx-font-weight: 500;" />
+                                    <TextField fx:id="txtRecived" prefHeight="35.0" style="-fx-background-color: #E0F7FA; -fx-background-radius: 4; -fx-border-color: #00BCD4; -fx-border-radius: 4; -fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #00838F;" text="0.0">
+                                       <font>
+                                          <Font name="System Bold" size="14.0" />
+                                       </font>
+                                    </TextField>
+                                 </children>
+                              </VBox>
+                              <VBox spacing="5.0" HBox.hgrow="ALWAYS">
+                                 <children>
+                                    <Label text="Remaining" style="-fx-text-fill: #757575; -fx-font-size: 12px; -fx-font-weight: 500;" />
+                                    <TextField fx:id="txtRemaining" editable="false" prefHeight="35.0" style="-fx-background-color: #FFEBEE; -fx-background-radius: 4; -fx-border-color: #EF5350; -fx-border-radius: 4; -fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #D32F2F;" text="0.0">
+                                       <font>
+                                          <Font name="System Bold" size="14.0" />
+                                       </font>
+                                    </TextField>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </HBox>
+                        <VBox spacing="5.0">
+                           <children>
+                              <Label text="Bank Details" style="-fx-text-fill: #757575; -fx-font-size: 12px; -fx-font-weight: 500;">
+                                 <graphic>
+                                    <FontAwesomeIcon fill="#757575" glyphName="BANK" size="0.9em" />
+                                 </graphic>
+                              </Label>
+                              <TextField fx:id="txtBank" prefHeight="40.0" style="-fx-background-color: #ECEFF1; -fx-background-radius: 4; -fx-border-color: #607D8B; -fx-border-radius: 4; -fx-font-size: 14px; -fx-text-fill: #455A64;">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </TextField>
+                           </children>
+                        </VBox>
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+            <HBox spacing="15.0" style="-fx-padding: 10 0 0 0;">
+               <children>
+                  <Button fx:id="btnSave" mnemonicParsing="false" prefHeight="45.0" prefWidth="120.0" style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-background-radius: 6; -fx-font-size: 16px; -fx-font-weight: bold; -fx-cursor: hand;" text="Save">
+                     <graphic>
+                        <FontAwesomeIcon fill="white" glyphName="SAVE" size="1.2em" />
+                     </graphic>
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="btnPrint" mnemonicParsing="false" prefHeight="45.0" prefWidth="120.0" style="-fx-background-color: #2196F3; -fx-text-fill: white; -fx-background-radius: 6; -fx-font-size: 16px; -fx-font-weight: bold; -fx-cursor: hand;" text="Print">
+                     <graphic>
+                        <FontAwesomeIcon fill="white" glyphName="PRINT" size="1.2em" />
+                     </graphic>
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="btnUpdate2" mnemonicParsing="false" prefHeight="45.0" prefWidth="120.0" style="-fx-background-color: #FF9800; -fx-text-fill: white; -fx-background-radius: 6; -fx-font-size: 16px; -fx-font-weight: bold; -fx-cursor: hand;" text="Update">
+                     <graphic>
+                        <FontAwesomeIcon fill="white" glyphName="EDIT" size="1.2em" />
+                     </graphic>
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="btnClear2" mnemonicParsing="false" prefHeight="45.0" prefWidth="120.0" style="-fx-background-color: #9E9E9E; -fx-text-fill: white; -fx-background-radius: 6; -fx-font-size: 16px; -fx-font-weight: bold; -fx-cursor: hand;" text="Clear">
+                     <graphic>
+                        <FontAwesomeIcon fill="white" glyphName="REFRESH" size="1.2em" />
+                     </graphic>
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="btnHome" mnemonicParsing="false" prefHeight="45.0" prefWidth="120.0" style="-fx-background-color: #607D8B; -fx-text-fill: white; -fx-background-radius: 6; -fx-font-size: 16px; -fx-font-weight: bold; -fx-cursor: hand;" text="Home">
+                     <graphic>
+                        <FontAwesomeIcon fill="white" glyphName="HOME" size="1.2em" />
+                     </graphic>
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                  </Button>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
    </children>
 </AnchorPane>

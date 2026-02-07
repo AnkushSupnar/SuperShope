@@ -3,6 +3,7 @@ import com.ankush.config.SpringFXMLLoader;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.text.Font;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import org.slf4j.Logger;
@@ -16,11 +17,20 @@ public class StageManager {
     private final Stage primaryStage;
     private final SpringFXMLLoader springFXMLLoader;
     private Parent viewRootNodeHierarchy;
+    private static boolean fontsLoaded = false;
 
     public StageManager(SpringFXMLLoader springFXMLLoader,Stage stage)
     {
         this.springFXMLLoader = springFXMLLoader;
         this.primaryStage = stage;
+        loadCustomFonts();
+    }
+
+    private void loadCustomFonts() {
+        if (!fontsLoaded) {
+            Font.loadFont(getClass().getResourceAsStream("/fxml/font/kiran.ttf"), 20);
+            fontsLoaded = true;
+        }
     }
     public void switchScene(final FxmlView view)
     {

@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #EDE7F6;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ankush.controller.settings.BackupController">
+   <children>
+      <VBox alignment="TOP_CENTER" spacing="25.0" style="-fx-padding: 40;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <!-- Back Button and Header -->
+            <HBox alignment="CENTER_LEFT" spacing="15.0">
+               <children>
+                  <Button fx:id="btnBack" style="-fx-background-color: rgba(171,71,188,0.1); -fx-background-radius: 10; -fx-cursor: hand; -fx-padding: 8 14;">
+                     <graphic>
+                        <FontAwesomeIcon fill="#7B1FA2" glyphName="ARROW_LEFT" size="1.3em" />
+                     </graphic>
+                  </Button>
+                  <StackPane prefHeight="44.0" prefWidth="44.0" style="-fx-background-color: linear-gradient(to bottom right, #AB47BC, #7B1FA2); -fx-background-radius: 12;">
+                     <children>
+                        <FontAwesomeIcon fill="WHITE" glyphName="DATABASE" size="1.5em" />
+                     </children>
+                  </StackPane>
+                  <Label style="-fx-text-fill: #1A237E; -fx-font-size: 28px; -fx-font-weight: bold;" text="Database Backup">
+                     <font>
+                        <Font name="System Bold" size="28.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+
+            <!-- Backup Folder Section -->
+            <VBox spacing="15.0" style="-fx-background-color: linear-gradient(to bottom right, #FFFFFF, #F3E5F5); -fx-background-radius: 16; -fx-effect: dropshadow(gaussian, rgba(26,35,126,0.12), 16, 0, 0, 6); -fx-padding: 30;">
+               <children>
+                  <HBox alignment="CENTER_LEFT" spacing="10.0">
+                     <children>
+                        <StackPane prefHeight="32.0" prefWidth="32.0" style="-fx-background-color: #7B1FA2; -fx-background-radius: 8;">
+                           <children>
+                              <FontAwesomeIcon fill="WHITE" glyphName="FOLDER" size="1em" />
+                           </children>
+                        </StackPane>
+                        <Label style="-fx-text-fill: #4A148C; -fx-font-size: 18px; -fx-font-weight: bold;" text="Backup Folder">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <Label style="-fx-text-fill: #7B1FA2; -fx-font-size: 13px;" text="Choose where your database backup files will be saved." wrapText="true">
+                     <font>
+                        <Font size="13.0" />
+                     </font>
+                  </Label>
+                  <HBox alignment="CENTER_LEFT" spacing="10.0">
+                     <children>
+                        <TextField fx:id="txtBackupPath" editable="false" prefHeight="40.0" style="-fx-background-color: #F5F5F5; -fx-background-radius: 8; -fx-border-color: #CE93D8; -fx-border-radius: 8; -fx-font-size: 13px;" HBox.hgrow="ALWAYS">
+                           <font>
+                              <Font size="13.0" />
+                           </font>
+                        </TextField>
+                        <Button fx:id="btnChangePath" prefHeight="40.0" style="-fx-background-color: linear-gradient(to right, #AB47BC, #7B1FA2); -fx-text-fill: white; -fx-background-radius: 8; -fx-font-size: 13px; -fx-font-weight: bold; -fx-cursor: hand;" text="Change Folder">
+                           <graphic>
+                              <FontAwesomeIcon fill="white" glyphName="FOLDER_OPEN" size="1em" />
+                           </graphic>
+                           <font>
+                              <Font size="13.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+
+            <!-- Create Backup Section -->
+            <VBox spacing="15.0" style="-fx-background-color: linear-gradient(to bottom right, #FFFFFF, #E8EAF6); -fx-background-radius: 16; -fx-effect: dropshadow(gaussian, rgba(26,35,126,0.12), 16, 0, 0, 6); -fx-padding: 30;">
+               <children>
+                  <HBox alignment="CENTER_LEFT" spacing="10.0">
+                     <children>
+                        <StackPane prefHeight="32.0" prefWidth="32.0" style="-fx-background-color: #3949AB; -fx-background-radius: 8;">
+                           <children>
+                              <FontAwesomeIcon fill="WHITE" glyphName="DOWNLOAD" size="1em" />
+                           </children>
+                        </StackPane>
+                        <Label style="-fx-text-fill: #1A237E; -fx-font-size: 18px; -fx-font-weight: bold;" text="Create Backup">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <Label style="-fx-text-fill: #3949AB; -fx-font-size: 13px;" text="Create a .sql backup file of your database. The file will be named with the current date and time." wrapText="true">
+                     <font>
+                        <Font size="13.0" />
+                     </font>
+                  </Label>
+                  <HBox alignment="CENTER_LEFT" spacing="20.0">
+                     <children>
+                        <Button fx:id="btnBackupNow" prefHeight="48.0" prefWidth="220.0" style="-fx-background-color: linear-gradient(to right, #3949AB, #1A237E); -fx-text-fill: white; -fx-background-radius: 10; -fx-font-size: 15px; -fx-font-weight: bold; -fx-cursor: hand; -fx-effect: dropshadow(gaussian, rgba(26,35,126,0.3), 6, 0, 0, 2);" text="Backup Now">
+                           <graphic>
+                              <FontAwesomeIcon fill="white" glyphName="DOWNLOAD" size="1.3em" />
+                           </graphic>
+                           <font>
+                              <Font name="System Bold" size="15.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="btnShareBackup" prefHeight="48.0" prefWidth="220.0" style="-fx-background-color: transparent; -fx-text-fill: #3949AB; -fx-border-color: #3949AB; -fx-border-width: 2; -fx-background-radius: 10; -fx-border-radius: 10; -fx-font-size: 15px; -fx-font-weight: bold; -fx-cursor: hand;" text="Share Backup">
+                           <graphic>
+                              <FontAwesomeIcon fill="#3949AB" glyphName="SHARE_ALT" size="1.3em" />
+                           </graphic>
+                           <font>
+                              <Font name="System Bold" size="15.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </HBox>
+                  <ProgressBar fx:id="progressBar" prefHeight="8.0" prefWidth="700.0" progress="0.0" style="-fx-accent: #3949AB;" visible="false">
+                     <VBox.margin>
+                        <Insets top="5.0" />
+                     </VBox.margin>
+                  </ProgressBar>
+                  <Label fx:id="lblStatus" style="-fx-text-fill: #3949AB; -fx-font-size: 13px;" text="">
+                     <font>
+                        <Font size="13.0" />
+                     </font>
+                  </Label>
+               </children>
+            </VBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

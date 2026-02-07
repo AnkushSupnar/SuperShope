@@ -118,6 +118,7 @@ public class BillingController implements Initializable {
     @Autowired private LoginService loginService;
     //@Autowired private PrintBill printbill;
     @Autowired BankTransactionService bankTrService;
+    @Autowired ShopeeInfoService shopeeInfoService;
 
     private ObservableList<String>itemNameList = FXCollections.observableArrayList();
     private ObservableList<Transaction>trList = FXCollections.observableArrayList();
@@ -149,6 +150,10 @@ public class BillingController implements Initializable {
         service.execute(task);
         service.shutdown();
         printbill = new PrintBill();
+        List<ShopeeInfo> shopeeInfoList = shopeeInfoService.getAllShopeeInfo();
+        if (!shopeeInfoList.isEmpty()) {
+            printbill.setShopeeInfo(shopeeInfoList.get(0));
+        }
         date.setValue(LocalDate.now());
         dateSearch.setValue(LocalDate.now());
         if(bankService.getBankByIdOptional(1).isPresent()){

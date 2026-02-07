@@ -28,7 +28,8 @@ public class TransactionMenuController implements Initializable {
     private Button btnBilling;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-            btnPurchaseInvoice.setOnAction(e->stageManager.switchScene(FxmlView.PURCHASEINVOICE));
-            btnBilling.setOnAction(e->stageManager.switchScene(FxmlView.BILLING));
+        //btnPurchaseInvoice.setOnAction(e->stageManager.switchScene(FxmlView.PURCHASEINVOICE));   
+        btnPurchaseInvoice.setOnAction(e->stageManager.switchScene(FxmlView.PURCHASEINVOICE2));
+            btnBilling.setOnAction(e->stageManager.switchScene(FxmlView.DAILYBILLING));
     }
 }

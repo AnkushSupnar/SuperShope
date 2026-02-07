@@ -1,5 +1,4 @@
 package com.ankush.newcontroller.transaction;
-
 import com.ankush.Main;
 import com.ankush.common.CommonData;
 import com.ankush.data.entities.*;
@@ -25,18 +24,17 @@ import org.controlsfx.control.textfield.TextFields;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
-
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.ResourceBundle;
-
 import static java.time.temporal.TemporalAdjusters.firstDayOfYear;
 import static java.time.temporal.TemporalAdjusters.lastDayOfYear;
 
+
 @Component
-public class PurchaseInvoiceController implements Initializable {
-    @Autowired @Lazy
+public class PurchaseInvoiceControllerNew implements Initializable {
+   @Autowired @Lazy
     StageManager stageManager;
     @FXML private SplitPane mainPane;
     @FXML private AnchorPane billingPane;
@@ -788,6 +786,7 @@ public class PurchaseInvoiceController implements Initializable {
         cmbUnit.getSelectionModel().clearSelection();
         item=null;
         txtQty.requestFocus();
+       // cmbUnit.getSelectionModel().select(0);
     }
     private void calculateGrandTotal()
     {
@@ -836,9 +835,15 @@ public class PurchaseInvoiceController implements Initializable {
         int index=-1;
         for(int i=0;i<trList.size();i++)
         {
+            
             if(trList.get(i).getItemname().trim().equals(tr.getItemname().trim()) &&
-                    trList.get(i).getBarcode().equals(tr.getBarcode())){
-                System.out.println("Found Same Item");
+                    trList.get(i).getBarcode().equals(tr.getBarcode())&&
+                    trList.get(i).getPrice().equals(tr.getPrice())&&
+                    trList.get(i).getUnit().equals(tr.getUnit())&&
+                    trList.get(i).getMrp().equals(tr.getMrp())
+                    )
+            {
+                System.out.println("Found Same Item in list");
                 index=i;
                 break;
             }
@@ -853,14 +858,14 @@ public class PurchaseInvoiceController implements Initializable {
         }
         else
         {
-            txtNetTotal.setText(
-                    String.valueOf(Float.parseFloat(txtNetTotal.getText())-
-                            trList.get(index).getAmount())
-            );
+            // txtNetTotal.setText(
+            //         String.valueOf(Float.parseFloat(txtNetTotal.getText())-
+            //                 trList.get(index).getAmount())
+            // );
             trList.get(index).setQty(trList.get(index).getQty()+tr.getQty());
             trList.get(index).setAmount(trList.get(index).getAmount()+tr.getAmount());
             table.refresh();
-            calculateGrandTotal();
+            
            // trList.remove(index);
            // tr.setId((long) (index+1));
             //trList.add(index,tr);
@@ -868,9 +873,25 @@ public class PurchaseInvoiceController implements Initializable {
                     String.valueOf(Float.parseFloat(txtNetTotal.getText())+
                             tr.getAmount())
             );
+            calculateGrandTotal();
             clear();
 
         }
+    }
+    private PurchaseTransaction createTransaction()
+    {
+        PurchaseTransaction tr = new PurchaseTransaction();
+        tr.setItemname(txtItemName.getText());
+        tr.setBarcode(txtBarcode.getText());
+        tr.setPrice(Float.valueOf(txtRate.getText()));
+        tr.setQty(Float.parseFloat(txtQty.getText()));
+        tr.setAmount(tr.getQty()*Float.parseFloat(txtRate.getText()));
+        tr.setMrp(Float.valueOf(txtMrp.getText()));
+        if(cmbUnit.getSelectionModel().getSelectedIndex()==0)
+           tr.setUnit("ik.ga`^.");
+        else
+           tr.setUnit("naga");
+        return tr;
     }
     private boolean validateItem() {
         if(txtItemName.getText().isEmpty())
@@ -939,21 +960,7 @@ public class PurchaseInvoiceController implements Initializable {
                 cmbUnit.getSelectionModel().select(1);
         }
     }
-    private PurchaseTransaction createTransaction()
-    {
-        PurchaseTransaction tr = new PurchaseTransaction();
-        tr.setItemname(txtItemName.getText());
-        tr.setBarcode(txtBarcode.getText());
-        tr.setPrice(Float.valueOf(txtRate.getText()));
-        tr.setQty(Float.parseFloat(txtQty.getText()));
-        tr.setAmount(tr.getQty()*Float.parseFloat(txtRate.getText()));
-        tr.setMrp(Float.valueOf(txtMrp.getText()));
-        if(cmbUnit.getSelectionModel().getSelectedIndex()==0)
-           tr.setUnit("ik.ga`^.");
-        else
-           tr.setUnit("naga");
-        return tr;
-    }
+    
     private void manageTransactionList()
     {
         Long sr= Long.valueOf(0);
@@ -1089,4 +1096,6 @@ public class PurchaseInvoiceController implements Initializable {
             return false;
         }
     }
+
+
 }

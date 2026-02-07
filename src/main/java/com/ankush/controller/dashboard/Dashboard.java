@@ -136,8 +136,15 @@ public class Dashboard implements Initializable {
         lblMonthlyPurchase.setText(""+0.0f);
         XYChart.Series series = new XYChart.Series();
 
+        // Configure the category axis to handle label overlapping
+        javafx.scene.chart.CategoryAxis xAxis = (javafx.scene.chart.CategoryAxis) lineChartMonth.getXAxis();
+        xAxis.setTickLabelRotation(45); // Rotate labels to prevent overlap
+        xAxis.setGapStartAndEnd(false);
+
         for (date = date.withDayOfMonth(1); date.isBefore(date.withDayOfMonth(date.lengthOfMonth())); date = date.plusDays(1)) {
-            series.getData().add(new XYChart.Data(""+date,billService.getDateTotalSale(date)));
+            // Use only day number instead of full date to prevent overlapping
+            String dayLabel = String.valueOf(date.getDayOfMonth());
+            series.getData().add(new XYChart.Data(dayLabel, billService.getDateTotalSale(date)));
             lblMonthlyBills.setText(
                     String.valueOf(Integer.parseInt(lblMonthlyBills.getText())+billService.getDateTotalBill(date))
             );

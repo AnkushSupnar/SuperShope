@@ -3,7 +3,6 @@ package com.ankush.data.entities;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Table(name = "purchasetransaction")
 @Entity

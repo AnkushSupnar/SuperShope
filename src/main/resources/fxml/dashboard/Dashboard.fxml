@@ -8,530 +8,396 @@
 <?import javafx.scene.chart.PieChart?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="737.0" prefWidth="1156.0" stylesheets="@../css/dashboard.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ankush.controller.dashboard.Dashboard">
+<AnchorPane prefHeight="737.0" prefWidth="1156.0" style="-fx-background-color: #EDE7F6;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ankush.controller.dashboard.Dashboard">
    <children>
-      <TabPane layoutX="10.0" layoutY="110.0" prefHeight="379.0" prefWidth="1146.0" style="-fx-background-color: white;" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <TabPane layoutX="10.0" layoutY="110.0" prefHeight="379.0" prefWidth="1146.0" style="-fx-background-color: transparent; -fx-tab-min-width: 150px; -fx-tab-max-width: 200px;" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <tabs>
             <Tab text="Todays Report">
                <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #EDE7F6;">
                      <children>
-                        <HBox prefHeight="81.0" prefWidth="580.0" style="-fx-background-color: white;" styleClass="tile" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+                        <HBox prefHeight="120.0" prefWidth="580.0" spacing="20.0" style="-fx-background-color: transparent; -fx-padding: 20;" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
                            <children>
-                              <Pane layoutX="21.0" layoutY="21.0" prefHeight="60.0" prefWidth="195.0" styleClass="tile">
+                              <VBox prefHeight="100.0" prefWidth="250.0" spacing="10.0" style="-fx-background-color: linear-gradient(to bottom right, #FFFFFF, #E8EAF6); -fx-background-radius: 12; -fx-effect: dropshadow(gaussian, rgba(26,35,126,0.12), 10, 0, 0, 3); -fx-padding: 20;" HBox.hgrow="ALWAYS">
                                  <children>
-                                    <StackPane layoutY="-1.0" prefHeight="60.0" prefWidth="84.0" style="-fx-background-color: #0275d8;">
+                                    <HBox alignment="CENTER_LEFT" spacing="15.0">
                                        <children>
-                                          <FontAwesomeIcon fill="WHITE" glyphName="CART_PLUS" size="3em" />
+                                          <StackPane prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: linear-gradient(to bottom right, #42A5F5, #1565C0); -fx-background-radius: 14;">
+                                             <children>
+                                                <FontAwesomeIcon fill="WHITE" glyphName="CART_PLUS" size="1.5em" />
+                                             </children>
+                                          </StackPane>
+                                          <VBox spacing="5.0">
+                                             <children>
+                                                <Label fx:id="lblTodaysBill" style="-fx-text-fill: #1A237E; -fx-font-size: 24px; -fx-font-weight: bold;" text="1000" />
+                                                <Label style="-fx-text-fill: #5C6BC0; -fx-font-size: 13px;" text="Today's Bills" />
+                                             </children>
+                                          </VBox>
                                        </children>
-                                    </StackPane>
-                                    <StackPane layoutX="86.0" layoutY="3.0" prefHeight="53.0" prefWidth="101.0" style="-fx-background-color: white;">
-                                       <children>
-                                          <Label fx:id="lblTodaysBill" text="1000" StackPane.alignment="TOP_CENTER">
-                                             <StackPane.margin>
-                                                <Insets top="10.0" />
-                                             </StackPane.margin>
-                                             <font>
-                                                <Font name="Arial Black" size="12.0" />
-                                             </font>
-                                          </Label>
-                                          <Label text="BILLS" StackPane.alignment="BOTTOM_CENTER">
-                                             <StackPane.margin>
-                                                <Insets bottom="10.0" />
-                                             </StackPane.margin>
-                                             <font>
-                                                <Font name="Arial Black" size="12.0" />
-                                             </font>
-                                          </Label>
-                                       </children>
-                                       <padding>
-                                          <Insets top="1.0" />
-                                       </padding>
-                                    </StackPane>
+                                    </HBox>
                                  </children>
-                                 <HBox.margin>
-                                    <Insets bottom="10.0" left="10.0" top="10.0" />
-                                 </HBox.margin>
-                              </Pane>
-                              <Pane layoutX="21.0" layoutY="21.0" prefHeight="71.0" prefWidth="195.0" styleClass="tile">
+                              </VBox>
+                              <VBox prefHeight="100.0" prefWidth="250.0" spacing="10.0" style="-fx-background-color: linear-gradient(to bottom right, #FFFFFF, #E8F5E9); -fx-background-radius: 12; -fx-effect: dropshadow(gaussian, rgba(46,125,50,0.12), 10, 0, 0, 3); -fx-padding: 20;" HBox.hgrow="ALWAYS">
                                  <children>
-                                    <StackPane layoutY="-1.0" prefHeight="60.0" prefWidth="84.0" style="-fx-background-color: #5cb85c;">
+                                    <HBox alignment="CENTER_LEFT" spacing="15.0">
                                        <children>
-                                          <FontAwesomeIcon fill="WHITE" glyphName="BTC" size="3em" />
+                                          <StackPane prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: linear-gradient(to bottom right, #66BB6A, #2E7D32); -fx-background-radius: 14;">
+                                             <children>
+                                                <FontAwesomeIcon fill="WHITE" glyphName="MONEY" size="1.5em" />
+                                             </children>
+                                          </StackPane>
+                                          <VBox spacing="5.0">
+                                             <children>
+                                                <Label fx:id="lblTodayAmount" style="-fx-text-fill: #1B5E20; -fx-font-size: 24px; -fx-font-weight: bold;" text="1000" />
+                                                <Label style="-fx-text-fill: #43A047; -fx-font-size: 13px;" text="Today's Amount" />
+                                             </children>
+                                          </VBox>
                                        </children>
-                                    </StackPane>
-                                    <StackPane layoutX="89.0" layoutY="4.0" prefHeight="53.0" prefWidth="98.0" style="-fx-background-color: white;">
-                                       <children>
-                                          <Label fx:id="lblTodayAmount" text="1000" StackPane.alignment="TOP_CENTER">
-                                             <StackPane.margin>
-                                                <Insets top="10.0" />
-                                             </StackPane.margin>
-                                             <font>
-                                                <Font name="Arial Black" size="12.0" />
-                                             </font>
-                                          </Label>
-                                          <Label text="AMOUNT" StackPane.alignment="BOTTOM_CENTER">
-                                             <StackPane.margin>
-                                                <Insets bottom="10.0" />
-                                             </StackPane.margin>
-                                             <font>
-                                                <Font name="Arial Black" size="12.0" />
-                                             </font>
-                                          </Label>
-                                       </children>
-                                    </StackPane>
+                                    </HBox>
                                  </children>
-                                 <HBox.margin>
-                                    <Insets bottom="10.0" left="10.0" top="10.0" />
-                                 </HBox.margin>
-                              </Pane>
-                              <Pane layoutX="21.0" layoutY="21.0" prefHeight="59.0" prefWidth="195.0" styleClass="tile">
+                              </VBox>
+                              <VBox prefHeight="100.0" prefWidth="250.0" spacing="10.0" style="-fx-background-color: linear-gradient(to bottom right, #FFFFFF, #FFF3E0); -fx-background-radius: 12; -fx-effect: dropshadow(gaussian, rgba(230,81,0,0.12), 10, 0, 0, 3); -fx-padding: 20;" HBox.hgrow="ALWAYS">
                                  <children>
-                                    <StackPane layoutY="-1.0" prefHeight="60.0" prefWidth="84.0" style="-fx-background-color: #FFC107;">
+                                    <HBox alignment="CENTER_LEFT" spacing="15.0">
                                        <children>
-                                          <FontAwesomeIcon fill="WHITE" glyphName="CART_PLUS" size="3em" />
+                                          <StackPane prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: linear-gradient(to bottom right, #FFA726, #E65100); -fx-background-radius: 14;">
+                                             <children>
+                                                <FontAwesomeIcon fill="WHITE" glyphName="SHOPPING_CART" size="1.5em" />
+                                             </children>
+                                          </StackPane>
+                                          <VBox spacing="5.0">
+                                             <children>
+                                                <Label fx:id="lblTodayPurchase" style="-fx-text-fill: #E65100; -fx-font-size: 24px; -fx-font-weight: bold;" text="1000" />
+                                                <Label style="-fx-text-fill: #FF8F00; -fx-font-size: 13px;" text="Today's Purchases" />
+                                             </children>
+                                          </VBox>
                                        </children>
-                                    </StackPane>
-                                    <StackPane layoutX="85.0" layoutY="3.0" prefHeight="53.0" prefWidth="107.0" style="-fx-background-color: white;">
-                                       <children>
-                                          <Label fx:id="lblTodayPurchase" text="1000" StackPane.alignment="TOP_CENTER">
-                                             <StackPane.margin>
-                                                <Insets top="10.0" />
-                                             </StackPane.margin>
-                                             <font>
-                                                <Font name="Arial Black" size="12.0" />
-                                             </font>
-                                          </Label>
-                                          <Label prefHeight="17.0" text="PURCHASES" StackPane.alignment="BOTTOM_CENTER">
-                                             <StackPane.margin>
-                                                <Insets bottom="10.0" left="5.0" />
-                                             </StackPane.margin>
-                                             <font>
-                                                <Font name="Arial Black" size="12.0" />
-                                             </font>
-                                          </Label>
-                                       </children>
-                                       <padding>
-                                          <Insets top="1.0" />
-                                       </padding>
-                                    </StackPane>
+                                    </HBox>
                                  </children>
-                                 <HBox.margin>
-                                    <Insets bottom="10.0" left="10.0" top="10.0" />
-                                 </HBox.margin>
-                              </Pane>
-                              <Pane layoutX="198.0" layoutY="21.0" prefHeight="71.0" prefWidth="195.0" styleClass="tile">
+                              </VBox>
+                              <VBox prefHeight="100.0" prefWidth="250.0" spacing="10.0" style="-fx-background-color: linear-gradient(to bottom right, #FFFFFF, #F3E5F5); -fx-background-radius: 12; -fx-effect: dropshadow(gaussian, rgba(106,27,154,0.12), 10, 0, 0, 3); -fx-padding: 20;" HBox.hgrow="ALWAYS">
                                  <children>
-                                    <StackPane layoutY="-1.0" prefHeight="60.0" prefWidth="84.0" style="-fx-background-color: #5cb85c;">
+                                    <HBox alignment="CENTER_LEFT" spacing="15.0">
                                        <children>
-                                          <FontAwesomeIcon fill="WHITE" glyphName="BTC" size="3em" />
+                                          <StackPane prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: linear-gradient(to bottom right, #AB47BC, #6A1B9A); -fx-background-radius: 14;">
+                                             <children>
+                                                <FontAwesomeIcon fill="WHITE" glyphName="TRENDING_UP" size="1.5em" />
+                                             </children>
+                                          </StackPane>
+                                          <VBox spacing="5.0">
+                                             <children>
+                                                <Label fx:id="lblTodayMargin" style="-fx-text-fill: #4A148C; -fx-font-size: 24px; -fx-font-weight: bold;" text="1000" />
+                                                <Label style="-fx-text-fill: #AB47BC; -fx-font-size: 13px;" text="Today's Margin" />
+                                             </children>
+                                          </VBox>
                                        </children>
-                                    </StackPane>
-                                    <StackPane layoutX="89.0" layoutY="4.0" prefHeight="53.0" prefWidth="101.0" style="-fx-background-color: white;">
-                                       <children>
-                                          <Label fx:id="lblTodayMargin" text="1000" StackPane.alignment="TOP_CENTER">
-                                             <StackPane.margin>
-                                                <Insets top="10.0" />
-                                             </StackPane.margin>
-                                             <font>
-                                                <Font name="Arial Black" size="12.0" />
-                                             </font>
-                                          </Label>
-                                          <Label text="MARGIN" StackPane.alignment="BOTTOM_CENTER">
-                                             <StackPane.margin>
-                                                <Insets bottom="10.0" />
-                                             </StackPane.margin>
-                                             <font>
-                                                <Font name="Arial Black" size="12.0" />
-                                             </font>
-                                          </Label>
-                                       </children>
-                                    </StackPane>
+                                    </HBox>
                                  </children>
-                                 <HBox.margin>
-                                    <Insets bottom="10.0" left="10.0" top="10.0" />
-                                 </HBox.margin>
-                              </Pane>
+                              </VBox>
                            </children>
                         </HBox>
-                        <LineChart fx:id="dailyLineChart" layoutX="63.0" layoutY="109.0" prefHeight="264.0" prefWidth="1146.0" title="Bills" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="109.0">
-                          <xAxis>
-                            <CategoryAxis />
-                          </xAxis>
-                          <yAxis>
-                            <NumberAxis side="LEFT" />
-                          </yAxis>
-                        </LineChart>
-                        <DatePicker fx:id="dateToday" layoutX="969.0" layoutY="93.0" AnchorPane.rightAnchor="15.0" />
-                        <SplitPane dividerPositions="0.5118829981718465" layoutX="178.0" layoutY="383.0" prefHeight="315.0" prefWidth="1146.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="383.0">
-                          <items>
-                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                        <VBox prefHeight="350.0" prefWidth="1146.0" spacing="15.0" style="-fx-background-color: linear-gradient(to bottom right, #FFFFFF, #E8EAF6); -fx-background-radius: 12; -fx-effect: dropshadow(gaussian, rgba(26,35,126,0.12), 10, 0, 0, 3); -fx-padding: 20;" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="160.0">
+                           <children>
+                              <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="1146.0">
                                  <children>
-                                    <TableView fx:id="tableNos" layoutX="6.0" layoutY="113.0" prefHeight="277.0" prefWidth="557.0" stylesheets="@../css/tablemar.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="36.0">
+                                    <Label style="-fx-text-fill: #1A237E; -fx-font-size: 18px; -fx-font-weight: bold;" text="Daily Sales Chart" />
+                                    <StackPane HBox.hgrow="ALWAYS" />
+                                    <DatePicker fx:id="dateToday" style="-fx-background-color: #F5F5F5; -fx-background-radius: 6; -fx-border-color: #C5CAE9; -fx-border-radius: 6;" />
+                                 </children>
+                              </HBox>
+                              <LineChart fx:id="dailyLineChart" prefHeight="280.0" prefWidth="1146.0" style="-fx-background-color: transparent;">
+                                 <xAxis>
+                                   <CategoryAxis style="-fx-tick-label-fill: #5C6BC0;" />
+                                 </xAxis>
+                                 <yAxis>
+                                   <NumberAxis side="LEFT" style="-fx-tick-label-fill: #5C6BC0;" />
+                                 </yAxis>
+                              </LineChart>
+                           </children>
+                        </VBox>
+                        <HBox prefHeight="300.0" prefWidth="1146.0" spacing="20.0" style="-fx-padding: 20;" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="530.0">
+                          <children>
+                            <VBox prefHeight="280.0" prefWidth="563.0" spacing="15.0" style="-fx-background-color: linear-gradient(to bottom right, #FFFFFF, #E8EAF6); -fx-background-radius: 12; -fx-effect: dropshadow(gaussian, rgba(26,35,126,0.12), 10, 0, 0, 3); -fx-padding: 20;">
+                                 <children>
+                                    <HBox alignment="CENTER_LEFT" spacing="10.0">
+                                       <children>
+                                          <StackPane prefHeight="28.0" prefWidth="28.0" style="-fx-background-color: #EF5350; -fx-background-radius: 6;">
+                                             <children>
+                                                <FontAwesomeIcon fill="WHITE" glyphName="EXCLAMATION_TRIANGLE" size="0.9em" />
+                                             </children>
+                                          </StackPane>
+                                          <Label style="-fx-text-fill: #1A237E; -fx-font-size: 16px; -fx-font-weight: bold;" text="Low Stock Items (Nos)" />
+                                       </children>
+                                    </HBox>
+                                    <TableView fx:id="tableNos" prefHeight="240.0" prefWidth="523.0" style="-fx-background-color: transparent; -fx-table-cell-border-color: #C5CAE9;">
                                       <columns>
-                                        <TableColumn fx:id="colSrno" prefWidth="75.0" text="Sr.No" />
+                                        <TableColumn fx:id="colSrno" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Sr.No" />
                                         <TableColumn fx:id="colItemName" prefWidth="275.0" text="Item Name" />
-                                          <TableColumn fx:id="colUnit" prefWidth="93.0" text="Unit" />
-                                          <TableColumn fx:id="colStock" prefWidth="112.0" text="Stock" />
+                                          <TableColumn fx:id="colUnit" prefWidth="93.0" style="-fx-alignment: CENTER;" text="Unit" />
+                                          <TableColumn fx:id="colStock" prefWidth="112.0" style="-fx-alignment: CENTER;" text="Stock" />
                                       </columns>
                                     </TableView>
-                                    <StackPane layoutX="161.0" layoutY="-61.0" prefHeight="38.0" prefWidth="557.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                       <children>
-                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Item Minimum Level Nos">
-                                             <font>
-                                                <Font name="Georgia" size="14.0" />
-                                             </font>
-                                          </Text>
-                                       </children>
-                                    </StackPane>
                                  </children>
-                              </AnchorPane>
-                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                              </VBox>
+                            <VBox prefHeight="280.0" prefWidth="563.0" spacing="15.0" style="-fx-background-color: linear-gradient(to bottom right, #FFFFFF, #E8EAF6); -fx-background-radius: 12; -fx-effect: dropshadow(gaussian, rgba(26,35,126,0.12), 10, 0, 0, 3); -fx-padding: 20;">
                                  <children>
-                                    <StackPane prefHeight="37.0" prefWidth="525.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <HBox alignment="CENTER_LEFT" spacing="10.0">
                                        <children>
-                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Item Minimum Level KG">
-                                             <font>
-                                                <Font name="Georgia" size="14.0" />
-                                             </font>
-                                          </Text>
+                                          <StackPane prefHeight="28.0" prefWidth="28.0" style="-fx-background-color: #FFA726; -fx-background-radius: 6;">
+                                             <children>
+                                                <FontAwesomeIcon fill="WHITE" glyphName="EXCLAMATION_TRIANGLE" size="0.9em" />
+                                             </children>
+                                          </StackPane>
+                                          <Label style="-fx-text-fill: #1A237E; -fx-font-size: 16px; -fx-font-weight: bold;" text="Low Stock Items (KG)" />
                                        </children>
-                                    </StackPane>
-                                    <TableView fx:id="tableKg" layoutY="37.0" prefHeight="277.0" prefWidth="557.0" stylesheets="@../css/tablemar.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="36.0">
+                                    </HBox>
+                                    <TableView fx:id="tableKg" prefHeight="240.0" prefWidth="523.0" style="-fx-background-color: transparent; -fx-table-cell-border-color: #C5CAE9;">
                                        <columns>
-                                          <TableColumn fx:id="colSr1" prefWidth="75.0" text="Sr.No" />
+                                          <TableColumn fx:id="colSr1" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Sr.No" />
                                           <TableColumn fx:id="colItemName1" prefWidth="251.0" text="Item Name" />
-                                          <TableColumn fx:id="colUnit1" prefWidth="92.0" text="Unit" />
-                                          <TableColumn fx:id="colStock1" prefWidth="112.0" text="Stock" />
+                                          <TableColumn fx:id="colUnit1" prefWidth="92.0" style="-fx-alignment: CENTER;" text="Unit" />
+                                          <TableColumn fx:id="colStock1" prefWidth="112.0" style="-fx-alignment: CENTER;" text="Stock" />
                                        </columns>
                                     </TableView>
                                  </children>
-                              </AnchorPane>
-                          </items>
-                        </SplitPane>
+                              </VBox>
+                          </children>
+                        </HBox>
                      </children>
                   </AnchorPane>
                </content>
             </Tab>
           <Tab fx:id="tabMonthly" text="Month Report">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="528.0" prefWidth="1146.0">
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="528.0" prefWidth="1146.0" style="-fx-background-color: #EDE7F6;">
                      <children>
-                        <LineChart fx:id="lineChartMonth" layoutY="133.0" prefHeight="499.0" prefWidth="1146.0" title="This Month Sale" titleSide="BOTTOM" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="133.0">
-                          <xAxis>
-                            <CategoryAxis side="BOTTOM" />
-                          </xAxis>
-                          <yAxis>
-                            <NumberAxis label="Sale" side="LEFT" />
-                          </yAxis>
-                        </LineChart>
-                        <HBox layoutX="-195.0" layoutY="42.0" prefHeight="81.0" prefWidth="580.0" style="-fx-background-color: white;" styleClass="tile" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+                        <HBox prefHeight="120.0" prefWidth="580.0" spacing="20.0" style="-fx-background-color: transparent; -fx-padding: 20;" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
                            <children>
-                              <Pane layoutX="21.0" layoutY="21.0" prefHeight="60.0" prefWidth="195.0" styleClass="tile">
+                              <VBox prefHeight="100.0" prefWidth="250.0" spacing="10.0" style="-fx-background-color: linear-gradient(to bottom right, #FFFFFF, #E8EAF6); -fx-background-radius: 12; -fx-effect: dropshadow(gaussian, rgba(26,35,126,0.12), 10, 0, 0, 3); -fx-padding: 20;" HBox.hgrow="ALWAYS">
                                  <children>
-                                    <StackPane layoutY="-1.0" prefHeight="60.0" prefWidth="84.0" style="-fx-background-color: #0275d8;">
+                                    <HBox alignment="CENTER_LEFT" spacing="15.0">
                                        <children>
-                                          <FontAwesomeIcon fill="WHITE" glyphName="CART_PLUS" size="3em" />
+                                          <StackPane prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: linear-gradient(to bottom right, #42A5F5, #1565C0); -fx-background-radius: 14;">
+                                             <children>
+                                                <FontAwesomeIcon fill="WHITE" glyphName="CART_PLUS" size="1.5em" />
+                                             </children>
+                                          </StackPane>
+                                          <VBox spacing="5.0">
+                                             <children>
+                                                <Label fx:id="lblMonthlyBills" style="-fx-text-fill: #1A237E; -fx-font-size: 24px; -fx-font-weight: bold;" text="1000" />
+                                                <Label style="-fx-text-fill: #5C6BC0; -fx-font-size: 13px;" text="Monthly Bills" />
+                                             </children>
+                                          </VBox>
                                        </children>
-                                    </StackPane>
-                                    <StackPane layoutX="89.0" layoutY="3.0" prefHeight="53.0" prefWidth="98.0" style="-fx-background-color: white;">
-                                       <children>
-                                          <Label fx:id="lblMonthlyBills" text="1000" StackPane.alignment="TOP_CENTER">
-                                             <StackPane.margin>
-                                                <Insets top="10.0" />
-                                             </StackPane.margin>
-                                             <font>
-                                                <Font name="Arial Black" size="12.0" />
-                                             </font>
-                                          </Label>
-                                          <Label text="BILLS" StackPane.alignment="BOTTOM_CENTER">
-                                             <StackPane.margin>
-                                                <Insets bottom="10.0" />
-                                             </StackPane.margin>
-                                             <font>
-                                                <Font name="Arial Black" size="12.0" />
-                                             </font>
-                                          </Label>
-                                       </children>
-                                       <padding>
-                                          <Insets top="1.0" />
-                                       </padding>
-                                    </StackPane>
+                                    </HBox>
                                  </children>
-                                 <HBox.margin>
-                                    <Insets bottom="10.0" left="10.0" top="10.0" />
-                                 </HBox.margin>
-                              </Pane>
-                              <Pane layoutX="21.0" layoutY="21.0" prefHeight="71.0" prefWidth="195.0" styleClass="tile">
+                              </VBox>
+                              <VBox prefHeight="100.0" prefWidth="250.0" spacing="10.0" style="-fx-background-color: linear-gradient(to bottom right, #FFFFFF, #E8F5E9); -fx-background-radius: 12; -fx-effect: dropshadow(gaussian, rgba(46,125,50,0.12), 10, 0, 0, 3); -fx-padding: 20;" HBox.hgrow="ALWAYS">
                                  <children>
-                                    <StackPane layoutY="-1.0" prefHeight="60.0" prefWidth="84.0" style="-fx-background-color: #5cb85c;">
+                                    <HBox alignment="CENTER_LEFT" spacing="15.0">
                                        <children>
-                                          <FontAwesomeIcon fill="WHITE" glyphName="BTC" size="3em" />
+                                          <StackPane prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: linear-gradient(to bottom right, #66BB6A, #2E7D32); -fx-background-radius: 14;">
+                                             <children>
+                                                <FontAwesomeIcon fill="WHITE" glyphName="MONEY" size="1.5em" />
+                                             </children>
+                                          </StackPane>
+                                          <VBox spacing="5.0">
+                                             <children>
+                                                <Label fx:id="lblMonthlyAmount" style="-fx-text-fill: #1B5E20; -fx-font-size: 24px; -fx-font-weight: bold;" text="1000" />
+                                                <Label style="-fx-text-fill: #43A047; -fx-font-size: 13px;" text="Monthly Amount" />
+                                             </children>
+                                          </VBox>
                                        </children>
-                                    </StackPane>
-                                    <StackPane layoutX="89.0" layoutY="4.0" prefHeight="53.0" prefWidth="99.0" style="-fx-background-color: white;">
-                                       <children>
-                                          <Label fx:id="lblMonthlyAmount" text="1000" StackPane.alignment="TOP_CENTER">
-                                             <StackPane.margin>
-                                                <Insets top="10.0" />
-                                             </StackPane.margin>
-                                             <font>
-                                                <Font name="Arial Black" size="12.0" />
-                                             </font>
-                                          </Label>
-                                          <Label text="AMOUNT" StackPane.alignment="BOTTOM_CENTER">
-                                             <StackPane.margin>
-                                                <Insets bottom="10.0" />
-                                             </StackPane.margin>
-                                             <font>
-                                                <Font name="Arial Black" size="12.0" />
-                                             </font>
-                                          </Label>
-                                       </children>
-                                    </StackPane>
+                                    </HBox>
                                  </children>
-                                 <HBox.margin>
-                                    <Insets bottom="10.0" left="10.0" top="10.0" />
-                                 </HBox.margin>
-                              </Pane>
-                              <Pane layoutX="21.0" layoutY="21.0" prefHeight="59.0" prefWidth="195.0" styleClass="tile">
+                              </VBox>
+                              <VBox prefHeight="100.0" prefWidth="250.0" spacing="10.0" style="-fx-background-color: linear-gradient(to bottom right, #FFFFFF, #FFF3E0); -fx-background-radius: 12; -fx-effect: dropshadow(gaussian, rgba(230,81,0,0.12), 10, 0, 0, 3); -fx-padding: 20;" HBox.hgrow="ALWAYS">
                                  <children>
-                                    <StackPane layoutY="-1.0" prefHeight="60.0" prefWidth="84.0" style="-fx-background-color: #FFC107;">
+                                    <HBox alignment="CENTER_LEFT" spacing="15.0">
                                        <children>
-                                          <FontAwesomeIcon fill="WHITE" glyphName="CART_PLUS" size="3em" />
+                                          <StackPane prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: linear-gradient(to bottom right, #FFA726, #E65100); -fx-background-radius: 14;">
+                                             <children>
+                                                <FontAwesomeIcon fill="WHITE" glyphName="SHOPPING_CART" size="1.5em" />
+                                             </children>
+                                          </StackPane>
+                                          <VBox spacing="5.0">
+                                             <children>
+                                                <Label fx:id="lblMonthlyPurchase" style="-fx-text-fill: #E65100; -fx-font-size: 24px; -fx-font-weight: bold;" text="1000" />
+                                                <Label style="-fx-text-fill: #FF8F00; -fx-font-size: 13px;" text="Monthly Purchases" />
+                                             </children>
+                                          </VBox>
                                        </children>
-                                    </StackPane>
-                                    <StackPane layoutX="92.0" layoutY="3.0" prefHeight="53.0" prefWidth="95.0" style="-fx-background-color: white;">
-                                       <children>
-                                          <Label fx:id="lblMonthlyPurchase" text="1000" StackPane.alignment="TOP_CENTER">
-                                             <StackPane.margin>
-                                                <Insets top="10.0" />
-                                             </StackPane.margin>
-                                             <font>
-                                                <Font name="Arial Black" size="12.0" />
-                                             </font>
-                                          </Label>
-                                          <Label text="PURCHASE" StackPane.alignment="BOTTOM_CENTER">
-                                             <StackPane.margin>
-                                                <Insets bottom="10.0" />
-                                             </StackPane.margin>
-                                             <font>
-                                                <Font name="Arial Black" size="12.0" />
-                                             </font>
-                                          </Label>
-                                       </children>
-                                       <padding>
-                                          <Insets top="1.0" />
-                                       </padding>
-                                    </StackPane>
+                                    </HBox>
                                  </children>
-                                 <HBox.margin>
-                                    <Insets bottom="10.0" left="10.0" top="10.0" />
-                                 </HBox.margin>
-                              </Pane>
-                              <Pane layoutX="198.0" layoutY="21.0" prefHeight="59.0" prefWidth="195.0" styleClass="tile">
+                              </VBox>
+                              <VBox prefHeight="100.0" prefWidth="250.0" spacing="10.0" style="-fx-background-color: linear-gradient(to bottom right, #FFFFFF, #F3E5F5); -fx-background-radius: 12; -fx-effect: dropshadow(gaussian, rgba(106,27,154,0.12), 10, 0, 0, 3); -fx-padding: 20;" HBox.hgrow="ALWAYS">
                                  <children>
-                                    <StackPane layoutY="-1.0" prefHeight="60.0" prefWidth="84.0" style="-fx-background-color: #5cb85c;">
+                                    <HBox alignment="CENTER_LEFT" spacing="15.0">
                                        <children>
-                                          <FontAwesomeIcon fill="WHITE" glyphName="BTC" size="3em" />
+                                          <StackPane prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: linear-gradient(to bottom right, #AB47BC, #6A1B9A); -fx-background-radius: 14;">
+                                             <children>
+                                                <FontAwesomeIcon fill="WHITE" glyphName="TRENDING_UP" size="1.5em" />
+                                             </children>
+                                          </StackPane>
+                                          <VBox spacing="5.0">
+                                             <children>
+                                                <Label fx:id="lblMonthlyMargin" style="-fx-text-fill: #4A148C; -fx-font-size: 24px; -fx-font-weight: bold;" text="1000" />
+                                                <Label style="-fx-text-fill: #AB47BC; -fx-font-size: 13px;" text="Monthly Margin" />
+                                             </children>
+                                          </VBox>
                                        </children>
-                                    </StackPane>
-                                    <StackPane layoutX="89.0" layoutY="4.0" prefHeight="53.0" prefWidth="102.0" style="-fx-background-color: white;">
-                                       <children>
-                                          <Label fx:id="lblMonthlyMargin" text="1000" StackPane.alignment="TOP_CENTER">
-                                             <StackPane.margin>
-                                                <Insets top="10.0" />
-                                             </StackPane.margin>
-                                             <font>
-                                                <Font name="Arial Black" size="12.0" />
-                                             </font>
-                                          </Label>
-                                          <Label text="MARGIN" StackPane.alignment="BOTTOM_CENTER">
-                                             <StackPane.margin>
-                                                <Insets bottom="10.0" />
-                                             </StackPane.margin>
-                                             <font>
-                                                <Font name="Arial Black" size="12.0" />
-                                             </font>
-                                          </Label>
-                                       </children>
-                                    </StackPane>
+                                    </HBox>
                                  </children>
-                                 <HBox.margin>
-                                    <Insets bottom="10.0" left="10.0" top="10.0" />
-                                 </HBox.margin>
-                              </Pane>
+                              </VBox>
                            </children>
                         </HBox>
-                        <DatePicker fx:id="dateMonth" layoutX="280.0" layoutY="104.0" prefHeight="25.0" prefWidth="158.0" AnchorPane.rightAnchor="20.0" />
+                        <VBox prefHeight="450.0" prefWidth="1146.0" spacing="15.0" style="-fx-background-color: linear-gradient(to bottom right, #FFFFFF, #E8EAF6); -fx-background-radius: 12; -fx-effect: dropshadow(gaussian, rgba(26,35,126,0.12), 10, 0, 0, 3); -fx-padding: 20;" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="160.0">
+                           <children>
+                              <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="1146.0">
+                                 <children>
+                                    <Label style="-fx-text-fill: #1A237E; -fx-font-size: 18px; -fx-font-weight: bold;" text="Monthly Sales Chart" />
+                                    <StackPane HBox.hgrow="ALWAYS" />
+                                    <DatePicker fx:id="dateMonth" style="-fx-background-color: #F5F5F5; -fx-background-radius: 6; -fx-border-color: #C5CAE9; -fx-border-radius: 6;" />
+                                 </children>
+                              </HBox>
+                              <LineChart fx:id="lineChartMonth" prefHeight="380.0" prefWidth="1146.0" style="-fx-background-color: transparent;">
+                                 <xAxis>
+                                   <CategoryAxis side="BOTTOM" style="-fx-tick-label-fill: #5C6BC0;" />
+                                 </xAxis>
+                                 <yAxis>
+                                   <NumberAxis label="Sale" side="LEFT" style="-fx-tick-label-fill: #5C6BC0;" />
+                                 </yAxis>
+                              </LineChart>
+                           </children>
+                        </VBox>
                      </children>
                   </AnchorPane>
             </content>
           </Tab>
           <Tab fx:id="tabYearly" text="Year Report">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #EDE7F6;">
                      <children>
-                        <HBox prefHeight="81.0" prefWidth="580.0" style="-fx-background-color: white;" styleClass="tile" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+                        <HBox prefHeight="120.0" prefWidth="580.0" spacing="20.0" style="-fx-background-color: transparent; -fx-padding: 20;" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
                            <children>
-                              <Pane layoutX="21.0" layoutY="21.0" prefHeight="60.0" prefWidth="195.0" styleClass="tile">
+                              <VBox prefHeight="100.0" prefWidth="250.0" spacing="10.0" style="-fx-background-color: linear-gradient(to bottom right, #FFFFFF, #E8EAF6); -fx-background-radius: 12; -fx-effect: dropshadow(gaussian, rgba(26,35,126,0.12), 10, 0, 0, 3); -fx-padding: 20;" HBox.hgrow="ALWAYS">
                                  <children>
-                                    <StackPane layoutY="-1.0" prefHeight="60.0" prefWidth="84.0" style="-fx-background-color: #0275d8;">
+                                    <HBox alignment="CENTER_LEFT" spacing="15.0">
                                        <children>
-                                          <FontAwesomeIcon fill="WHITE" glyphName="CART_PLUS" size="3em" />
+                                          <StackPane prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: linear-gradient(to bottom right, #42A5F5, #1565C0); -fx-background-radius: 14;">
+                                             <children>
+                                                <FontAwesomeIcon fill="WHITE" glyphName="CART_PLUS" size="1.5em" />
+                                             </children>
+                                          </StackPane>
+                                          <VBox spacing="5.0">
+                                             <children>
+                                                <Label fx:id="lblYearBills" style="-fx-text-fill: #1A237E; -fx-font-size: 24px; -fx-font-weight: bold;" text="1000" />
+                                                <Label style="-fx-text-fill: #5C6BC0; -fx-font-size: 13px;" text="Yearly Bills" />
+                                             </children>
+                                          </VBox>
                                        </children>
-                                    </StackPane>
-                                    <StackPane layoutX="86.0" layoutY="3.0" prefHeight="53.0" prefWidth="103.0" style="-fx-background-color: white;">
-                                       <children>
-                                          <Label fx:id="lblYearBills" text="1000" StackPane.alignment="TOP_CENTER">
-                                             <StackPane.margin>
-                                                <Insets top="10.0" />
-                                             </StackPane.margin>
-                                             <font>
-                                                <Font name="Arial Black" size="12.0" />
-                                             </font>
-                                          </Label>
-                                          <Label text="BILLS" StackPane.alignment="BOTTOM_CENTER">
-                                             <StackPane.margin>
-                                                <Insets bottom="10.0" />
-                                             </StackPane.margin>
-                                             <font>
-                                                <Font name="Arial Black" size="12.0" />
-                                             </font>
-                                          </Label>
-                                       </children>
-                                       <padding>
-                                          <Insets top="1.0" />
-                                       </padding>
-                                    </StackPane>
+                                    </HBox>
                                  </children>
-                                 <HBox.margin>
-                                    <Insets bottom="10.0" left="10.0" top="10.0" />
-                                 </HBox.margin>
-                              </Pane>
-                              <Pane layoutX="21.0" layoutY="21.0" prefHeight="71.0" prefWidth="195.0" styleClass="tile">
+                              </VBox>
+                              <VBox prefHeight="100.0" prefWidth="250.0" spacing="10.0" style="-fx-background-color: linear-gradient(to bottom right, #FFFFFF, #E8F5E9); -fx-background-radius: 12; -fx-effect: dropshadow(gaussian, rgba(46,125,50,0.12), 10, 0, 0, 3); -fx-padding: 20;" HBox.hgrow="ALWAYS">
                                  <children>
-                                    <StackPane layoutY="-1.0" prefHeight="60.0" prefWidth="84.0" style="-fx-background-color: #5cb85c;">
+                                    <HBox alignment="CENTER_LEFT" spacing="15.0">
                                        <children>
-                                          <FontAwesomeIcon fill="WHITE" glyphName="BTC" size="3em" />
+                                          <StackPane prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: linear-gradient(to bottom right, #66BB6A, #2E7D32); -fx-background-radius: 14;">
+                                             <children>
+                                                <FontAwesomeIcon fill="WHITE" glyphName="MONEY" size="1.5em" />
+                                             </children>
+                                          </StackPane>
+                                          <VBox spacing="5.0">
+                                             <children>
+                                                <Label fx:id="lblYearAmount" style="-fx-text-fill: #1B5E20; -fx-font-size: 24px; -fx-font-weight: bold;" text="1000" />
+                                                <Label style="-fx-text-fill: #43A047; -fx-font-size: 13px;" text="Yearly Amount" />
+                                             </children>
+                                          </VBox>
                                        </children>
-                                    </StackPane>
-                                    <StackPane layoutX="86.0" layoutY="3.0" prefHeight="53.0" prefWidth="104.0" style="-fx-background-color: white;">
-                                       <children>
-                                          <Label fx:id="lblYearAmount" text="1000" StackPane.alignment="TOP_CENTER">
-                                             <StackPane.margin>
-                                                <Insets top="10.0" />
-                                             </StackPane.margin>
-                                             <font>
-                                                <Font name="Arial Black" size="12.0" />
-                                             </font>
-                                          </Label>
-                                          <Label text="AMOUNT" StackPane.alignment="BOTTOM_CENTER">
-                                             <StackPane.margin>
-                                                <Insets bottom="10.0" />
-                                             </StackPane.margin>
-                                             <font>
-                                                <Font name="Arial Black" size="12.0" />
-                                             </font>
-                                          </Label>
-                                       </children>
-                                    </StackPane>
+                                    </HBox>
                                  </children>
-                                 <HBox.margin>
-                                    <Insets bottom="10.0" left="10.0" top="10.0" />
-                                 </HBox.margin>
-                              </Pane>
-                              <Pane layoutX="21.0" layoutY="21.0" prefHeight="60.0" prefWidth="195.0" styleClass="tile">
+                              </VBox>
+                              <VBox prefHeight="100.0" prefWidth="250.0" spacing="10.0" style="-fx-background-color: linear-gradient(to bottom right, #FFFFFF, #FFF3E0); -fx-background-radius: 12; -fx-effect: dropshadow(gaussian, rgba(230,81,0,0.12), 10, 0, 0, 3); -fx-padding: 20;" HBox.hgrow="ALWAYS">
                                  <children>
-                                    <StackPane layoutY="-1.0" prefHeight="60.0" prefWidth="84.0" style="-fx-background-color: #FFC107;">
+                                    <HBox alignment="CENTER_LEFT" spacing="15.0">
                                        <children>
-                                          <FontAwesomeIcon fill="WHITE" glyphName="CART_PLUS" size="3em" />
+                                          <StackPane prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: linear-gradient(to bottom right, #FFA726, #E65100); -fx-background-radius: 14;">
+                                             <children>
+                                                <FontAwesomeIcon fill="WHITE" glyphName="SHOPPING_CART" size="1.5em" />
+                                             </children>
+                                          </StackPane>
+                                          <VBox spacing="5.0">
+                                             <children>
+                                                <Label fx:id="lblYearPurchase" style="-fx-text-fill: #E65100; -fx-font-size: 24px; -fx-font-weight: bold;" text="1000" />
+                                                <Label style="-fx-text-fill: #FF8F00; -fx-font-size: 13px;" text="Yearly Purchases" />
+                                             </children>
+                                          </VBox>
                                        </children>
-                                    </StackPane>
-                                    <StackPane layoutX="85.0" layoutY="3.0" prefHeight="53.0" prefWidth="106.0" style="-fx-background-color: white;">
-                                       <children>
-                                          <Label fx:id="lblYearPurchase" text="1000" StackPane.alignment="TOP_CENTER">
-                                             <StackPane.margin>
-                                                <Insets top="10.0" />
-                                             </StackPane.margin>
-                                             <font>
-                                                <Font name="Arial Black" size="12.0" />
-                                             </font>
-                                          </Label>
-                                          <Label text="PURCHASE" StackPane.alignment="BOTTOM_CENTER">
-                                             <StackPane.margin>
-                                                <Insets bottom="10.0" />
-                                             </StackPane.margin>
-                                             <font>
-                                                <Font name="Arial Black" size="12.0" />
-                                             </font>
-                                          </Label>
-                                       </children>
-                                       <padding>
-                                          <Insets top="1.0" />
-                                       </padding>
-                                    </StackPane>
+                                    </HBox>
                                  </children>
-                                 <HBox.margin>
-                                    <Insets bottom="10.0" left="10.0" top="10.0" />
-                                 </HBox.margin>
-                              </Pane>
-                              <Pane layoutX="198.0" layoutY="21.0" prefHeight="71.0" prefWidth="195.0" styleClass="tile">
+                              </VBox>
+                              <VBox prefHeight="100.0" prefWidth="250.0" spacing="10.0" style="-fx-background-color: linear-gradient(to bottom right, #FFFFFF, #F3E5F5); -fx-background-radius: 12; -fx-effect: dropshadow(gaussian, rgba(106,27,154,0.12), 10, 0, 0, 3); -fx-padding: 20;" HBox.hgrow="ALWAYS">
                                  <children>
-                                    <StackPane layoutY="-1.0" prefHeight="60.0" prefWidth="84.0" style="-fx-background-color: #5cb85c;">
+                                    <HBox alignment="CENTER_LEFT" spacing="15.0">
                                        <children>
-                                          <FontAwesomeIcon fill="WHITE" glyphName="BTC" size="3em" />
+                                          <StackPane prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: linear-gradient(to bottom right, #AB47BC, #6A1B9A); -fx-background-radius: 14;">
+                                             <children>
+                                                <FontAwesomeIcon fill="WHITE" glyphName="TRENDING_UP" size="1.5em" />
+                                             </children>
+                                          </StackPane>
+                                          <VBox spacing="5.0">
+                                             <children>
+                                                <Label fx:id="lblYearMargin" style="-fx-text-fill: #4A148C; -fx-font-size: 24px; -fx-font-weight: bold;" text="1000" />
+                                                <Label style="-fx-text-fill: #AB47BC; -fx-font-size: 13px;" text="Yearly Margin" />
+                                             </children>
+                                          </VBox>
                                        </children>
-                                    </StackPane>
-                                    <StackPane layoutX="85.0" layoutY="4.0" prefHeight="53.0" prefWidth="107.0" style="-fx-background-color: white;">
-                                       <children>
-                                          <Label fx:id="lblYearMargin" text="1000" StackPane.alignment="TOP_CENTER">
-                                             <StackPane.margin>
-                                                <Insets top="10.0" />
-                                             </StackPane.margin>
-                                             <font>
-                                                <Font name="Arial Black" size="12.0" />
-                                             </font>
-                                          </Label>
-                                          <Label text="MARGIN" StackPane.alignment="BOTTOM_CENTER">
-                                             <StackPane.margin>
-                                                <Insets bottom="10.0" />
-                                             </StackPane.margin>
-                                             <font>
-                                                <Font name="Arial Black" size="12.0" />
-                                             </font>
-                                          </Label>
-                                       </children>
-                                    </StackPane>
+                                    </HBox>
                                  </children>
-                                 <HBox.margin>
-                                    <Insets bottom="10.0" left="10.0" top="10.0" />
-                                 </HBox.margin>
-                              </Pane>
+                              </VBox>
                            </children>
                         </HBox>
-                        <LineChart fx:id="lineChartYear" layoutX="10.0" layoutY="108.0" prefHeight="295.0" prefWidth="1126.0" titleSide="BOTTOM" AnchorPane.bottomAnchor="295.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="108.0">
-                          <xAxis>
-                            <CategoryAxis side="BOTTOM" />
-                          </xAxis>
-                          <yAxis>
-                            <NumberAxis label="Sale in Rupees" side="LEFT" />
-                          </yAxis>
-                        </LineChart>
-                        <DatePicker fx:id="date" layoutX="8.0" layoutY="96.0" prefHeight="25.0" prefWidth="133.0" AnchorPane.rightAnchor="25.0" />
-                        <PieChart fx:id="pichartYear" layoutX="5.0" layoutY="383.0" prefHeight="310.0" prefWidth="692.0" AnchorPane.bottomAnchor="5.0" AnchorPane.topAnchor="383.0" />
+                        <HBox prefHeight="400.0" prefWidth="1146.0" spacing="20.0" style="-fx-padding: 20;" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="160.0">
+                          <children>
+                            <VBox prefHeight="380.0" prefWidth="600.0" spacing="15.0" style="-fx-background-color: linear-gradient(to bottom right, #FFFFFF, #E8EAF6); -fx-background-radius: 12; -fx-effect: dropshadow(gaussian, rgba(26,35,126,0.12), 10, 0, 0, 3); -fx-padding: 20;">
+                               <children>
+                                  <HBox alignment="CENTER_LEFT" prefHeight="40.0">
+                                     <children>
+                                        <Label style="-fx-text-fill: #1A237E; -fx-font-size: 18px; -fx-font-weight: bold;" text="Yearly Sales Chart" />
+                                        <StackPane HBox.hgrow="ALWAYS" />
+                                        <DatePicker fx:id="date" style="-fx-background-color: #F5F5F5; -fx-background-radius: 6; -fx-border-color: #C5CAE9; -fx-border-radius: 6;" />
+                                     </children>
+                                  </HBox>
+                                  <LineChart fx:id="lineChartYear" prefHeight="320.0" prefWidth="560.0" style="-fx-background-color: transparent;">
+                                     <xAxis>
+                                       <CategoryAxis side="BOTTOM" style="-fx-tick-label-fill: #5C6BC0;" />
+                                     </xAxis>
+                                     <yAxis>
+                                       <NumberAxis label="Sale in Rupees" side="LEFT" style="-fx-tick-label-fill: #5C6BC0;" />
+                                     </yAxis>
+                                  </LineChart>
+                               </children>
+                            </VBox>
+                            <VBox prefHeight="380.0" prefWidth="500.0" spacing="15.0" style="-fx-background-color: linear-gradient(to bottom right, #FFFFFF, #E8EAF6); -fx-background-radius: 12; -fx-effect: dropshadow(gaussian, rgba(26,35,126,0.12), 10, 0, 0, 3); -fx-padding: 20;">
+                               <children>
+                                  <Label style="-fx-text-fill: #1A237E; -fx-font-size: 18px; -fx-font-weight: bold;" text="Sales Distribution" />
+                                  <PieChart fx:id="pichartYear" prefHeight="340.0" prefWidth="460.0" style="-fx-background-color: transparent;" />
+                               </children>
+                            </VBox>
+                          </children>
+                        </HBox>
                      </children>
                   </AnchorPane>
             </content>

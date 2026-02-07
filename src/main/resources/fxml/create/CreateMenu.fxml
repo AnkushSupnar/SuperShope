@@ -3,193 +3,220 @@
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="pane" prefHeight="488.0" prefWidth="795.0" stylesheets="@../css/menu.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ankush.controller.create.CreateManuController">
+<AnchorPane fx:id="pane" prefHeight="488.0" prefWidth="795.0" style="-fx-background-color: #EDE7F6;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ankush.controller.create.CreateManuController">
    <children>
-      <VBox alignment="TOP_CENTER" layoutX="40.0" layoutY="31.0" prefHeight="189.0" prefWidth="220.0" styleClass="pane">
+      <VBox alignment="CENTER" spacing="25.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" style="-fx-padding: 25;">
          <children>
-            <FontAwesomeIcon glyphName="USER_PLUS" size="4em" VBox.vgrow="ALWAYS">
-               <VBox.margin>
-                  <Insets top="10.0" />
-               </VBox.margin>
-            </FontAwesomeIcon>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="headingtext" text="EMPLOYEE">
-               <font>
-                  <Font name="Lucida Console" size="16.0" />
-               </font>
-               <VBox.margin>
-                  <Insets top="5.0" />
-               </VBox.margin>
-            </Text>
-            <VBox alignment="CENTER" nodeOrientation="LEFT_TO_RIGHT">
+            <HBox alignment="CENTER" spacing="12.0">
                <children>
-                  <Button fx:id="btnAddEmployee" alignment="TOP_LEFT" lineSpacing="10.0" mnemonicParsing="false" text="ADD EMPLOYEE">
-                     <graphic>
-                        <FontAwesomeIcon glyphName="USD" />
-                     </graphic>
-                  </Button>
-                  <Button fx:id="btnViewEmployee" alignment="TOP_LEFT" mnemonicParsing="false" prefHeight="35.0" text="VIEW EMPLOYEE">
-                     <graphic>
-                        <FontAwesomeIcon glyphName="USD" />
-                     </graphic>
-                  </Button>
+                  <StackPane prefHeight="36.0" prefWidth="36.0" style="-fx-background-color: #3949AB; -fx-background-radius: 8;">
+                     <children>
+                        <FontAwesomeIcon fill="WHITE" glyphName="DATABASE" size="1.2em" />
+                     </children>
+                  </StackPane>
+                  <Label style="-fx-text-fill: #1A237E; -fx-font-size: 22px; -fx-font-weight: bold;" text="Master Data">
+                     <font>
+                        <Font name="System Bold" size="22.0" />
+                     </font>
+                  </Label>
                </children>
                <VBox.margin>
-                  <Insets top="10.0" />
+                  <Insets left="5.0" />
                </VBox.margin>
-            </VBox>
-         </children>
-         <effect>
-            <DropShadow />
-         </effect>
-      </VBox>
-      <VBox alignment="TOP_CENTER" layoutX="282.0" layoutY="31.0" prefHeight="189.0" prefWidth="220.0" styleClass="pane">
-         <children>
-            <FontAwesomeIcon glyphName="BANK" size="4em" VBox.vgrow="ALWAYS">
-               <VBox.margin>
-                  <Insets top="10.0" />
-               </VBox.margin>
-            </FontAwesomeIcon>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="headingtext" text="BANK">
-               <font>
-                  <Font name="Lucida Console" size="16.0" />
-               </font>
-               <VBox.margin>
-                  <Insets top="5.0" />
-               </VBox.margin>
-            </Text>
-            <VBox alignment="CENTER" nodeOrientation="LEFT_TO_RIGHT">
+            </HBox>
+            <HBox alignment="CENTER" spacing="25.0">
                <children>
-                  <Button fx:id="btnAddBank" alignment="TOP_LEFT" lineSpacing="10.0" mnemonicParsing="false" text="ADD BANK">
-                     <graphic>
-                        <FontAwesomeIcon glyphName="USD" />
-                     </graphic>
-                  </Button>
-                  <Button fx:id="btnVIewBank" alignment="TOP_LEFT" mnemonicParsing="false" prefHeight="35.0" text="VIEW BANK">
-                     <graphic>
-                        <FontAwesomeIcon glyphName="USD" />
-                     </graphic>
-                  </Button>
+                  <!-- Employee Card -->
+                  <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="230.0" spacing="12.0" style="-fx-background-color: linear-gradient(to bottom right, #FFFFFF, #E8F5E9); -fx-background-radius: 14; -fx-effect: dropshadow(gaussian, rgba(76,175,80,0.15), 12, 0, 0, 4); -fx-padding: 20;">
+                     <children>
+                        <StackPane prefHeight="60.0" prefWidth="60.0" style="-fx-background-color: linear-gradient(to bottom right, #66BB6A, #2E7D32); -fx-background-radius: 30;">
+                           <children>
+                              <FontAwesomeIcon fill="WHITE" glyphName="USER_PLUS" size="1.8em" />
+                           </children>
+                        </StackPane>
+                        <Label style="-fx-text-fill: #1B5E20; -fx-font-size: 16px; -fx-font-weight: bold;" text="EMPLOYEE">
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font>
+                        </Label>
+                        <VBox alignment="CENTER" spacing="8.0">
+                           <children>
+                              <Button fx:id="btnAddEmployee" mnemonicParsing="false" prefWidth="180.0" style="-fx-background-color: linear-gradient(to right, #66BB6A, #2E7D32); -fx-text-fill: white; -fx-background-radius: 8; -fx-font-size: 13px; -fx-font-weight: bold; -fx-cursor: hand; -fx-effect: dropshadow(gaussian, rgba(46,125,50,0.3), 4, 0, 0, 2);" text="Add Employee">
+                                 <graphic>
+                                    <FontAwesomeIcon fill="white" glyphName="PLUS" size="1em" />
+                                 </graphic>
+                              </Button>
+                              <Button fx:id="btnViewEmployee" mnemonicParsing="false" prefWidth="180.0" style="-fx-background-color: transparent; -fx-text-fill: #2E7D32; -fx-border-color: #2E7D32; -fx-border-width: 1.5; -fx-background-radius: 8; -fx-border-radius: 8; -fx-font-size: 13px; -fx-font-weight: bold; -fx-cursor: hand;" text="View Employee">
+                                 <graphic>
+                                    <FontAwesomeIcon fill="#2E7D32" glyphName="EYE" size="1em" />
+                                 </graphic>
+                              </Button>
+                           </children>
+                        </VBox>
+                     </children>
+                  </VBox>
+
+                  <!-- Bank Card -->
+                  <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="230.0" spacing="12.0" style="-fx-background-color: linear-gradient(to bottom right, #FFFFFF, #E8EAF6); -fx-background-radius: 14; -fx-effect: dropshadow(gaussian, rgba(26,35,126,0.12), 12, 0, 0, 4); -fx-padding: 20;">
+                     <children>
+                        <StackPane prefHeight="60.0" prefWidth="60.0" style="-fx-background-color: linear-gradient(to bottom right, #42A5F5, #1565C0); -fx-background-radius: 30;">
+                           <children>
+                              <FontAwesomeIcon fill="WHITE" glyphName="BANK" size="1.8em" />
+                           </children>
+                        </StackPane>
+                        <Label style="-fx-text-fill: #0D47A1; -fx-font-size: 16px; -fx-font-weight: bold;" text="BANK">
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font>
+                        </Label>
+                        <VBox alignment="CENTER" spacing="8.0">
+                           <children>
+                              <Button fx:id="btnAddBank" mnemonicParsing="false" prefWidth="180.0" style="-fx-background-color: linear-gradient(to right, #42A5F5, #1565C0); -fx-text-fill: white; -fx-background-radius: 8; -fx-font-size: 13px; -fx-font-weight: bold; -fx-cursor: hand; -fx-effect: dropshadow(gaussian, rgba(21,101,192,0.3), 4, 0, 0, 2);" text="Add Bank">
+                                 <graphic>
+                                    <FontAwesomeIcon fill="white" glyphName="PLUS" size="1em" />
+                                 </graphic>
+                              </Button>
+                              <Button fx:id="btnVIewBank" mnemonicParsing="false" prefWidth="180.0" style="-fx-background-color: transparent; -fx-text-fill: #1565C0; -fx-border-color: #1565C0; -fx-border-width: 1.5; -fx-background-radius: 8; -fx-border-radius: 8; -fx-font-size: 13px; -fx-font-weight: bold; -fx-cursor: hand;" text="View Bank">
+                                 <graphic>
+                                    <FontAwesomeIcon fill="#1565C0" glyphName="EYE" size="1em" />
+                                 </graphic>
+                              </Button>
+                           </children>
+                        </VBox>
+                     </children>
+                  </VBox>
+
+                  <!-- User Card -->
+                  <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="230.0" spacing="12.0" style="-fx-background-color: linear-gradient(to bottom right, #FFFFFF, #F3E5F5); -fx-background-radius: 14; -fx-effect: dropshadow(gaussian, rgba(156,39,176,0.12), 12, 0, 0, 4); -fx-padding: 20;">
+                     <children>
+                        <StackPane prefHeight="60.0" prefWidth="60.0" style="-fx-background-color: linear-gradient(to bottom right, #AB47BC, #6A1B9A); -fx-background-radius: 30;">
+                           <children>
+                              <FontAwesomeIcon fill="WHITE" glyphName="USER" size="1.8em" />
+                           </children>
+                        </StackPane>
+                        <Label style="-fx-text-fill: #4A148C; -fx-font-size: 16px; -fx-font-weight: bold;" text="USER">
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font>
+                        </Label>
+                        <VBox alignment="CENTER" spacing="8.0">
+                           <children>
+                              <Button fx:id="btnAddUser" mnemonicParsing="false" prefWidth="180.0" style="-fx-background-color: linear-gradient(to right, #AB47BC, #6A1B9A); -fx-text-fill: white; -fx-background-radius: 8; -fx-font-size: 13px; -fx-font-weight: bold; -fx-cursor: hand; -fx-effect: dropshadow(gaussian, rgba(106,27,154,0.3), 4, 0, 0, 2);" text="Add User">
+                                 <graphic>
+                                    <FontAwesomeIcon fill="white" glyphName="PLUS" size="1em" />
+                                 </graphic>
+                              </Button>
+                           </children>
+                           <VBox.margin>
+                              <Insets top="8.0" />
+                           </VBox.margin>
+                        </VBox>
+                     </children>
+                  </VBox>
                </children>
-               <VBox.margin>
-                  <Insets top="10.0" />
-               </VBox.margin>
-            </VBox>
-         </children>
-         <effect>
-            <DropShadow />
-         </effect>
-      </VBox>
-      <VBox alignment="TOP_CENTER" layoutX="540.0" layoutY="31.0" prefHeight="189.0" prefWidth="220.0" styleClass="pane">
-         <children>
-            <FontAwesomeIcon glyphName="USER_PLUS" size="4em" VBox.vgrow="ALWAYS">
-               <VBox.margin>
-                  <Insets top="10.0" />
-               </VBox.margin>
-            </FontAwesomeIcon>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="headingtext" text="USER">
-               <font>
-                  <Font name="Lucida Console" size="16.0" />
-               </font>
-               <VBox.margin>
-                  <Insets top="5.0" />
-               </VBox.margin>
-            </Text>
-            <VBox alignment="CENTER" nodeOrientation="LEFT_TO_RIGHT">
+            </HBox>
+
+            <HBox alignment="CENTER" spacing="25.0">
                <children>
-                  <Button fx:id="btnAddUser" alignment="TOP_LEFT" lineSpacing="10.0" mnemonicParsing="false" text="ADD USER">
-                     <graphic>
-                        <FontAwesomeIcon glyphName="USD" />
-                     </graphic>
-                  </Button>
+                  <!-- Item Card -->
+                  <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="230.0" spacing="12.0" style="-fx-background-color: linear-gradient(to bottom right, #FFFFFF, #FFF3E0); -fx-background-radius: 14; -fx-effect: dropshadow(gaussian, rgba(230,81,0,0.12), 12, 0, 0, 4); -fx-padding: 20;">
+                     <children>
+                        <StackPane prefHeight="60.0" prefWidth="60.0" style="-fx-background-color: linear-gradient(to bottom right, #FFA726, #E65100); -fx-background-radius: 30;">
+                           <children>
+                              <FontAwesomeIcon fill="WHITE" glyphName="CUBE" size="1.8em" />
+                           </children>
+                        </StackPane>
+                        <Label style="-fx-text-fill: #E65100; -fx-font-size: 16px; -fx-font-weight: bold;" text="ITEM">
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font>
+                        </Label>
+                        <VBox alignment="CENTER" spacing="8.0">
+                           <children>
+                              <Button fx:id="btnAddItem" mnemonicParsing="false" prefWidth="180.0" style="-fx-background-color: linear-gradient(to right, #FFA726, #E65100); -fx-text-fill: white; -fx-background-radius: 8; -fx-font-size: 13px; -fx-font-weight: bold; -fx-cursor: hand; -fx-effect: dropshadow(gaussian, rgba(230,81,0,0.3), 4, 0, 0, 2);" text="Add Item">
+                                 <graphic>
+                                    <FontAwesomeIcon fill="white" glyphName="PLUS" size="1em" />
+                                 </graphic>
+                              </Button>
+                              <Button fx:id="btnViewItem" mnemonicParsing="false" prefWidth="180.0" style="-fx-background-color: transparent; -fx-text-fill: #E65100; -fx-border-color: #E65100; -fx-border-width: 1.5; -fx-background-radius: 8; -fx-border-radius: 8; -fx-font-size: 13px; -fx-font-weight: bold; -fx-cursor: hand;" text="View Item">
+                                 <graphic>
+                                    <FontAwesomeIcon fill="#E65100" glyphName="EYE" size="1em" />
+                                 </graphic>
+                              </Button>
+                           </children>
+                        </VBox>
+                     </children>
+                  </VBox>
+
+                  <!-- Purchase Party Card -->
+                  <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="230.0" spacing="12.0" style="-fx-background-color: linear-gradient(to bottom right, #FFFFFF, #E0F7FA); -fx-background-radius: 14; -fx-effect: dropshadow(gaussian, rgba(0,188,212,0.12), 12, 0, 0, 4); -fx-padding: 20;">
+                     <children>
+                        <StackPane prefHeight="60.0" prefWidth="60.0" style="-fx-background-color: linear-gradient(to bottom right, #26C6DA, #00838F); -fx-background-radius: 30;">
+                           <children>
+                              <FontAwesomeIcon fill="WHITE" glyphName="TRUCK" size="1.8em" />
+                           </children>
+                        </StackPane>
+                        <Label style="-fx-text-fill: #006064; -fx-font-size: 16px; -fx-font-weight: bold;" text="PURCHASE PARTY">
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font>
+                        </Label>
+                        <VBox alignment="CENTER" spacing="8.0">
+                           <children>
+                              <Button fx:id="btnAddParty" mnemonicParsing="false" prefWidth="180.0" style="-fx-background-color: linear-gradient(to right, #26C6DA, #00838F); -fx-text-fill: white; -fx-background-radius: 8; -fx-font-size: 13px; -fx-font-weight: bold; -fx-cursor: hand; -fx-effect: dropshadow(gaussian, rgba(0,131,143,0.3), 4, 0, 0, 2);" text="Add Party">
+                                 <graphic>
+                                    <FontAwesomeIcon fill="white" glyphName="PLUS" size="1em" />
+                                 </graphic>
+                              </Button>
+                              <Button fx:id="btnViewParty" mnemonicParsing="false" prefWidth="180.0" style="-fx-background-color: transparent; -fx-text-fill: #00838F; -fx-border-color: #00838F; -fx-border-width: 1.5; -fx-background-radius: 8; -fx-border-radius: 8; -fx-font-size: 13px; -fx-font-weight: bold; -fx-cursor: hand;" text="View Party">
+                                 <graphic>
+                                    <FontAwesomeIcon fill="#00838F" glyphName="EYE" size="1em" />
+                                 </graphic>
+                              </Button>
+                           </children>
+                        </VBox>
+                     </children>
+                  </VBox>
+
+                  <!-- Customer Card -->
+                  <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="230.0" spacing="12.0" style="-fx-background-color: linear-gradient(to bottom right, #FFFFFF, #FCE4EC); -fx-background-radius: 14; -fx-effect: dropshadow(gaussian, rgba(233,30,99,0.12), 12, 0, 0, 4); -fx-padding: 20;">
+                     <children>
+                        <StackPane prefHeight="60.0" prefWidth="60.0" style="-fx-background-color: linear-gradient(to bottom right, #EC407A, #AD1457); -fx-background-radius: 30;">
+                           <children>
+                              <FontAwesomeIcon fill="WHITE" glyphName="USERS" size="1.8em" />
+                           </children>
+                        </StackPane>
+                        <Label style="-fx-text-fill: #880E4F; -fx-font-size: 16px; -fx-font-weight: bold;" text="CUSTOMER">
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font>
+                        </Label>
+                        <VBox alignment="CENTER" spacing="8.0">
+                           <children>
+                              <Button mnemonicParsing="false" prefWidth="180.0" style="-fx-background-color: linear-gradient(to right, #EC407A, #AD1457); -fx-text-fill: white; -fx-background-radius: 8; -fx-font-size: 13px; -fx-font-weight: bold; -fx-cursor: hand; -fx-effect: dropshadow(gaussian, rgba(173,20,87,0.3), 4, 0, 0, 2);" text="Add Customer">
+                                 <graphic>
+                                    <FontAwesomeIcon fill="white" glyphName="PLUS" size="1em" />
+                                 </graphic>
+                              </Button>
+                              <Button mnemonicParsing="false" prefWidth="180.0" style="-fx-background-color: transparent; -fx-text-fill: #AD1457; -fx-border-color: #AD1457; -fx-border-width: 1.5; -fx-background-radius: 8; -fx-border-radius: 8; -fx-font-size: 13px; -fx-font-weight: bold; -fx-cursor: hand;" text="View Customer">
+                                 <graphic>
+                                    <FontAwesomeIcon fill="#AD1457" glyphName="EYE" size="1em" />
+                                 </graphic>
+                              </Button>
+                           </children>
+                        </VBox>
+                     </children>
+                  </VBox>
                </children>
-               <VBox.margin>
-                  <Insets top="10.0" />
-               </VBox.margin>
-            </VBox>
+            </HBox>
          </children>
-         <effect>
-            <DropShadow />
-         </effect>
-      </VBox>
-      <VBox alignment="TOP_CENTER" layoutX="38.0" layoutY="257.0" prefHeight="189.0" prefWidth="220.0" styleClass="pane">
-         <children>
-            <FontAwesomeIcon glyphName="BUS" size="4em" VBox.vgrow="ALWAYS">
-               <VBox.margin>
-                  <Insets top="10.0" />
-               </VBox.margin>
-            </FontAwesomeIcon>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="headingtext" text="ITEM">
-               <font>
-                  <Font name="Lucida Console" size="16.0" />
-               </font>
-               <VBox.margin>
-                  <Insets top="5.0" />
-               </VBox.margin>
-            </Text>
-            <VBox alignment="CENTER" nodeOrientation="LEFT_TO_RIGHT">
-               <children>
-                  <Button fx:id="btnAddItem" alignment="TOP_LEFT" lineSpacing="10.0" mnemonicParsing="false" text="ADD ITEM">
-                     <graphic>
-                        <FontAwesomeIcon glyphName="USD" />
-                     </graphic>
-                  </Button>
-                  <Button fx:id="btnViewItem" alignment="TOP_LEFT" mnemonicParsing="false" prefHeight="35.0" text="VIEW ITEM">
-                     <graphic>
-                        <FontAwesomeIcon glyphName="USD" />
-                     </graphic>
-                  </Button>
-               </children>
-               <VBox.margin>
-                  <Insets top="10.0" />
-               </VBox.margin>
-            </VBox>
-         </children>
-         <effect>
-            <DropShadow />
-         </effect>
-      </VBox>
-      <VBox alignment="TOP_CENTER" layoutX="300.0" layoutY="257.0" prefHeight="189.0" prefWidth="220.0" styleClass="pane">
-         <children>
-            <FontAwesomeIcon glyphName="BUS" size="4em" VBox.vgrow="ALWAYS">
-               <VBox.margin>
-                  <Insets top="10.0" />
-               </VBox.margin>
-            </FontAwesomeIcon>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="headingtext" text="PURCHASE">
-               <font>
-                  <Font name="Lucida Console" size="16.0" />
-               </font>
-               <VBox.margin>
-                  <Insets top="5.0" />
-               </VBox.margin>
-            </Text>
-            <VBox alignment="CENTER" nodeOrientation="LEFT_TO_RIGHT">
-               <children>
-                  <Button fx:id="btnAddParty" alignment="TOP_LEFT" lineSpacing="10.0" mnemonicParsing="false" text="ADD PARTY">
-                     <graphic>
-                        <FontAwesomeIcon glyphName="USD" />
-                     </graphic>
-                  </Button>
-                  <Button fx:id="btnViewParty" alignment="TOP_LEFT" mnemonicParsing="false" prefHeight="35.0" text="VIEW PARTY">
-                     <graphic>
-                        <FontAwesomeIcon glyphName="USD" />
-                     </graphic>
-                  </Button>
-               </children>
-               <VBox.margin>
-                  <Insets top="10.0" />
-               </VBox.margin>
-            </VBox>
-         </children>
-         <effect>
-            <DropShadow />
-         </effect>
       </VBox>
    </children>
 </AnchorPane>
