@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<SplitPane fx:id="mainPane" dividerPositions="0.631404958677686" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ankush.newcontroller.transaction.PurchaseInvoiceControllerNew">
+  <items>
+    <AnchorPane fx:id="billingPane" minHeight="-Infinity" minWidth="-Infinity" SplitPane.resizableWithParent="false">
+         <children>
+            <Label layoutX="284.0" layoutY="20.0" text="Purchase Party Name" AnchorPane.leftAnchor="284.0">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <HBox layoutX="10.0" layoutY="45.0" spacing="10.0" AnchorPane.leftAnchor="10.0">
+               <children>
+                  <DatePicker fx:id="date" prefHeight="32.0" prefWidth="111.0" promptText="select Date" />
+                  <TextField fx:id="txtInvoiceNo" prefHeight="32.0" prefWidth="142.0">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="txtParty" prefHeight="30.0" prefWidth="240.0">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </TextField>
+               </children>
+            </HBox>
+            <Label layoutX="137.0" layoutY="20.0" text="Purchase Invoice No:" AnchorPane.leftAnchor="137.0">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="15.0" layoutY="20.0" text="Invoice Date">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="15.0" layoutY="83.0" text="Item Bar Code">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <HBox layoutX="8.0" layoutY="100.0">
+               <children>
+                  <TextField fx:id="txtBarcode" prefHeight="33.0" prefWidth="127.0">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="txtItemName" prefHeight="33.0" prefWidth="210.0" promptText="maalaacao naava" style="-fx-font-family: kiran; -fx-font-size: 20;" />
+                  <TextField fx:id="txtQty" prefHeight="33.0" prefWidth="85.0" promptText="naga" style="-fx-font-family: kiran; -fx-font-size: 20;" />
+                  <ComboBox fx:id="cmbUnit" prefHeight="32.0" prefWidth="68.0" promptText="Unit" visibleRowCount="2" />
+                  <TextField fx:id="txtRate" prefHeight="25.0" prefWidth="85.0" promptText="Baava" style="-fx-font-family: kiran; -fx-font-size: 20;" />
+                  <TextField fx:id="txtMrp" layoutX="591.0" layoutY="10.0" prefHeight="25.0" prefWidth="85.0" promptText="ikMmata" style="-fx-font-family: kiran; -fx-font-size: 20;" text="0.0" />
+                  <TextField fx:id="txtAmount" prefHeight="25.0" prefWidth="85.0" promptText="ekuNa" style="-fx-font-family: kiran; -fx-font-size: 20;" />
+               </children>
+            </HBox>
+            <Label layoutX="138.0" layoutY="83.0" text="Item Name">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="344.0" layoutY="83.0" text="Quantity">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="500.0" layoutY="83.0" text="Rate">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="583.0" layoutY="83.0" text="MRP">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="434.0" layoutY="83.0" text="Unit">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <HBox layoutX="10.0" layoutY="143.0" spacing="10.0" AnchorPane.leftAnchor="10.0">
+               <children>
+                  <Button fx:id="btnAdd" mnemonicParsing="false" stylesheets="@../css/button.css" text="ADD">
+                     <graphic>
+                        <FontAwesomeIcon glyphName="PLUS" />
+                     </graphic>
+                  </Button>
+                  <Button fx:id="btnUpdate" mnemonicParsing="false" stylesheets="@../css/button.css" text="UPDATE">
+                     <graphic>
+                        <FontAwesomeIcon glyphName="EDIT" />
+                     </graphic>
+                  </Button>
+                  <Button fx:id="btnRemove" mnemonicParsing="false" stylesheets="@../css/button.css" text="REMOVE">
+                     <graphic>
+                        <FontAwesomeIcon glyphName="CLOSE" />
+                     </graphic>
+                  </Button>
+                  <Button fx:id="btnClear" mnemonicParsing="false" stylesheets="@../css/button.css" text="CLEAR">
+                     <graphic>
+                        <FontAwesomeIcon glyphName="RECYCLE" />
+                     </graphic>
+                  </Button>
+               </children>
+            </HBox>
+            <TableView fx:id="table" layoutX="10.0" layoutY="179.0" prefHeight="366.0" prefWidth="741.0" AnchorPane.bottomAnchor="205.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="179.0">
+              <columns>
+                <TableColumn fx:id="colSr" prefWidth="45.0" text="SR.NO" />
+                <TableColumn fx:id="colBarcode" prefWidth="148.0" text="BARCODE" />
+                  <TableColumn fx:id="colItemName" prefWidth="235.0" text="ITEM NAME" />
+                  <TableColumn fx:id="colQty" prefWidth="72.0" text="QTY" />
+                  <TableColumn fx:id="colUnit" prefWidth="68.0" text="UNIT" />
+                  <TableColumn fx:id="colRate" prefWidth="77.0" text="PRICE" />
+                  <TableColumn fx:id="colAmount" prefWidth="83.0" text="AMOUNT" />
+              </columns>
+            </TableView>
+            <Pane layoutX="10.0" layoutY="545.0" prefHeight="164.0" prefWidth="740.0" style="-fx-background-color: white; -fx-border-color: red;" AnchorPane.bottomAnchor="41.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
+               <children>
+                  <Label layoutX="420.0" layoutY="8.0" text="NET TOTAL" />
+                  <HBox layoutX="14.0" layoutY="25.0">
+                     <children>
+                        <TextField fx:id="txtTransporting" style="-fx-font-family: kiran; -fx-font-size: 20;" text="0.0" />
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="+">
+                           <HBox.margin>
+                              <Insets top="10.0" />
+                           </HBox.margin>
+                        </Text>
+                        <TextField fx:id="txtWages" style="-fx-font-family: kiran; -fx-font-size: 20;" text="0.0" />
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="+">
+                           <HBox.margin>
+                              <Insets top="10.0" />
+                           </HBox.margin>
+                        </Text>
+                        <TextField fx:id="txtOther" style="-fx-font-family: kiran; -fx-font-size: 20;" text="0.0" />
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="+">
+                           <HBox.margin>
+                              <Insets top="10.0" />
+                           </HBox.margin>
+                        </Text>
+                        <TextField fx:id="txtNetTotal" editable="false" promptText="ekuNa" style="-fx-font-family: kiran; -fx-font-size: 20;" text="0.0" />
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="=">
+                           <HBox.margin>
+                              <Insets top="10.0" />
+                           </HBox.margin>
+                        </Text>
+                        <TextField fx:id="txtGrandTotal" editable="false" promptText="ekuNa" style="-fx-font-family: kiran; -fx-font-size: 20;" text="0.0" />
+                     </children>
+                  </HBox>
+                  <Label layoutX="14.0" layoutY="8.0" text="TRANSPORTING CHRGS" />
+                  <Label layoutX="152.0" layoutY="8.0" text="WAGES" />
+                  <Label layoutX="283.0" layoutY="8.0" text="OTHER CHRGS" />
+                  <Label layoutX="557.0" layoutY="8.0" text="GRAND TOTAL" />
+                  <TextField fx:id="txtDiscount" layoutX="16.0" layoutY="79.0" style="-fx-font-family: kiran; -fx-font-size: 20;" />
+                  <Label layoutX="14.0" layoutY="61.0" text="DICOUNT" />
+                  <TextField fx:id="txtPaid" layoutX="150.0" layoutY="79.0" style="-fx-font-family: kiran; -fx-font-size: 20;" />
+                  <Label layoutX="148.0" layoutY="61.0" text="PAID AMOUNT" />
+                  <TextField fx:id="txtBank" layoutX="281.0" layoutY="79.0" prefHeight="33.0" prefWidth="185.0" promptText="Select Bank Name">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </TextField>
+                  <Label layoutX="279.0" layoutY="61.0" text="PAID FROM" />
+                  <HBox layoutX="10.0" layoutY="120.0" spacing="10.0">
+                     <children>
+                        <Button fx:id="btnSave" mnemonicParsing="false" stylesheets="@../css/button.css" text="SAVE">
+                           <graphic>
+                              <FontAwesomeIcon glyphName="SAVE" />
+                           </graphic>
+                        </Button>
+                        <Button fx:id="btnUpdate2" mnemonicParsing="false" stylesheets="@../css/button.css" text="UPDATE">
+                           <graphic>
+                              <FontAwesomeIcon glyphName="EDIT" />
+                           </graphic>
+                        </Button>
+                        <Button fx:id="btnClear2" mnemonicParsing="false" stylesheets="@../css/button.css" text="CLEAR">
+                           <graphic>
+                              <FontAwesomeIcon glyphName="RECYCLE" />
+                           </graphic>
+                        </Button>
+                        <Button fx:id="btnPrint" mnemonicParsing="false" stylesheets="@../css/button.css" text="PRINT">
+                           <graphic>
+                              <FontAwesomeIcon glyphName="PRINT" />
+                           </graphic>
+                        </Button>
+                        <Button fx:id="btnExit" mnemonicParsing="false" stylesheets="@../css/button.css" text="EXIT">
+                           <graphic>
+                              <FontAwesomeIcon glyphName="HOME" />
+                           </graphic>
+                        </Button>
+                     </children>
+                  </HBox>
+               </children>
+            </Pane>
+            <Label layoutX="667.0" layoutY="83.0" text="Amount">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+         </children></AnchorPane>
+    <AnchorPane minHeight="0.0" minWidth="0.0">
+         <children>
+            <TableView fx:id="tableold" layoutX="192.0" layoutY="60.0" prefHeight="680.0" prefWidth="443.0" stylesheets="@../css/table.css" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="3.0" AnchorPane.topAnchor="60.0">
+              <columns>
+                <TableColumn fx:id="colSrNo" prefWidth="48.0" text="SR.NO" />
+                <TableColumn fx:id="colDate" prefWidth="93.0" text="DATE" />
+                  <TableColumn fx:id="colInvoiceNo" prefWidth="82.0" text="INVOICE NO" />
+                  <TableColumn fx:id="colParty" prefWidth="170.0" text="PARTY NAME" />
+                  <TableColumn fx:id="colTotal" prefWidth="79.0" text="TOTAL AMT" />
+                  <TableColumn fx:id="colPaid" prefWidth="79.0" text="PAID AMT" />
+              </columns>
+            </TableView>
+            <Pane layoutX="33.0" layoutY="-64.0" prefHeight="60.0" prefWidth="443.0" AnchorPane.bottomAnchor="680.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <Label layoutX="14.0" layoutY="4.0" text="Date" />
+                  <HBox layoutX="10.0" layoutY="23.0" spacing="5.0">
+                     <children>
+                        <DatePicker fx:id="dateSearch" prefWidth="100.0" promptText="select Date" />
+                        <Button fx:id="btnShow" mnemonicParsing="false" stylesheets="@../css/smallbutton.css" text="SHOW">
+                           <graphic>
+                              <FontAwesomeIcon glyphName="SEARCH" />
+                           </graphic>
+                        </Button>
+                        <Button fx:id="btnMonth" mnemonicParsing="false" stylesheets="@../css/smallbutton.css" text="MONTH">
+                           <graphic>
+                              <FontAwesomeIcon glyphName="LAPTOP" />
+                           </graphic>
+                        </Button>
+                        <Button fx:id="btnYear" mnemonicParsing="false" stylesheets="@../css/smallbutton.css" text="YEAR">
+                           <graphic>
+                              <FontAwesomeIcon glyphName="LAPTOP" />
+                           </graphic>
+                        </Button>
+                        <Button fx:id="btnAll" mnemonicParsing="false" stylesheets="@../css/smallbutton.css" text="ALL">
+                           <graphic>
+                              <FontAwesomeIcon glyphName="LAPTOP" />
+                           </graphic>
+                        </Button>
+                     </children>
+                  </HBox>
+               </children>
+            </Pane>
+         </children></AnchorPane>
+  </items>
+</SplitPane>
