@@ -1,5 +1,6 @@
 package com.ankush.controller.create;
 
+import com.ankush.config.SpringFXMLLoader;
 import com.ankush.data.entities.Item;
 import com.ankush.data.service.ItemService;
 import com.ankush.view.AlertNotification;
@@ -16,6 +17,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.util.Callback;
@@ -63,6 +65,7 @@ public class AddItemController implements Initializable {
     @FXML private AnchorPane sidePane;
 
     @Autowired ItemService itemService;
+    @Autowired private SpringFXMLLoader loader;
 
     private ToggleGroup  group;
     @Autowired
@@ -70,6 +73,8 @@ public class AddItemController implements Initializable {
     @Autowired
     private AlertNotification alert;
     private ObservableList<Item>list = FXCollections.observableArrayList();
+    private ObservableList<String> itemNameSearch = FXCollections.observableArrayList();
+    private ListView<String> listView;
     private Long id;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -116,7 +121,10 @@ public class AddItemController implements Initializable {
         btnSave.setOnAction(e->save());
     btnUpdate.setOnAction(e->update());
     btnClear.setOnAction(e->clear());
-    btnExit.setOnAction(e->mainPane.setVisible(false));
+    btnExit.setOnAction(e -> {
+        BorderPane root = (BorderPane) mainPane.getParent();
+        root.setCenter(loader.getPage("/fxml/create/CreateMenu.fxml"));
+    });
     btnShowAll.setOnAction(e->{
         list.clear();
         list.addAll(service.getAllItems());
@@ -130,78 +138,92 @@ public class AddItemController implements Initializable {
         list.add(itemService.getItemByName(txtSearch.getText()));
     }
 
-    private void addItemSearch() {
-        ListView listView;
-        ObservableList<String> itemNameSearch = FXCollections.observableArrayList();
+    // ===== Item name autocomplete (BillingController pattern) =====
+    void addItemSearch() {
         itemNameSearch.addAll(itemService.getAllItemNames());
-        listView = new ListView();
+        listView = new ListView<>();
         listView.setStyle("-fx-font:18pt \"Kiran\"");
-        listView.setLayoutX(txtSearch.getLayoutX());
-        listView.setLayoutY(txtSearch.getLayoutY()+40);
-        listView.setPrefWidth(txtSearch.getPrefWidth());
-        sidePane.getChildren().addAll(listView);
+        listView.setLayoutX(0);
+        listView.setLayoutY(62);
+        sidePane.getChildren().add(listView);
         listView.setVisible(false);
-        txtSearch.setOnKeyReleased(e->{
-            listView.setVisible(true);
-            if(txtSearch.getText()==null &&txtSearch.getText().isEmpty() || txtSearch.getText().equals("") || txtSearch.getText().equals(" ")) {
-                listView.getItems().clear();
-                listView.getItems().addAll(itemNameSearch);
-                return;
+
+        // Key released on search field
+        txtSearch.setOnKeyReleased(e -> {
+            findItem(txtSearch.getText());
+            if (listView.getItems().size() > 0) {
+                listView.getSelectionModel().select(0);
+                listView.setVisible(true);
             }
-                listView.getItems().clear();
-                listView.getItems().addAll(searchList(txtSearch.getText(),itemNameSearch));
-            if(e.getCode()== KeyCode.ENTER ||e.getCode()== KeyCode.DOWN) {
-                System.out.println("Pressed "+e.getCode());
+            // ENTER - select item
+            if (e.getCode() == KeyCode.ENTER) {
+                if (listView.getItems().size() > 0) {
+                    listView.getSelectionModel().select(0);
+                    listView.requestFocus();
+                }
+                if (txtSearch.getText().equals(listView.getSelectionModel().getSelectedItem())) {
+                    listView.setVisible(false);
+                    show();
+                }
+            }
+            // DOWN ARROW - navigate to dropdown
+            if (e.getCode() == KeyCode.DOWN) {
                 if (listView.getItems().size() > 0) {
                     listView.getSelectionModel().select(0);
                     listView.requestFocus();
                 }
             }
         });
-        txtSearch.setOnMouseClicked(e->{
-            if(txtSearch.getText()!=null)
-            {
-                if(txtSearch.getText()==null &&txtSearch.getText().isEmpty() || txtSearch.getText().equals("") || txtSearch.getText().equals(" ")) {
-                    listView.getItems().clear();
-                    listView.getItems().addAll(itemNameSearch);
-                    listView.setVisible(true);
-                    return;
-                }
-                listView.getItems().clear();
-                listView.getItems().addAll(searchList(txtSearch.getText(),itemNameSearch));
-                if(!listView.getItems().isEmpty()) listView.setVisible(true);
-            }
+
+        // Mouse click on search field - show dropdown
+        txtSearch.setOnMouseClicked(e -> {
+            findItem(txtSearch.getText());
+            listView.setVisible(true);
         });
-        listView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue observableValue, String o, String t1) {
-                if(listView.isFocused())
-                txtSearch.setText(t1);
-            }
-        });
-        listView.setOnKeyReleased(e->{
-            if(e.getCode()==KeyCode.BACK_SPACE)
-            {
+
+        // Enter key on dropdown list - select item name
+        listView.setOnKeyReleased(e -> {
+            String selectedName = String.valueOf(listView.getSelectionModel().getSelectedItems());
+            if (e.getCode() == KeyCode.ENTER) {
+                txtSearch.setText(selectedName.substring(1, selectedName.length() - 1));
+                listView.setVisible(false);
                 txtSearch.requestFocus();
             }
-            if(e.getCode()==KeyCode.ENTER)
-            {
+        });
+
+        // Double-click on dropdown list - select and search
+        listView.setOnMouseClicked(e -> {
+            if (e.getButton() == MouseButton.PRIMARY && e.getClickCount() == 2) {
+                String selectedName = String.valueOf(listView.getSelectionModel().getSelectedItems());
+                txtSearch.setText(selectedName.substring(1, selectedName.length() - 1));
                 listView.setVisible(false);
-                btnShow.requestFocus();
+                show();
             }
         });
-        listView.setOnMouseClicked(e->{
-            if(e.getButton()== MouseButton.PRIMARY && e.getClickCount()==2)
-                listView.setVisible(false);
+
+        // Focus listeners - show/hide dropdown
+        txtSearch.focusedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observableValue, Boolean aBoolean, Boolean t1) {
+                if (t1) {
+                    findItem(txtSearch.getText());
+                    listView.setVisible(true);
+                } else {
+                    if (listView.isFocused())
+                        return;
+                    else
+                        listView.setVisible(false);
+                }
+            }
         });
+
         listView.focusedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> observableValue, Boolean aBoolean, Boolean t1) {
-                if(t1) {
-                    //in focus
-                }
-                else{
-                    if(txtSearch.isFocused())
+                if (t1) {
+                    // in focus
+                } else {
+                    if (txtSearch.isFocused())
                         return;
                     else
                         listView.setVisible(false);
@@ -210,17 +232,26 @@ public class AddItemController implements Initializable {
         });
     }
 
+    // ===== Filter item names (same as BillingController findItem) =====
+    void findItem(String find) {
+        listView.getItems().clear();
+        if (find == null || find.equals("") || find.trim().equals("")) {
+            listView.getItems().clear();
+            listView.getItems().addAll(itemNameSearch);
+            return;
+        } else {
+            listView.getItems().clear();
+        }
 
-    private List<String> searchList(String text, ObservableList<String> itemNameSearch) {
-        if(text==null)
-            return itemNameSearch;
-
-
-        List<String> searchWords = Arrays.asList(text.trim().split(" "));
-        return itemNameSearch.stream().filter(input->{
-            return searchWords.stream().allMatch(word->
-                    input.toLowerCase().startsWith(word.toLowerCase()));
-        }).collect(Collectors.toList());
+        try {
+            for (int i = 0; i < itemNameSearch.size(); i++) {
+                if (itemNameSearch.get(i).toLowerCase().startsWith(find.toLowerCase())) {
+                    listView.getItems().add(itemNameSearch.get(i));
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Error in findItem " + e.getMessage());
+        }
     }
 
     private void clear() {

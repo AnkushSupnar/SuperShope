@@ -1,6 +1,7 @@
 package com.ankush.controller.create;
 
 import com.ankush.common.CommonData;
+import com.ankush.config.SpringFXMLLoader;
 import com.ankush.data.entities.Customer;
 import com.ankush.data.service.CustomerService;
 import com.ankush.view.AlertNotification;
@@ -18,6 +19,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
@@ -29,6 +32,9 @@ import java.util.ResourceBundle;
 public class AddCustomerController implements Initializable {
     @Autowired @Lazy
     StageManager stageManager;
+    @Autowired
+    private SpringFXMLLoader loader;
+    @FXML private AnchorPane rootPane;
     @FXML private TextField txtName;
     @FXML private TextField txtAddress;
     @FXML private TextField txtContact;
@@ -80,7 +86,10 @@ public class AddCustomerController implements Initializable {
         btnUpdate.setOnAction(e->update());
         btnShowAll.setOnAction(e->showAll());
         btnSearch.setOnAction(e->search());
-
+        btnHome.setOnAction(e -> {
+            BorderPane root = (BorderPane) rootPane.getParent();
+            root.setCenter(loader.getPage("/fxml/create/CreateMenu.fxml"));
+        });
     }
 
     private void search() {

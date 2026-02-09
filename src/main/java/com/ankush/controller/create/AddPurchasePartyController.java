@@ -1,5 +1,6 @@
 package com.ankush.controller.create;
 
+import com.ankush.config.SpringFXMLLoader;
 import com.ankush.data.entities.PurchaseParty;
 import com.ankush.data.service.PurchasePartyService;
 import com.ankush.view.AlertNotification;
@@ -14,6 +15,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
@@ -45,6 +47,8 @@ public class AddPurchasePartyController implements Initializable {
     private AlertNotification alert;
     @Autowired
     private PurchasePartyService service;
+    @Autowired
+    private SpringFXMLLoader loader;
     private ObservableList<PurchaseParty>list = FXCollections.observableArrayList();
     Integer id;
     @Override
@@ -61,6 +65,10 @@ public class AddPurchasePartyController implements Initializable {
         btnSave.setOnAction(e->save());
         btnUpdate.setOnAction(e->update());
         btnClear.setOnAction(e->clear());
+        btnExit.setOnAction(e -> {
+            BorderPane root = (BorderPane) pane.getParent();
+            root.setCenter(loader.getPage("/fxml/create/CreateMenu.fxml"));
+        });
     }
 
     private void clear() {

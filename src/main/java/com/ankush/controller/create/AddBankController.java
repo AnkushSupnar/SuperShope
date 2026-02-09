@@ -1,5 +1,6 @@
 package com.ankush.controller.create;
 
+import com.ankush.config.SpringFXMLLoader;
 import com.ankush.data.entities.Bank;
 import com.ankush.data.service.BankService;
 import com.ankush.view.AlertNotification;
@@ -16,6 +17,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
@@ -48,6 +50,8 @@ public class AddBankController implements Initializable {
     BankService service;
     @Autowired
     private AlertNotification alert;
+    @Autowired
+    private SpringFXMLLoader loader;
     private Integer id;
     private ObservableList<Bank>list = FXCollections.observableArrayList();
     @Override
@@ -81,7 +85,10 @@ public class AddBankController implements Initializable {
         btnSave.setOnAction(e->save());
         btnUpdate.setOnAction(e->update());
         btnClear.setOnAction(e->clear());
-        btnHome.setOnAction(e->pane.setVisible(false));
+        btnHome.setOnAction(e -> {
+            BorderPane root = (BorderPane) pane.getParent();
+            root.setCenter(loader.getPage("/fxml/create/CreateMenu.fxml"));
+        });
     }
 
     private void clear() {

@@ -9,103 +9,152 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
 
-
-<AnchorPane fx:id="mainPane" prefHeight="520.0" prefWidth="446.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ankush.controller.create.AddUserController">
+<AnchorPane fx:id="mainPane" prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #EDE7F6;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ankush.controller.create.AddUserController">
    <children>
-      <Pane layoutX="45.0" layoutY="28.0" prefHeight="477.0" prefWidth="356.0" style="-fx-border-color: black;" AnchorPane.leftAnchor="45.0" AnchorPane.topAnchor="28.0">
+      <VBox alignment="TOP_CENTER" spacing="16.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
          <children>
-            <StackPane layoutY="1.0" prefHeight="120.0" prefWidth="371.0">
+
+            <!-- ======== HEADER BAR (Purple Gradient) ======== -->
+            <HBox alignment="CENTER_LEFT" spacing="12.0" style="-fx-padding: 12 20; -fx-background-color: linear-gradient(to right, #AB47BC, #6A1B9A); -fx-background-radius: 10; -fx-effect: dropshadow(gaussian, rgba(106,27,154,0.3), 8, 0, 0, 3);">
                <children>
-                  <FontAwesomeIcon fill="#2979ff" glyphName="USER_PLUS" size="10em" />
-               </children>
-            </StackPane>
-            <StackPane layoutX="-1.0" layoutY="122.0" prefHeight="23.0" prefWidth="371.0">
-               <children>
-                  <Text fill="#2979ff" strokeType="OUTSIDE" strokeWidth="0.0" text="ADD NEW LOGIN USER">
-                     <font>
-                        <Font name="Georgia" size="20.0" />
-                     </font>
-                  </Text>
-               </children>
-            </StackPane>
-            <VBox layoutX="41.0" layoutY="156.0" prefHeight="264.0" prefWidth="285.0">
-               <children>
-                  <Label text="Select Employee Name">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </Label>
-                  <ComboBox fx:id="cmbEmployee" prefHeight="25.0" prefWidth="285.0" stylesheets="@../css/combobox.css" />
-                  <Label text="Enter User Name">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                     <VBox.margin>
-                        <Insets top="10.0" />
-                     </VBox.margin>
-                  </Label>
-                  <TextField fx:id="txtUserName" prefHeight="25.0" prefWidth="246.0" promptText="Enter User Name For Login">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </TextField>
-                  <Label text="Enter New Password For Login">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                     <VBox.margin>
-                        <Insets top="10.0" />
-                     </VBox.margin>
-                  </Label>
-                  <PasswordField fx:id="txtPassword" prefHeight="25.0" prefWidth="246.0" promptText="Enter Password">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </PasswordField>
-                  <Label text="Re-Enter New Password For Login">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                     <VBox.margin>
-                        <Insets top="10.0" />
-                     </VBox.margin>
-                  </Label>
-                  <PasswordField fx:id="txtRepassword" prefHeight="25.0" prefWidth="246.0" promptText="Re-Enter Password">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </PasswordField>
-                  <HBox spacing="10.0">
+                  <StackPane prefHeight="38.0" prefWidth="38.0" style="-fx-background-color: rgba(255,255,255,0.25); -fx-background-radius: 19;">
                      <children>
-                        <Button fx:id="btnSave" mnemonicParsing="false" stylesheets="@../css/button.css" text="SAVE">
-                           <graphic>
-                              <FontAwesomeIcon glyphName="SAVE" />
-                           </graphic>
-                        </Button>
-                        <Button fx:id="btnClear" mnemonicParsing="false" stylesheets="@../css/button.css" text="CLEAR">
-                           <graphic>
-                              <FontAwesomeIcon glyphName="RECYCLE" />
-                           </graphic>
-                        </Button>
-                        <Button fx:id="btnExit" mnemonicParsing="false" stylesheets="@../css/button.css" text="EXIT">
-                           <graphic>
-                              <FontAwesomeIcon glyphName="CLOSE" />
-                           </graphic>
-                        </Button>
+                        <FontAwesomeIcon fill="WHITE" glyphName="USER_PLUS" size="1.4em" />
                      </children>
-                     <VBox.margin>
-                        <Insets top="10.0" />
-                     </VBox.margin>
-                  </HBox>
+                  </StackPane>
+                  <Label style="-fx-text-fill: white; -fx-font-size: 18px; -fx-font-weight: bold;" text="Add New Login User">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
                </children>
-            </VBox>
+            </HBox>
+
+            <!-- ======== FORM CARD (Centered) ======== -->
+            <HBox alignment="CENTER" VBox.vgrow="ALWAYS">
+               <children>
+                  <VBox alignment="TOP_CENTER" maxWidth="480.0" prefWidth="480.0" spacing="0.0" style="-fx-background-color: linear-gradient(to bottom right, #FFFFFF, #F3E5F5); -fx-background-radius: 16; -fx-effect: dropshadow(gaussian, rgba(106,27,154,0.15), 14, 0, 0, 5); -fx-padding: 30;">
+                     <children>
+
+                        <!-- Icon + Title -->
+                        <StackPane prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: linear-gradient(to bottom right, #AB47BC, #6A1B9A); -fx-background-radius: 35;">
+                           <children>
+                              <FontAwesomeIcon fill="WHITE" glyphName="USER" size="2.2em" />
+                           </children>
+                        </StackPane>
+                        <Label style="-fx-text-fill: #4A148C; -fx-font-size: 16px; -fx-font-weight: bold;" text="User Registration">
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets top="10.0" bottom="20.0" />
+                           </VBox.margin>
+                        </Label>
+
+                        <!-- Select Employee -->
+                        <VBox alignment="TOP_LEFT" spacing="6.0">
+                           <children>
+                              <Label style="-fx-text-fill: #757575; -fx-font-size: 12px; -fx-font-weight: bold;" text="Select Employee">
+                                 <graphic>
+                                    <FontAwesomeIcon fill="#757575" glyphName="USERS" size="0.9em" />
+                                 </graphic>
+                              </Label>
+                              <ComboBox fx:id="cmbEmployee" prefHeight="40.0" maxWidth="1.7976931348623157E308" promptText="Select Employee Name" style="-fx-background-color: #F5F5F5; -fx-background-radius: 6; -fx-border-color: #E0E0E0; -fx-border-radius: 6; -fx-font-size: 14px;" />
+                           </children>
+                           <VBox.margin>
+                              <Insets bottom="14.0" />
+                           </VBox.margin>
+                        </VBox>
+
+                        <!-- User Name -->
+                        <VBox alignment="TOP_LEFT" spacing="6.0">
+                           <children>
+                              <Label style="-fx-text-fill: #757575; -fx-font-size: 12px; -fx-font-weight: bold;" text="User Name">
+                                 <graphic>
+                                    <FontAwesomeIcon fill="#757575" glyphName="USER" size="0.9em" />
+                                 </graphic>
+                              </Label>
+                              <TextField fx:id="txtUserName" prefHeight="40.0" promptText="Enter User Name For Login" style="-fx-background-color: #F5F5F5; -fx-background-radius: 6; -fx-border-color: #E0E0E0; -fx-border-radius: 6; -fx-font-size: 14px;">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </TextField>
+                           </children>
+                           <VBox.margin>
+                              <Insets bottom="14.0" />
+                           </VBox.margin>
+                        </VBox>
+
+                        <!-- Password -->
+                        <VBox alignment="TOP_LEFT" spacing="6.0">
+                           <children>
+                              <Label style="-fx-text-fill: #757575; -fx-font-size: 12px; -fx-font-weight: bold;" text="Password">
+                                 <graphic>
+                                    <FontAwesomeIcon fill="#757575" glyphName="LOCK" size="0.9em" />
+                                 </graphic>
+                              </Label>
+                              <PasswordField fx:id="txtPassword" prefHeight="40.0" promptText="Enter Password" style="-fx-background-color: #F5F5F5; -fx-background-radius: 6; -fx-border-color: #E0E0E0; -fx-border-radius: 6; -fx-font-size: 14px;">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </PasswordField>
+                           </children>
+                           <VBox.margin>
+                              <Insets bottom="14.0" />
+                           </VBox.margin>
+                        </VBox>
+
+                        <!-- Confirm Password -->
+                        <VBox alignment="TOP_LEFT" spacing="6.0">
+                           <children>
+                              <Label style="-fx-text-fill: #757575; -fx-font-size: 12px; -fx-font-weight: bold;" text="Confirm Password">
+                                 <graphic>
+                                    <FontAwesomeIcon fill="#757575" glyphName="SHIELD" size="0.9em" />
+                                 </graphic>
+                              </Label>
+                              <PasswordField fx:id="txtRepassword" prefHeight="40.0" promptText="Re-Enter Password" style="-fx-background-color: #F5F5F5; -fx-background-radius: 6; -fx-border-color: #E0E0E0; -fx-border-radius: 6; -fx-font-size: 14px;">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </PasswordField>
+                           </children>
+                           <VBox.margin>
+                              <Insets bottom="20.0" />
+                           </VBox.margin>
+                        </VBox>
+
+                        <!-- Action Buttons -->
+                        <HBox alignment="CENTER" spacing="14.0">
+                           <children>
+                              <Button fx:id="btnSave" mnemonicParsing="false" prefHeight="40.0" prefWidth="140.0" style="-fx-background-color: linear-gradient(to right, #AB47BC, #6A1B9A); -fx-text-fill: white; -fx-background-radius: 8; -fx-font-size: 13px; -fx-font-weight: bold; -fx-cursor: hand; -fx-effect: dropshadow(gaussian, rgba(106,27,154,0.3), 4, 0, 0, 2);" text="SAVE">
+                                 <graphic>
+                                    <FontAwesomeIcon fill="white" glyphName="CHECK" size="1.1em" />
+                                 </graphic>
+                              </Button>
+                              <Button fx:id="btnClear" mnemonicParsing="false" prefHeight="40.0" prefWidth="140.0" style="-fx-background-color: transparent; -fx-text-fill: #6A1B9A; -fx-border-color: #6A1B9A; -fx-border-width: 1.5; -fx-background-radius: 8; -fx-border-radius: 8; -fx-font-size: 13px; -fx-font-weight: bold; -fx-cursor: hand;" text="CLEAR">
+                                 <graphic>
+                                    <FontAwesomeIcon fill="#6A1B9A" glyphName="ERASER" size="1.1em" />
+                                 </graphic>
+                              </Button>
+                              <Button fx:id="btnExit" mnemonicParsing="false" prefHeight="40.0" prefWidth="140.0" style="-fx-background-color: transparent; -fx-text-fill: #455A64; -fx-border-color: #78909C; -fx-border-width: 1.5; -fx-background-radius: 8; -fx-border-radius: 8; -fx-font-size: 13px; -fx-font-weight: bold; -fx-cursor: hand;" text="BACK">
+                                 <graphic>
+                                    <FontAwesomeIcon fill="#455A64" glyphName="ARROW_LEFT" size="1.1em" />
+                                 </graphic>
+                              </Button>
+                           </children>
+                        </HBox>
+
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+
          </children>
-      </Pane>
+      </VBox>
    </children>
 </AnchorPane>

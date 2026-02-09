@@ -1,5 +1,6 @@
 package com.ankush.controller.create;
 
+import com.ankush.config.SpringFXMLLoader;
 import com.ankush.data.entities.Login;
 import com.ankush.data.service.EmployeeService;
 import com.ankush.data.service.LoginService;
@@ -12,6 +13,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +43,8 @@ public class AddUserController implements FxmlController {
     private LoginService loginService;
     @Autowired
     private AlertNotification alert;
+    @Autowired
+    private SpringFXMLLoader loader;
     private List<String>empNameList = new ArrayList<>();
     @Autowired @Lazy
     public AddUserController(StageManager stageManager) {
@@ -52,6 +56,10 @@ public class AddUserController implements FxmlController {
         cmbEmployee.getItems().addAll(empNameList);
         btnSave.setOnAction(e->save());
         btnClear.setOnAction(e->clear());
+        btnExit.setOnAction(e -> {
+            BorderPane root = (BorderPane) mainPane.getParent();
+            root.setCenter(loader.getPage("/fxml/create/CreateMenu.fxml"));
+        });
     }
 
     private void save() {

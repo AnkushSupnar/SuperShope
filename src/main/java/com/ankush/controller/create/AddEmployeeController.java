@@ -1,5 +1,6 @@
 package com.ankush.controller.create;
 
+import com.ankush.config.SpringFXMLLoader;
 import com.ankush.data.service.EmployeeService;
 import com.ankush.view.AlertNotification;
 import com.ankush.view.FxmlController;
@@ -12,6 +13,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +44,8 @@ public class AddEmployeeController implements FxmlController {
     private AlertNotification alert;
     @Autowired
     private EmployeeService employeeService;
+    @Autowired
+    private SpringFXMLLoader loader;
     private ObservableList<Employee>empList = FXCollections.observableArrayList();
     private Integer id;
     @Autowired @Lazy
@@ -64,7 +68,10 @@ public class AddEmployeeController implements FxmlController {
         btnSave.setOnAction(e->save());
         btnUpadate.setOnAction(e->update());
         linkCreateUser.setOnAction(e->stageManager.switchScene(FxmlView.ADDUSER));
-        btnExit.setOnAction(e->mainPane.setVisible(false));
+        btnExit.setOnAction(e -> {
+            BorderPane root = (BorderPane) mainPane.getParent();
+            root.setCenter(loader.getPage("/fxml/create/CreateMenu.fxml"));
+        });
     }
 
     private void update() {
