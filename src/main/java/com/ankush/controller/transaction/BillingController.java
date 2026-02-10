@@ -4,6 +4,7 @@ import com.ankush.common.CommonData;
 import com.ankush.controller.print.PrintBill;
 import com.ankush.controller.print.PrintExample;
 import com.ankush.data.entities.*;
+import com.ankush.customUI.AutoCompleteTextField;
 import com.ankush.data.service.*;
 import com.ankush.view.AlertNotification;
 import com.ankush.view.FxmlView;
@@ -105,8 +106,7 @@ public class BillingController implements Initializable {
 
 
     //for itemName search box
-    private ListView listView;
-    private ObservableList<String> itemNameSearch = FXCollections.observableArrayList();
+    private AutoCompleteTextField autoCompleteItemName;
     @Autowired ItemService itemService;
     private  Item item;
     ///////////////////
@@ -177,7 +177,13 @@ public class BillingController implements Initializable {
         cmbUnit.getItems().addAll("KG","NOS");
         TextFields.bindAutoCompletion(txtBank,bankService.getAllBankNames());
         createItemList();
-        addItemNameSearch();
+        autoCompleteItemName = new AutoCompleteTextField(txtItemName, itemService.getAllItemNames(), Font.font("Kiran", 20), txtQty);
+        autoCompleteItemName.setOnSelectionCallback(selectedName -> {
+            if(txtBarcode.getText().isEmpty()) {
+                item = itemService.getItemByName(selectedName);
+            }
+            setItem(item);
+        });
         txtBarcode.setOnAction(e->barcodeAction());
         txtBarcode.textProperty().addListener(new ChangeListener<String>() {
             @Override
@@ -977,104 +983,6 @@ public class BillingController implements Initializable {
             }
         });
     }
-    void addItemNameSearch()
-    {
-        itemNameSearch.addAll(itemService.getAllItemNames());
-        listView = new ListView();
-        listView.setStyle("-fx-font:18pt \"Kiran\"");
-        listView.setLayoutX(400);
-        listView.setLayoutY(120);
-        rootPane.getChildren().addAll(listView);
-        listView.setVisible(false);
-        txtItemName.setOnKeyReleased(e->{
-            findItem(txtItemName.getText());
-            if(listView.getItems().size()>0)
-            {
-                listView.getSelectionModel().select(0);
-                listView.setVisible(true);
-            }
-            if(e.getCode()==KeyCode.ENTER){
-                if(listView.getItems().size()>0)
-                {
-                    listView.getSelectionModel().select(0);
-                    listView.requestFocus();
-                }
-                if(txtItemName.getText().equals(listView.getSelectionModel().getSelectedItem()))
-                {
-                    if(txtBarcode.getText().isEmpty())
-                    {
-                        item = itemService.getItemByName(txtItemName.getText());
-                    }
-
-                    listView.setVisible(false);
-                    txtQty.requestFocus();
-                    setItem(item);
-                }
-            }
-            if(e.getCode()==KeyCode.DOWN)
-            {
-                if(listView.getItems().size()>0)
-                {
-                    listView.getSelectionModel().select(0);
-                    listView.requestFocus();
-                }
-            }
-
-        });
-        txtItemName.setOnMouseClicked(e->{
-            findItem(txtItemName.getText());
-            listView.setVisible(true);
-        });
-        listView.setOnKeyReleased(e->{
-            String item = String.valueOf(listView.getSelectionModel().getSelectedItems());
-            if(e.getCode()== KeyCode.ENTER)
-            {
-                txtItemName.setText(item.substring(1,item.length()-1));
-                listView.setVisible(false);
-                txtItemName.requestFocus();
-            }
-        });
-        listView.setOnMouseClicked(e->{
-            if(e.getButton()== MouseButton.PRIMARY && e.getClickCount()==2)
-            {
-                String itemName = String.valueOf(listView.getSelectionModel().getSelectedItems());
-                txtItemName.setText(itemName.substring(1,itemName.length()-1));
-                setItem(itemService.getItemByName(txtItemName.getText()));
-                txtQty.requestFocus();
-                listView.setVisible(false);
-            }
-        });
-        txtItemName.focusedProperty().addListener(new ChangeListener<Boolean>() {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> observableValue, Boolean aBoolean, Boolean t1) {
-                if(t1)
-                {
-                    findItem(txtItemName.getText());
-                    listView.setVisible(true);
-                }
-                else {
-                    if(listView.isFocused())
-                        return;
-                    else
-                        listView.setVisible(false);
-                }
-            }
-        });
-        listView.focusedProperty().addListener(new ChangeListener<Boolean>() {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> observableValue, Boolean aBoolean, Boolean t1) {
-                if(t1) {
-                    //in focus
-                }
-                else{
-                    if(txtItemName.isFocused())
-                        return;
-                    else
-                        listView.setVisible(false);
-                }
-            }
-        });
-    }
     public static boolean isNumeric(String strNum) {
         if (strNum == null) {
             return false;
@@ -1085,27 +993,6 @@ public class BillingController implements Initializable {
             return false;
         }
         return true;
-    }
-    void findItem(String find) {
-        //cmodel.removeAllElements();
-        listView.getItems().clear();
-        if(find.equals("")|| find.trim().equals(""))
-        {
-            listView.getItems().clear();
-            listView.getItems().addAll(itemNameSearch);
-            return;
-        }else listView.getItems().clear();
-
-        try {
-            for (int i = 0; i < itemNameSearch.size(); i++) {
-                if (itemNameSearch.get(i).toLowerCase().startsWith(find.toLowerCase())) {
-                    listView.getItems().add(itemNameSearch.get(i));
-                }
-            }
-        } catch (Exception e) {
-            System.out.println("Error in findItem " + e.getMessage());
-            return;
-        }
     }
     void calculateGrandTotal()
     {

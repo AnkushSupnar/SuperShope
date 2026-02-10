@@ -37,21 +37,21 @@
                </children>
             </HBox>
          </children></AnchorPane>
-      <Label layoutX="254.0" layoutY="5.0" text="Date" />
+      <Label layoutX="254.0" layoutY="5.0" style="-fx-font-weight: bold;" text="Date" />
       <DatePicker fx:id="date" layoutX="249.0" layoutY="22.0" prefHeight="33.0" prefWidth="118.0" promptText="select Date" />
-      <Label layoutX="370.0" layoutY="6.0" text="Customer Name" />
+      <Label layoutX="370.0" layoutY="6.0" style="-fx-font-weight: bold;" text="Customer Name" />
       <TextField fx:id="txtCustomerName" layoutX="370.0" layoutY="22.0" prefHeight="33.0" prefWidth="268.0" promptText="Enter Customer Name">
          <font>
             <Font size="14.0" />
          </font>
       </TextField>
-      <Label layoutX="644.0" layoutY="8.0" text="Customer Mobile No" />
+      <Label layoutX="644.0" layoutY="8.0" style="-fx-font-weight: bold;" text="Customer Mobile No" />
       <TextField fx:id="txtCustomerMobile" layoutX="644.0" layoutY="23.0" prefHeight="33.0" prefWidth="182.0" promptText="Enter Customer Mobile No">
          <font>
             <Font size="14.0" />
          </font>
       </TextField>
-      <Label layoutX="252.0" layoutY="70.0" text="Bar Code" />
+      <Label layoutX="252.0" layoutY="70.0" style="-fx-font-weight: bold;" text="Bar Code" />
       <HBox layoutX="252.0" layoutY="87.0" prefHeight="33.0" prefWidth="759.0">
          <children>
             <TextField fx:id="txtBarcode" prefHeight="33.0">
@@ -78,11 +78,11 @@
                </font></TextField>
          </children>
       </HBox>
-      <Label layoutX="450.0" layoutY="70.0" text="Item Name" />
-      <Label layoutX="681.0" layoutY="70.0" text="Unit" />
-      <Label layoutX="754.0" layoutY="70.0" text="Quantity" />
-      <Label layoutX="929.0" layoutY="70.0" text="Amount" />
-      <Label layoutX="847.0" layoutY="70.0" text="Rate" />
+      <Label layoutX="450.0" layoutY="70.0" style="-fx-font-weight: bold;" text="Item Name" />
+      <Label layoutX="681.0" layoutY="70.0" style="-fx-font-weight: bold;" text="Unit" />
+      <Label layoutX="754.0" layoutY="70.0" style="-fx-font-weight: bold;" text="Quantity" />
+      <Label layoutX="929.0" layoutY="70.0" style="-fx-font-weight: bold;" text="Amount" />
+      <Label layoutX="847.0" layoutY="70.0" style="-fx-font-weight: bold;" text="Rate" />
       <HBox layoutX="250.0" layoutY="133.0" spacing="10.0">
          <children>
             <Button fx:id="btnAdd" mnemonicParsing="false" text="ADD">
@@ -265,23 +265,8 @@
             <Font name="System Bold" size="20.0" />
          </font>
       </TextField>
-      <TabPane layoutX="22.0" layoutY="70.0" prefHeight="726.0" prefWidth="248.0" stylesheets="@../css/tab.css" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <TabPane fx:id="tabPaneFavorite" prefHeight="726.0" prefWidth="248.0" stylesheets="@../css/tab.css" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
         <tabs>
-          <Tab fx:id="tabOil" text="taola">
-            <content>
-              <AnchorPane fx:id="leftPane" minHeight="0.0" minWidth="0.0" prefHeight="697.0" prefWidth="228.0" />
-            </content>
-          </Tab>
-          <Tab fx:id="tabDal" text="daLI">
-            <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-            </content>
-          </Tab>
-            <Tab fx:id="tabOther" text="[tar">
-               <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-               </content>
-            </Tab>
         </tabs>
       </TabPane>
    </children>

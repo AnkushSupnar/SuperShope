@@ -1,48 +1,41 @@
 .table-view .column-header,
 .table-view .column-header-background .filler {
-    -fx-background-color:  #007bff;
-    -fx-border-color:white;
-
-
+    -fx-background-color: linear-gradient(to bottom, #29B6F6, #0288D1);
+    -fx-border-color: #B3E5FC;
 }
-.table-view .column-header .label{
-   -fx-text-fill: white;
-   -fx-font-weight: bold;
-   -fx-alignment: CENTER;
+.table-view .column-header .label {
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-alignment: CENTER;
 }
-.table-view .cell{
-   -fx-cell-size: 35;
-  -fx-alignment: center-left;
-  -fx-alignment: CENTER_LEFT;
-
-   -fx-font-size:14px;
-
+.table-view .cell {
+    -fx-cell-size: 35;
+    -fx-alignment: CENTER_LEFT;
+    -fx-font-size: 14px;
 }
-
-/* scroll bar starts here */
-
-/* The increment and decrement button CSS class of scrollbar */
-.table-view .increment-button ,.table-view .decrement-button {
-    -fx-background-color:transparent;
-	-fx-background-radius: 2em;
-
+.table-view {
+    -fx-border-color: #B3E5FC;
+    -fx-border-radius: 4;
 }
 
-/* The main scrollbar **track** CSS class  */
+/* scroll bar */
+
+.table-view .increment-button, .table-view .decrement-button {
+    -fx-background-color: transparent;
+    -fx-background-radius: 2em;
+}
+
 .table-view .scroll-bar:horizontal .track,
-.table-view .scroll-bar:vertical .track{
-	-fx-background-color: transparent;
-	-fx-border-color:derive( #6622CC,80%);
-
-	-fx-background-radius: 2em;
-	-fx-border-radius:2em;
+.table-view .scroll-bar:vertical .track {
+    -fx-background-color: transparent;
+    -fx-border-color: derive(#0288D1, 80%);
+    -fx-background-radius: 2em;
+    -fx-border-radius: 2em;
 }
 
-/* The main scrollbar **thumb** CSS class which we drag every time (movable) */
 .table-view .scroll-bar:horizontal .thumb,
 .table-view .scroll-bar:vertical .thumb {
-    -fx-background-color:derive( #6622CC,90%);
-	-fx-background-insets: 2, 0, 0;
-	-fx-background-radius: 2em;
-
+    -fx-background-color: derive(#0288D1, 70%);
+    -fx-background-insets: 2, 0, 0;
+    -fx-background-radius: 2em;
 }

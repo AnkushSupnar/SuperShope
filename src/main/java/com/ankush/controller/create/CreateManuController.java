@@ -1,11 +1,9 @@
 package com.ankush.controller.create;
 
 import com.ankush.config.SpringFXMLLoader;
-import com.ankush.view.FxmlView;
 import com.ankush.view.StageManager;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;

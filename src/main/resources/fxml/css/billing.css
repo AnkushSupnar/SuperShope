@@ -1,26 +1,49 @@
 .root {
-  -fx-body-color : #F5F5F5;
-  -fx-outer-border : #cecece;
+    -fx-body-color: #EDE7F6;
+    -fx-outer-border: #C5CAE9;
+    -fx-background-color: #EDE7F6;
 }
 
-.pane{
-    -fx-border-color:black;
+.pane {
+    -fx-background-color: #FFFFFF;
+    -fx-border-color: #C5CAE9;
+    -fx-border-radius: 6;
+    -fx-background-radius: 6;
+    -fx-effect: dropshadow(gaussian, rgba(26,35,126,0.08), 6, 0, 0, 2);
 }
 
-.button{
-	-fx-background-color:#007bff;
-	-fx-text-fill:White;
+.label {
+    -fx-text-fill: #1A237E;
 }
-.button .glyph-icon{
-	-fx-fill:white;
+
+.button {
+    -fx-background-color: linear-gradient(to bottom, #29B6F6, #0288D1);
+    -fx-text-fill: white;
+    -fx-background-radius: 6;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(2,136,209,0.25), 3, 0, 0, 1);
+}
+.button .glyph-icon {
+    -fx-fill: white;
 }
 .button:hover {
-	-fx-background-color:#64dd17;
-	-fx-text-fill:white;
+    -fx-background-color: linear-gradient(to bottom, #4FC3F7, #29B6F6);
+    -fx-text-fill: white;
+    -fx-effect: dropshadow(gaussian, rgba(2,136,209,0.35), 5, 0, 0, 2);
 }
 .button:hover .glyph-icon {
-	-fx-fill:white;
+    -fx-fill: white;
 }
-.button:pressed{
-	-fx-background-color:#007bff;
+.button:pressed {
+    -fx-background-color: #0277BD;
+    -fx-effect: none;
+}
+
+.text-field {
+    -fx-border-color: #C5CAE9;
+    -fx-border-radius: 4;
+    -fx-background-radius: 4;
+}
+.text-field:focused {
+    -fx-border-color: #3949AB;
 }

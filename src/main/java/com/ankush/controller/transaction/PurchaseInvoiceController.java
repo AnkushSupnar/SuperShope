@@ -3,6 +3,7 @@ package com.ankush.controller.transaction;
 import com.ankush.Main;
 import com.ankush.common.CommonData;
 import com.ankush.data.entities.*;
+import com.ankush.customUI.AutoCompleteTextField;
 import com.ankush.data.service.*;
 import com.ankush.view.AlertNotification;
 import com.ankush.view.FxmlView;
@@ -95,8 +96,7 @@ public class PurchaseInvoiceController implements Initializable {
     @Autowired private BankTransactionService bankTransactionService;
     @Autowired private ItemStockService itemStockService;
     private Long invoiceid;
-    private ListView listView;
-    private ObservableList<String> itemNameList = FXCollections.observableArrayList();
+    private AutoCompleteTextField autoCompleteItemName;
     private ObservableList<PurchaseTransaction>trList = FXCollections.observableArrayList();
     private Item item;
     private ObservableList<PurchaseInvoice>oldInvoiceList = FXCollections.observableArrayList();
@@ -272,7 +272,13 @@ public class PurchaseInvoiceController implements Initializable {
         cmbUnit.getItems().addAll("KG","NOS");
         TextFields.bindAutoCompletion(txtParty,partyService.getAllPurchasePartyNames());
         TextFields.bindAutoCompletion(txtBank,bankService.getAllBankNames());
-        addItemNameSearch();
+        autoCompleteItemName = new AutoCompleteTextField(txtItemName, itemService.getAllItemNames(), Font.font("Kiran", 20), txtQty);
+        autoCompleteItemName.setOnSelectionCallback(selectedName -> {
+            if(txtBarcode.getText().isEmpty()) {
+                item = itemService.getItemByName(selectedName);
+            }
+            setItem();
+        });
 
         colSrNo.setCellValueFactory(new PropertyValueFactory<>("id"));
         colDate.setCellValueFactory(new PropertyValueFactory<>("date"));
@@ -297,9 +303,9 @@ public class PurchaseInvoiceController implements Initializable {
                 }
             }
         });
-        txtBarcode.setOnMouseClicked(e->listView.setVisible(false));
+        txtBarcode.setOnMouseClicked(e->autoCompleteItemName.hidePopup());
         txtBarcode.setOnAction(e->txtItemName.requestFocus());
-        txtQty.setOnMouseClicked(e->listView.setVisible(false));
+        txtQty.setOnMouseClicked(e->autoCompleteItemName.hidePopup());
         txtQty.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
@@ -317,7 +323,7 @@ public class PurchaseInvoiceController implements Initializable {
             }
         });
         txtQty.setOnKeyReleased(e->{
-            listView.setVisible(false);
+            autoCompleteItemName.hidePopup();
             if(isNumber(txtQty.getText()) && !txtRate.getText().isEmpty() && isNumber(txtRate.getText()))
             {
                 txtAmount.setText(
@@ -958,122 +964,6 @@ public class PurchaseInvoiceController implements Initializable {
         for(int i=0;i<trList.size();i++)
         {
             trList.get(i).setId(++sr);
-        }
-    }
-    void addItemNameSearch()
-    {
-        itemNameList.addAll(itemService.getAllItemNames());
-        listView = new ListView();
-        listView.setStyle("-fx-font:18pt \"Kiran\"");
-        listView.setLayoutX(140);
-        listView.setLayoutY(142);
-        billingPane.getChildren().addAll(listView);
-        listView.setVisible(false);
-        txtItemName.setOnKeyReleased(e->{
-            findItem(txtItemName.getText());
-            if(listView.getItems().size()>0)
-            {
-                listView.getSelectionModel().select(0);
-                listView.setVisible(true);
-            }
-            if(e.getCode()==KeyCode.ENTER){
-                if(listView.getItems().size()>0)
-                {
-                    listView.getSelectionModel().select(0);
-                    listView.requestFocus();
-                }
-                if(txtItemName.getText().equals(listView.getSelectionModel().getSelectedItem()))
-                {
-                    if(txtBarcode.getText().isEmpty())
-                    {
-                        item = itemService.getItemByName(txtItemName.getText());
-                    }
-                    listView.setVisible(false);
-                   setItem();
-                    txtQty.requestFocus();
-
-                }
-            }
-            if(e.getCode()==KeyCode.DOWN)
-            {
-                if(listView.getItems().size()>0)
-                {
-                    listView.getSelectionModel().select(0);
-                    listView.requestFocus();
-                }
-            }
-
-        });
-        txtItemName.setOnMouseClicked(e->{
-            findItem(txtItemName.getText());
-            listView.setVisible(true);
-        });
-        listView.setOnKeyReleased(e->{
-            String item = String.valueOf(listView.getSelectionModel().getSelectedItems());
-            if(e.getCode()== KeyCode.ENTER)
-            {
-                txtItemName.setText(item.substring(1,item.length()-1));
-                listView.setVisible(false);
-                txtItemName.requestFocus();
-            }
-        });
-        listView.setOnMouseClicked(e->{
-            if(e.getButton()== MouseButton.PRIMARY && e.getClickCount()==2)
-            {
-                String itemName = String.valueOf(listView.getSelectionModel().getSelectedItems());
-                txtItemName.setText(itemName.substring(1,itemName.length()-1));
-                //item = itemService.getItemByName(txtItemName.getText());
-               // System.out.println(item);
-               // setItem();
-                listView.setVisible(false);
-            }
-        });
-        txtItemName.focusedProperty().addListener(new ChangeListener<Boolean>() {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> observableValue, Boolean aBoolean, Boolean t1) {
-                if(t1)
-                {
-                    findItem(txtItemName.getText());
-                    listView.setVisible(true);
-                }
-                else {
-                    if(listView.isFocused())
-                        return;
-                    else
-                        listView.setVisible(false);
-                }
-            }
-        });
-        listView.focusedProperty().addListener((observableValue, aBoolean, t1) -> {
-            if(t1) {
-                //in focus
-            }
-            else{
-                if(txtItemName.isFocused())
-                    return;
-                else
-                    listView.setVisible(false);
-            }
-        });
-    }
-    void findItem(String find) {
-        //cmodel.removeAllElements();
-        listView.getItems().clear();
-        if(find.equals("")|| find.equals(" "))
-        {
-            listView.getItems().clear();
-            listView.getItems().addAll(itemNameList);
-            return;
-        }
-        try {
-            for (int i = 0; i < itemNameList.size(); i++) {
-                if (itemNameList.get(i).startsWith(find)) {
-                    listView.getItems().add(itemNameList.get(i));
-                }
-            }
-        } catch (Exception e) {
-            System.out.println("Error in findItem " + e.getMessage());
-            return;
         }
     }
     private boolean isNumber(String num) {

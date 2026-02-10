@@ -6,7 +6,9 @@ import com.ankush.data.entities.Transaction;
 import com.ankush.data.service.BillService;
 import com.ankush.data.service.ItemService;
 import com.ankush.data.service.ItemStockService;
+import com.ankush.customUI.AutoCompleteTextField;
 import com.ankush.view.AlertNotification;
+import javafx.scene.text.Font;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -53,8 +55,7 @@ public class DailySalesReportController implements Initializable {
     @FXML private TextField txtSale;
     @FXML private TextField txtMargin;
 
-    private ListView listView;
-    private ObservableList<String> itemNameSearch = FXCollections.observableArrayList();
+    private AutoCompleteTextField autoCompleteItemName;
     @Autowired
     ItemService itemService;
 
@@ -82,7 +83,7 @@ public class DailySalesReportController implements Initializable {
         colRateTotal.setCellValueFactory(new PropertyValueFactory<>("totalrate"));
         colMargine.setCellValueFactory(new PropertyValueFactory<>("margine"));
         table.setItems(saleList);
-        addItemNameSearch();
+        autoCompleteItemName = new AutoCompleteTextField(txtItemName, itemService.getAllItemNames(), Font.font("Kiran", 20));
         loadData(date.getValue());
         date.setOnAction(e->loadData(date.getValue()));
         btnShow.setOnAction(e->show());
@@ -183,120 +184,6 @@ public class DailySalesReportController implements Initializable {
         txtMargin.setText(
                 String.valueOf(Float.parseFloat(txtSale.getText())-Float.parseFloat(txtPurchase.getText()))
         );
-    }
-    void addItemNameSearch()
-    {
-        itemNameSearch.addAll(itemService.getAllItemNames());
-        listView = new ListView();
-        listView.setStyle("-fx-font:18pt \"Kiran\"");
-        listView.setLayoutX(txtItemName.getLayoutX());
-        listView.setPrefWidth(txtItemName.getPrefWidth());
-        listView.setLayoutY(txtItemName.getLayoutY()+txtItemName.getPrefHeight());
-
-        rootPane.getChildren().addAll(listView);
-        listView.setVisible(false);
-        txtItemName.setOnKeyReleased(e->{
-            findItem(txtItemName.getText());
-            if(listView.getItems().size()>0)
-            {
-                listView.getSelectionModel().select(0);
-                listView.setVisible(true);
-            }
-            if(e.getCode()== KeyCode.ENTER){
-                if(listView.getItems().size()>0)
-                {
-                    listView.getSelectionModel().select(0);
-                    listView.requestFocus();
-                }
-                if(txtItemName.getText().equals(listView.getSelectionModel().getSelectedItem()))
-                {
-
-                }
-            }
-            if(e.getCode()==KeyCode.DOWN)
-            {
-                if(listView.getItems().size()>0)
-                {
-                    listView.getSelectionModel().select(0);
-                    listView.requestFocus();
-                }
-            }
-
-        });
-        txtItemName.setOnMouseClicked(e->{
-            findItem(txtItemName.getText());
-            listView.setVisible(true);
-        });
-        listView.setOnKeyReleased(e->{
-            String item = String.valueOf(listView.getSelectionModel().getSelectedItems());
-            if(e.getCode()== KeyCode.ENTER)
-            {
-                txtItemName.setText(item.substring(1,item.length()-1));
-                listView.setVisible(false);
-                txtItemName.requestFocus();
-            }
-        });
-        listView.setOnMouseClicked(e->{
-            if(e.getButton()== MouseButton.PRIMARY && e.getClickCount()==2)
-            {
-                String itemName = String.valueOf(listView.getSelectionModel().getSelectedItems());
-                txtItemName.setText(itemName.substring(1,itemName.length()-1));
-
-
-                listView.setVisible(false);
-            }
-        });
-        txtItemName.focusedProperty().addListener(new ChangeListener<Boolean>() {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> observableValue, Boolean aBoolean, Boolean t1) {
-                if(t1)
-                {
-                    findItem(txtItemName.getText());
-                    listView.setVisible(true);
-                }
-                else {
-                    if(listView.isFocused())
-                        return;
-                    else
-                        listView.setVisible(false);
-                }
-            }
-        });
-        listView.focusedProperty().addListener(new ChangeListener<Boolean>() {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> observableValue, Boolean aBoolean, Boolean t1) {
-                if(t1) {
-                    //in focus
-                }
-                else{
-                    if(txtItemName.isFocused())
-                        return;
-                    else
-                        listView.setVisible(false);
-                }
-            }
-        });
-    }
-    void findItem(String find) {
-        //cmodel.removeAllElements();
-        listView.getItems().clear();
-        if(find.equals("")|| find.trim().equals(""))
-        {
-            listView.getItems().clear();
-            listView.getItems().addAll(itemNameSearch);
-            return;
-        }else listView.getItems().clear();
-
-        try {
-            for (int i = 0; i < itemNameSearch.size(); i++) {
-                if (itemNameSearch.get(i).toLowerCase().startsWith(find.toLowerCase())) {
-                    listView.getItems().add(itemNameSearch.get(i));
-                }
-            }
-        } catch (Exception e) {
-            System.out.println("Error in findItem " + e.getMessage());
-            return;
-        }
     }
     private void show()
     {

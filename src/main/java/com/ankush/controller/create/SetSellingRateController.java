@@ -1,6 +1,7 @@
 package com.ankush.controller.create;
 
 import com.ankush.config.SpringFXMLLoader;
+import com.ankush.customUI.AutoCompleteTextField;
 import com.ankush.data.entities.Item;
 import com.ankush.data.service.ItemService;
 import com.ankush.view.AlertNotification;
@@ -17,6 +18,7 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -67,8 +69,7 @@ public class SetSellingRateController implements Initializable {
     @FXML private Button btnBack;
 
     private ObservableList<Item> list = FXCollections.observableArrayList();
-    private ObservableList<String> itemNameSearch = FXCollections.observableArrayList();
-    private ListView<String> listView;
+    private AutoCompleteTextField autoCompleteItemName;
     private Item selectedItem;
     private Item item;
 
@@ -154,7 +155,11 @@ public class SetSellingRateController implements Initializable {
         });
 
         // ===== Item name search with autocomplete (same as Billing) =====
-        addItemNameSearch();
+        autoCompleteItemName = new AutoCompleteTextField(txtItemName, itemService.getAllItemNames(), Font.font("Kiran", 20));
+        autoCompleteItemName.setOnSelectionCallback(selectedName -> {
+            item = itemService.getItemByName(selectedName);
+            setItemFromSearch(item);
+        });
     }
 
     // ===== Barcode action (Enter key on barcode field) =====
@@ -181,123 +186,6 @@ public class SetSellingRateController implements Initializable {
         table.refresh();
         updateItemCount();
         table.getSelectionModel().select(0);
-    }
-
-    // ===== Item name autocomplete (Billing pattern) =====
-    void addItemNameSearch() {
-        itemNameSearch.addAll(itemService.getAllItemNames());
-        listView = new ListView<>();
-        listView.setStyle("-fx-font:18pt \"Kiran\"");
-        listView.setLayoutX(225);
-        listView.setLayoutY(165);
-        rootPane.getChildren().add(listView);
-        listView.setVisible(false);
-
-        // Key released on item name field
-        txtItemName.setOnKeyReleased(e -> {
-            findItem(txtItemName.getText());
-            if (listView.getItems().size() > 0) {
-                listView.getSelectionModel().select(0);
-                listView.setVisible(true);
-            }
-            // ENTER - select item
-            if (e.getCode() == KeyCode.ENTER) {
-                if (listView.getItems().size() > 0) {
-                    listView.getSelectionModel().select(0);
-                    listView.requestFocus();
-                }
-                if (txtItemName.getText().equals(listView.getSelectionModel().getSelectedItem())) {
-                    item = itemService.getItemByName(txtItemName.getText());
-                    listView.setVisible(false);
-                    setItemFromSearch(item);
-                }
-            }
-            // DOWN ARROW - navigate to dropdown
-            if (e.getCode() == KeyCode.DOWN) {
-                if (listView.getItems().size() > 0) {
-                    listView.getSelectionModel().select(0);
-                    listView.requestFocus();
-                }
-            }
-        });
-
-        // Mouse click on item name field - show dropdown
-        txtItemName.setOnMouseClicked(e -> {
-            findItem(txtItemName.getText());
-            listView.setVisible(true);
-        });
-
-        // Enter key on dropdown list - select item name
-        listView.setOnKeyReleased(e -> {
-            String selectedName = String.valueOf(listView.getSelectionModel().getSelectedItems());
-            if (e.getCode() == KeyCode.ENTER) {
-                txtItemName.setText(selectedName.substring(1, selectedName.length() - 1));
-                listView.setVisible(false);
-                txtItemName.requestFocus();
-            }
-        });
-
-        // Double-click on dropdown list - select and search
-        listView.setOnMouseClicked(e -> {
-            if (e.getButton() == MouseButton.PRIMARY && e.getClickCount() == 2) {
-                String selectedName = String.valueOf(listView.getSelectionModel().getSelectedItems());
-                txtItemName.setText(selectedName.substring(1, selectedName.length() - 1));
-                setItemFromSearch(itemService.getItemByName(txtItemName.getText()));
-                listView.setVisible(false);
-            }
-        });
-
-        // Focus listeners - show/hide dropdown
-        txtItemName.focusedProperty().addListener(new ChangeListener<Boolean>() {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> observableValue, Boolean aBoolean, Boolean t1) {
-                if (t1) {
-                    findItem(txtItemName.getText());
-                    listView.setVisible(true);
-                } else {
-                    if (listView.isFocused())
-                        return;
-                    else
-                        listView.setVisible(false);
-                }
-            }
-        });
-
-        listView.focusedProperty().addListener(new ChangeListener<Boolean>() {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> observableValue, Boolean aBoolean, Boolean t1) {
-                if (t1) {
-                    // in focus
-                } else {
-                    if (txtItemName.isFocused())
-                        return;
-                    else
-                        listView.setVisible(false);
-                }
-            }
-        });
-    }
-
-    // ===== Filter item names (same as Billing findItem) =====
-    void findItem(String find) {
-        listView.getItems().clear();
-        if (find == null || find.equals("") || find.trim().equals("")) {
-            listView.getItems().clear();
-            listView.getItems().addAll(itemNameSearch);
-            return;
-        } else {
-            listView.getItems().clear();
-        }
-
-        try {
-            for (int i = 0; i < itemNameSearch.size(); i++) {
-                if (itemNameSearch.get(i).toLowerCase().startsWith(find.toLowerCase())) {
-                    listView.getItems().add(itemNameSearch.get(i));
-                }
-            }
-        } catch (Exception e) {
-            System.out.println("Error in findItem " + e.getMessage());
-        }
     }
 
     // ===== Load all items into table =====

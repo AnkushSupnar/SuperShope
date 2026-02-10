@@ -4,7 +4,6 @@ import com.ankush.common.CommonData;
 import com.ankush.config.SpringFXMLLoader;
 import com.ankush.view.StageManager;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -26,8 +25,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
-import java.io.IOException;
 import java.net.URL;
+import java.util.Arrays;
+import java.util.List;
 import java.util.ResourceBundle;
 @Component
 public class HomeController implements Initializable {
@@ -44,12 +44,25 @@ public class HomeController implements Initializable {
     @FXML private HBox menuInventary;
     @FXML private HBox menuMaster;
     @FXML private HBox menuReport;
+    @FXML private HBox menuOther;
     @FXML private Text txtUserName;
     @FXML private HBox menuSettings;
     @FXML private HBox menuSupport;
     @FXML private HBox menuExit;
 
+    private static final String MENU_SELECTED_STYLE =
+            "-fx-background-color: rgba(255,255,255,0.25); -fx-background-radius: 10; " +
+            "-fx-padding: 12 20; -fx-cursor: hand; " +
+            "-fx-border-color: transparent transparent transparent #FFCA28; " +
+            "-fx-border-width: 0 0 0 3; -fx-border-radius: 10;";
+
+    private static final String MENU_DEFAULT_STYLE =
+            "-fx-background-color: rgba(255,255,255,0.05); -fx-background-radius: 10; " +
+            "-fx-padding: 12 20; -fx-cursor: hand;";
+
     private Pane pane;
+    private List<HBox> navMenuItems;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
@@ -61,33 +74,52 @@ public class HomeController implements Initializable {
         {
             txtUserName.setText(CommonData.getLoginUser().getUsername());
         }
+
+        navMenuItems = Arrays.asList(menuDashboard, menuTransaction, menuMaster, menuReport, menuOther, menuSettings);
+
         menuDashboard.setOnMouseClicked(e->{
+            setActiveMenu(menuDashboard);
             pane =loader.getPage("/fxml/dashboard/Dashboard.fxml");
             mainPane.setCenter(pane);
         });
         menuTransaction.setOnMouseClicked(e -> {
+                setActiveMenu(menuTransaction);
                 pane =loader.getPage("/fxml/transaction/TransactionMenu.fxml");
                 mainPane.setCenter(pane);
         });
-//        menuCreate.setOnMouseClicked(e->{
-//            pane =loader.getPage("/fxml/create/CreateMenu.fxml");
-//            mainPane.setCenter(pane);
-//        });
 
         menuReport.setOnMouseClicked(e->{
+            setActiveMenu(menuReport);
             pane =loader.getPage("/fxml/report/ReportMenu.fxml");
             mainPane.setCenter(pane);
         });
         menuSettings.setOnMouseClicked(e->{
+            setActiveMenu(menuSettings);
             pane = loader.getPage("/fxml/settings/SettingsMenu.fxml");
             mainPane.setCenter(pane);
         });
         menuSupport.setOnMouseClicked(e -> showSupportDialog());
         menuExit.setOnMouseClicked(e->System.exit(0));
         menuMaster.setOnMouseClicked(e->{
+            setActiveMenu(menuMaster);
             pane =loader.getPage("/fxml/create/CreateMenu.fxml");
             mainPane.setCenter(pane);
         });
+        menuOther.setOnMouseClicked(e->{
+            setActiveMenu(menuOther);
+            pane =loader.getPage("/fxml/other/OtherMenu.fxml");
+            mainPane.setCenter(pane);
+        });
+
+        // Set Dashboard as the default selected menu
+        setActiveMenu(menuDashboard);
+    }
+
+    private void setActiveMenu(HBox activeMenu) {
+        for (HBox menu : navMenuItems) {
+            menu.setStyle(MENU_DEFAULT_STYLE);
+        }
+        activeMenu.setStyle(MENU_SELECTED_STYLE);
     }
 
     private void showSupportDialog() {

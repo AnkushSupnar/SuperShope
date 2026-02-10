@@ -3,6 +3,7 @@ package com.ankush.controller.report.item;
 import com.ankush.Main;
 import com.ankush.data.entities.ItemStock;
 import com.ankush.data.service.ItemStockService;
+import com.ankush.customUI.AutoCompleteTextField;
 import com.ankush.view.AlertNotification;
 import com.ankush.view.StageManager;
 import impl.org.controlsfx.skin.AutoCompletePopup;
@@ -45,8 +46,7 @@ public class ItemStockController implements Initializable {
     private ObservableList<ItemStock>list = FXCollections.observableArrayList();
     @Autowired
     private AlertNotification alert;
-    private ListView listView;
-    private ObservableList<String> itemNameList = FXCollections.observableArrayList();
+    private AutoCompleteTextField autoCompleteItemName;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         Font.loadFont(Main.class.getResource("/fxml/font/kiran.ttf").toExternalForm(),10);
@@ -57,7 +57,7 @@ public class ItemStockController implements Initializable {
         colStock.setCellValueFactory(new PropertyValueFactory<>("stock"));
         list.addAll(service.getAllItemStock());
         table.setItems(list);
-        addItemNameSearch();
+        autoCompleteItemName = new AutoCompleteTextField(txtItemName, service.getAllItemNames(), Font.font("Kiran", 20));
         btnView.setOnAction(e->view());
         btnViewAll.setOnAction(e->viewAll());
         btnHome.setOnAction(e->mainPane.setVisible(false));
@@ -80,85 +80,4 @@ public class ItemStockController implements Initializable {
         list.add(service.getItemStockByItemname(txtItemName.getText()));
         table.refresh();
     }
-    void addItemNameSearch()
-    {
-        itemNameList.addAll(service.getAllItemNames());
-        listView = new ListView();
-        listView.setStyle("-fx-font:18pt \"Kiran\"");
-        listView.setLayoutX(txtItemName.getLayoutX());
-        listView.setLayoutY(txtItemName.getLayoutY()+33);
-        mainPane.getChildren().addAll(listView);
-        listView.setVisible(false);
-        txtItemName.setOnKeyReleased(e->{
-            findItem(txtItemName.getText());
-            if(listView.getItems().size()>0)
-            {
-                listView.getSelectionModel().select(0);
-                listView.setVisible(true);
-            }
-            if(e.getCode()== KeyCode.ENTER){
-                if(listView.getItems().size()>0)
-                {
-                    listView.getSelectionModel().select(0);
-                    listView.requestFocus();
-                }
-                if(txtItemName.getText().equals(listView.getSelectionModel().getSelectedItem()))
-                {
-                    listView.setVisible(false);
-                }
-            }
-            if(e.getCode()==KeyCode.DOWN)
-            {
-                if(listView.getItems().size()>0)
-                {
-                    listView.getSelectionModel().select(0);
-                    listView.requestFocus();
-                }
-            }
-
-        });
-        txtItemName.setOnMouseClicked(e->{
-            findItem(txtItemName.getText());
-            listView.setVisible(true);
-        });
-        listView.setOnKeyReleased(e->{
-            String item = String.valueOf(listView.getSelectionModel().getSelectedItems());
-            if(e.getCode()== KeyCode.ENTER)
-            {
-                txtItemName.setText(item.substring(1,item.length()-1));
-                listView.setVisible(false);
-                txtItemName.requestFocus();
-            }
-        });
-        listView.setOnMouseClicked(e->{
-            if(e.getButton()== MouseButton.PRIMARY && e.getClickCount()==2)
-            {
-                String itemName = String.valueOf(listView.getSelectionModel().getSelectedItems());
-                txtItemName.setText(itemName.substring(1,itemName.length()-1));
-                listView.setVisible(false);
-            }
-        });
-    }
-
-    void findItem(String find) {
-        //cmodel.removeAllElements();
-        listView.getItems().clear();
-        if(find.equals("")|| find.equals(" "))
-        {
-            listView.getItems().clear();
-            listView.getItems().addAll(itemNameList);
-            return;
-        }
-        try {
-            for (int i = 0; i < itemNameList.size(); i++) {
-                if (itemNameList.get(i).startsWith(find)) {
-                    listView.getItems().add(itemNameList.get(i));
-                }
-            }
-        } catch (Exception e) {
-            System.out.println("Error in findItem " + e.getMessage());
-            return;
-        }
-    }
-
 }

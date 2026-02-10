@@ -1,15 +1,41 @@
 @font-face {
-font-family: kiran;
-src: url(kiran.ttf);
+    font-family: kiran;
+    src: url(kiran.ttf);
 }
-.root {
-    -tab-text-color: green ;
+
+.tab-pane > .tab-header-area {
+    -fx-padding: 3 0 0 0;
+    -fx-background-color: #EDE7F6;
 }
 
 .tab-label {
-    -fx-text-fill: red ;
-    -fx-font-family:'kiran';
-    -fx-font-size: 25;
+    -fx-text-fill: #0288D1;
+    -fx-font-family: 'kiran';
+    -fx-font-size: 22;
+    -fx-font-weight: bold;
 }
-.tab-pane:top .tab-header-area .headers-region .tab:top .tab-container .focus-indicator{
+
+.tab-pane > .tab-header-area > .headers-region > .tab {
+    -fx-background-color: #FFFFFF;
+    -fx-background-radius: 6 6 0 0;
+    -fx-padding: 5 12;
+    -fx-border-color: #B3E5FC #B3E5FC transparent #B3E5FC;
+    -fx-border-radius: 6 6 0 0;
+}
+
+.tab-pane > .tab-header-area > .headers-region > .tab:selected {
+    -fx-background-color: linear-gradient(to bottom, #29B6F6, #0288D1);
+}
+
+.tab-pane > .tab-header-area > .headers-region > .tab:selected .tab-label {
+    -fx-text-fill: white;
+}
+
+.tab-pane:top .tab-header-area .headers-region .tab:top .tab-container .focus-indicator {
+    -fx-border-color: transparent;
+}
+
+.tab-content-area {
+    -fx-background-color: #FFFFFF;
+    -fx-border-color: #C5CAE9;
 }

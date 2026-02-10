@@ -1,0 +1,145 @@
+@font-face {
+    font-family: kiran;
+    src: url(../font/kiran.ttf);
+}
+
+/* ===== Base ===== */
+.root {
+    -fx-background-color: #E1F5FE;
+}
+
+/* ===== Cards / Panels ===== */
+.pane {
+    -fx-background-color: #FFFFFF;
+    -fx-border-color: #B3E5FC;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-effect: dropshadow(gaussian, rgba(2,136,209,0.10), 6, 0, 0, 2);
+}
+
+/* ===== Labels ===== */
+.label {
+    -fx-text-fill: #01579B;
+}
+
+/* ===== Regular Buttons (Sky Blue) ===== */
+.button {
+    -fx-background-color: linear-gradient(to bottom, #29B6F6, #0288D1);
+    -fx-text-fill: white;
+    -fx-background-radius: 6;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(2,136,209,0.25), 3, 0, 0, 1);
+}
+.button .glyph-icon {
+    -fx-fill: white;
+}
+.button:hover {
+    -fx-background-color: linear-gradient(to bottom, #4FC3F7, #29B6F6);
+    -fx-text-fill: white;
+    -fx-effect: dropshadow(gaussian, rgba(2,136,209,0.35), 5, 0, 0, 2);
+}
+.button:hover .glyph-icon {
+    -fx-fill: white;
+}
+.button:pressed {
+    -fx-background-color: #0277BD;
+    -fx-effect: none;
+}
+
+/* ===== Save Button (Green accent) ===== */
+.btn-save {
+    -fx-background-color: linear-gradient(to bottom, #43A047, #2E7D32);
+    -fx-effect: dropshadow(gaussian, rgba(46,125,50,0.25), 3, 0, 0, 1);
+}
+.btn-save:hover {
+    -fx-background-color: linear-gradient(to bottom, #66BB6A, #43A047);
+    -fx-effect: dropshadow(gaussian, rgba(46,125,50,0.35), 5, 0, 0, 2);
+}
+.btn-save:pressed {
+    -fx-background-color: #1B5E20;
+}
+
+/* ===== Print Button (Darker Blue) ===== */
+.btn-print {
+    -fx-background-color: linear-gradient(to bottom, #0288D1, #01579B);
+    -fx-effect: dropshadow(gaussian, rgba(1,87,155,0.25), 3, 0, 0, 1);
+}
+.btn-print:hover {
+    -fx-background-color: linear-gradient(to bottom, #039BE5, #0288D1);
+    -fx-effect: dropshadow(gaussian, rgba(1,87,155,0.35), 5, 0, 0, 2);
+}
+.btn-print:pressed {
+    -fx-background-color: #014377;
+}
+
+/* ===== Exit Button (Muted) ===== */
+.btn-exit {
+    -fx-background-color: linear-gradient(to bottom, #90A4AE, #78909C);
+    -fx-effect: dropshadow(gaussian, rgba(120,144,156,0.15), 2, 0, 0, 1);
+}
+.btn-exit:hover {
+    -fx-background-color: linear-gradient(to bottom, #B0BEC5, #90A4AE);
+}
+.btn-exit:pressed {
+    -fx-background-color: #607D8B;
+}
+
+/* ===== Text Fields ===== */
+.text-field {
+    -fx-border-color: #81D4FA;
+    -fx-border-radius: 4;
+    -fx-background-radius: 4;
+    -fx-background-color: #FFFFFF;
+}
+.text-field:focused {
+    -fx-border-color: #0288D1;
+    -fx-effect: dropshadow(gaussian, rgba(2,136,209,0.18), 4, 0, 0, 0);
+}
+
+/* ===== Combo Box ===== */
+.combo-box {
+    -fx-border-color: #81D4FA;
+    -fx-border-radius: 4;
+    -fx-background-radius: 4;
+}
+
+/* ===== Date Picker ===== */
+.date-picker {
+    -fx-border-color: #81D4FA;
+    -fx-border-radius: 4;
+    -fx-background-radius: 4;
+}
+
+/* ===== Title Bar (Sky Blue gradient) ===== */
+.title-bar {
+    -fx-background-color: linear-gradient(to right, #0288D1, #01579B);
+    -fx-background-radius: 0;
+    -fx-padding: 8 15;
+}
+.title-bar .label {
+    -fx-text-fill: white;
+}
+
+/* ===== Summary Panel ===== */
+.summary-pane {
+    -fx-background-color: #FFFFFF;
+    -fx-border-color: #B3E5FC;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-effect: dropshadow(gaussian, rgba(2,136,209,0.08), 5, 0, 0, 2);
+}
+
+/* ===== Search Panel ===== */
+.search-pane {
+    -fx-background-color: linear-gradient(to right, #E1F5FE, #FFFFFF);
+    -fx-border-color: #81D4FA;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-effect: dropshadow(gaussian, rgba(2,136,209,0.06), 4, 0, 0, 1);
+}
+
+/* ===== Split Pane Divider ===== */
+.split-pane > .split-pane-divider {
+    -fx-background-color: #B3E5FC;
+    -fx-padding: 0 1;
+}

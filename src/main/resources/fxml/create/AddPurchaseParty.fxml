@@ -121,7 +121,7 @@
                                  <children>
                                     <Label style="-fx-text-fill: #757575; -fx-font-size: 12px; -fx-font-weight: bold;" text="Party PAN No">
                                        <graphic>
-                                          <FontAwesomeIcon fill="#757575" glyphName="ID_CARD" size="0.9em" />
+                                          <FontAwesomeIcon fill="#757575" glyphName="CREDIT_CARD" size="0.9em" />
                                        </graphic>
                                     </Label>
                                     <TextField fx:id="txtPan" prefHeight="38.0" promptText="Enter PAN Number" style="-fx-background-color: #F5F5F5; -fx-background-radius: 6; -fx-border-color: #E0E0E0; -fx-border-radius: 6; -fx-font-size: 14px; -fx-font-weight: bold;">
