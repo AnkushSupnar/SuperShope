@@ -5,30 +5,31 @@
 
 .tab-pane > .tab-header-area {
     -fx-padding: 3 0 0 0;
-    -fx-background-color: #EDE7F6;
+    -fx-background-color: #f8f8f8;
 }
 
 .tab-label {
-    -fx-text-fill: #0288D1;
+    -fx-text-fill: #1a1a1a;
     -fx-font-family: 'kiran';
     -fx-font-size: 22;
     -fx-font-weight: bold;
 }
 
 .tab-pane > .tab-header-area > .headers-region > .tab {
-    -fx-background-color: #FFFFFF;
-    -fx-background-radius: 6 6 0 0;
+    -fx-background-color: #000000, #ffffff;
+    -fx-background-insets: 0 0 0 0, 1.5 1.5 0 1.5;
+    -fx-background-radius: 6 6 0 0, 5 5 0 0;
     -fx-padding: 5 12;
-    -fx-border-color: #B3E5FC #B3E5FC transparent #B3E5FC;
-    -fx-border-radius: 6 6 0 0;
 }
 
 .tab-pane > .tab-header-area > .headers-region > .tab:selected {
-    -fx-background-color: linear-gradient(to bottom, #29B6F6, #0288D1);
+    -fx-background-color: #000000, #eeeeee;
+    -fx-background-insets: 0 0 0 0, 1.5 1.5 0 1.5;
+    -fx-background-radius: 6 6 0 0, 5 5 0 0;
 }
 
 .tab-pane > .tab-header-area > .headers-region > .tab:selected .tab-label {
-    -fx-text-fill: white;
+    -fx-text-fill: #000000;
 }
 
 .tab-pane:top .tab-header-area .headers-region .tab:top .tab-container .focus-indicator {
@@ -36,6 +37,6 @@
 }
 
 .tab-content-area {
-    -fx-background-color: #FFFFFF;
-    -fx-border-color: #C5CAE9;
+    -fx-background-color: #000000, #ffffff;
+    -fx-background-insets: 0, 1.5;
 }

@@ -121,6 +121,7 @@ public class DailyBillingController implements Initializable {
     @Autowired BankTransactionService bankTrService;
     @Autowired ShopeeInfoService shopeeInfoService;
     @Autowired FavoriteCategoryService favoriteCategoryService;
+    @Autowired BackupService backupService;
 
     private ObservableList<String>itemNameList = FXCollections.observableArrayList();
     private ObservableList<Transaction>trList = FXCollections.observableArrayList();
@@ -469,6 +470,7 @@ public class DailyBillingController implements Initializable {
                 printbill.setBill(billService.getBillByBillNo(bill.getBillno()));
                 loadTodaysBills();
                 clear2();
+                backupService.performAutoBackup();
 
             }
             else if(result==2)
@@ -488,6 +490,7 @@ public class DailyBillingController implements Initializable {
                 printbill.setBill(billService.getBillByBillNo(bill.getBillno()));
                 loadTodaysBills();
                 clear2();
+                backupService.performAutoBackup();
             }
 
         }catch(Exception e){
@@ -814,6 +817,17 @@ public class DailyBillingController implements Initializable {
             }
                 //checking stock availability;
             ItemStock stock = stockService.getItemStockByItemname(txtItemName.getText());
+            if(stock == null)
+            {
+                Alert stockAlert = new Alert(Alert.AlertType.ERROR);
+                stockAlert.setTitle("Stock Not Available");
+                stockAlert.setHeaderText("Item is not available in stock");
+                Label itemLabel = new Label(txtItemName.getText());
+                itemLabel.setFont(Font.font("Kiran", 20));
+                stockAlert.getDialogPane().setContent(itemLabel);
+                stockAlert.showAndWait();
+                return;
+            }
             if(stock.getStock()<Float.parseFloat(txtQty.getText()))
             {
                 alert.showError("Less Quantity Available "+stock.getStock()+" "+cmbUnit.getValue());

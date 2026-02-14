@@ -1,49 +1,104 @@
 .root {
-    -fx-body-color: #EDE7F6;
-    -fx-outer-border: #C5CAE9;
     -fx-background-color: #EDE7F6;
 }
 
 .pane {
-    -fx-background-color: #FFFFFF;
-    -fx-border-color: #C5CAE9;
-    -fx-border-radius: 6;
-    -fx-background-radius: 6;
-    -fx-effect: dropshadow(gaussian, rgba(26,35,126,0.08), 6, 0, 0, 2);
+    -fx-background-color: #000000, #ffffff;
+    -fx-background-insets: 0, 1.5;
+    -fx-background-radius: 6, 5;
 }
 
 .label {
-    -fx-text-fill: #1A237E;
+    -fx-text-fill: #1a1a1a;
 }
 
 .button {
-    -fx-background-color: linear-gradient(to bottom, #29B6F6, #0288D1);
-    -fx-text-fill: white;
-    -fx-background-radius: 6;
+    -fx-background-color: #000000, #ffffff;
+    -fx-background-insets: 0, 1.5;
+    -fx-background-radius: 6, 5;
+    -fx-text-fill: #1a1a1a;
     -fx-cursor: hand;
-    -fx-effect: dropshadow(gaussian, rgba(2,136,209,0.25), 3, 0, 0, 1);
+    -fx-padding: 5 12;
 }
 .button .glyph-icon {
-    -fx-fill: white;
+    -fx-fill: #1a1a1a;
 }
 .button:hover {
-    -fx-background-color: linear-gradient(to bottom, #4FC3F7, #29B6F6);
-    -fx-text-fill: white;
-    -fx-effect: dropshadow(gaussian, rgba(2,136,209,0.35), 5, 0, 0, 2);
+    -fx-background-color: #000000, #eeeeee;
+    -fx-background-insets: 0, 1.5;
+    -fx-background-radius: 6, 5;
+    -fx-text-fill: #000000;
 }
 .button:hover .glyph-icon {
-    -fx-fill: white;
+    -fx-fill: #000000;
 }
 .button:pressed {
-    -fx-background-color: #0277BD;
-    -fx-effect: none;
+    -fx-background-color: #000000, #dddddd;
+    -fx-background-insets: 0, 1.5;
+    -fx-background-radius: 6, 5;
 }
 
 .text-field {
-    -fx-border-color: #C5CAE9;
-    -fx-border-radius: 4;
-    -fx-background-radius: 4;
+    -fx-background-color: #000000, #ffffff;
+    -fx-background-insets: 0, 1.5;
+    -fx-background-radius: 4, 3;
+    -fx-text-fill: #1a1a1a;
+    -fx-prompt-text-fill: #888888;
+    -fx-padding: 4 7;
 }
 .text-field:focused {
-    -fx-border-color: #3949AB;
+    -fx-background-color: #000000, #ffffff;
+    -fx-background-insets: 0, 1.5;
+    -fx-background-radius: 4, 3;
+    -fx-padding: 4 7;
+}
+
+.combo-box {
+    -fx-background-color: #000000, #ffffff;
+    -fx-background-insets: 0, 1.5;
+    -fx-background-radius: 4, 3;
+}
+.combo-box .list-cell {
+    -fx-text-fill: #1a1a1a;
+    -fx-background-color: transparent;
+}
+.combo-box .arrow-button {
+    -fx-background-color: transparent;
+}
+.combo-box .arrow {
+    -fx-background-color: #1a1a1a;
+}
+.combo-box-popup .list-view {
+    -fx-background-color: #000000, #ffffff;
+    -fx-background-insets: 0, 1;
+}
+.combo-box-popup .list-view .list-cell {
+    -fx-text-fill: #1a1a1a;
+    -fx-background-color: #ffffff;
+}
+.combo-box-popup .list-view .list-cell:hover {
+    -fx-background-color: #f0f0f0;
+}
+
+.date-picker {
+    -fx-background-color: #000000, #ffffff;
+    -fx-background-insets: 0, 1.5;
+    -fx-background-radius: 4, 3;
+}
+.date-picker .text-field {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+    -fx-text-fill: #1a1a1a;
+    -fx-padding: 4 7;
+}
+.date-picker .text-field:focused {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+    -fx-padding: 4 7;
+}
+.date-picker .arrow-button {
+    -fx-background-color: transparent;
+}
+.date-picker .arrow-button .arrow {
+    -fx-background-color: #1a1a1a;
 }

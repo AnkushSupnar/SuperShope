@@ -94,6 +94,7 @@ public class PurchaseInvoiceControllerNew implements Initializable {
     @Autowired private PurchaseTransactionService invoiceTrService;
     @Autowired private BankTransactionService bankTransactionService;
     @Autowired private ItemStockService itemStockService;
+    @Autowired private BackupService backupService;
     private Long invoiceid;
     private AutoCompleteTextField autoCompleteItemName;
     private AutoCompleteTextField autoCompleteParty;
@@ -590,6 +591,7 @@ public class PurchaseInvoiceControllerNew implements Initializable {
             trList.clear();
             tableold.refresh();
             alert.showSuccess("Invoice Saved Success "+invoice.getId());
+            backupService.performAutoBackup();
         }
         else if(flag==2)
         {
@@ -627,6 +629,7 @@ public class PurchaseInvoiceControllerNew implements Initializable {
             oldInvoiceList.addAll(invoiceService.getDateWisePurchaseInvoice(LocalDate.now()));
             tableold.refresh();
             alert.showSuccess("Invoice Update Success");
+            backupService.performAutoBackup();
 
         }
 
