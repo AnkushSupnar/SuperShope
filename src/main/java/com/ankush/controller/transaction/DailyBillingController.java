@@ -1,6 +1,5 @@
 package com.ankush.controller.transaction;
 
-import com.ankush.common.CommonData;
 import com.ankush.controller.print.PrintBill;
 import com.ankush.controller.print.PrintExample;
 import com.ankush.customUI.AutoCompleteTextField;
@@ -9,9 +8,6 @@ import com.ankush.data.service.*;
 import com.ankush.view.AlertNotification;
 import com.ankush.view.FxmlView;
 import com.ankush.view.StageManager;
-import impl.org.controlsfx.autocompletion.AutoCompletionTextFieldBinding;
-import impl.org.controlsfx.autocompletion.SuggestionProvider;
-import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -22,12 +18,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
+
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Font;
 import javafx.util.Callback;
-import org.controlsfx.control.textfield.TextFields;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
@@ -95,11 +90,11 @@ public class DailyBillingController implements Initializable {
 
     @FXML private TableView<Bill> tableOld;
     @FXML private TableColumn<Bill,Long> colBillNo;
-    @FXML private TableColumn<Bill,LocalDate> colDate;
     @FXML private TableColumn<Bill,Float> colBillAmt;
     @FXML private TableColumn<Bill,Float> colPaid;
+    @FXML private TableColumn<Bill,Float> colDue;
+    @FXML private TableColumn<Bill,String> colStatus;
     @FXML private TableColumn<Bill,String> colCustomer;
-    @FXML private TableColumn<Bill,String> colLogin;
 
     @FXML private DatePicker dateSearch;
     @FXML private Button btnWeek;
@@ -108,10 +103,13 @@ public class DailyBillingController implements Initializable {
 
     //for itemName search box
     private AutoCompleteTextField autoCompleteItemName;
+    private AutoCompleteTextField autoCompleteCustomerName;
+    private AutoCompleteTextField autoCompleteBank;
     @Autowired ItemService itemService;
     private  Item item;
     ///////////////////
     @Autowired private ItemStockService stockService;
+    @Autowired private AppSettingsService appSettingsService;
     @Autowired private AlertNotification alert;
     @Autowired private BankService bankService;
     @Autowired private CustomerService customerService;
@@ -125,30 +123,69 @@ public class DailyBillingController implements Initializable {
 
     private ObservableList<String>itemNameList = FXCollections.observableArrayList();
     private ObservableList<Transaction>trList = FXCollections.observableArrayList();
-    private SuggestionProvider<String>customerNames;
     private ObservableList<Bill>billList =FXCollections.observableArrayList();
     private Long billno;
     private PrintBill printbill;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        trList.clear();
+        billList.clear();
+        billno = null;
         createTable();
         colBillNo.setCellValueFactory(new PropertyValueFactory<>("billno"));
-        colDate.setCellValueFactory(new PropertyValueFactory<>("date"));
         colBillAmt.setCellValueFactory(new PropertyValueFactory<>("grandtotal"));
         colPaid.setCellValueFactory(new PropertyValueFactory<>("paid"));
-        colCustomer.setCellValueFactory(cellData -> {
-            Customer cust = cellData.getValue().getCustomer();
-            return new SimpleStringProperty(cust != null ? cust.getName() : "");
+        colDue.setCellValueFactory(cellData -> {
+            Bill b = cellData.getValue();
+            float due = (b.getGrandtotal() != null ? b.getGrandtotal() : 0) - (b.getPaid() != null ? b.getPaid() : 0);
+            return new javafx.beans.property.SimpleObjectProperty<>(due > 0 ? due : 0f);
         });
-        colLogin.setCellValueFactory(cellData->new SimpleStringProperty(cellData.getValue().getLogin().getUsername()));
+        colStatus.setCellValueFactory(cellData -> {
+            Bill b = cellData.getValue();
+            float grand = b.getGrandtotal() != null ? b.getGrandtotal() : 0;
+            float paid = b.getPaid() != null ? b.getPaid() : 0;
+            if (paid >= grand) return new SimpleStringProperty("PAID");
+            else if (paid > 0) return new SimpleStringProperty("PARTIAL");
+            else return new SimpleStringProperty("UNPAID");
+        });
+        colCustomer.setCellValueFactory(cellData -> {
+            Bill b = cellData.getValue();
+            float grand = b.getGrandtotal() != null ? b.getGrandtotal() : 0;
+            float paid = b.getPaid() != null ? b.getPaid() : 0;
+            if (paid < grand && b.getCustomer() != null) {
+                return new SimpleStringProperty(b.getCustomer().getName());
+            }
+            return new SimpleStringProperty("");
+        });
+        // Color rows based on payment status
+        tableOld.setStyle("-fx-font-size: 14;");
+        tableOld.setRowFactory(tv -> new TableRow<>() {
+            @Override
+            protected void updateItem(Bill bill, boolean empty) {
+                super.updateItem(bill, empty);
+                if (empty || bill == null) {
+                    setStyle("");
+                } else {
+                    float grand = bill.getGrandtotal() != null ? bill.getGrandtotal() : 0;
+                    float paid = bill.getPaid() != null ? bill.getPaid() : 0;
+                    if (paid >= grand) {
+                        setStyle("-fx-background-color: #E8F5E9;"); // green - paid
+                    } else if (paid > 0) {
+                        setStyle("-fx-background-color: #FFF8E1;"); // yellow - partial
+                    } else {
+                        setStyle("-fx-background-color: #FFEBEE;"); // red - unpaid
+                    }
+                }
+            }
+        });
         //billList.addAll(billService.getBillByDate(LocalDate.now()));
        // billList.addAll(billService.getAllBills());
         tableOld.setItems(billList);
         Task<Void> task = new Task<>() {
             @Override
             protected Void call() {
-                billList.addAll(billService.getAllBills());
+                billList.addAll(billService.getBillByDate(LocalDate.now()));
                 return null;
             }
         };
@@ -168,13 +205,19 @@ public class DailyBillingController implements Initializable {
             Platform.runLater(()->stageManager.switchScene(FxmlView.HOME));
             return;
         }
-        txtBank.setText(defaultBank.get().getBankname());
-        CommonData.customerNames.addAll(customerService.getAllCustomerNames());
-        customerNames = SuggestionProvider.create(CommonData.customerNames);
-        new AutoCompletionTextFieldBinding<>(txtCustomerName,customerNames);
+        autoCompleteBank = new AutoCompleteTextField(txtBank, bankService.getAllBankNames(), Font.font("System Bold", 14), btnSave);
+        autoCompleteBank.setUseContainsFilter(true);
+        autoCompleteBank.setText(defaultBank.get().getBankname());
         billno= null;
         cmbUnit.getItems().addAll("KG","NOS");
-        TextFields.bindAutoCompletion(txtBank,bankService.getAllBankNames());
+        autoCompleteCustomerName = new AutoCompleteTextField(txtCustomerName, customerService.getAllCustomerNames(), Font.font("System Bold", 14), txtCustomerMobile);
+        autoCompleteCustomerName.setUseContainsFilter(true);
+        autoCompleteCustomerName.setOnSelectionCallback(selectedName -> {
+            Customer c = customerService.getCustomerByName(selectedName);
+            if (c != null && c.getContact() != null) {
+                txtCustomerMobile.setText(c.getContact());
+            }
+        });
         createItemList();
         autoCompleteItemName = new AutoCompleteTextField(txtItemName, itemService.getAllItemNames(), Font.font("Kiran", 20), txtQty);
         autoCompleteItemName.setOnSelectionCallback(selectedName -> {
@@ -270,6 +313,13 @@ public class DailyBillingController implements Initializable {
                 }
             }
         });
+        txtRecived.focusedProperty().addListener((obs, wasFocused, isFocused) -> {
+            if(isFocused) Platform.runLater(()->txtRecived.selectAll());
+        });
+        txtRecived.setOnAction(e->{
+            btnSave.requestFocus();
+            btnSave.fire();
+        });
         txtRecived.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
@@ -312,7 +362,7 @@ public class DailyBillingController implements Initializable {
         btnClear.setOnAction(e->clear());
         btnUpdate.setOnAction(e->update());
         dateSearch.setOnAction(e->{
-            if(date.getValue()!=null)
+            if(dateSearch.getValue()!=null)
             {
                 billList.clear();
                 billList.addAll(billService.getBillByDate(dateSearch.getValue()));
@@ -321,7 +371,7 @@ public class DailyBillingController implements Initializable {
         btnWeek.setOnAction(e->{
             if(dateSearch.getValue()!=null) {
                 billList.clear();
-                billList.addAll(billService.findByDateBetween(dateSearch.getValue().with(previousOrSame(MONDAY)), date.getValue().with(nextOrSame(SUNDAY))));
+                billList.addAll(billService.findByDateBetween(dateSearch.getValue().with(previousOrSame(MONDAY)), dateSearch.getValue().with(nextOrSame(SUNDAY))));
             }
         });
         btnMonth.setOnAction(e->{
@@ -329,6 +379,10 @@ public class DailyBillingController implements Initializable {
                 billList.clear();
                 billList.addAll(billService.findByDateBetween(dateSearch.getValue().withDayOfMonth(1), dateSearch.getValue().withDayOfMonth(dateSearch.getValue().lengthOfMonth())));
             }
+        });
+        btnAll.setOnAction(e->{
+            billList.clear();
+            billList.addAll(billService.getAllBills());
         });
         btnSave.setOnAction(e->save());
         btnClear2.setOnAction(e->clear2());
@@ -376,14 +430,14 @@ public class DailyBillingController implements Initializable {
         txtOther.setText(String.valueOf(0.0f));
         txtGrandTotal.setText(String.valueOf(0.0f));
         txtRecived.setText(String.valueOf(0.0f));
-        txtCustomerName.setText("");
+        autoCompleteCustomerName.clear();
         txtMrp.setText(String.valueOf(0.0f));
         txtDiscount.setText(String.valueOf(0.0f));
         txtPayble.setText(String.valueOf(0.0f));
         txtRecived.setText(String.valueOf(0.0f));
         txtRemaining.setText(String.valueOf(0.0f));
         txtCustomerMobile.setText(String.valueOf(0.0f));
-        bankService.getBankByIdOptional(1).ifPresent(bank -> txtBank.setText(bank.getBankname()));
+        bankService.getBankByIdOptional(1).ifPresent(bank -> autoCompleteBank.setText(bank.getBankname()));
         billno=null;
     }
 
@@ -396,7 +450,7 @@ public class DailyBillingController implements Initializable {
             if(!validateBill())return;
             Customer custom = null;
             custom =checkCustomer();
-            if(custom==null) custom = customerService.getCustomerByName(txtCustomerName.getText());
+            if(custom==null) custom = customerService.getCustomerByName(autoCompleteCustomerName.getText());
             float paid=0.0f,remain=0.0f;
             float remainVal = isNumeric(txtRemaining.getText()) ? Float.parseFloat(txtRemaining.getText()) : 0.0f;
             if(remainVal<0.0f)
@@ -501,11 +555,11 @@ public class DailyBillingController implements Initializable {
 
     private Customer checkCustomer() {
         Customer customer =null;
-        if(txtCustomerName.getText().isEmpty() || txtCustomerName.getText().isBlank()|| txtCustomerName.getText().equals("")||txtCustomerName.getText().equals(null))
+        if(autoCompleteCustomerName.getText().isEmpty() || autoCompleteCustomerName.getText().isBlank()|| autoCompleteCustomerName.getText().equals("")||autoCompleteCustomerName.getText().equals(null))
         {
             return customerService.getById(1);
         }
-        customer=customerService.getCustomerByName(txtCustomerName.getText());
+        customer=customerService.getCustomerByName(autoCompleteCustomerName.getText());
         if(customer!=null)
         {
             return customer;
@@ -515,7 +569,7 @@ public class DailyBillingController implements Initializable {
             customer = Customer.builder()
                     .email("-")
                     .contact(txtCustomerMobile.getText())
-                    .name(txtCustomerName.getText())
+                    .name(autoCompleteCustomerName.getText())
                     .build();
             customerService.saveCustomer(customer);
             return customer;
@@ -556,19 +610,19 @@ public class DailyBillingController implements Initializable {
             date.requestFocus();
             return false;
         }
-        if(txtBank.getText().isEmpty())
+        if(autoCompleteBank.getText().isEmpty())
         {
             alert.showError("Select Bank Name");
-            txtBank.requestFocus();
+            autoCompleteBank.requestFocus();
             return false;
         }
-        if(bankService.getBankByBankname(txtBank.getText())==null)
+        if(bankService.getBankByBankname(autoCompleteBank.getText())==null)
         {
             alert.showError("Select Bank Again");
-            txtBank.requestFocus();
+            autoCompleteBank.requestFocus();
             return false;
         }
-        if(txtCustomerName.getText().isEmpty())
+        if(autoCompleteCustomerName.getText().isEmpty())
         {
             boolean result=true;
             float recivedAmt = isNumeric(txtRecived.getText()) ? Float.parseFloat(txtRecived.getText()) : 0.0f;
@@ -582,7 +636,7 @@ public class DailyBillingController implements Initializable {
             }
             return result;
         }
-        if(!txtCustomerName.getText().isEmpty() && txtCustomerMobile.getText().isEmpty())
+        if(!autoCompleteCustomerName.getText().isEmpty() && txtCustomerMobile.getText().isEmpty())
         {
             alert.showError("Enter Customer Mobile Number");
             txtCustomerMobile.requestFocus();
@@ -816,22 +870,22 @@ public class DailyBillingController implements Initializable {
                 return;
             }
                 //checking stock availability;
-            ItemStock stock = stockService.getItemStockByItemname(txtItemName.getText());
-            if(stock == null)
-            {
-                Alert stockAlert = new Alert(Alert.AlertType.ERROR);
-                stockAlert.setTitle("Stock Not Available");
-                stockAlert.setHeaderText("Item is not available in stock");
-                Label itemLabel = new Label(txtItemName.getText());
-                itemLabel.setFont(Font.font("Kiran", 20));
-                stockAlert.getDialogPane().setContent(itemLabel);
-                stockAlert.showAndWait();
-                return;
-            }
-            if(stock.getStock()<Float.parseFloat(txtQty.getText()))
-            {
-                alert.showError("Less Quantity Available "+stock.getStock()+" "+cmbUnit.getValue());
-                return;
+            if(appSettingsService.isStockCheckEnabled()) {
+                ItemStock stock = stockService.getItemStockByItemname(txtItemName.getText());
+                if (stock == null) {
+                    Alert stockAlert = new Alert(Alert.AlertType.ERROR);
+                    stockAlert.setTitle("Stock Not Available");
+                    stockAlert.setHeaderText("Item is not available in stock");
+                    Label itemLabel = new Label(txtItemName.getText());
+                    itemLabel.setFont(Font.font("Kiran", 20));
+                    stockAlert.getDialogPane().setContent(itemLabel);
+                    stockAlert.showAndWait();
+                    return;
+                }
+                if (stock.getStock() < Float.parseFloat(txtQty.getText())) {
+                    alert.showError("Less Quantity Available " + stock.getStock() + " " + cmbUnit.getValue());
+                    return;
+                }
             }
             Transaction tr = Transaction.builder()
                     .amount(Float.parseFloat(txtAmount.getText()))
@@ -974,19 +1028,26 @@ public class DailyBillingController implements Initializable {
         tabPaneFavorite.getTabs().clear();
 
         // "All Items" tab
-        Tab allTab = new Tab("savao");
+        Tab allTab = new Tab("sava-");
+        allTab.setStyle("-fx-font:14pt \"Kiran\"");
         AnchorPane allPane = new AnchorPane();
         listItem = new ListView<>();
         listItem.setStyle("-fx-font:18pt \"Kiran\"");
-        listItem.getItems().addAll(stockService.getItemNameByBarcode());
-        listItem.setLayoutX(0);
-        listItem.setLayoutY(0);
-        listItem.setPrefWidth(248);
-        listItem.prefHeightProperty().bind(allPane.heightProperty());
+        if(appSettingsService.isStockCheckEnabled()) {
+            listItem.getItems().addAll(stockService.getItemNameByBarcode());
+        } else {
+            listItem.getItems().addAll(itemService.getAllItemNames());
+        }
+        AnchorPane.setTopAnchor(listItem, 0.0);
+        AnchorPane.setBottomAnchor(listItem, 0.0);
+        AnchorPane.setLeftAnchor(listItem, 0.0);
+        AnchorPane.setRightAnchor(listItem, 0.0);
         allPane.getChildren().add(listItem);
         listItem.setOnMouseClicked(e->{
             if(e.getButton()== MouseButton.PRIMARY && e.getClickCount()==2){
                 setItem(itemService.getItemByName(listItem.getSelectionModel().getSelectedItem()));
+                autoCompleteItemName.hidePopup();
+                Platform.runLater(()->txtQty.requestFocus());
             }
         });
         allTab.setContent(allPane);
@@ -997,6 +1058,7 @@ public class DailyBillingController implements Initializable {
         List<FavoriteCategory> categories = favoriteCategoryService.getAllCategories();
         for(FavoriteCategory category : categories) {
             Tab tab = new Tab(category.getName());
+            tab.setStyle("-fx-font:14pt \"Kiran\"");
             AnchorPane pane = new AnchorPane();
             ListView<String> catListView = new ListView<>();
             catListView.setStyle("-fx-font:18pt \"Kiran\"");
@@ -1004,16 +1066,18 @@ public class DailyBillingController implements Initializable {
             List<String> itemNames = favoriteCategoryService.getItemNamesByCategory(category.getId());
             catListView.getItems().addAll(itemNames);
 
-            catListView.setLayoutX(0);
-            catListView.setLayoutY(0);
-            catListView.setPrefWidth(248);
-            catListView.prefHeightProperty().bind(pane.heightProperty());
+            AnchorPane.setTopAnchor(catListView, 0.0);
+            AnchorPane.setBottomAnchor(catListView, 0.0);
+            AnchorPane.setLeftAnchor(catListView, 0.0);
+            AnchorPane.setRightAnchor(catListView, 0.0);
             pane.getChildren().add(catListView);
             catListView.setOnMouseClicked(e->{
                 if(e.getButton()== MouseButton.PRIMARY && e.getClickCount()==2){
                     String selectedName = catListView.getSelectionModel().getSelectedItem();
                     if(selectedName!=null) {
                         setItem(itemService.getItemByName(selectedName));
+                        autoCompleteItemName.hidePopup();
+                        Platform.runLater(()->txtQty.requestFocus());
                     }
                 }
             });

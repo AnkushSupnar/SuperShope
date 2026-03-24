@@ -172,16 +172,16 @@
                 <TableView fx:id="table" VBox.vgrow="ALWAYS"
                            style="-fx-background-color: transparent;">
                     <columns>
-                        <TableColumn fx:id="colSr" prefWidth="40" text="Sr"/>
-                        <TableColumn fx:id="colDate" prefWidth="90" text="Date"/>
-                        <TableColumn fx:id="colParty" prefWidth="140" text="Party Name"/>
-                        <TableColumn fx:id="colInvoiceNo" prefWidth="90" text="Invoice No"/>
-                        <TableColumn fx:id="colItems" prefWidth="50" text="Items"/>
-                        <TableColumn fx:id="colNetTotal" prefWidth="85" text="Net Total"/>
-                        <TableColumn fx:id="colDiscount" prefWidth="70" text="Discount"/>
-                        <TableColumn fx:id="colGrandTotal" prefWidth="95" text="Grand Total"/>
-                        <TableColumn fx:id="colPaid" prefWidth="80" text="Paid"/>
-                        <TableColumn fx:id="colDue" prefWidth="80" text="Due"/>
+                        <TableColumn fx:id="colSr" minWidth="30.0" prefWidth="38.0" maxWidth="50.0" text="Sr"/>
+                        <TableColumn fx:id="colDate" minWidth="70.0" prefWidth="85.0" maxWidth="105.0" text="Date"/>
+                        <TableColumn fx:id="colParty" minWidth="100.0" prefWidth="140.0" maxWidth="190.0" text="Party Name"/>
+                        <TableColumn fx:id="colInvoiceNo" minWidth="70.0" prefWidth="85.0" maxWidth="105.0" text="Invoice No"/>
+                        <TableColumn fx:id="colItems" minWidth="40.0" prefWidth="50.0" maxWidth="65.0" text="Items"/>
+                        <TableColumn fx:id="colNetTotal" minWidth="65.0" prefWidth="82.0" maxWidth="100.0" text="Net Total"/>
+                        <TableColumn fx:id="colDiscount" minWidth="55.0" prefWidth="68.0" maxWidth="85.0" text="Discount"/>
+                        <TableColumn fx:id="colGrandTotal" minWidth="70.0" prefWidth="90.0" maxWidth="110.0" text="Grand Total"/>
+                        <TableColumn fx:id="colPaid" minWidth="60.0" prefWidth="78.0" maxWidth="95.0" text="Paid"/>
+                        <TableColumn fx:id="colDue" minWidth="60.0" prefWidth="78.0" maxWidth="95.0" text="Due"/>
                     </columns>
                     <VBox.margin><Insets left="15" right="15"/></VBox.margin>
                 </TableView>

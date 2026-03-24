@@ -4,6 +4,7 @@ import com.ankush.logging.ExceptionWriter;
 import com.ankush.view.StageManager;
 import javafx.stage.Stage;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
@@ -15,8 +16,6 @@ import java.util.ResourceBundle;
 
 @Configuration
 public class AppJavaConfig {
-    @Autowired
-    SpringFXMLLoader springFXMLLoader;
 
     /**
      * Useful when dumping stack trace to a string for logging.
@@ -34,8 +33,13 @@ public class AppJavaConfig {
     }
 
     @Bean
+    public SpringFXMLLoader springFXMLLoader(ApplicationContext context, ResourceBundle resourceBundle) {
+        return new SpringFXMLLoader(context, resourceBundle);
+    }
+
+    @Bean
     @Lazy(value = true) //Stage only created after Spring context bootstap
-    public StageManager stageManager(Stage stage) throws IOException {
+    public StageManager stageManager(SpringFXMLLoader springFXMLLoader, Stage stage) throws IOException {
         return new StageManager(springFXMLLoader, stage);
     }
 

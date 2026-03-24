@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.util.ResourceBundle;
-@Component
+
 public class SpringFXMLLoader {
     private final ResourceBundle resourceBundle;
     private final ApplicationContext context;

@@ -64,15 +64,15 @@
             <!-- Table -->
             <TableView fx:id="table" stylesheets="@../../css/report-table.css" VBox.vgrow="ALWAYS">
                <columns>
-                  <TableColumn fx:id="colSr" prefWidth="45.0" text="SR" />
-                  <TableColumn fx:id="colMonth" prefWidth="130.0" text="MONTH" />
-                  <TableColumn fx:id="colInvoices" prefWidth="80.0" text="INVOICES" />
-                  <TableColumn fx:id="colNetTotal" prefWidth="100.0" text="NET TOTAL" />
-                  <TableColumn fx:id="colOtherCharges" prefWidth="110.0" text="OTHER CHARGES" />
-                  <TableColumn fx:id="colDiscount" prefWidth="90.0" text="DISCOUNT" />
-                  <TableColumn fx:id="colGrandTotal" prefWidth="110.0" text="GRAND TOTAL" />
-                  <TableColumn fx:id="colPaid" prefWidth="100.0" text="PAID" />
-                  <TableColumn fx:id="colDue" prefWidth="100.0" text="DUE" />
+                  <TableColumn fx:id="colSr" minWidth="35.0" prefWidth="40.0" maxWidth="50.0" text="SR" />
+                  <TableColumn fx:id="colMonth" minWidth="90.0" prefWidth="120.0" maxWidth="150.0" text="MONTH" />
+                  <TableColumn fx:id="colInvoices" minWidth="60.0" prefWidth="75.0" maxWidth="95.0" text="INVOICES" />
+                  <TableColumn fx:id="colNetTotal" minWidth="75.0" prefWidth="95.0" maxWidth="115.0" text="NET TOTAL" />
+                  <TableColumn fx:id="colOtherCharges" minWidth="80.0" prefWidth="100.0" maxWidth="125.0" text="OTHER CHARGES" />
+                  <TableColumn fx:id="colDiscount" minWidth="65.0" prefWidth="85.0" maxWidth="105.0" text="DISCOUNT" />
+                  <TableColumn fx:id="colGrandTotal" minWidth="80.0" prefWidth="100.0" maxWidth="125.0" text="GRAND TOTAL" />
+                  <TableColumn fx:id="colPaid" minWidth="70.0" prefWidth="90.0" maxWidth="115.0" text="PAID" />
+                  <TableColumn fx:id="colDue" minWidth="70.0" prefWidth="90.0" maxWidth="115.0" text="DUE" />
                </columns>
                <VBox.margin>
                   <Insets left="10.0" right="10.0" top="8.0" />

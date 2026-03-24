@@ -22,7 +22,6 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Font;
 import javafx.util.Callback;
-import org.controlsfx.control.textfield.TextFields;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
@@ -97,6 +96,8 @@ public class PurchaseInvoiceController implements Initializable {
     @Autowired private ItemStockService itemStockService;
     private Long invoiceid;
     private AutoCompleteTextField autoCompleteItemName;
+    private AutoCompleteTextField autoCompleteParty;
+    private AutoCompleteTextField autoCompleteBank;
     private ObservableList<PurchaseTransaction>trList = FXCollections.observableArrayList();
     private Item item;
     private ObservableList<PurchaseInvoice>oldInvoiceList = FXCollections.observableArrayList();
@@ -270,8 +271,10 @@ public class PurchaseInvoiceController implements Initializable {
         table.setItems(trList);
         item = null;
         cmbUnit.getItems().addAll("KG","NOS");
-        TextFields.bindAutoCompletion(txtParty,partyService.getAllPurchasePartyNames());
-        TextFields.bindAutoCompletion(txtBank,bankService.getAllBankNames());
+        autoCompleteParty = new AutoCompleteTextField(txtParty, partyService.getAllPurchasePartyNames(), Font.font("System Bold", 14), txtBarcode);
+        autoCompleteParty.setUseContainsFilter(true);
+        autoCompleteBank = new AutoCompleteTextField(txtBank, bankService.getAllBankNames(), Font.font("System Bold", 14), btnSave);
+        autoCompleteBank.setUseContainsFilter(true);
         autoCompleteItemName = new AutoCompleteTextField(txtItemName, itemService.getAllItemNames(), Font.font("Kiran", 20), txtQty);
         autoCompleteItemName.setOnSelectionCallback(selectedName -> {
             if(txtBarcode.getText().isEmpty()) {
@@ -286,6 +289,8 @@ public class PurchaseInvoiceController implements Initializable {
         colParty.setCellValueFactory(cellData->new SimpleStringProperty(cellData.getValue().getPurchaseParty().getName()));
         colTotal.setCellValueFactory(new PropertyValueFactory<>("grandtotal"));
         colPaid.setCellValueFactory(new PropertyValueFactory<>("paid"));
+        date.setValue(LocalDate.now());
+        dateSearch.setValue(LocalDate.now());
         oldInvoiceList.addAll(invoiceService.getDateWisePurchaseInvoice(LocalDate.now()));
         tableold.setItems(oldInvoiceList);
 
@@ -475,7 +480,7 @@ public class PurchaseInvoiceController implements Initializable {
 
     private void clear2() {
         date.setValue(LocalDate.now());
-        txtParty.setText("");
+        autoCompleteParty.clear();
         txtInvoiceNo.setText("");
         clear();
         trList.clear();
@@ -505,7 +510,7 @@ public class PurchaseInvoiceController implements Initializable {
             manageTransactionList();
             date.setValue(in.getDate());
             txtInvoiceNo.setText(in.getPartyinvoiceno());
-            txtParty.setText(in.getPurchaseParty().getName());
+            autoCompleteParty.setText(in.getPurchaseParty().getName());
             txtTransporting.setText(String.valueOf(in.getTransporting()));
             txtWages.setText(String.valueOf(in.getWages()));
             txtOther.setText(String.valueOf(in.getWages()));
@@ -513,7 +518,7 @@ public class PurchaseInvoiceController implements Initializable {
             txtGrandTotal.setText(String.valueOf(in.getGrandtotal()));
             txtDiscount.setText(String.valueOf(in.getDiscount()));
             txtPaid.setText(String.valueOf(in.getPaid()));
-            txtBank.setText(in.getBank().getBankname());
+            autoCompleteBank.setText(in.getBank().getBankname());
             calculateGrandTotal();
             invoiceid=in.getId();
         }catch(Exception e)
@@ -526,8 +531,8 @@ public class PurchaseInvoiceController implements Initializable {
         if(!validateData()) return;
         PurchaseInvoice invoice = new PurchaseInvoice();
         invoice.setPartyinvoiceno(txtInvoiceNo.getText());
-        invoice.setPurchaseParty(partyService.getPartyByName(txtParty.getText()));
-        invoice.setBank(bankService.getBankByBankname(txtBank.getText()));
+        invoice.setPurchaseParty(partyService.getPartyByName(autoCompleteParty.getText()));
+        invoice.setBank(bankService.getBankByBankname(autoCompleteBank.getText()));
         invoice.setDate(date.getValue());
         invoice.setDiscount(Float.parseFloat(txtDiscount.getText()));
         invoice.setGrandtotal(Float.parseFloat(txtGrandTotal.getText()));
@@ -558,7 +563,7 @@ public class PurchaseInvoiceController implements Initializable {
         if(bankService.getBalanceById(invoice.getBank().getId())<invoice.getPaid())
         {
             alert.showError("Not sufficient Balance in Bank choose another ");
-            txtBank.requestFocus();
+            autoCompleteBank.requestFocus();
             return;
         }
         int flag=0;
@@ -717,16 +722,16 @@ public class PurchaseInvoiceController implements Initializable {
         }
     }
     private boolean validateData() {
-        if(txtParty.getText().isEmpty())
+        if(autoCompleteParty.getText().isEmpty())
         {
             alert.showError("Select Purchase Party Name");
-            txtParty.requestFocus();
+            autoCompleteParty.requestFocus();
             return false;
         }
-        if(partyService.getPartyByName(txtParty.getText())==null)
+        if(partyService.getPartyByName(autoCompleteParty.getText())==null)
         {
             alert.showError("Party Not Found");
-            txtParty.requestFocus();
+            autoCompleteParty.requestFocus();
             return false;
         }
         if(txtInvoiceNo.getText().isEmpty())
@@ -747,16 +752,16 @@ public class PurchaseInvoiceController implements Initializable {
             txtBarcode.requestFocus();
             return false;
         }
-        if(txtBank.getText().isEmpty())
+        if(autoCompleteBank.getText().isEmpty())
         {
             alert.showError("Select Bank Name");
-            txtBank.requestFocus();
+            autoCompleteBank.requestFocus();
             return false;
         }
-        if(bankService.getBankByBankname(txtBank.getText())==null)
+        if(bankService.getBankByBankname(autoCompleteBank.getText())==null)
         {
             alert.showError("Bank Not Found");
-            txtBank.requestFocus();
+            autoCompleteBank.requestFocus();
             return false;
         }
         if(txtMrp.getText().isEmpty()||txtMrp.getText().isBlank()||txtMrp.getText().equals("") && !isNumber(txtMrp.getText()))

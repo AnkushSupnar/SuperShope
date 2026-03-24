@@ -1,104 +1,329 @@
+/* ================================================================
+ *  DailyBilling — Clean Material theme
+ *
+ *  Nuclear flicker fix: ALL Modena lookup variables AND
+ *  -fx-background-color are forced to the same value in every
+ *  pseudo-class state. Modena cannot derive a different color
+ *  because every variable it reads is locked.
+ * ================================================================ */
+
+/* ========== Root ========== */
 .root {
     -fx-background-color: #EDE7F6;
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
 }
 
+/* ========== Right Panel Card ========== */
 .pane {
-    -fx-background-color: #000000, #ffffff;
-    -fx-background-insets: 0, 1.5;
-    -fx-background-radius: 6, 5;
+    -fx-background-color: white;
+    -fx-background-radius: 12;
+    -fx-effect: dropshadow(gaussian, rgba(21, 101, 192, 0.10), 10, 0, 0, 3);
 }
 
+/* ========== Labels ========== */
 .label {
-    -fx-text-fill: #1a1a1a;
+    -fx-text-fill: #424242;
 }
 
-.button {
-    -fx-background-color: #000000, #ffffff;
-    -fx-background-insets: 0, 1.5;
-    -fx-background-radius: 6, 5;
-    -fx-text-fill: #1a1a1a;
+/* ================================================================
+ *  BUTTONS — Zero hover/press/focus effects
+ *
+ *  Override ALL Modena internals:
+ *    -fx-base, -fx-color, -fx-hover-base, -fx-pressed-base,
+ *    -fx-body-color, -fx-outer-border, -fx-inner-border,
+ *    -fx-shadow-highlight-color, -fx-mark-color, -fx-mark-highlight-color
+ *  so Modena's derived backgrounds are identical in every state.
+ * ================================================================ */
+
+.button,
+.button:hover,
+.button:focused,
+.button:pressed,
+.button:armed,
+.button:focused:hover,
+.button:focused:pressed,
+.button:default {
+    -fx-base: #1565C0;
+    -fx-color: #1565C0;
+    -fx-hover-base: #1565C0;
+    -fx-pressed-base: #1565C0;
+    -fx-body-color: #1565C0;
+    -fx-outer-border: transparent;
+    -fx-inner-border: transparent;
+    -fx-shadow-highlight-color: transparent;
+    -fx-mark-color: white;
+    -fx-mark-highlight-color: white;
+    -fx-background-color: #1565C0;
+    -fx-background-radius: 8;
+    -fx-background-insets: 0;
+    -fx-text-fill: white;
+    -fx-border-color: transparent;
+    -fx-border-width: 0;
+    -fx-border-insets: 0;
+    -fx-padding: 8 20;
     -fx-cursor: hand;
-    -fx-padding: 5 12;
-}
-.button .glyph-icon {
-    -fx-fill: #1a1a1a;
-}
-.button:hover {
-    -fx-background-color: #000000, #eeeeee;
-    -fx-background-insets: 0, 1.5;
-    -fx-background-radius: 6, 5;
-    -fx-text-fill: #000000;
-}
-.button:hover .glyph-icon {
-    -fx-fill: #000000;
-}
-.button:pressed {
-    -fx-background-color: #000000, #dddddd;
-    -fx-background-insets: 0, 1.5;
-    -fx-background-radius: 6, 5;
+    -fx-font-weight: bold;
+    -fx-min-height: 32;
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+    -fx-effect: null;
 }
 
+.button .glyph-icon {
+    -fx-fill: white;
+}
+
+/* — Primary (Blue) — Add, Save — */
+.btn-primary,
+.btn-primary:hover,
+.btn-primary:focused,
+.btn-primary:pressed,
+.btn-primary:armed,
+.btn-primary:focused:hover,
+.btn-primary:focused:pressed {
+    -fx-base: #1565C0;
+    -fx-color: #1565C0;
+    -fx-hover-base: #1565C0;
+    -fx-pressed-base: #1565C0;
+    -fx-body-color: #1565C0;
+    -fx-background-color: #1565C0;
+}
+
+/* — Danger (Red) — Remove — */
+.btn-danger,
+.btn-danger:hover,
+.btn-danger:focused,
+.btn-danger:pressed,
+.btn-danger:armed,
+.btn-danger:focused:hover,
+.btn-danger:focused:pressed {
+    -fx-base: #C62828;
+    -fx-color: #C62828;
+    -fx-hover-base: #C62828;
+    -fx-pressed-base: #C62828;
+    -fx-body-color: #C62828;
+    -fx-background-color: #C62828;
+}
+
+/* — Success (Teal) — Update — */
+.btn-success,
+.btn-success:hover,
+.btn-success:focused,
+.btn-success:pressed,
+.btn-success:armed,
+.btn-success:focused:hover,
+.btn-success:focused:pressed {
+    -fx-base: #00796B;
+    -fx-color: #00796B;
+    -fx-hover-base: #00796B;
+    -fx-pressed-base: #00796B;
+    -fx-body-color: #00796B;
+    -fx-background-color: #00796B;
+}
+
+/* — Secondary (Grey) — Clear — */
+.btn-secondary,
+.btn-secondary:hover,
+.btn-secondary:focused,
+.btn-secondary:pressed,
+.btn-secondary:armed,
+.btn-secondary:focused:hover,
+.btn-secondary:focused:pressed {
+    -fx-base: #455A64;
+    -fx-color: #455A64;
+    -fx-hover-base: #455A64;
+    -fx-pressed-base: #455A64;
+    -fx-body-color: #455A64;
+    -fx-background-color: #455A64;
+}
+
+/* — Print (Indigo) — */
+.btn-print,
+.btn-print:hover,
+.btn-print:focused,
+.btn-print:pressed,
+.btn-print:armed,
+.btn-print:focused:hover,
+.btn-print:focused:pressed {
+    -fx-base: #283593;
+    -fx-color: #283593;
+    -fx-hover-base: #283593;
+    -fx-pressed-base: #283593;
+    -fx-body-color: #283593;
+    -fx-background-color: #283593;
+}
+
+/* — Dark — Home — */
+.btn-dark,
+.btn-dark:hover,
+.btn-dark:focused,
+.btn-dark:pressed,
+.btn-dark:armed,
+.btn-dark:focused:hover,
+.btn-dark:focused:pressed {
+    -fx-base: #37474F;
+    -fx-color: #37474F;
+    -fx-hover-base: #37474F;
+    -fx-pressed-base: #37474F;
+    -fx-body-color: #37474F;
+    -fx-background-color: #37474F;
+}
+
+/* — Filter (smaller) — Week, Month, All — */
+.btn-filter,
+.btn-filter:hover,
+.btn-filter:focused,
+.btn-filter:pressed,
+.btn-filter:armed,
+.btn-filter:focused:hover,
+.btn-filter:focused:pressed {
+    -fx-base: #1565C0;
+    -fx-color: #1565C0;
+    -fx-hover-base: #1565C0;
+    -fx-pressed-base: #1565C0;
+    -fx-body-color: #1565C0;
+    -fx-background-color: #1565C0;
+    -fx-padding: 4 12;
+    -fx-font-size: 11px;
+    -fx-min-height: 26;
+    -fx-background-radius: 6;
+}
+
+/* ========== Text Fields ========== */
 .text-field {
-    -fx-background-color: #000000, #ffffff;
-    -fx-background-insets: 0, 1.5;
-    -fx-background-radius: 4, 3;
-    -fx-text-fill: #1a1a1a;
-    -fx-prompt-text-fill: #888888;
-    -fx-padding: 4 7;
+    -fx-background-color: #F5F5F5;
+    -fx-background-radius: 6;
+    -fx-border-color: #E0E0E0;
+    -fx-border-radius: 6;
+    -fx-text-fill: #212121;
+    -fx-prompt-text-fill: #9E9E9E;
+    -fx-padding: 5 8;
 }
 .text-field:focused {
-    -fx-background-color: #000000, #ffffff;
-    -fx-background-insets: 0, 1.5;
-    -fx-background-radius: 4, 3;
-    -fx-padding: 4 7;
+    -fx-border-color: #42A5F5;
+    -fx-background-color: #FFFFFF;
+    -fx-effect: dropshadow(gaussian, rgba(66, 165, 245, 0.2), 4, 0, 0, 0);
 }
 
+/* ========== ComboBox ========== */
 .combo-box {
-    -fx-background-color: #000000, #ffffff;
-    -fx-background-insets: 0, 1.5;
-    -fx-background-radius: 4, 3;
+    -fx-background-color: #F5F5F5;
+    -fx-background-radius: 6;
+    -fx-border-color: #E0E0E0;
+    -fx-border-radius: 6;
 }
 .combo-box .list-cell {
-    -fx-text-fill: #1a1a1a;
+    -fx-text-fill: #212121;
     -fx-background-color: transparent;
 }
 .combo-box .arrow-button {
     -fx-background-color: transparent;
 }
 .combo-box .arrow {
-    -fx-background-color: #1a1a1a;
+    -fx-background-color: #757575;
 }
 .combo-box-popup .list-view {
-    -fx-background-color: #000000, #ffffff;
-    -fx-background-insets: 0, 1;
+    -fx-background-color: white;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 8, 0, 0, 2);
 }
 .combo-box-popup .list-view .list-cell {
-    -fx-text-fill: #1a1a1a;
-    -fx-background-color: #ffffff;
+    -fx-text-fill: #212121;
+    -fx-background-color: white;
+    -fx-padding: 6 10;
 }
 .combo-box-popup .list-view .list-cell:hover {
-    -fx-background-color: #f0f0f0;
+    -fx-background-color: #E3F2FD;
 }
 
+/* ========== Date Picker ========== */
 .date-picker {
-    -fx-background-color: #000000, #ffffff;
-    -fx-background-insets: 0, 1.5;
-    -fx-background-radius: 4, 3;
+    -fx-background-color: #F5F5F5;
+    -fx-background-radius: 6;
+    -fx-border-color: #E0E0E0;
+    -fx-border-radius: 6;
 }
 .date-picker .text-field {
     -fx-background-color: transparent;
     -fx-background-insets: 0;
-    -fx-text-fill: #1a1a1a;
-    -fx-padding: 4 7;
+    -fx-border-color: transparent;
+    -fx-text-fill: #212121;
+    -fx-padding: 5 8;
 }
 .date-picker .text-field:focused {
     -fx-background-color: transparent;
     -fx-background-insets: 0;
-    -fx-padding: 4 7;
+    -fx-border-color: transparent;
+}
+.date-picker:focused {
+    -fx-border-color: #42A5F5;
+    -fx-effect: dropshadow(gaussian, rgba(66, 165, 245, 0.2), 4, 0, 0, 0);
 }
 .date-picker .arrow-button {
     -fx-background-color: transparent;
 }
 .date-picker .arrow-button .arrow {
-    -fx-background-color: #1a1a1a;
+    -fx-background-color: #757575;
+}
+
+/* ========== Main Table ========== */
+.table-view {
+    -fx-background-color: white;
+    -fx-background-radius: 8;
+    -fx-effect: dropshadow(gaussian, rgba(21, 101, 192, 0.08), 8, 0, 0, 2);
+}
+.table-view .column-header,
+.table-view .column-header-background .filler {
+    -fx-background-color: #E3F2FD;
+    -fx-border-color: #BBDEFB;
+    -fx-border-width: 0 0 1.5 0;
+}
+.table-view .column-header .label {
+    -fx-text-fill: #1565C0;
+    -fx-font-weight: bold;
+    -fx-font-size: 12px;
+    -fx-alignment: CENTER;
+}
+.table-view .column-header-background {
+    -fx-background-color: #E3F2FD;
+}
+.table-view .cell {
+    -fx-cell-size: 35;
+    -fx-alignment: CENTER_LEFT;
+    -fx-font-size: 13px;
+    -fx-text-fill: #424242;
+}
+.table-view .table-row-cell {
+    -fx-background-color: white;
+    -fx-border-color: #F5F5F5;
+    -fx-border-width: 0 0 0.5 0;
+}
+.table-view .table-row-cell:odd {
+    -fx-background-color: #FAFAFA;
+}
+.table-view .table-row-cell:selected {
+    -fx-background-color: #E3F2FD;
+}
+.table-view .table-row-cell:selected .cell {
+    -fx-text-fill: #0D47A1;
+}
+.table-view .placeholder .label {
+    -fx-text-fill: #9E9E9E;
+}
+
+/* Scrollbars */
+.table-view .increment-button, .table-view .decrement-button {
+    -fx-background-color: transparent;
+    -fx-background-radius: 2em;
+}
+.table-view .scroll-bar:horizontal .track,
+.table-view .scroll-bar:vertical .track {
+    -fx-background-color: #F5F5F5;
+    -fx-background-radius: 2em;
+}
+.table-view .scroll-bar:horizontal .thumb,
+.table-view .scroll-bar:vertical .thumb {
+    -fx-background-color: #BBDEFB;
+    -fx-background-insets: 2, 0, 0;
+    -fx-background-radius: 2em;
 }

@@ -20,7 +20,8 @@
       "Bash(python -c \"import os; os.remove\\(r''\\\\\\\\?\\\\C:\\\\Claude_workspace\\\\SuperShope\\\\nul''\\)\")",
       "Bash(cmd.exe /c \"dir C:\\\\Claude_workspace\\\\SuperShope\\\\nul\")",
       "Bash(git add:*)",
-      "Bash(xargs:*)"
+      "Bash(xargs:*)",
+      "Bash(cd /c/Claude_workspace/SuperShope && mvn clean compile -q 2>&1)"
     ]
   }
 }

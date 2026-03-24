@@ -29,13 +29,24 @@ public class PrintBill {
 
     Document doc;
     String fileName = "D:\\Shopee\\bill.pdf";
-    public static final String fontname = "D:\\Shopee\\kiran.ttf";
-    //public static java.awt.Font fontname = new java.awt.Font("/fxm/font/kiran.ttf");
-    Font f1 = FontFactory.getFont(fontname, BaseFont.IDENTITY_H, BaseFont.EMBEDDED, 30f, Font.BOLD);//, BaseColor.BLACK);
+    public static final String fontname = getFontPath();
+    Font f1 = FontFactory.getFont(fontname, BaseFont.IDENTITY_H, BaseFont.EMBEDDED, 30f, Font.BOLD);
     Font f2 = FontFactory.getFont(fontname, BaseFont.IDENTITY_H, BaseFont.EMBEDDED, 14f, Font.NORMAL, BaseColor.BLUE);
     Font f3 = FontFactory.getFont(fontname, BaseFont.IDENTITY_H, BaseFont.EMBEDDED, 16f, Font.BOLD, BaseColor.BLACK);
-    Font f4 = FontFactory.getFont(fontname, BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED, 12f, Font.BOLD, BaseColor.BLACK);
-    Font f5 = FontFactory.getFont(fontname, BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED, 18f, Font.BOLD, BaseColor.BLACK);
+    Font f4 = FontFactory.getFont(fontname, BaseFont.IDENTITY_H, BaseFont.EMBEDDED, 12f, Font.BOLD, BaseColor.BLACK);
+    Font f5 = FontFactory.getFont(fontname, BaseFont.IDENTITY_H, BaseFont.EMBEDDED, 18f, Font.BOLD, BaseColor.BLACK);
+
+    private static String getFontPath() {
+        try {
+            java.net.URL fontUrl = PrintBill.class.getResource("/fonts/kiran.ttf");
+            if (fontUrl != null) {
+                return fontUrl.toExternalForm();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "D:\\Shopee\\kiran.ttf";
+    }
     private static Font smallBold = new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.NORMAL);
     private static Font small = new Font(Font.FontFamily.COURIER, 8, Font.BOLD);
     private static Font smallMedium = new Font(Font.FontFamily.COURIER, 10, Font.BOLD);

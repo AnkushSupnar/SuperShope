@@ -142,10 +142,10 @@
                                     </HBox>
                                     <TableView fx:id="tableNos" prefHeight="240.0" prefWidth="523.0" style="-fx-background-color: transparent; -fx-table-cell-border-color: #C5CAE9;">
                                       <columns>
-                                        <TableColumn fx:id="colSrno" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Sr.No" />
-                                        <TableColumn fx:id="colItemName" prefWidth="275.0" text="Item Name" />
-                                          <TableColumn fx:id="colUnit" prefWidth="93.0" style="-fx-alignment: CENTER;" text="Unit" />
-                                          <TableColumn fx:id="colStock" prefWidth="112.0" style="-fx-alignment: CENTER;" text="Stock" />
+                                        <TableColumn fx:id="colSrno" minWidth="40.0" prefWidth="50.0" maxWidth="65.0" style="-fx-alignment: CENTER;" text="Sr.No" />
+                                        <TableColumn fx:id="colItemName" minWidth="150.0" prefWidth="250.0" maxWidth="320.0" text="Item Name" />
+                                          <TableColumn fx:id="colUnit" minWidth="55.0" prefWidth="75.0" maxWidth="95.0" style="-fx-alignment: CENTER;" text="Unit" />
+                                          <TableColumn fx:id="colStock" minWidth="70.0" prefWidth="100.0" maxWidth="130.0" style="-fx-alignment: CENTER;" text="Stock" />
                                       </columns>
                                     </TableView>
                                  </children>
@@ -164,10 +164,10 @@
                                     </HBox>
                                     <TableView fx:id="tableKg" prefHeight="240.0" prefWidth="523.0" style="-fx-background-color: transparent; -fx-table-cell-border-color: #C5CAE9;">
                                        <columns>
-                                          <TableColumn fx:id="colSr1" prefWidth="75.0" style="-fx-alignment: CENTER;" text="Sr.No" />
-                                          <TableColumn fx:id="colItemName1" prefWidth="251.0" text="Item Name" />
-                                          <TableColumn fx:id="colUnit1" prefWidth="92.0" style="-fx-alignment: CENTER;" text="Unit" />
-                                          <TableColumn fx:id="colStock1" prefWidth="112.0" style="-fx-alignment: CENTER;" text="Stock" />
+                                          <TableColumn fx:id="colSr1" minWidth="40.0" prefWidth="50.0" maxWidth="65.0" style="-fx-alignment: CENTER;" text="Sr.No" />
+                                          <TableColumn fx:id="colItemName1" minWidth="150.0" prefWidth="250.0" maxWidth="320.0" text="Item Name" />
+                                          <TableColumn fx:id="colUnit1" minWidth="55.0" prefWidth="75.0" maxWidth="95.0" style="-fx-alignment: CENTER;" text="Unit" />
+                                          <TableColumn fx:id="colStock1" minWidth="70.0" prefWidth="100.0" maxWidth="130.0" style="-fx-alignment: CENTER;" text="Stock" />
                                        </columns>
                                     </TableView>
                                  </children>

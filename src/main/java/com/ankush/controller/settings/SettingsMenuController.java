@@ -23,6 +23,9 @@ public class SettingsMenuController implements Initializable {
     @FXML
     private Button btnShopeeInfo;
 
+    @FXML
+    private Button btnAppSettings;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         btnBackup.setOnAction(e -> {
@@ -36,6 +39,13 @@ public class SettingsMenuController implements Initializable {
             BorderPane mainPane = (BorderPane) btnShopeeInfo.getScene().lookup("#mainPane");
             if (mainPane != null) {
                 Pane pane = loader.getPage("/fxml/settings/ShopeeInfoSettings.fxml");
+                mainPane.setCenter(pane);
+            }
+        });
+        btnAppSettings.setOnAction(e -> {
+            BorderPane mainPane = (BorderPane) btnAppSettings.getScene().lookup("#mainPane");
+            if (mainPane != null) {
+                Pane pane = loader.getPage("/fxml/settings/AppSettings.fxml");
                 mainPane.setCenter(pane);
             }
         });

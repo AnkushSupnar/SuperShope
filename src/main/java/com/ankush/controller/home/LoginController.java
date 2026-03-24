@@ -1,15 +1,12 @@
 package com.ankush.controller.home;
 
 import com.ankush.common.CommonData;
-import com.ankush.controller.print.PrintBill;
 import com.ankush.data.entities.Employee;
-import com.ankush.data.entities.Login;
 import com.ankush.data.entities.ShopeeInfo;
 import com.ankush.data.service.BillService;
 import com.ankush.data.service.LoginService;
 import com.ankush.data.service.ShopeeInfoService;
 import com.ankush.view.AlertNotification;
-import com.ankush.view.FxmlController;
 import com.ankush.view.FxmlView;
 import com.ankush.view.StageManager;
 import javafx.collections.FXCollections;

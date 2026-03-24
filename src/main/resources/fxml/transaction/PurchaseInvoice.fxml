@@ -13,6 +13,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.Priority?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
@@ -20,12 +21,26 @@
   <items>
     <AnchorPane fx:id="billingPane" minHeight="-Infinity" minWidth="-Infinity" SplitPane.resizableWithParent="false">
          <children>
-            <Label layoutX="284.0" layoutY="20.0" text="Purchase Party Name" AnchorPane.leftAnchor="284.0">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Label>
-            <HBox layoutX="10.0" layoutY="45.0" spacing="10.0" AnchorPane.leftAnchor="10.0">
+            <HBox layoutY="20.0" spacing="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
+               <children>
+                  <Label prefWidth="111.0" text="Invoice Date">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label prefWidth="142.0" text="Purchase Invoice No:">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label text="Purchase Party Name" HBox.hgrow="ALWAYS">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox layoutY="45.0" spacing="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
                <children>
                   <DatePicker fx:id="date" prefHeight="32.0" prefWidth="111.0" promptText="select Date" />
                   <TextField fx:id="txtInvoiceNo" prefHeight="32.0" prefWidth="142.0">
@@ -33,196 +48,265 @@
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </TextField>
-                  <TextField fx:id="txtParty" prefHeight="30.0" prefWidth="240.0">
+                  <TextField fx:id="txtParty" prefHeight="30.0" prefWidth="240.0" HBox.hgrow="ALWAYS">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </TextField>
                </children>
             </HBox>
-            <Label layoutX="137.0" layoutY="20.0" text="Purchase Invoice No:" AnchorPane.leftAnchor="137.0">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Label>
-            <Label layoutX="15.0" layoutY="20.0" text="Invoice Date">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Label>
-            <Label layoutX="15.0" layoutY="83.0" text="Item Bar Code">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Label>
-            <HBox layoutX="8.0" layoutY="100.0">
+            <HBox layoutY="83.0" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="10.0">
+               <children>
+                  <Label prefWidth="127.0" text="Item Bar Code">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label prefWidth="210.0" text="Item Name" HBox.hgrow="ALWAYS">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label prefWidth="85.0" text="Quantity">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label prefWidth="68.0" text="Unit">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label prefWidth="85.0" text="Rate">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label prefWidth="85.0" text="MRP">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label prefWidth="85.0" text="Amount">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox layoutY="100.0" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="10.0">
                <children>
                   <TextField fx:id="txtBarcode" prefHeight="33.0" prefWidth="127.0">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </TextField>
-                  <TextField fx:id="txtItemName" prefHeight="33.0" prefWidth="210.0" promptText="maalaacao naava" style="-fx-font-family: kiran; -fx-font-size: 20;" />
-                  <TextField fx:id="txtQty" prefHeight="33.0" prefWidth="85.0" promptText="naga" style="-fx-font-family: kiran; -fx-font-size: 20;" />
+                  <TextField fx:id="txtItemName" prefHeight="33.0" prefWidth="210.0" promptText="maalaacao naava" HBox.hgrow="ALWAYS">
+                     <font>
+                        <Font name="Kiran" size="20.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="txtQty" prefHeight="33.0" prefWidth="85.0" promptText="naga">
+                     <font>
+                        <Font name="Kiran" size="20.0" />
+                     </font>
+                  </TextField>
                   <ComboBox fx:id="cmbUnit" prefHeight="32.0" prefWidth="68.0" promptText="Unit" visibleRowCount="2" />
-                  <TextField fx:id="txtRate" prefHeight="25.0" prefWidth="85.0" promptText="Baava" style="-fx-font-family: kiran; -fx-font-size: 20;" />
-                  <TextField fx:id="txtMrp" layoutX="591.0" layoutY="10.0" prefHeight="25.0" prefWidth="85.0" promptText="ikMmata" style="-fx-font-family: kiran; -fx-font-size: 20;" text="0.0" />
-                  <TextField fx:id="txtAmount" prefHeight="25.0" prefWidth="85.0" promptText="ekuNa" style="-fx-font-family: kiran; -fx-font-size: 20;" />
+                  <TextField fx:id="txtRate" prefHeight="33.0" prefWidth="85.0" promptText="Baava">
+                     <font>
+                        <Font name="Kiran" size="20.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="txtMrp" prefHeight="33.0" prefWidth="85.0" promptText="ikMmata" text="0.0">
+                     <font>
+                        <Font name="Kiran" size="20.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="txtAmount" prefHeight="33.0" prefWidth="85.0" promptText="ekuNa">
+                     <font>
+                        <Font name="Kiran" size="20.0" />
+                     </font>
+                  </TextField>
                </children>
             </HBox>
-            <Label layoutX="138.0" layoutY="83.0" text="Item Name">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Label>
-            <Label layoutX="344.0" layoutY="83.0" text="Quantity">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Label>
-            <Label layoutX="500.0" layoutY="83.0" text="Rate">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Label>
-            <Label layoutX="583.0" layoutY="83.0" text="MRP">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Label>
-            <Label layoutX="434.0" layoutY="83.0" text="Unit">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Label>
             <HBox layoutX="10.0" layoutY="143.0" spacing="10.0" AnchorPane.leftAnchor="10.0">
                <children>
-                  <Button fx:id="btnAdd" mnemonicParsing="false" stylesheets="@../css/button.css" text="ADD">
+                  <Button fx:id="btnAdd" mnemonicParsing="false" style="-fx-background-color: #1565C0; -fx-text-fill: white; -fx-color: #1565C0; -fx-background-insets: 0; -fx-background-radius: 5; -fx-border-color: transparent; -fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-effect: null;" text="ADD">
                      <graphic>
-                        <FontAwesomeIcon glyphName="PLUS" />
+                        <FontAwesomeIcon fill="WHITE" glyphName="PLUS" />
                      </graphic>
+                     <font>
+                        <Font name="Georgia" size="14.0" />
+                     </font>
                   </Button>
-                  <Button fx:id="btnUpdate" mnemonicParsing="false" stylesheets="@../css/button.css" text="UPDATE">
+                  <Button fx:id="btnUpdate" mnemonicParsing="false" style="-fx-background-color: #00796B; -fx-text-fill: white; -fx-color: #00796B; -fx-background-insets: 0; -fx-background-radius: 5; -fx-border-color: transparent; -fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-effect: null;" text="UPDATE">
                      <graphic>
-                        <FontAwesomeIcon glyphName="EDIT" />
+                        <FontAwesomeIcon fill="WHITE" glyphName="EDIT" />
                      </graphic>
+                     <font>
+                        <Font name="Georgia" size="14.0" />
+                     </font>
                   </Button>
-                  <Button fx:id="btnRemove" mnemonicParsing="false" stylesheets="@../css/button.css" text="REMOVE">
+                  <Button fx:id="btnRemove" mnemonicParsing="false" style="-fx-background-color: #C62828; -fx-text-fill: white; -fx-color: #C62828; -fx-background-insets: 0; -fx-background-radius: 5; -fx-border-color: transparent; -fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-effect: null;" text="REMOVE">
                      <graphic>
-                        <FontAwesomeIcon glyphName="CLOSE" />
+                        <FontAwesomeIcon fill="WHITE" glyphName="CLOSE" />
                      </graphic>
+                     <font>
+                        <Font name="Georgia" size="14.0" />
+                     </font>
                   </Button>
-                  <Button fx:id="btnClear" mnemonicParsing="false" stylesheets="@../css/button.css" text="CLEAR">
+                  <Button fx:id="btnClear" mnemonicParsing="false" style="-fx-background-color: #455A64; -fx-text-fill: white; -fx-color: #455A64; -fx-background-insets: 0; -fx-background-radius: 5; -fx-border-color: transparent; -fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-effect: null;" text="CLEAR">
                      <graphic>
-                        <FontAwesomeIcon glyphName="RECYCLE" />
+                        <FontAwesomeIcon fill="WHITE" glyphName="RECYCLE" />
                      </graphic>
+                     <font>
+                        <Font name="Georgia" size="14.0" />
+                     </font>
                   </Button>
                </children>
             </HBox>
             <TableView fx:id="table" layoutX="10.0" layoutY="179.0" prefHeight="366.0" prefWidth="741.0" AnchorPane.bottomAnchor="205.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="179.0">
               <columns>
-                <TableColumn fx:id="colSr" prefWidth="45.0" text="SR.NO" />
-                <TableColumn fx:id="colBarcode" prefWidth="148.0" text="BARCODE" />
-                  <TableColumn fx:id="colItemName" prefWidth="235.0" text="ITEM NAME" />
-                  <TableColumn fx:id="colQty" prefWidth="72.0" text="QTY" />
-                  <TableColumn fx:id="colUnit" prefWidth="68.0" text="UNIT" />
-                  <TableColumn fx:id="colRate" prefWidth="77.0" text="PRICE" />
-                  <TableColumn fx:id="colAmount" prefWidth="83.0" text="AMOUNT" />
+                <TableColumn fx:id="colSr" minWidth="35.0" prefWidth="45.0" maxWidth="55.0" text="SR.NO" />
+                <TableColumn fx:id="colBarcode" minWidth="100.0" prefWidth="130.0" maxWidth="160.0" text="BARCODE" />
+                  <TableColumn fx:id="colItemName" minWidth="150.0" prefWidth="235.0" maxWidth="300.0" text="ITEM NAME" />
+                  <TableColumn fx:id="colQty" minWidth="50.0" prefWidth="72.0" maxWidth="85.0" text="QTY" />
+                  <TableColumn fx:id="colUnit" minWidth="50.0" prefWidth="68.0" maxWidth="80.0" text="UNIT" />
+                  <TableColumn fx:id="colRate" minWidth="60.0" prefWidth="77.0" maxWidth="95.0" text="PRICE" />
+                  <TableColumn fx:id="colAmount" minWidth="65.0" prefWidth="83.0" maxWidth="100.0" text="AMOUNT" />
               </columns>
             </TableView>
-            <Pane layoutX="10.0" layoutY="545.0" prefHeight="164.0" prefWidth="740.0" style="-fx-background-color: white; -fx-border-color: red;" AnchorPane.bottomAnchor="41.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
+            <Pane layoutX="10.0" layoutY="545.0" prefHeight="164.0" prefWidth="740.0" style="-fx-background-color: #FAFAFA; -fx-border-color: #E0E0E0; -fx-border-radius: 5; -fx-background-radius: 5;" AnchorPane.bottomAnchor="41.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
                <children>
+                  <Label layoutX="14.0" layoutY="8.0" text="TRANSPORTING CHRGS" />
+                  <Label layoutX="152.0" layoutY="8.0" text="WAGES" />
+                  <Label layoutX="283.0" layoutY="8.0" text="OTHER CHRGS" />
                   <Label layoutX="420.0" layoutY="8.0" text="NET TOTAL" />
+                  <Label layoutX="557.0" layoutY="8.0" text="GRAND TOTAL" />
                   <HBox layoutX="14.0" layoutY="25.0">
                      <children>
-                        <TextField fx:id="txtTransporting" style="-fx-font-family: kiran; -fx-font-size: 20;" text="0.0" />
+                        <TextField fx:id="txtTransporting" style="-fx-background-color: #FFF8E1; -fx-text-fill: #F57F17; -fx-background-radius: 5; -fx-border-color: #FFE082; -fx-border-radius: 5;" text="0.0">
+                           <font>
+                              <Font name="Kiran" size="20.0" />
+                           </font>
+                        </TextField>
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="+">
                            <HBox.margin>
                               <Insets top="10.0" />
                            </HBox.margin>
                         </Text>
-                        <TextField fx:id="txtWages" style="-fx-font-family: kiran; -fx-font-size: 20;" text="0.0" />
+                        <TextField fx:id="txtWages" style="-fx-background-color: #FFF8E1; -fx-text-fill: #F57F17; -fx-background-radius: 5; -fx-border-color: #FFE082; -fx-border-radius: 5;" text="0.0">
+                           <font>
+                              <Font name="Kiran" size="20.0" />
+                           </font>
+                        </TextField>
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="+">
                            <HBox.margin>
                               <Insets top="10.0" />
                            </HBox.margin>
                         </Text>
-                        <TextField fx:id="txtOther" style="-fx-font-family: kiran; -fx-font-size: 20;" text="0.0" />
+                        <TextField fx:id="txtOther" style="-fx-background-color: #FFF8E1; -fx-text-fill: #F57F17; -fx-background-radius: 5; -fx-border-color: #FFE082; -fx-border-radius: 5;" text="0.0">
+                           <font>
+                              <Font name="Kiran" size="20.0" />
+                           </font>
+                        </TextField>
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="+">
                            <HBox.margin>
                               <Insets top="10.0" />
                            </HBox.margin>
                         </Text>
-                        <TextField fx:id="txtNetTotal" editable="false" promptText="ekuNa" style="-fx-font-family: kiran; -fx-font-size: 20;" text="0.0" />
+                        <TextField fx:id="txtNetTotal" editable="false" promptText="ekuNa" style="-fx-background-color: #E3F2FD; -fx-text-fill: #1565C0; -fx-background-radius: 5; -fx-border-color: #BBDEFB; -fx-border-radius: 5;" text="0.0">
+                           <font>
+                              <Font name="Kiran" size="20.0" />
+                           </font>
+                        </TextField>
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="=">
                            <HBox.margin>
                               <Insets top="10.0" />
                            </HBox.margin>
                         </Text>
-                        <TextField fx:id="txtGrandTotal" editable="false" promptText="ekuNa" style="-fx-font-family: kiran; -fx-font-size: 20;" text="0.0" />
+                        <TextField fx:id="txtGrandTotal" editable="false" promptText="ekuNa" style="-fx-background-color: #1B5E20; -fx-text-fill: white; -fx-background-radius: 5; -fx-border-color: transparent; -fx-border-radius: 5;" text="0.0">
+                           <font>
+                              <Font name="Kiran" size="20.0" />
+                           </font>
+                        </TextField>
                      </children>
                   </HBox>
-                  <Label layoutX="14.0" layoutY="8.0" text="TRANSPORTING CHRGS" />
-                  <Label layoutX="152.0" layoutY="8.0" text="WAGES" />
-                  <Label layoutX="283.0" layoutY="8.0" text="OTHER CHRGS" />
-                  <Label layoutX="557.0" layoutY="8.0" text="GRAND TOTAL" />
-                  <TextField fx:id="txtDiscount" layoutX="16.0" layoutY="79.0" style="-fx-font-family: kiran; -fx-font-size: 20;" />
-                  <Label layoutX="14.0" layoutY="61.0" text="DICOUNT" />
-                  <TextField fx:id="txtPaid" layoutX="150.0" layoutY="79.0" style="-fx-font-family: kiran; -fx-font-size: 20;" />
+                  <Label layoutX="14.0" layoutY="61.0" text="DISCOUNT" />
                   <Label layoutX="148.0" layoutY="61.0" text="PAID AMOUNT" />
-                  <TextField fx:id="txtBank" layoutX="281.0" layoutY="79.0" prefHeight="33.0" prefWidth="185.0" promptText="Select Bank Name">
+                  <Label layoutX="279.0" layoutY="61.0" text="PAID FROM" />
+                  <TextField fx:id="txtDiscount" layoutX="16.0" layoutY="79.0" style="-fx-background-color: #FFF3E0; -fx-text-fill: #E65100; -fx-background-radius: 5; -fx-border-color: #FFCC80; -fx-border-radius: 5;">
+                     <font>
+                        <Font name="Kiran" size="20.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="txtPaid" layoutX="150.0" layoutY="79.0" style="-fx-background-color: #E8F5E9; -fx-text-fill: #2E7D32; -fx-background-radius: 5; -fx-border-color: #A5D6A7; -fx-border-radius: 5;">
+                     <font>
+                        <Font name="Kiran" size="20.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="txtBank" layoutX="281.0" layoutY="79.0" prefHeight="33.0" prefWidth="185.0" promptText="Select Bank Name" style="-fx-background-color: #ECEFF1; -fx-text-fill: #37474F; -fx-background-radius: 5; -fx-border-color: #CFD8DC; -fx-border-radius: 5;">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </TextField>
-                  <Label layoutX="279.0" layoutY="61.0" text="PAID FROM" />
                   <HBox layoutX="10.0" layoutY="120.0" spacing="10.0">
                      <children>
-                        <Button fx:id="btnSave" mnemonicParsing="false" stylesheets="@../css/button.css" text="SAVE">
+                        <Button fx:id="btnSave" mnemonicParsing="false" style="-fx-background-color: #1565C0; -fx-text-fill: white; -fx-color: #1565C0; -fx-background-insets: 0; -fx-background-radius: 5; -fx-border-color: transparent; -fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-effect: null;" text="SAVE">
                            <graphic>
-                              <FontAwesomeIcon glyphName="SAVE" />
+                              <FontAwesomeIcon fill="WHITE" glyphName="SAVE" />
                            </graphic>
+                           <font>
+                              <Font name="Georgia" size="14.0" />
+                           </font>
                         </Button>
-                        <Button fx:id="btnUpdate2" mnemonicParsing="false" stylesheets="@../css/button.css" text="UPDATE">
+                        <Button fx:id="btnUpdate2" mnemonicParsing="false" style="-fx-background-color: #00796B; -fx-text-fill: white; -fx-color: #00796B; -fx-background-insets: 0; -fx-background-radius: 5; -fx-border-color: transparent; -fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-effect: null;" text="UPDATE">
                            <graphic>
-                              <FontAwesomeIcon glyphName="EDIT" />
+                              <FontAwesomeIcon fill="WHITE" glyphName="EDIT" />
                            </graphic>
+                           <font>
+                              <Font name="Georgia" size="14.0" />
+                           </font>
                         </Button>
-                        <Button fx:id="btnClear2" mnemonicParsing="false" stylesheets="@../css/button.css" text="CLEAR">
+                        <Button fx:id="btnClear2" mnemonicParsing="false" style="-fx-background-color: #455A64; -fx-text-fill: white; -fx-color: #455A64; -fx-background-insets: 0; -fx-background-radius: 5; -fx-border-color: transparent; -fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-effect: null;" text="CLEAR">
                            <graphic>
-                              <FontAwesomeIcon glyphName="RECYCLE" />
+                              <FontAwesomeIcon fill="WHITE" glyphName="RECYCLE" />
                            </graphic>
+                           <font>
+                              <Font name="Georgia" size="14.0" />
+                           </font>
                         </Button>
-                        <Button fx:id="btnPrint" mnemonicParsing="false" stylesheets="@../css/button.css" text="PRINT">
+                        <Button fx:id="btnPrint" mnemonicParsing="false" style="-fx-background-color: #283593; -fx-text-fill: white; -fx-color: #283593; -fx-background-insets: 0; -fx-background-radius: 5; -fx-border-color: transparent; -fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-effect: null;" text="PRINT">
                            <graphic>
-                              <FontAwesomeIcon glyphName="PRINT" />
+                              <FontAwesomeIcon fill="WHITE" glyphName="PRINT" />
                            </graphic>
+                           <font>
+                              <Font name="Georgia" size="14.0" />
+                           </font>
                         </Button>
-                        <Button fx:id="btnExit" mnemonicParsing="false" stylesheets="@../css/button.css" text="EXIT">
+                        <Button fx:id="btnExit" mnemonicParsing="false" style="-fx-background-color: #37474F; -fx-text-fill: white; -fx-color: #37474F; -fx-background-insets: 0; -fx-background-radius: 5; -fx-border-color: transparent; -fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-effect: null;" text="EXIT">
                            <graphic>
-                              <FontAwesomeIcon glyphName="HOME" />
+                              <FontAwesomeIcon fill="WHITE" glyphName="HOME" />
                            </graphic>
+                           <font>
+                              <Font name="Georgia" size="14.0" />
+                           </font>
                         </Button>
                      </children>
                   </HBox>
                </children>
             </Pane>
-            <Label layoutX="667.0" layoutY="83.0" text="Amount">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Label>
          </children></AnchorPane>
     <AnchorPane minHeight="0.0" minWidth="0.0">
          <children>
-            <TableView fx:id="tableold" layoutX="192.0" layoutY="60.0" prefHeight="680.0" prefWidth="443.0" stylesheets="@../css/table.css" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="3.0" AnchorPane.topAnchor="60.0">
+            <TableView fx:id="tableold" layoutX="192.0" layoutY="60.0" prefHeight="680.0" prefWidth="443.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="3.0" AnchorPane.topAnchor="60.0">
               <columns>
-                <TableColumn fx:id="colSrNo" prefWidth="48.0" text="SR.NO" />
-                <TableColumn fx:id="colDate" prefWidth="93.0" text="DATE" />
-                  <TableColumn fx:id="colInvoiceNo" prefWidth="82.0" text="INVOICE NO" />
-                  <TableColumn fx:id="colParty" prefWidth="170.0" text="PARTY NAME" />
-                  <TableColumn fx:id="colTotal" prefWidth="79.0" text="TOTAL AMT" />
-                  <TableColumn fx:id="colPaid" prefWidth="79.0" text="PAID AMT" />
+                <TableColumn fx:id="colSrNo" minWidth="35.0" prefWidth="45.0" maxWidth="55.0" text="SR.NO" />
+                <TableColumn fx:id="colDate" minWidth="70.0" prefWidth="90.0" maxWidth="110.0" text="DATE" />
+                  <TableColumn fx:id="colInvoiceNo" minWidth="65.0" prefWidth="82.0" maxWidth="100.0" text="INVOICE NO" />
+                  <TableColumn fx:id="colParty" minWidth="120.0" prefWidth="170.0" maxWidth="220.0" text="PARTY NAME" />
+                  <TableColumn fx:id="colTotal" minWidth="65.0" prefWidth="79.0" maxWidth="100.0" text="TOTAL AMT" />
+                  <TableColumn fx:id="colPaid" minWidth="65.0" prefWidth="79.0" maxWidth="100.0" text="PAID AMT" />
               </columns>
             </TableView>
             <Pane layoutX="33.0" layoutY="-64.0" prefHeight="60.0" prefWidth="443.0" AnchorPane.bottomAnchor="680.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -231,24 +315,24 @@
                   <HBox layoutX="10.0" layoutY="23.0" spacing="5.0">
                      <children>
                         <DatePicker fx:id="dateSearch" prefWidth="100.0" promptText="select Date" />
-                        <Button fx:id="btnShow" mnemonicParsing="false" stylesheets="@../css/smallbutton.css" text="SHOW">
+                        <Button fx:id="btnShow" mnemonicParsing="false" style="-fx-background-color: #43A047; -fx-text-fill: white; -fx-color: #43A047; -fx-background-insets: 0; -fx-background-radius: 5; -fx-border-color: transparent; -fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-effect: null; -fx-font-size: 10; -fx-padding: 4 10;" text="SHOW">
                            <graphic>
-                              <FontAwesomeIcon glyphName="SEARCH" />
+                              <FontAwesomeIcon fill="WHITE" glyphName="SEARCH" />
                            </graphic>
                         </Button>
-                        <Button fx:id="btnMonth" mnemonicParsing="false" stylesheets="@../css/smallbutton.css" text="MONTH">
+                        <Button fx:id="btnMonth" mnemonicParsing="false" style="-fx-background-color: #43A047; -fx-text-fill: white; -fx-color: #43A047; -fx-background-insets: 0; -fx-background-radius: 5; -fx-border-color: transparent; -fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-effect: null; -fx-font-size: 10; -fx-padding: 4 10;" text="MONTH">
                            <graphic>
-                              <FontAwesomeIcon glyphName="LAPTOP" />
+                              <FontAwesomeIcon fill="WHITE" glyphName="LAPTOP" />
                            </graphic>
                         </Button>
-                        <Button fx:id="btnYear" mnemonicParsing="false" stylesheets="@../css/smallbutton.css" text="YEAR">
+                        <Button fx:id="btnYear" mnemonicParsing="false" style="-fx-background-color: #43A047; -fx-text-fill: white; -fx-color: #43A047; -fx-background-insets: 0; -fx-background-radius: 5; -fx-border-color: transparent; -fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-effect: null; -fx-font-size: 10; -fx-padding: 4 10;" text="YEAR">
                            <graphic>
-                              <FontAwesomeIcon glyphName="LAPTOP" />
+                              <FontAwesomeIcon fill="WHITE" glyphName="LAPTOP" />
                            </graphic>
                         </Button>
-                        <Button fx:id="btnAll" mnemonicParsing="false" stylesheets="@../css/smallbutton.css" text="ALL">
+                        <Button fx:id="btnAll" mnemonicParsing="false" style="-fx-background-color: #43A047; -fx-text-fill: white; -fx-color: #43A047; -fx-background-insets: 0; -fx-background-radius: 5; -fx-border-color: transparent; -fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-effect: null; -fx-font-size: 10; -fx-padding: 4 10;" text="ALL">
                            <graphic>
-                              <FontAwesomeIcon glyphName="LAPTOP" />
+                              <FontAwesomeIcon fill="WHITE" glyphName="LAPTOP" />
                            </graphic>
                         </Button>
                      </children>

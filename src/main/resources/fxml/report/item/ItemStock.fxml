@@ -24,11 +24,11 @@
       </Button>
       <TableView fx:id="table" layoutX="20.0" layoutY="76.0" prefHeight="324.0" prefWidth="580.0" stylesheets="@../../css/tablemar.css" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="76.0">
         <columns>
-          <TableColumn fx:id="colSrNo" prefWidth="75.0" text="SR.NO" />
-          <TableColumn fx:id="colItemName" prefWidth="245.0" text="ITEM NAME" />
-            <TableColumn fx:id="colUnit" prefWidth="82.0" text="UNIT" />
-            <TableColumn fx:id="colBarcode" prefWidth="496.0" text="BARCODE" />
-            <TableColumn fx:id="colStock" prefWidth="122.0" text="STOCK" />
+          <TableColumn fx:id="colSrNo" minWidth="40.0" prefWidth="50.0" maxWidth="65.0" text="SR.NO" />
+          <TableColumn fx:id="colItemName" minWidth="150.0" prefWidth="220.0" maxWidth="300.0" text="ITEM NAME" />
+            <TableColumn fx:id="colUnit" minWidth="55.0" prefWidth="75.0" maxWidth="95.0" text="UNIT" />
+            <TableColumn fx:id="colBarcode" minWidth="100.0" prefWidth="140.0" maxWidth="180.0" text="BARCODE" />
+            <TableColumn fx:id="colStock" minWidth="70.0" prefWidth="100.0" maxWidth="130.0" text="STOCK" />
         </columns>
       </TableView>
       <Button fx:id="btnHome" layoutX="525.0" layoutY="31.0" mnemonicParsing="false" stylesheets="@../../css/button.css" text="HOME">

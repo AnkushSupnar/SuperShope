@@ -27,6 +27,11 @@
     -fx-background-color: linear-gradient(to bottom, #29B6F6, #0288D1);
     -fx-text-fill: white;
     -fx-background-radius: 6;
+    -fx-background-insets: 0;
+    -fx-border-color: transparent;
+    -fx-border-width: 0;
+    -fx-border-insets: 0;
+    -fx-padding: 6 14;
     -fx-cursor: hand;
     -fx-effect: dropshadow(gaussian, rgba(2,136,209,0.25), 3, 0, 0, 1);
 }
@@ -35,6 +40,10 @@
 }
 .button:hover {
     -fx-background-color: linear-gradient(to bottom, #4FC3F7, #29B6F6);
+    -fx-background-insets: 0;
+    -fx-border-color: transparent;
+    -fx-border-width: 0;
+    -fx-border-insets: 0;
     -fx-text-fill: white;
     -fx-effect: dropshadow(gaussian, rgba(2,136,209,0.35), 5, 0, 0, 2);
 }
@@ -43,6 +52,10 @@
 }
 .button:pressed {
     -fx-background-color: #0277BD;
+    -fx-background-insets: 0;
+    -fx-border-color: transparent;
+    -fx-border-width: 0;
+    -fx-border-insets: 0;
     -fx-effect: none;
 }
 

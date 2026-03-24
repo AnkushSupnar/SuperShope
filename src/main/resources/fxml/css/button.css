@@ -2,14 +2,44 @@
 	-fx-background-color:#007bff;
 	-fx-text-fill:White;
 	-fx-font:12pt "Georgia";
-	 -fx-effect: dropshadow( one-pass-box , black , 8 , 0.0 , 2 , 0 );
+	-fx-effect: dropshadow( one-pass-box , black , 8 , 0.0 , 2 , 0 );
+	-fx-background-insets: 0;
+	-fx-background-radius: 6;
+	-fx-border-color: transparent;
+	-fx-border-width: 0;
+	-fx-border-insets: 0;
+	-fx-padding: 6 14;
+	-fx-cursor: hand;
+	-fx-focus-color: transparent;
+	-fx-faint-focus-color: transparent;
 }
 .button .glyph-icon{
 	-fx-fill:white;
 }
-.button:hover {
-	-fx-background-color:#00e676;
+.button:focused {
+	-fx-background-color:#007bff;
+	-fx-background-insets: 0;
+	-fx-background-radius: 6;
+	-fx-border-color: transparent;
+	-fx-border-width: 0;
+	-fx-border-insets: 0;
 }
-.button:pressed{
-	-fx-background-color:#1de9b6;
+.button:hover,
+.button:focused:hover {
+	-fx-background-color:#0056b3;
+	-fx-background-insets: 0;
+	-fx-background-radius: 6;
+	-fx-border-color: transparent;
+	-fx-border-width: 0;
+	-fx-border-insets: 0;
+}
+.button:pressed,
+.button:focused:pressed,
+.button:armed {
+	-fx-background-color:#004085;
+	-fx-background-insets: 0;
+	-fx-background-radius: 6;
+	-fx-border-color: transparent;
+	-fx-border-width: 0;
+	-fx-border-insets: 0;
 }
