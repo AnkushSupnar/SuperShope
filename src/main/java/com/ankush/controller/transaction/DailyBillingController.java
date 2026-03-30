@@ -443,10 +443,6 @@ public class DailyBillingController implements Initializable {
 
     private void save() {
         try {
-            new PrintExample("D:\\Shopee\\bill.pdf");
-//            printbill = new PrintBill();
-//            printbill.setBill(billService.getBillByBillNo(3));
-//            // printbill.createDoc();
             if(!validateBill())return;
             Customer custom = null;
             custom =checkCustomer();
@@ -522,6 +518,9 @@ public class DailyBillingController implements Initializable {
                // printbill.createDoc();
                 alert.showSuccess("Bill Save Success");
                 printbill.setBill(billService.getBillByBillNo(bill.getBillno()));
+                if(alert.showConfirmation("Print Bill", "Do you want to print the bill?")) {
+                    new PrintExample("D:\\Shopee\\bill.pdf");
+                }
                 loadTodaysBills();
                 clear2();
                 backupService.performAutoBackup();
@@ -539,9 +538,10 @@ public class DailyBillingController implements Initializable {
 //                        .transactionid(bill.getBillno())
 //                        .build());
                 alert.showSuccess("Bill  Updated Success");
-              //  printbill = new PrintBill();
-                //printbill.setBill(bill);
                 printbill.setBill(billService.getBillByBillNo(bill.getBillno()));
+                if(alert.showConfirmation("Print Bill", "Do you want to print the bill?")) {
+                    new PrintExample("D:\\Shopee\\bill.pdf");
+                }
                 loadTodaysBills();
                 clear2();
                 backupService.performAutoBackup();
