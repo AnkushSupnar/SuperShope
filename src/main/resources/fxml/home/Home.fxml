@@ -1,181 +1,135 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane fx:id="mainPane" prefHeight="680.0" prefWidth="939.0" style="-fx-background-color: #EDE7F6;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ankush.controller.home.HomeController">
+<!-- Home shell in the dashboard's look (styles in css/app-theme.css) -->
+<BorderPane fx:id="mainPane" prefHeight="680.0" prefWidth="939.0" styleClass="page" stylesheets="@../css/app-theme.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ankush.controller.home.HomeController">
    <left>
-      <AnchorPane prefHeight="534.0" prefWidth="230.0" style="-fx-background-color: linear-gradient(to bottom, #1A237E, #283593, #3949AB); -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 12, 0, 3, 0);" BorderPane.alignment="CENTER">
+      <VBox prefWidth="230.0" spacing="4.0" styleClass="sidebar" style="-fx-padding: 22 12 20 12;" BorderPane.alignment="CENTER">
          <children>
-            <VBox layoutX="50.0" layoutY="26.0" prefHeight="200.0" prefWidth="100.0" spacing="4.0" style="-fx-padding: 20 10 20 10;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-               <children>
-                  <HBox fx:id="menuDashboard" alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="200.0" spacing="15.0" style="-fx-background-color: rgba(255,255,255,0.25); -fx-background-radius: 10; -fx-padding: 12 20; -fx-cursor: hand; -fx-border-color: transparent transparent transparent #FFCA28; -fx-border-width: 0 0 0 3; -fx-border-radius: 10;">
+            <Label style="-fx-text-fill: rgba(232,234,246,0.6); -fx-font-size: 11px; -fx-font-weight: bold; -fx-padding: 0 0 6 16;" text="MENU" />
+                  <HBox fx:id="menuDashboard" alignment="CENTER_LEFT" spacing="14.0" styleClass="nav-item">
                      <children>
-                        <StackPane prefHeight="32.0" prefWidth="32.0" style="-fx-background-color: #4CAF50; -fx-background-radius: 8;">
+                        <StackPane styleClass="nav-icon">
                            <children>
                               <FontAwesomeIcon fill="WHITE" glyphName="DASHBOARD" size="1.1em" />
                            </children>
                         </StackPane>
-                        <Label style="-fx-text-fill: #E8EAF6; -fx-font-size: 14px; -fx-font-weight: bold;" text="Dashboard">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                        </Label>
+                        <Label styleClass="nav-label" text="Dashboard" />
                      </children>
-                     <VBox.margin>
-                        <Insets top="20.0" />
-                     </VBox.margin>
                   </HBox>
-                  <HBox fx:id="menuTransaction" alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="200.0" spacing="15.0" style="-fx-background-color: rgba(255,255,255,0.05); -fx-background-radius: 10; -fx-padding: 12 20; -fx-cursor: hand;">
+                  <HBox fx:id="menuTransaction" alignment="CENTER_LEFT" spacing="14.0" styleClass="nav-item">
                      <children>
-                        <StackPane prefHeight="32.0" prefWidth="32.0" style="-fx-background-color: #42A5F5; -fx-background-radius: 8;">
+                        <StackPane styleClass="nav-icon">
                            <children>
                               <FontAwesomeIcon fill="WHITE" glyphName="EXCHANGE" size="1.1em" />
                            </children>
                         </StackPane>
-                        <Label style="-fx-text-fill: #E8EAF6; -fx-font-size: 14px; -fx-font-weight: bold;" text="Transaction">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                        </Label>
+                        <Label styleClass="nav-label" text="Transaction" />
                      </children>
                   </HBox>
-                  <HBox fx:id="menuMaster" alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="200.0" spacing="15.0" style="-fx-background-color: rgba(255,255,255,0.05); -fx-background-radius: 10; -fx-padding: 12 20; -fx-cursor: hand;">
+                  <HBox fx:id="menuMaster" alignment="CENTER_LEFT" spacing="14.0" styleClass="nav-item">
                      <children>
-                        <StackPane prefHeight="32.0" prefWidth="32.0" style="-fx-background-color: #FFA726; -fx-background-radius: 8;">
+                        <StackPane styleClass="nav-icon">
                            <children>
                               <FontAwesomeIcon fill="WHITE" glyphName="DATABASE" size="1.1em" />
                            </children>
                         </StackPane>
-                        <Label style="-fx-text-fill: #E8EAF6; -fx-font-size: 14px; -fx-font-weight: bold;" text="Master">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                        </Label>
+                        <Label styleClass="nav-label" text="Master" />
                      </children>
                   </HBox>
-                  <HBox fx:id="menuReport" alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="200.0" spacing="15.0" style="-fx-background-color: rgba(255,255,255,0.05); -fx-background-radius: 10; -fx-padding: 12 20; -fx-cursor: hand;">
+                  <HBox fx:id="menuReport" alignment="CENTER_LEFT" spacing="14.0" styleClass="nav-item">
                      <children>
-                        <StackPane prefHeight="32.0" prefWidth="32.0" style="-fx-background-color: #EC407A; -fx-background-radius: 8;">
+                        <StackPane styleClass="nav-icon">
                            <children>
                               <FontAwesomeIcon fill="WHITE" glyphName="BAR_CHART" size="1.1em" />
                            </children>
                         </StackPane>
-                        <Label style="-fx-text-fill: #E8EAF6; -fx-font-size: 14px; -fx-font-weight: bold;" text="Reports">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                        </Label>
+                        <Label styleClass="nav-label" text="Reports" />
                      </children>
                   </HBox>
-                  <HBox fx:id="menuOther" alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="200.0" spacing="15.0" style="-fx-background-color: rgba(255,255,255,0.05); -fx-background-radius: 10; -fx-padding: 12 20; -fx-cursor: hand;">
+                  <HBox fx:id="menuOther" alignment="CENTER_LEFT" spacing="14.0" styleClass="nav-item">
                      <children>
-                        <StackPane prefHeight="32.0" prefWidth="32.0" style="-fx-background-color: #FF8F00; -fx-background-radius: 8;">
+                        <StackPane styleClass="nav-icon">
                            <children>
                               <FontAwesomeIcon fill="WHITE" glyphName="TH_LARGE" size="1.1em" />
                            </children>
                         </StackPane>
-                        <Label style="-fx-text-fill: #E8EAF6; -fx-font-size: 14px; -fx-font-weight: bold;" text="Other">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                        </Label>
+                        <Label styleClass="nav-label" text="Other" />
                      </children>
                   </HBox>
-                  <VBox alignment="BOTTOM_CENTER" spacing="4.0" VBox.vgrow="ALWAYS">
-                     <children>
-                        <HBox fx:id="menuSettings" alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="200.0" spacing="15.0" style="-fx-background-color: rgba(255,255,255,0.05); -fx-background-radius: 10; -fx-padding: 12 20; -fx-cursor: hand;">
+            <Region VBox.vgrow="ALWAYS" />
+            <VBox spacing="4.0">
+               <children>
+                        <HBox fx:id="menuSettings" alignment="CENTER_LEFT" spacing="14.0" styleClass="nav-item">
                            <children>
-                              <StackPane prefHeight="32.0" prefWidth="32.0" style="-fx-background-color: #AB47BC; -fx-background-radius: 8;">
+                              <StackPane styleClass="nav-icon">
                                  <children>
                                     <FontAwesomeIcon fill="WHITE" glyphName="COG" size="1.1em" />
                                  </children>
                               </StackPane>
-                              <Label style="-fx-text-fill: #E8EAF6; -fx-font-size: 14px; -fx-font-weight: bold;" text="Settings">
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font>
-                              </Label>
+                              <Label styleClass="nav-label" text="Settings" />
                            </children>
                         </HBox>
-                        <HBox fx:id="menuSupport" alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="200.0" spacing="15.0" style="-fx-background-color: rgba(255,255,255,0.05); -fx-background-radius: 10; -fx-padding: 12 20; -fx-cursor: hand;">
+                        <HBox fx:id="menuSupport" alignment="CENTER_LEFT" spacing="14.0" styleClass="nav-item">
                            <children>
-                              <StackPane prefHeight="32.0" prefWidth="32.0" style="-fx-background-color: #26C6DA; -fx-background-radius: 8;">
+                              <StackPane styleClass="nav-icon">
                                  <children>
                                     <FontAwesomeIcon fill="WHITE" glyphName="SUPPORT" size="1.1em" />
                                  </children>
                               </StackPane>
-                              <Label style="-fx-text-fill: #E8EAF6; -fx-font-size: 14px; -fx-font-weight: bold;" text="Support">
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font>
-                              </Label>
+                              <Label styleClass="nav-label" text="Support" />
                            </children>
                         </HBox>
-                        <HBox fx:id="menuExit" alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="200.0" spacing="15.0" style="-fx-background-color: rgba(255,255,255,0.05); -fx-background-radius: 10; -fx-padding: 12 20; -fx-cursor: hand;">
+                        <HBox fx:id="menuExit" alignment="CENTER_LEFT" spacing="14.0" styleClass="nav-item">
                            <children>
-                              <StackPane prefHeight="32.0" prefWidth="32.0" style="-fx-background-color: #EF5350; -fx-background-radius: 8;">
+                              <StackPane styleClass="nav-icon">
                                  <children>
                                     <FontAwesomeIcon fill="WHITE" glyphName="SIGN_OUT" size="1.1em" />
                                  </children>
                               </StackPane>
-                              <Label style="-fx-text-fill: #E8EAF6; -fx-font-size: 14px; -fx-font-weight: bold;" text="Log Out">
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font>
-                              </Label>
+                              <Label styleClass="nav-label" text="Log Out" />
                            </children>
                         </HBox>
-                     </children>
-                     <VBox.margin>
-                        <Insets bottom="20.0" />
-                     </VBox.margin>
-                  </VBox>
                </children>
             </VBox>
          </children>
-      </AnchorPane>
+      </VBox>
    </left>
    <top>
-      <AnchorPane prefHeight="68.0" prefWidth="600.0" style="-fx-background-color: linear-gradient(to right, #1A237E, #283593); -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 6, 0, 0, 2);" BorderPane.alignment="CENTER">
+      <HBox alignment="CENTER_LEFT" prefHeight="68.0" spacing="14.0" styleClass="topbar" style="-fx-padding: 0 24 0 22;" BorderPane.alignment="CENTER">
          <children>
-            <HBox alignment="CENTER_RIGHT" layoutX="220.0" layoutY="0.0" prefHeight="68.0" prefWidth="399.0" spacing="12.0" style="-fx-background-color: transparent; -fx-padding: 0 20 0 0;" AnchorPane.leftAnchor="220.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <StackPane prefHeight="44.0" prefWidth="44.0" styleClass="topbar-logo">
                <children>
-                  <StackPane prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: rgba(255,255,255,0.2); -fx-background-radius: 20;">
-                     <children>
-                        <FontAwesomeIcon fill="WHITE" glyphName="USER" size="1.2em" />
-                     </children>
-                  </StackPane>
-                  <Text fx:id="txtUserName" style="-fx-fill: #E8EAF6; -fx-font-size: 14px; -fx-font-weight: bold;" text="User Name">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </Text>
+                  <FontAwesomeIcon fill="#2a78d6" glyphName="SHOPPING_CART" size="1.5em" />
                </children>
-            </HBox>
-            <HBox alignment="CENTER_LEFT" layoutX="20.0" layoutY="0.0" prefHeight="68.0" prefWidth="400.0" spacing="15.0" style="-fx-padding: 0 0 0 20;" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="0.0">
+            </StackPane>
+            <Label fx:id="lblShopeeName" styleClass="topbar-shop" text="Super Shop Management">
+               <font>
+                  <Font name="kiran" size="28.0" />
+               </font>
+            </Label>
+            <Region HBox.hgrow="ALWAYS" />
+            <HBox alignment="CENTER_LEFT" spacing="10.0" styleClass="topbar-user">
                <children>
-                  <StackPane prefHeight="44.0" prefWidth="44.0" style="-fx-background-color: rgba(255,255,255,0.2); -fx-background-radius: 22;">
+                  <StackPane styleClass="topbar-avatar">
                      <children>
-                        <FontAwesomeIcon fill="#FFCA28" glyphName="SHOPPING_CART" size="1.5em" />
+                        <FontAwesomeIcon fill="WHITE" glyphName="USER" size="1.1em" />
                      </children>
                   </StackPane>
-                  <Label fx:id="lblShopeeName" style="-fx-text-fill: WHITE;" text="Super Shop Management">
-                     <font>
-                        <Font name="kiran" size="28.0" />
-                     </font>
-                  </Label>
+                  <Text fx:id="txtUserName" styleClass="topbar-user-name" text="User Name" />
                </children>
             </HBox>
          </children>
-      </AnchorPane>
+      </HBox>
    </top>
 </BorderPane>

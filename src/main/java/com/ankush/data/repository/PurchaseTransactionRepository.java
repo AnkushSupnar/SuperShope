@@ -16,4 +16,8 @@ public interface PurchaseTransactionRepository extends JpaRepository<PurchaseTra
     @Modifying
     @Query("delete from PurchaseTransaction where id=:id")
     void deleteTransaction(@Param("id")Long id);
+
+    // item names on purchase invoices dated on or after the given date
+    @Query("select distinct t.itemname from PurchaseTransaction t where t.invoice.date >= :since")
+    List<String> getPurchasedNamesSince(@Param("since") java.time.LocalDate since);
 }

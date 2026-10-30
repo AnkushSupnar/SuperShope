@@ -26,7 +26,7 @@ public class SplashScreen {
 
         // App icon
         ImageView icon = new ImageView(
-                new Image(getClass().getResourceAsStream("/fxml/icon/stethoscope.png")));
+                new Image(getClass().getResourceAsStream("/fxml/icon/store.png")));
         icon.setFitWidth(80);
         icon.setFitHeight(80);
         icon.setPreserveRatio(true);
@@ -70,7 +70,7 @@ public class SplashScreen {
         // Set taskbar icon
         try {
             stage.getIcons().add(
-                    new Image(getClass().getResourceAsStream("/fxml/icon/stethoscope.png")));
+                    new Image(getClass().getResourceAsStream("/fxml/icon/store.png")));
         } catch (Exception ignored) {
         }
     }

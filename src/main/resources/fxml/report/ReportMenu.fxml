@@ -1,224 +1,235 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="mainPane" prefHeight="500.0" prefWidth="711.0" style="-fx-background-color: #EDE7F6;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ankush.controller.report.ReportMenuController">
+<!-- Reports menu in the dashboard's look (styles in css/app-theme.css) -->
+<AnchorPane fx:id="mainPane" prefHeight="500.0" prefWidth="1100.0" styleClass="page" stylesheets="@../css/app-theme.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ankush.controller.report.ReportMenuController">
    <children>
-      <VBox spacing="0.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <VBox spacing="22.0" style="-fx-padding: 22 26 26 26;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <!-- Header with title and chips -->
-            <VBox alignment="CENTER" spacing="20.0" style="-fx-background-color: linear-gradient(to right, #1A237E, #283593, #3949AB); -fx-padding: 20 30;">
+            <VBox spacing="2.0">
                <children>
-                  <HBox alignment="CENTER" spacing="10.0">
+                  <Label styleClass="page-title" text="Reports" />
+                  <Label styleClass="page-subtitle" text="Sales, purchases and customer accounts." />
+               </children>
+            </VBox>
+            <HBox alignment="CENTER_LEFT" spacing="10.0">
+               <children>
+                  <HBox fx:id="chipSales" alignment="CENTER" spacing="8.0" styleClass="chip,chip-selected">
                      <children>
-                        <StackPane prefHeight="32.0" prefWidth="32.0" style="-fx-background-color: rgba(255,255,255,0.2); -fx-background-radius: 8;">
-                           <children>
-                              <FontAwesomeIcon fill="WHITE" glyphName="BAR_CHART" size="1.1em" />
-                           </children>
-                        </StackPane>
-                        <Label style="-fx-text-fill: WHITE; -fx-font-size: 20px; -fx-font-weight: bold;" text="Reports">
-                           <font>
-                              <Font name="System Bold" size="20.0" />
-                           </font>
-                        </Label>
+                        <FontAwesomeIcon fx:id="chipSalesIcon" fill="WHITE" glyphName="LINE_CHART" size="1.1em" />
+                        <Label fx:id="chipSalesLabel" style="-fx-text-fill: WHITE; -fx-font-size: 13px; -fx-font-weight: bold;" text="Sales" />
                      </children>
                   </HBox>
-                  <!-- Chip bar -->
-                  <HBox alignment="CENTER" spacing="12.0">
+                  <HBox fx:id="chipPurchase" alignment="CENTER" spacing="8.0" styleClass="chip">
                      <children>
-                        <HBox fx:id="chipSales" alignment="CENTER" prefHeight="38.0" spacing="8.0" style="-fx-background-color: WHITE; -fx-background-radius: 20; -fx-padding: 8 22; -fx-cursor: hand; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 4, 0, 0, 1);">
-                           <children>
-                              <FontAwesomeIcon fx:id="chipSalesIcon" fill="#1A237E" glyphName="LINE_CHART" size="1.1em" />
-                              <Label fx:id="chipSalesLabel" style="-fx-text-fill: #1A237E; -fx-font-size: 13px; -fx-font-weight: bold;" text="Sales">
-                                 <font>
-                                    <Font size="13.0" />
-                                 </font>
-                              </Label>
-                           </children>
-                        </HBox>
-                        <HBox fx:id="chipPurchase" alignment="CENTER" prefHeight="38.0" spacing="8.0" style="-fx-background-color: rgba(255,255,255,0.2); -fx-background-radius: 20; -fx-padding: 8 22; -fx-cursor: hand;">
-                           <children>
-                              <FontAwesomeIcon fx:id="chipPurchaseIcon" fill="WHITE" glyphName="TRUCK" size="1.1em" />
-                              <Label fx:id="chipPurchaseLabel" style="-fx-text-fill: WHITE; -fx-font-size: 13px; -fx-font-weight: bold;" text="Purchase">
-                                 <font>
-                                    <Font size="13.0" />
-                                 </font>
-                              </Label>
-                           </children>
-                        </HBox>
-                        <HBox fx:id="chipCustomer" alignment="CENTER" prefHeight="38.0" spacing="8.0" style="-fx-background-color: rgba(255,255,255,0.2); -fx-background-radius: 20; -fx-padding: 8 22; -fx-cursor: hand;">
-                           <children>
-                              <FontAwesomeIcon fx:id="chipCustomerIcon" fill="WHITE" glyphName="USERS" size="1.1em" />
-                              <Label fx:id="chipCustomerLabel" style="-fx-text-fill: WHITE; -fx-font-size: 13px; -fx-font-weight: bold;" text="Customer">
-                                 <font>
-                                    <Font size="13.0" />
-                                 </font>
-                              </Label>
-                           </children>
-                        </HBox>
+                        <FontAwesomeIcon fx:id="chipPurchaseIcon" fill="#1A237E" glyphName="TRUCK" size="1.1em" />
+                        <Label fx:id="chipPurchaseLabel" style="-fx-text-fill: #1A237E; -fx-font-size: 13px; -fx-font-weight: bold;" text="Purchase" />
+                     </children>
+                  </HBox>
+                  <HBox fx:id="chipCustomer" alignment="CENTER" spacing="8.0" styleClass="chip">
+                     <children>
+                        <FontAwesomeIcon fx:id="chipCustomerIcon" fill="#1A237E" glyphName="USERS" size="1.1em" />
+                        <Label fx:id="chipCustomerLabel" style="-fx-text-fill: #1A237E; -fx-font-size: 13px; -fx-font-weight: bold;" text="Customer" />
                      </children>
                   </HBox>
                </children>
-            </VBox>
-
-            <!-- Content area -->
-            <StackPane fx:id="contentArea" VBox.vgrow="ALWAYS" style="-fx-background-color: #EDE7F6; -fx-padding: 25;">
+            </HBox>
+            <StackPane fx:id="contentArea" alignment="TOP_LEFT">
                <children>
-                  <!-- Sales Panel (default visible) -->
-                  <VBox fx:id="panelSales" alignment="CENTER" spacing="20.0">
+                  <VBox fx:id="panelSales" visible="true">
                      <children>
-                        <HBox alignment="CENTER" spacing="25.0">
+                        <GridPane hgap="18.0" vgap="18.0">
+                           <columnConstraints>
+                              <ColumnConstraints hgrow="ALWAYS" percentWidth="50.0" />
+                              <ColumnConstraints hgrow="ALWAYS" percentWidth="50.0" />
+                           </columnConstraints>
                            <children>
-                              <VBox alignment="CENTER" prefWidth="260.0" spacing="14.0" style="-fx-background-color: linear-gradient(to bottom right, #FFFFFF, #E8EAF6); -fx-background-radius: 16; -fx-effect: dropshadow(gaussian, rgba(26,35,126,0.15), 14, 0, 0, 5); -fx-padding: 25;">
+                  <VBox spacing="16.0" styleClass="menu-card" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                     <children>
+                        <HBox alignment="CENTER_LEFT" spacing="14.0">
+                           <children>
+                              <StackPane styleClass="menu-icon">
+                                 <children><FontAwesomeIcon fill="#2a78d6" glyphName="LINE_CHART" size="1.6em" /></children>
+                              </StackPane>
+                              <VBox spacing="3.0" HBox.hgrow="ALWAYS">
                                  <children>
-                                    <StackPane prefHeight="60.0" prefWidth="60.0" style="-fx-background-color: linear-gradient(to bottom right, #5C6BC0, #1A237E); -fx-background-radius: 30;">
-                                       <children>
-                                          <FontAwesomeIcon fill="WHITE" glyphName="LINE_CHART" size="1.8em" />
-                                       </children>
-                                    </StackPane>
-                                    <Label style="-fx-text-fill: #1A237E; -fx-font-size: 16px; -fx-font-weight: bold;" text="Sales Report">
-                                       <font>
-                                          <Font name="System Bold" size="16.0" />
-                                       </font>
-                                    </Label>
-                                    <Label style="-fx-text-fill: #5C6BC0; -fx-font-size: 12px; -fx-text-alignment: center;" text="View item-wise sales with margins and export" textAlignment="CENTER" wrapText="true" />
-                                    <Button fx:id="btnDailySales" mnemonicParsing="false" prefWidth="200.0" style="-fx-background-color: linear-gradient(to right, #3949AB, #1A237E); -fx-text-fill: white; -fx-background-radius: 10; -fx-font-size: 13px; -fx-font-weight: bold; -fx-cursor: hand; -fx-effect: dropshadow(gaussian, rgba(26,35,126,0.3), 4, 0, 0, 2);" text="View Report">
-                                       <graphic>
-                                          <FontAwesomeIcon fill="white" glyphName="ARROW_RIGHT" size="1em" />
-                                       </graphic>
-                                    </Button>
+                                    <Label styleClass="menu-card-title" text="Sales Report" />
+                                    <Label styleClass="menu-card-text" text="Bills by day, month, year or custom dates; export to PDF or Excel." wrapText="true" />
                                  </children>
                               </VBox>
-                              <VBox alignment="CENTER" prefWidth="260.0" spacing="14.0" style="-fx-background-color: linear-gradient(to bottom right, #FFFFFF, #E8EAF6); -fx-background-radius: 16; -fx-effect: dropshadow(gaussian, rgba(26,35,126,0.15), 14, 0, 0, 5); -fx-padding: 25;">
-                                 <children>
-                                    <StackPane prefHeight="60.0" prefWidth="60.0" style="-fx-background-color: linear-gradient(to bottom right, #42A5F5, #1565C0); -fx-background-radius: 30;">
-                                       <children>
-                                          <FontAwesomeIcon fill="WHITE" glyphName="CUBES" size="1.8em" />
-                                       </children>
-                                    </StackPane>
-                                    <Label style="-fx-text-fill: #1A237E; -fx-font-size: 16px; -fx-font-weight: bold;" text="Item Stock Report">
-                                       <font>
-                                          <Font name="System Bold" size="16.0" />
-                                       </font>
-                                    </Label>
-                                    <Label style="-fx-text-fill: #5C6BC0; -fx-font-size: 12px; -fx-text-alignment: center;" text="View current inventory levels and stock" textAlignment="CENTER" wrapText="true" />
-                                    <Button fx:id="btnVIewStock" mnemonicParsing="false" prefWidth="200.0" style="-fx-background-color: linear-gradient(to right, #42A5F5, #1565C0); -fx-text-fill: white; -fx-background-radius: 10; -fx-font-size: 13px; -fx-font-weight: bold; -fx-cursor: hand; -fx-effect: dropshadow(gaussian, rgba(21,101,192,0.3), 4, 0, 0, 2);" text="View Stock">
-                                       <graphic>
-                                          <FontAwesomeIcon fill="white" glyphName="ARROW_RIGHT" size="1em" />
-                                       </graphic>
-                                    </Button>
-                                 </children>
-                              </VBox>
+                           </children>
+                        </HBox>
+                        <Region VBox.vgrow="ALWAYS" />
+                        <HBox spacing="10.0">
+                           <children>
+                              <Button fx:id="btnDailySales" maxWidth="Infinity" mnemonicParsing="false" styleClass="btn-primary" text="View Report" HBox.hgrow="ALWAYS">
+                                 <graphic><FontAwesomeIcon fill="WHITE" glyphName="ARROW_RIGHT" size="1.1em" /></graphic>
+                              </Button>
                            </children>
                         </HBox>
                      </children>
                   </VBox>
-
-                  <!-- Purchase Panel (hidden by default) -->
-                  <VBox fx:id="panelPurchase" alignment="CENTER" spacing="20.0" visible="false">
+                  <VBox spacing="16.0" styleClass="menu-card" GridPane.columnIndex="1" GridPane.rowIndex="0">
                      <children>
-                        <HBox alignment="CENTER" spacing="25.0">
+                        <HBox alignment="CENTER_LEFT" spacing="14.0">
                            <children>
-                              <VBox alignment="CENTER" prefWidth="260.0" spacing="14.0" style="-fx-background-color: linear-gradient(to bottom right, #FFFFFF, #FFF3E0); -fx-background-radius: 16; -fx-effect: dropshadow(gaussian, rgba(230,81,0,0.12), 14, 0, 0, 5); -fx-padding: 25;">
+                              <StackPane styleClass="menu-icon">
+                                 <children><FontAwesomeIcon fill="#2a78d6" glyphName="CUBES" size="1.6em" /></children>
+                              </StackPane>
+                              <VBox spacing="3.0" HBox.hgrow="ALWAYS">
                                  <children>
-                                    <StackPane prefHeight="60.0" prefWidth="60.0" style="-fx-background-color: linear-gradient(to bottom right, #FFA726, #E65100); -fx-background-radius: 30;">
-                                       <children>
-                                          <FontAwesomeIcon fill="WHITE" glyphName="TRUCK" size="1.8em" />
-                                       </children>
-                                    </StackPane>
-                                    <Label style="-fx-text-fill: #E65100; -fx-font-size: 16px; -fx-font-weight: bold;" text="Purchase Report">
-                                       <font>
-                                          <Font name="System Bold" size="16.0" />
-                                       </font>
-                                    </Label>
-                                    <Label style="-fx-text-fill: #FF8F00; -fx-font-size: 12px; -fx-text-alignment: center;" text="View all purchase invoices and supplier data" textAlignment="CENTER" wrapText="true" />
-                                    <Button fx:id="btnPurchaseReport" mnemonicParsing="false" prefWidth="200.0" style="-fx-background-color: linear-gradient(to right, #FFA726, #E65100); -fx-text-fill: white; -fx-background-radius: 10; -fx-font-size: 13px; -fx-font-weight: bold; -fx-cursor: hand; -fx-effect: dropshadow(gaussian, rgba(230,81,0,0.3), 4, 0, 0, 2);" text="View Report">
-                                       <graphic>
-                                          <FontAwesomeIcon fill="white" glyphName="ARROW_RIGHT" size="1em" />
-                                       </graphic>
-                                    </Button>
+                                    <Label styleClass="menu-card-title" text="Item Stock Report" />
+                                    <Label styleClass="menu-card-text" text="Current stock of each item." wrapText="true" />
                                  </children>
                               </VBox>
-                              <VBox alignment="CENTER" prefWidth="260.0" spacing="14.0" style="-fx-background-color: linear-gradient(to bottom right, #FFFFFF, #FFF3E0); -fx-background-radius: 16; -fx-effect: dropshadow(gaussian, rgba(230,81,0,0.12), 14, 0, 0, 5); -fx-padding: 25;">
-                                 <children>
-                                    <StackPane prefHeight="60.0" prefWidth="60.0" style="-fx-background-color: linear-gradient(to bottom right, #FFB74D, #F57C00); -fx-background-radius: 30;">
-                                       <children>
-                                          <FontAwesomeIcon fill="WHITE" glyphName="CALENDAR" size="1.8em" />
-                                       </children>
-                                    </StackPane>
-                                    <Label style="-fx-text-fill: #E65100; -fx-font-size: 16px; -fx-font-weight: bold;" text="Monthly Purchase">
-                                       <font>
-                                          <Font name="System Bold" size="16.0" />
-                                       </font>
-                                    </Label>
-                                    <Label style="-fx-text-fill: #FF8F00; -fx-font-size: 12px; -fx-text-alignment: center;" text="Monthly purchase summary and trends" textAlignment="CENTER" wrapText="true" />
-                                    <Button fx:id="btnMonthlyPurchase" mnemonicParsing="false" prefWidth="200.0" style="-fx-background-color: linear-gradient(to right, #FFB74D, #F57C00); -fx-text-fill: white; -fx-background-radius: 10; -fx-font-size: 13px; -fx-font-weight: bold; -fx-cursor: hand; -fx-effect: dropshadow(gaussian, rgba(245,124,0,0.3), 4, 0, 0, 2);" text="View Report">
-                                       <graphic>
-                                          <FontAwesomeIcon fill="white" glyphName="ARROW_RIGHT" size="1em" />
-                                       </graphic>
-                                    </Button>
-                                 </children>
-                              </VBox>
+                           </children>
+                        </HBox>
+                        <Region VBox.vgrow="ALWAYS" />
+                        <HBox spacing="10.0">
+                           <children>
+                              <Button fx:id="btnVIewStock" maxWidth="Infinity" mnemonicParsing="false" styleClass="btn-primary" text="View Stock" HBox.hgrow="ALWAYS">
+                                 <graphic><FontAwesomeIcon fill="WHITE" glyphName="ARROW_RIGHT" size="1.1em" /></graphic>
+                              </Button>
                            </children>
                         </HBox>
                      </children>
                   </VBox>
-
-                  <!-- Customer Panel (hidden by default) -->
-                  <VBox fx:id="panelCustomer" alignment="CENTER" spacing="20.0" visible="false">
+                           </children>
+                        </GridPane>
+                     </children>
+                  </VBox>
+                  <VBox fx:id="panelPurchase" visible="false">
                      <children>
-                        <HBox alignment="CENTER" spacing="25.0">
+                        <GridPane hgap="18.0" vgap="18.0">
+                           <columnConstraints>
+                              <ColumnConstraints hgrow="ALWAYS" percentWidth="50.0" />
+                              <ColumnConstraints hgrow="ALWAYS" percentWidth="50.0" />
+                           </columnConstraints>
                            <children>
-                              <VBox alignment="CENTER" prefWidth="260.0" spacing="14.0" style="-fx-background-color: linear-gradient(to bottom right, #FFFFFF, #E8F5E9); -fx-background-radius: 16; -fx-effect: dropshadow(gaussian, rgba(46,125,50,0.12), 14, 0, 0, 5); -fx-padding: 25;">
+                  <VBox spacing="16.0" styleClass="menu-card" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                     <children>
+                        <HBox alignment="CENTER_LEFT" spacing="14.0">
+                           <children>
+                              <StackPane styleClass="menu-icon">
+                                 <children><FontAwesomeIcon fill="#2a78d6" glyphName="TRUCK" size="1.6em" /></children>
+                              </StackPane>
+                              <VBox spacing="3.0" HBox.hgrow="ALWAYS">
                                  <children>
-                                    <StackPane prefHeight="60.0" prefWidth="60.0" style="-fx-background-color: linear-gradient(to bottom right, #66BB6A, #2E7D32); -fx-background-radius: 30;">
-                                       <children>
-                                          <FontAwesomeIcon fill="WHITE" glyphName="USERS" size="1.8em" />
-                                       </children>
-                                    </StackPane>
-                                    <Label style="-fx-text-fill: #1B5E20; -fx-font-size: 16px; -fx-font-weight: bold;" text="Customer Ledger">
-                                       <font>
-                                          <Font name="System Bold" size="16.0" />
-                                       </font>
-                                    </Label>
-                                    <Label style="-fx-text-fill: #43A047; -fx-font-size: 12px; -fx-text-alignment: center;" text="View customer-wise transaction history" textAlignment="CENTER" wrapText="true" />
-                                    <Button fx:id="btnCustomerLedger" mnemonicParsing="false" prefWidth="200.0" style="-fx-background-color: linear-gradient(to right, #66BB6A, #2E7D32); -fx-text-fill: white; -fx-background-radius: 10; -fx-font-size: 13px; -fx-font-weight: bold; -fx-cursor: hand; -fx-effect: dropshadow(gaussian, rgba(46,125,50,0.3), 4, 0, 0, 2);" text="View Ledger">
-                                       <graphic>
-                                          <FontAwesomeIcon fill="white" glyphName="ARROW_RIGHT" size="1em" />
-                                       </graphic>
-                                    </Button>
-                                 </children>
-                              </VBox>
-                              <VBox alignment="CENTER" prefWidth="260.0" spacing="14.0" style="-fx-background-color: linear-gradient(to bottom right, #FFFFFF, #E8F5E9); -fx-background-radius: 16; -fx-effect: dropshadow(gaussian, rgba(46,125,50,0.12), 14, 0, 0, 5); -fx-padding: 25;">
-                                 <children>
-                                    <StackPane prefHeight="60.0" prefWidth="60.0" style="-fx-background-color: linear-gradient(to bottom right, #81C784, #388E3C); -fx-background-radius: 30;">
-                                       <children>
-                                          <FontAwesomeIcon fill="WHITE" glyphName="CREDIT_CARD" size="1.8em" />
-                                       </children>
-                                    </StackPane>
-                                    <Label style="-fx-text-fill: #1B5E20; -fx-font-size: 16px; -fx-font-weight: bold;" text="Outstanding Dues">
-                                       <font>
-                                          <Font name="System Bold" size="16.0" />
-                                       </font>
-                                    </Label>
-                                    <Label style="-fx-text-fill: #43A047; -fx-font-size: 12px; -fx-text-alignment: center;" text="Track pending payments and credit balances" textAlignment="CENTER" wrapText="true" />
-                                    <Button fx:id="btnOutstandingDues" mnemonicParsing="false" prefWidth="200.0" style="-fx-background-color: linear-gradient(to right, #81C784, #388E3C); -fx-text-fill: white; -fx-background-radius: 10; -fx-font-size: 13px; -fx-font-weight: bold; -fx-cursor: hand; -fx-effect: dropshadow(gaussian, rgba(56,142,60,0.3), 4, 0, 0, 2);" text="View Dues">
-                                       <graphic>
-                                          <FontAwesomeIcon fill="white" glyphName="ARROW_RIGHT" size="1em" />
-                                       </graphic>
-                                    </Button>
+                                    <Label styleClass="menu-card-title" text="Purchase Report" />
+                                    <Label styleClass="menu-card-text" text="All purchase invoices and supplier details." wrapText="true" />
                                  </children>
                               </VBox>
                            </children>
                         </HBox>
+                        <Region VBox.vgrow="ALWAYS" />
+                        <HBox spacing="10.0">
+                           <children>
+                              <Button fx:id="btnPurchaseReport" maxWidth="Infinity" mnemonicParsing="false" styleClass="btn-primary" text="View Report" HBox.hgrow="ALWAYS">
+                                 <graphic><FontAwesomeIcon fill="WHITE" glyphName="ARROW_RIGHT" size="1.1em" /></graphic>
+                              </Button>
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+                  <VBox spacing="16.0" styleClass="menu-card" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                     <children>
+                        <HBox alignment="CENTER_LEFT" spacing="14.0">
+                           <children>
+                              <StackPane styleClass="menu-icon">
+                                 <children><FontAwesomeIcon fill="#2a78d6" glyphName="CALENDAR" size="1.6em" /></children>
+                              </StackPane>
+                              <VBox spacing="3.0" HBox.hgrow="ALWAYS">
+                                 <children>
+                                    <Label styleClass="menu-card-title" text="Monthly Purchase" />
+                                    <Label styleClass="menu-card-text" text="Purchases month by month." wrapText="true" />
+                                 </children>
+                              </VBox>
+                           </children>
+                        </HBox>
+                        <Region VBox.vgrow="ALWAYS" />
+                        <HBox spacing="10.0">
+                           <children>
+                              <Button fx:id="btnMonthlyPurchase" maxWidth="Infinity" mnemonicParsing="false" styleClass="btn-primary" text="View Report" HBox.hgrow="ALWAYS">
+                                 <graphic><FontAwesomeIcon fill="WHITE" glyphName="ARROW_RIGHT" size="1.1em" /></graphic>
+                              </Button>
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+                           </children>
+                        </GridPane>
+                     </children>
+                  </VBox>
+                  <VBox fx:id="panelCustomer" visible="false">
+                     <children>
+                        <GridPane hgap="18.0" vgap="18.0">
+                           <columnConstraints>
+                              <ColumnConstraints hgrow="ALWAYS" percentWidth="50.0" />
+                              <ColumnConstraints hgrow="ALWAYS" percentWidth="50.0" />
+                           </columnConstraints>
+                           <children>
+                  <VBox spacing="16.0" styleClass="menu-card" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                     <children>
+                        <HBox alignment="CENTER_LEFT" spacing="14.0">
+                           <children>
+                              <StackPane styleClass="menu-icon">
+                                 <children><FontAwesomeIcon fill="#2a78d6" glyphName="USERS" size="1.6em" /></children>
+                              </StackPane>
+                              <VBox spacing="3.0" HBox.hgrow="ALWAYS">
+                                 <children>
+                                    <Label styleClass="menu-card-title" text="Customer Ledger" />
+                                    <Label styleClass="menu-card-text" text="Bills and payments of one customer." wrapText="true" />
+                                 </children>
+                              </VBox>
+                           </children>
+                        </HBox>
+                        <Region VBox.vgrow="ALWAYS" />
+                        <HBox spacing="10.0">
+                           <children>
+                              <Button fx:id="btnCustomerLedger" maxWidth="Infinity" mnemonicParsing="false" styleClass="btn-primary" text="View Ledger" HBox.hgrow="ALWAYS">
+                                 <graphic><FontAwesomeIcon fill="WHITE" glyphName="ARROW_RIGHT" size="1.1em" /></graphic>
+                              </Button>
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+                  <VBox spacing="16.0" styleClass="menu-card" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                     <children>
+                        <HBox alignment="CENTER_LEFT" spacing="14.0">
+                           <children>
+                              <StackPane styleClass="menu-icon">
+                                 <children><FontAwesomeIcon fill="#2a78d6" glyphName="CREDIT_CARD" size="1.6em" /></children>
+                              </StackPane>
+                              <VBox spacing="3.0" HBox.hgrow="ALWAYS">
+                                 <children>
+                                    <Label styleClass="menu-card-title" text="Outstanding Dues" />
+                                    <Label styleClass="menu-card-text" text="Customers who still have to pay." wrapText="true" />
+                                 </children>
+                              </VBox>
+                           </children>
+                        </HBox>
+                        <Region VBox.vgrow="ALWAYS" />
+                        <HBox spacing="10.0">
+                           <children>
+                              <Button fx:id="btnOutstandingDues" maxWidth="Infinity" mnemonicParsing="false" styleClass="btn-primary" text="View Dues" HBox.hgrow="ALWAYS">
+                                 <graphic><FontAwesomeIcon fill="WHITE" glyphName="ARROW_RIGHT" size="1.1em" /></graphic>
+                              </Button>
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+                           </children>
+                        </GridPane>
                      </children>
                   </VBox>
                </children>

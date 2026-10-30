@@ -18,4 +18,6 @@ public interface FavoriteCategoryItemRepository extends JpaRepository<FavoriteCa
     List<String> getItemNamesByCategoryId(@Param("categoryId") Long categoryId);
 
     void deleteByCategoryIdAndItemId(Long categoryId, Long itemId);
+
+    List<FavoriteCategoryItem> findByItemId(Long itemId);
 }

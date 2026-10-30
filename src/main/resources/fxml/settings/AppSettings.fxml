@@ -3,6 +3,7 @@
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -68,6 +69,67 @@
                               <Font name="System Bold" size="13.0" />
                            </font>
                         </ToggleButton>
+                     </children>
+                  </HBox>
+
+                  <!-- Quick Add Setting -->
+                  <HBox alignment="CENTER_LEFT" spacing="15.0" style="-fx-background-color: #F5F5F5; -fx-background-radius: 12; -fx-border-color: #C5CAE9; -fx-border-radius: 12; -fx-padding: 20;">
+                     <children>
+                        <StackPane prefHeight="48.0" prefWidth="48.0" style="-fx-background-color: linear-gradient(to bottom right, #1565C0, #0D47A1); -fx-background-radius: 12;">
+                           <children>
+                              <FontAwesomeIcon fill="WHITE" glyphName="BOLT" size="1.5em" />
+                           </children>
+                        </StackPane>
+                        <VBox spacing="4.0">
+                           <children>
+                              <Label style="-fx-text-fill: #1A237E; -fx-font-size: 16px; -fx-font-weight: bold;" text="Quick Add in Billing" />
+                              <Label style="-fx-text-fill: #616161; -fx-font-size: 13px;" text="When enabled, pressing Enter on Quantity adds the item to the bill straight away (rate from Item Master). Turn off to move to the Rate box first." wrapText="true" />
+                           </children>
+                        </VBox>
+                        <Region HBox.hgrow="ALWAYS" />
+                        <ToggleButton fx:id="toggleQuickAdd" prefHeight="36.0" prefWidth="80.0" text="OFF" />
+                     </children>
+                  </HBox>
+
+                  <!-- Print After Save Setting -->
+                  <HBox alignment="CENTER_LEFT" spacing="15.0" style="-fx-background-color: #F5F5F5; -fx-background-radius: 12; -fx-border-color: #C5CAE9; -fx-border-radius: 12; -fx-padding: 20;">
+                     <children>
+                        <StackPane prefHeight="48.0" prefWidth="48.0" style="-fx-background-color: linear-gradient(to bottom right, #283593, #1A237E); -fx-background-radius: 12;">
+                           <children>
+                              <FontAwesomeIcon fill="WHITE" glyphName="PRINT" size="1.5em" />
+                           </children>
+                        </StackPane>
+                        <VBox spacing="4.0">
+                           <children>
+                              <Label style="-fx-text-fill: #1A237E; -fx-font-size: 16px; -fx-font-weight: bold;" text="Print After Saving Bill" />
+                              <Label style="-fx-text-fill: #616161; -fx-font-size: 13px;" text="Ask every time, always print, or never print (use PRINT / F10 when needed)." wrapText="true" />
+                           </children>
+                        </VBox>
+                        <Region HBox.hgrow="ALWAYS" />
+                        <ComboBox fx:id="cmbPrintMode" prefHeight="36.0" prefWidth="160.0" />
+                     </children>
+                  </HBox>
+
+                  <!-- Bill Printer Setting -->
+                  <HBox alignment="CENTER_LEFT" spacing="15.0" style="-fx-background-color: #F5F5F5; -fx-background-radius: 12; -fx-border-color: #C5CAE9; -fx-border-radius: 12; -fx-padding: 20;">
+                     <children>
+                        <StackPane prefHeight="48.0" prefWidth="48.0" style="-fx-background-color: linear-gradient(to bottom right, #6A1B9A, #4A148C); -fx-background-radius: 12;">
+                           <children>
+                              <FontAwesomeIcon fill="WHITE" glyphName="PRINT" size="1.5em" />
+                           </children>
+                        </StackPane>
+                        <VBox spacing="4.0" HBox.hgrow="ALWAYS">
+                           <children>
+                              <Label style="-fx-text-fill: #1A237E; -fx-font-size: 16px; -fx-font-weight: bold;" text="Bill Printer" />
+                              <Label style="-fx-text-fill: #616161; -fx-font-size: 13px;" text="Bills always go to this printer. Thermal printers print the whole bill in one piece and cut once at the end." wrapText="true" />
+                           </children>
+                        </VBox>
+                        <VBox spacing="8.0">
+                           <children>
+                              <ComboBox fx:id="cmbBillPrinter" prefHeight="36.0" prefWidth="260.0" />
+                              <ComboBox fx:id="cmbPrinterType" prefHeight="36.0" prefWidth="260.0" />
+                           </children>
+                        </VBox>
                      </children>
                   </HBox>
 

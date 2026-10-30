@@ -99,7 +99,7 @@ public class Main extends Application {
 		Stage loginStage = new Stage();
 		try {
 			loginStage.getIcons().add(
-					new Image(getClass().getResourceAsStream("/fxml/icon/stethoscope.png")));
+					new Image(getClass().getResourceAsStream("/fxml/icon/store.png")));
 		} catch (Exception ignored) {
 		}
 

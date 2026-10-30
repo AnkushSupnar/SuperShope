@@ -79,7 +79,7 @@ public class SetSellingRateController implements Initializable {
         colSr.setCellValueFactory(new PropertyValueFactory<>("id"));
         colName.setCellValueFactory(new PropertyValueFactory<>("itemname"));
         colUnit.setCellValueFactory(new PropertyValueFactory<>("unit"));
-        colRate.setCellValueFactory(new PropertyValueFactory<>("rate"));
+        colRate.setCellValueFactory(new PropertyValueFactory<>("price"));
         colSellingPrice.setCellValueFactory(new PropertyValueFactory<>("sailingprice"));
 
         // Load all items on startup
@@ -210,7 +210,7 @@ public class SetSellingRateController implements Initializable {
 
         // Fill item details
         lblItemName.setText(item.getItemname());
-        lblCurrentRate.setText(String.valueOf(item.getRate()));
+        lblCurrentRate.setText(String.valueOf(item.getPrice()));
         lblCurrentSellingPrice.setText(String.valueOf(item.getSailingprice()));
 
         // Pre-fill current selling price so user can just modify it
@@ -231,7 +231,7 @@ public class SetSellingRateController implements Initializable {
                 return;
             }
             float newPrice = Float.parseFloat(priceText);
-            float profit = newPrice - selectedItem.getRate();
+            float profit = newPrice - selectedItem.getPrice();
             lblProfit.setText(String.format("%.2f", profit));
             setProfitStyle(profit);
         } catch (NumberFormatException e) {

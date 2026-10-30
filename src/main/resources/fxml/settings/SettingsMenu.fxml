@@ -4,114 +4,108 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="500.0" prefWidth="900.0" style="-fx-background-color: #EDE7F6;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ankush.controller.settings.SettingsMenuController">
+<!-- Menu page in the dashboard's look (styles in css/app-theme.css) -->
+<AnchorPane prefHeight="500.0" prefWidth="1100.0" styleClass="page" stylesheets="@../css/app-theme.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ankush.controller.settings.SettingsMenuController">
    <children>
-      <VBox alignment="CENTER" spacing="30.0" style="-fx-padding: 40;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <VBox spacing="22.0" style="-fx-padding: 22 26 26 26;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <HBox alignment="CENTER" spacing="12.0">
+            <VBox spacing="2.0">
                <children>
-                  <StackPane prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: #AB47BC; -fx-background-radius: 10;">
-                     <children>
-                        <FontAwesomeIcon fill="WHITE" glyphName="COG" size="1.3em" />
-                     </children>
-                  </StackPane>
-                  <Label style="-fx-text-fill: #1A237E; -fx-font-size: 26px; -fx-font-weight: bold;" text="Settings">
-                     <font>
-                        <Font name="System Bold" size="26.0" />
-                     </font>
-                  </Label>
+                  <Label styleClass="page-title" text="Settings" />
+                  <Label styleClass="page-subtitle" text="Backups, shop details and how billing behaves." />
                </children>
-            </HBox>
-            <HBox alignment="CENTER" spacing="30.0">
+            </VBox>
+            <GridPane hgap="18.0" vgap="18.0">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="ALWAYS" percentWidth="33.3333" />
+                  <ColumnConstraints hgrow="ALWAYS" percentWidth="33.3333" />
+                  <ColumnConstraints hgrow="ALWAYS" percentWidth="33.3333" />
+               </columnConstraints>
                <children>
-                  <VBox alignment="CENTER" prefHeight="300.0" prefWidth="260.0" spacing="16.0" style="-fx-background-color: linear-gradient(to bottom right, #FFFFFF, #F3E5F5); -fx-background-radius: 16; -fx-effect: dropshadow(gaussian, rgba(26,35,126,0.15), 16, 0, 0, 6); -fx-padding: 25;">
+                  <VBox spacing="16.0" styleClass="menu-card" GridPane.columnIndex="0" GridPane.rowIndex="0">
                      <children>
-                        <StackPane prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: linear-gradient(to bottom right, #AB47BC, #7B1FA2); -fx-background-radius: 35;">
+                        <HBox alignment="CENTER_LEFT" spacing="14.0">
                            <children>
-                              <FontAwesomeIcon fill="WHITE" glyphName="DATABASE" size="2.2em" />
+                              <StackPane styleClass="menu-icon">
+                                 <children><FontAwesomeIcon fill="#2a78d6" glyphName="DATABASE" size="1.6em" /></children>
+                              </StackPane>
+                              <VBox spacing="3.0" HBox.hgrow="ALWAYS">
+                                 <children>
+                                    <Label styleClass="menu-card-title" text="Database Backup" />
+                                    <Label styleClass="menu-card-text" text="Create a database backup with MySQL dump; save and share it." wrapText="true" />
+                                 </children>
+                              </VBox>
                            </children>
-                        </StackPane>
-                        <Label style="-fx-text-fill: #4A148C; -fx-font-size: 20px; -fx-font-weight: bold;" text="Database Backup">
-                           <font>
-                              <Font name="System Bold" size="20.0" />
-                           </font>
-                        </Label>
-                        <Label style="-fx-text-fill: #7B1FA2; -fx-font-size: 12px; -fx-text-alignment: center;" text="Create database backups using MySQL dump. Save and share backups easily." textAlignment="CENTER" wrapText="true">
-                           <font>
-                              <Font size="12.0" />
-                           </font>
-                        </Label>
-                        <Button fx:id="btnBackup" alignment="CENTER" prefHeight="40.0" prefWidth="220.0" style="-fx-background-color: linear-gradient(to right, #AB47BC, #7B1FA2); -fx-text-fill: white; -fx-background-radius: 10; -fx-font-size: 13px; -fx-font-weight: bold; -fx-cursor: hand; -fx-effect: dropshadow(gaussian, rgba(74,20,140,0.3), 6, 0, 0, 2);" text="Open Backup">
-                           <graphic>
-                              <FontAwesomeIcon fill="white" glyphName="ARROW_RIGHT" size="1.1em" />
-                           </graphic>
-                           <font>
-                              <Font size="13.0" />
-                           </font>
-                        </Button>
+                        </HBox>
+                        <Region VBox.vgrow="ALWAYS" />
+                        <HBox spacing="10.0">
+                           <children>
+                              <Button fx:id="btnBackup" maxWidth="Infinity" mnemonicParsing="false" styleClass="btn-primary" text="Open Backup" HBox.hgrow="ALWAYS">
+                                 <graphic><FontAwesomeIcon fill="WHITE" glyphName="ARROW_RIGHT" size="1.1em" /></graphic>
+                              </Button>
+                           </children>
+                        </HBox>
                      </children>
                   </VBox>
-                  <VBox alignment="CENTER" prefHeight="300.0" prefWidth="260.0" spacing="16.0" style="-fx-background-color: linear-gradient(to bottom right, #FFFFFF, #E8EAF6); -fx-background-radius: 16; -fx-effect: dropshadow(gaussian, rgba(26,35,126,0.15), 16, 0, 0, 6); -fx-padding: 25;">
+                  <VBox spacing="16.0" styleClass="menu-card" GridPane.columnIndex="1" GridPane.rowIndex="0">
                      <children>
-                        <StackPane prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: linear-gradient(to bottom right, #3949AB, #1A237E); -fx-background-radius: 35;">
+                        <HBox alignment="CENTER_LEFT" spacing="14.0">
                            <children>
-                              <FontAwesomeIcon fill="WHITE" glyphName="HOME" size="2.2em" />
+                              <StackPane styleClass="menu-icon">
+                                 <children><FontAwesomeIcon fill="#2a78d6" glyphName="HOME" size="1.6em" /></children>
+                              </StackPane>
+                              <VBox spacing="3.0" HBox.hgrow="ALWAYS">
+                                 <children>
+                                    <Label styleClass="menu-card-title" text="Shop Info" />
+                                    <Label styleClass="menu-card-text" text="Shop name, owner, contact and address printed on bills." wrapText="true" />
+                                 </children>
+                              </VBox>
                            </children>
-                        </StackPane>
-                        <Label style="-fx-text-fill: #1A237E; -fx-font-size: 20px; -fx-font-weight: bold;" text="Shopee Info">
-                           <font>
-                              <Font name="System Bold" size="20.0" />
-                           </font>
-                        </Label>
-                        <Label style="-fx-text-fill: #3949AB; -fx-font-size: 12px; -fx-text-alignment: center;" text="View and update your shop details like name, owner, contact and address." textAlignment="CENTER" wrapText="true">
-                           <font>
-                              <Font size="12.0" />
-                           </font>
-                        </Label>
-                        <Button fx:id="btnShopeeInfo" alignment="CENTER" prefHeight="40.0" prefWidth="220.0" style="-fx-background-color: linear-gradient(to right, #3949AB, #1A237E); -fx-text-fill: white; -fx-background-radius: 10; -fx-font-size: 13px; -fx-font-weight: bold; -fx-cursor: hand; -fx-effect: dropshadow(gaussian, rgba(26,35,126,0.3), 6, 0, 0, 2);" text="Open Shopee Info">
-                           <graphic>
-                              <FontAwesomeIcon fill="white" glyphName="ARROW_RIGHT" size="1.1em" />
-                           </graphic>
-                           <font>
-                              <Font size="13.0" />
-                           </font>
-                        </Button>
+                        </HBox>
+                        <Region VBox.vgrow="ALWAYS" />
+                        <HBox spacing="10.0">
+                           <children>
+                              <Button fx:id="btnShopeeInfo" maxWidth="Infinity" mnemonicParsing="false" styleClass="btn-primary" text="Open Shop Info" HBox.hgrow="ALWAYS">
+                                 <graphic><FontAwesomeIcon fill="WHITE" glyphName="ARROW_RIGHT" size="1.1em" /></graphic>
+                              </Button>
+                           </children>
+                        </HBox>
                      </children>
                   </VBox>
-                  <VBox alignment="CENTER" prefHeight="300.0" prefWidth="260.0" spacing="16.0" style="-fx-background-color: linear-gradient(to bottom right, #FFFFFF, #E0F2F1); -fx-background-radius: 16; -fx-effect: dropshadow(gaussian, rgba(26,35,126,0.15), 16, 0, 0, 6); -fx-padding: 25;">
+                  <VBox spacing="16.0" styleClass="menu-card" GridPane.columnIndex="2" GridPane.rowIndex="0">
                      <children>
-                        <StackPane prefHeight="70.0" prefWidth="70.0" style="-fx-background-color: linear-gradient(to bottom right, #00796B, #004D40); -fx-background-radius: 35;">
+                        <HBox alignment="CENTER_LEFT" spacing="14.0">
                            <children>
-                              <FontAwesomeIcon fill="WHITE" glyphName="COGS" size="2.2em" />
+                              <StackPane styleClass="menu-icon">
+                                 <children><FontAwesomeIcon fill="#2a78d6" glyphName="COGS" size="1.6em" /></children>
+                              </StackPane>
+                              <VBox spacing="3.0" HBox.hgrow="ALWAYS">
+                                 <children>
+                                    <Label styleClass="menu-card-title" text="Application Settings" />
+                                    <Label styleClass="menu-card-text" text="Stock check, quick add, printing and the bill printer." wrapText="true" />
+                                 </children>
+                              </VBox>
                            </children>
-                        </StackPane>
-                        <Label style="-fx-text-fill: #004D40; -fx-font-size: 20px; -fx-font-weight: bold;" text="Application Settings">
-                           <font>
-                              <Font name="System Bold" size="20.0" />
-                           </font>
-                        </Label>
-                        <Label style="-fx-text-fill: #00796B; -fx-font-size: 12px; -fx-text-alignment: center;" text="Configure application behaviour like stock check, billing options and more." textAlignment="CENTER" wrapText="true">
-                           <font>
-                              <Font size="12.0" />
-                           </font>
-                        </Label>
-                        <Button fx:id="btnAppSettings" alignment="CENTER" prefHeight="40.0" prefWidth="220.0" style="-fx-background-color: linear-gradient(to right, #00796B, #004D40); -fx-text-fill: white; -fx-background-radius: 10; -fx-font-size: 13px; -fx-font-weight: bold; -fx-cursor: hand; -fx-effect: dropshadow(gaussian, rgba(0,77,64,0.3), 6, 0, 0, 2);" text="Open App Settings">
-                           <graphic>
-                              <FontAwesomeIcon fill="white" glyphName="ARROW_RIGHT" size="1.1em" />
-                           </graphic>
-                           <font>
-                              <Font size="13.0" />
-                           </font>
-                        </Button>
+                        </HBox>
+                        <Region VBox.vgrow="ALWAYS" />
+                        <HBox spacing="10.0">
+                           <children>
+                              <Button fx:id="btnAppSettings" maxWidth="Infinity" mnemonicParsing="false" styleClass="btn-primary" text="Open App Settings" HBox.hgrow="ALWAYS">
+                                 <graphic><FontAwesomeIcon fill="WHITE" glyphName="ARROW_RIGHT" size="1.1em" /></graphic>
+                              </Button>
+                           </children>
+                        </HBox>
                      </children>
                   </VBox>
                </children>
-            </HBox>
+            </GridPane>
          </children>
       </VBox>
    </children>

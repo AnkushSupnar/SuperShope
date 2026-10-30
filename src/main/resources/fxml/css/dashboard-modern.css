@@ -1,0 +1,156 @@
+/* Dashboard: cards on the app's lavender page, recessive chart chrome */
+
+.dash-root {
+    -fx-background-color: #EDE7F6;
+}
+
+.dash-card {
+    -fx-background-color: white;
+    -fx-background-radius: 14;
+    -fx-padding: 18 20 18 20;
+    -fx-effect: dropshadow(gaussian, rgba(26, 35, 126, 0.08), 14, 0, 0, 4);
+}
+
+.dash-title {
+    -fx-text-fill: #1A237E;
+    -fx-font-size: 26px;
+    -fx-font-weight: bold;
+}
+
+.dash-subtitle {
+    -fx-text-fill: #5F5E73;
+    -fx-font-size: 13px;
+}
+
+.card-title {
+    -fx-text-fill: #1F1F2E;
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+}
+
+.card-note {
+    -fx-text-fill: #6B6A7E;
+    -fx-font-size: 12px;
+}
+
+.kpi-caption {
+    -fx-text-fill: #5F5E73;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+}
+
+.kpi-value {
+    -fx-text-fill: #1F1F2E;
+    -fx-font-size: 26px;
+    -fx-font-weight: bold;
+}
+
+.kpi-detail {
+    -fx-text-fill: #6B6A7E;
+    -fx-font-size: 12px;
+}
+
+.delta-up {
+    -fx-text-fill: #1B7A3A;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+}
+
+.delta-down {
+    -fx-text-fill: #B3261E;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+}
+
+.delta-flat {
+    -fx-text-fill: #6B6A7E;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+}
+
+.pill-paid {
+    -fx-background-color: #E6F4EA;
+    -fx-text-fill: #1B7A3A;
+    -fx-background-radius: 10;
+    -fx-padding: 2 8 2 8;
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+}
+
+.pill-due {
+    -fx-background-color: #FCE8E6;
+    -fx-text-fill: #B3261E;
+    -fx-background-radius: 10;
+    -fx-padding: 2 8 2 8;
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+}
+
+.row-text {
+    -fx-text-fill: #1F1F2E;
+    -fx-font-size: 13px;
+}
+
+.row-muted {
+    -fx-text-fill: #6B6A7E;
+    -fx-font-size: 12px;
+}
+
+.dash-button {
+    -fx-background-color: white;
+    -fx-text-fill: #1A237E;
+    -fx-border-color: #C5CAE9;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+    -fx-padding: 6 14 6 14;
+}
+
+.dash-button:hover {
+    -fx-background-color: #E8EAF6;
+}
+
+/* charts: no plot background, horizontal grid only, quiet axes */
+.dash-chart .chart-plot-background {
+    -fx-background-color: transparent;
+}
+
+.dash-chart .chart-vertical-grid-lines {
+    -fx-stroke: transparent;
+}
+
+.dash-chart .chart-horizontal-grid-lines {
+    -fx-stroke: #ECEAF2;
+}
+
+.dash-chart .chart-vertical-zero-line,
+.dash-chart .chart-horizontal-zero-line {
+    -fx-stroke: transparent;
+}
+
+.dash-chart .axis {
+    -fx-tick-label-fill: #6B6A7E;
+    -fx-tick-label-font-size: 11px;
+}
+
+.dash-chart .axis-tick-mark,
+.dash-chart .axis-minor-tick-mark {
+    -fx-stroke: transparent;
+}
+
+.dash-chart .axis:bottom {
+    -fx-border-color: #D9D7E3 transparent transparent transparent;
+}
+
+.dash-chart .axis:left {
+    -fx-border-color: transparent;
+}
+
+.dash-chart .chart-bar {
+    -fx-background-radius: 4 4 0 0;
+}
+
+.dash-chart .chart-legend {
+    visibility: hidden;
+}

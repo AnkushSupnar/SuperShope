@@ -18,9 +18,14 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.util.Callback;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,9 +37,13 @@ import javafx.application.Platform;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.Set;
+import java.util.stream.Collectors;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -77,6 +86,7 @@ public class DailyBillingController implements Initializable {
     @FXML private Button btnHome;
     @FXML private Button btnUpdate2;
     @FXML private Button btnClear2;
+    @FXML private Button btnSalesReturn;
     @FXML private TextField txtNetTotal;
     @FXML private TextField txtOther;
     @FXML private TextField txtGrandTotal;
@@ -120,12 +130,40 @@ public class DailyBillingController implements Initializable {
     @Autowired ShopeeInfoService shopeeInfoService;
     @Autowired FavoriteCategoryService favoriteCategoryService;
     @Autowired BackupService backupService;
+    @Autowired @Lazy SalesReturnController salesReturnController;
 
     private ObservableList<String>itemNameList = FXCollections.observableArrayList();
     private ObservableList<Transaction>trList = FXCollections.observableArrayList();
     private ObservableList<Bill>billList =FXCollections.observableArrayList();
     private Long billno;
     private PrintBill printbill;
+
+    private ComboBox<String> cmbCategory;
+    private static final String ALL_CATEGORIES = "All Categories";
+    private static final int SALES_RANK_DAYS = 90;
+    // set while code updates txtBarcode / txtQty so their listeners don't undo the change
+    private boolean suppressBarcodeListener = false;
+    private boolean updatingFromAmount = false;
+    /** Row loaded with UPDATE; ADD of the same item replaces it. -1 when adding a new line. */
+    private int editingIndex = -1;
+    /** Customer id 1 is the default walk-in (cash) customer. */
+    private static final int WALK_IN_CUSTOMER_ID = 1;
+
+    // Counters: each one holds a bill in progress, saved line by line in temptransaction.
+    // Editing a saved bill is a separate mode that never touches the counters.
+    @FXML private HBox counterBar;
+    @FXML private Label lblEditBanner;
+    @Autowired private BillingCounterService counterService;
+    /** counter whose bill is on screen; null only while no counter exists */
+    private Integer currentCounter;
+    /** true while a saved bill (billno) is open with UPDATE; the counters are locked meanwhile */
+    private boolean editMode = false;
+    /** counter to go back to when the edit is saved or cancelled */
+    private Integer counterBeforeEdit;
+    /** set while the screen is filled from the database, so nothing is written back */
+    private boolean loadingCounter = false;
+    /** item name -> quantity the bill being edited took from stock (given back when it is saved) */
+    private final Map<String, Float> editedBillQty = new java.util.HashMap<>();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -218,18 +256,21 @@ public class DailyBillingController implements Initializable {
                 txtCustomerMobile.setText(c.getContact());
             }
         });
-        createItemList();
-        autoCompleteItemName = new AutoCompleteTextField(txtItemName, itemService.getAllItemNames(), Font.font("Kiran", 20), txtQty);
+        autoCompleteItemName = new AutoCompleteTextField(txtItemName, new ArrayList<>(), Font.font("Kiran", 20), txtQty);
+        // match anywhere in the name, plus English search name / short code, popular items first
+        autoCompleteItemName.setUseContainsFilter(true);
         autoCompleteItemName.setOnSelectionCallback(selectedName -> {
-            if(txtBarcode.getText().isEmpty()) {
-                item = itemService.getItemByName(selectedName);
-            }
+            Item selected = itemService.getItemByName(selectedName);
+            if(selected != null) item = selected;
             setItem(item);
         });
+        createItemList();
+        refreshItemSearch();
         txtBarcode.setOnAction(e->barcodeAction());
         txtBarcode.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
+                if(suppressBarcodeListener) return;
                 item=null;
                 if(!txtBarcode.getText().equals("")) {
                     item = itemService.getItemByBarcode(txtBarcode.getText());
@@ -249,7 +290,7 @@ public class DailyBillingController implements Initializable {
                 if (!newValue.matches("\\d{0,100}([\\.]\\d{0,4})?")) {
                     txtQty.setText(oldValue);
                 }
-                else
+                else if(!updatingFromAmount)
                 {
                     if(!txtRate.getText().isEmpty() &&
                             !txtRate.getText().equals(""+0.0f)&&
@@ -303,13 +344,8 @@ public class DailyBillingController implements Initializable {
                 }
                 else
                 {
-                    if(!txtOther.getText().isEmpty() &&
-                            !txtOther.getText().equals(""+0.0f)&&
-                                    isNumeric(txtOther.getText()))
-                    {
-                        if(isNumeric(txtOther.getText()))
-                            calculateGrandTotal();
-                    }
+                    // also when cleared: empty counts as 0 (used to keep the old charge in the grand total)
+                    calculateGrandTotal();
                 }
             }
         });
@@ -345,7 +381,7 @@ public class DailyBillingController implements Initializable {
                     isNumeric(txtRate.getText())&&
                     Float.parseFloat(txtRate.getText())>0.0f)
             {
-                btnAdd.requestFocus();
+                add();
             }
         });
         txtQty.setOnAction(e->{
@@ -354,9 +390,26 @@ public class DailyBillingController implements Initializable {
                 txtAmount.setText(
                         String.valueOf(Float.parseFloat(txtRate.getText())*Float.parseFloat(txtQty.getText()))
                 );
-                txtRate.requestFocus();
+                // quick add: rate already known from item master, so add the line straight away
+                if(appSettingsService.isQuickAddEnabled() && Float.parseFloat(txtRate.getText())>0.0f) {
+                    add();
+                } else {
+                    txtRate.requestFocus();
+                }
             }
         });
+        // Loose items: type the amount (e.g. 50) and the quantity is worked out from the rate
+        txtAmount.textProperty().addListener((obs, oldValue, newValue) -> {
+            // qty x rate is written here as a float string, so allow any number of decimals
+            if (!newValue.matches("\\d{0,100}([\\.]\\d*)?")) {
+                txtAmount.setText(oldValue);
+            }
+        });
+        txtAmount.setOnAction(e -> amountAction());
+        table.setOnKeyPressed(e -> {
+            if (e.getCode() == KeyCode.DELETE) remove();
+        });
+        rootPane.addEventFilter(KeyEvent.KEY_PRESSED, this::handleShortcut);
         btnAdd.setOnAction(e->add());
         btnRemove.setOnAction(e->remove());
         btnClear.setOnAction(e->clear());
@@ -385,9 +438,19 @@ public class DailyBillingController implements Initializable {
             billList.addAll(billService.getAllBills());
         });
         btnSave.setOnAction(e->save());
-        btnClear2.setOnAction(e->clear2());
+        btnClear2.setOnAction(e->newBill());
         btnUpdate2.setOnAction(e->update2());
-        btnHome.setOnAction(e->stageManager.switchScene(FxmlView.HOME));
+        btnHome.setOnAction(e->{
+            javafx.stage.Stage win = (javafx.stage.Stage) btnHome.getScene().getWindow();
+            if(win == stageManager.getPrimaryStage()) {
+                stageManager.switchScene(FxmlView.HOME);
+            } else {
+                win.close();
+            }
+        });
+        if(btnSalesReturn != null) {
+            btnSalesReturn.setOnAction(e -> openSalesReturnForSelectedBill());
+        }
         btnPrint.setOnAction(e->{
             if(tableOld.getSelectionModel().getSelectedItem()==null) {
 
@@ -400,7 +463,203 @@ public class DailyBillingController implements Initializable {
             new PrintExample("D:\\Shopee\\bill.pdf");
         });
         itemSearch();
+        initCounters();
+    }
 
+    // ---------------------------------------------------------------- counters
+
+    private void initCounters() {
+        editMode = false;
+        editedBillQty.clear();
+        counterBeforeEdit = null;
+        currentCounter = null;
+        showEditBanner(false);
+        // customer details typed on a counter are kept with it (lines are kept on every change)
+        for (TextField f : List.of(txtCustomerName, txtCustomerMobile, txtOther)) {
+            f.focusedProperty().addListener((obs, was, is) -> { if (!is) saveDraftHeader(); });
+        }
+        rootPane.sceneProperty().addListener((obs, o, scene) -> {
+            if (scene == null) return;
+            scene.windowProperty().addListener((o2, w0, w) -> {
+                // counters may have been added or changed in the master meanwhile
+                if (w != null) w.focusedProperty().addListener((o3, was, is) -> { if (is) refreshCounterBar(); });
+            });
+        });
+        counterService.ensureDefaultCounter();
+        List<BillingCounter> counters = counterService.getActiveCounters();
+        if (counters.isEmpty()) {
+            alert.showError("No active billing counter. Add one in Create > Billing Counters.");
+            refreshCounterBar();
+            return;
+        }
+        Map<Integer, double[]> pending = counterService.getPendingSummary();
+        Integer first = counters.stream().map(BillingCounter::getCounterno)
+                .filter(pending::containsKey).findFirst().orElse(counters.get(0).getCounterno());
+        loadCounter(first);
+        showPendingBillsPopup(pending);
+    }
+
+    /** On opening billing: lists the bills left in progress on the counters (also after a restart). */
+    private void showPendingBillsPopup(Map<Integer, double[]> pending) {
+        if (pending.isEmpty()) return;
+        StringBuilder sb = new StringBuilder();
+        for (BillingCounter c : counterService.getAllCounters()) {
+            double[] p = pending.get(c.getCounterno());
+            if (p == null) continue;
+            sb.append(String.format(java.util.Locale.ROOT, "%s (C%d):  %d items,  Rs. %.2f", c.getName(), c.getCounterno(), (int) p[0], p[1]));
+            if (c.getCustomername() != null && !c.getCustomername().isBlank()) sb.append("  -  ").append(c.getCustomername());
+            sb.append('\n');
+        }
+        Alert info = new Alert(Alert.AlertType.INFORMATION);
+        info.setTitle("Pending Bills");
+        info.setHeaderText("Bills not finished yet are waiting on these counters");
+        info.setContentText(sb + "\nClick a counter at the top (or F5 / F6, Ctrl+1..9) to continue it.");
+        Platform.runLater(info::show);
+    }
+
+    /** Puts the counter's bill in progress on screen. Writes nothing. */
+    private void loadCounter(Integer counterno) {
+        BillingCounter counter = counterService.getByCounterno(counterno);
+        loadingCounter = true;
+        try {
+            clear();
+            clear2();
+            currentCounter = counterno;
+            for (TempTransaction t : counterService.getLines(counterno)) {
+                trList.add(Transaction.builder()
+                        .itemname(t.getItemname()).barcode(t.getBarcode()).unit(t.getUnit())
+                        .quantity(t.getQuantity()).rate(t.getRate()).price(t.getPrice())
+                        .amount(t.getAmount()).sailingprice(t.getSailingprice()).build());
+            }
+            if (counter != null) {
+                autoCompleteCustomerName.setText(counter.getCustomername() == null ? "" : counter.getCustomername());
+                txtCustomerMobile.setText(counter.getCustomermobile() == null ? "" : counter.getCustomermobile());
+                txtOther.setText(String.valueOf(counter.getOthercharges() == null ? 0.0f : counter.getOthercharges()));
+            }
+            validateTrList();
+        } finally {
+            loadingCounter = false;
+        }
+        refreshCounterBar();
+        Platform.runLater(() -> txtBarcode.requestFocus());
+    }
+
+    private void switchCounter(Integer counterno) {
+        if (editMode) {
+            alert.showError("Finish editing Bill " + billno + " first: SAVE it, or CLEAR / F8 to cancel");
+            return;
+        }
+        if (counterno == null || counterno.equals(currentCounter)) return;
+        saveDraftHeader();
+        loadCounter(counterno);
+    }
+
+    /** F5 / F6: previous / next active counter. */
+    private void stepCounter(int step) {
+        List<BillingCounter> counters = counterService.getActiveCounters();
+        if (counters.isEmpty()) return;
+        int pos = 0;
+        for (int i = 0; i < counters.size(); i++)
+            if (counters.get(i).getCounterno().equals(currentCounter)) pos = i;
+        pos = Math.floorMod(pos + step, counters.size());
+        switchCounter(counters.get(pos).getCounterno());
+    }
+
+    /** Writes the bill on screen to its counter (lines + customer). Never during an edit of a saved bill. */
+    private void persistCounter() {
+        if (editMode || loadingCounter || currentCounter == null) return;
+        List<TempTransaction> lines = new ArrayList<>();
+        for (Transaction tr : trList) {
+            lines.add(TempTransaction.builder()
+                    .itemname(tr.getItemname()).barcode(tr.getBarcode()).unit(tr.getUnit())
+                    .quantity(tr.getQuantity()).rate(tr.getRate()).price(tr.getPrice())
+                    .amount(tr.getAmount()).sailingprice(tr.getSailingprice()).build());
+        }
+        try {
+            counterService.replaceLines(currentCounter, lines);
+            saveDraftHeader();
+        } catch (Exception e) {
+            alert.showError("Could not keep the bill on counter " + currentCounter + ": " + e.getMessage());
+            e.printStackTrace();
+        }
+        refreshCounterBar();
+    }
+
+    private void saveDraftHeader() {
+        if (editMode || loadingCounter || currentCounter == null) return;
+        try {
+            counterService.saveDraft(currentCounter, autoCompleteCustomerName.getText(), txtCustomerMobile.getText(),
+                    isNumeric(txtOther.getText()) ? Float.parseFloat(txtOther.getText()) : 0.0f);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /** One button per active counter: number, item count and total; the current one highlighted. */
+    private void refreshCounterBar() {
+        if (counterBar == null) return;
+        List<BillingCounter> counters = counterService.getActiveCounters();
+        Map<Integer, double[]> pending = counterService.getPendingSummary();
+        counterBar.getChildren().clear();
+        int index = 0;
+        for (BillingCounter c : counters) {
+            index++;
+            Integer no = c.getCounterno();
+            double[] p = pending.get(no);
+            Button b = new Button(p == null ? "C" + no : String.format(java.util.Locale.ROOT, "C%d  %d | %.0f", no, (int) p[0], p[1]));
+            b.setUserData(no);
+            b.setMnemonicParsing(false);
+            String bg = no.equals(currentCounter) ? "#0D47A1" : (p != null ? "#EF6C00" : "#78909C");
+            b.setStyle("-fx-background-color: " + bg + "; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 13;"
+                    + " -fx-background-radius: 5; -fx-background-insets: 0;"
+                    + (no.equals(currentCounter) ? " -fx-border-color: #FFD600; -fx-border-width: 2; -fx-border-radius: 5;" : ""));
+            b.setTooltip(new Tooltip(c.getName() + (index <= 9 ? "  (Ctrl+" + index + ")" : "")));
+            b.setDisable(editMode);
+            b.setOnAction(e -> switchCounter(no));
+            counterBar.getChildren().add(b);
+        }
+    }
+
+    private void showEditBanner(boolean show) {
+        if (lblEditBanner == null) return;
+        lblEditBanner.setVisible(show);
+        lblEditBanner.setManaged(show);
+        if (show) lblEditBanner.setText("EDITING BILL " + billno + "  -  SAVE or CLEAR (F8) to cancel");
+    }
+
+    /** Leaves the edit of a saved bill and goes back to the counter that was open. */
+    private void exitEditMode() {
+        editMode = false;
+        billno = null;
+        editedBillQty.clear();
+        showEditBanner(false);
+        Integer back = counterBeforeEdit;
+        counterBeforeEdit = null;
+        if (back == null || counterService.getByCounterno(back) == null) {
+            List<BillingCounter> counters = counterService.getActiveCounters();
+            back = counters.isEmpty() ? null : counters.get(0).getCounterno();
+        }
+        if (back != null) loadCounter(back);
+        else { clear(); clear2(); refreshCounterBar(); }
+    }
+
+    /** CLEAR / F8: cancel the edit of a saved bill, or discard the bill on the current counter. */
+    private void newBill() {
+        if (editMode) {
+            if (alert.showConfirmation("Cancel Edit", "Cancel editing Bill " + billno + "? Changes are not saved.")) {
+                exitEditMode();
+            }
+            return;
+        }
+        if (!trList.isEmpty() && !alert.showConfirmation("New Bill",
+                "Discard the bill on counter " + currentCounter + " and start a new one?")) {
+            return;
+        }
+        if (currentCounter != null) counterService.clearCounter(currentCounter);
+        clear();
+        clear2();
+        refreshCounterBar();
+        txtBarcode.requestFocus();
     }
 
     private void itemSearch() {
@@ -409,9 +668,34 @@ public class DailyBillingController implements Initializable {
     private void update2() {
         if(tableOld.getSelectionModel().getSelectedItem()==null)
             return;
-        Bill bill = tableOld.getSelectionModel().getSelectedItem();
-        trList.clear();
+        if(editMode) {
+            alert.showError("Already editing Bill " + billno + ": SAVE it, or CLEAR / F8 to cancel");
+            return;
+        }
+        Bill bill = billService.getBillByBillNo(tableOld.getSelectionModel().getSelectedItem().getBillno());
+        // the counter's bill stays saved in temptransaction; edit mode never writes there
+        saveDraftHeader();
+        counterBeforeEdit = currentCounter;
+        editMode = true;
+        clear();
+        clear2();
         trList.addAll(bill.getTransactions());
+        editedBillQty.clear();
+        for (Transaction t : bill.getTransactions()) {
+            Item current = itemService.findCurrentItem(t.getItemname(), t.getBarcode());
+            editedBillQty.merge(current != null ? current.getItemname() : t.getItemname(), t.getQuantity(), Float::sum);
+        }
+        // load the whole bill, not only its lines: saving used to turn a credit bill into a fully paid
+        // walk-in bill (customer, paid and other charges were lost) and move it to today's date
+        if(bill.getDate()!=null) date.setValue(bill.getDate());
+        txtOther.setText(String.valueOf(bill.getOthercharges()==null ? 0.0f : bill.getOthercharges()));
+        Customer cust = bill.getCustomer();
+        if(cust!=null && cust.getId()!=WALK_IN_CUSTOMER_ID) {
+            autoCompleteCustomerName.setText(cust.getName());
+            txtCustomerMobile.setText(cust.getContact()==null ? "" : cust.getContact());
+            // walk-in bills keep received empty so they are saved fully paid again
+            txtRecived.setText(String.valueOf(bill.getPaid()==null ? 0.0f : bill.getPaid()));
+        }
         validateTrList();
       //  txtBank.setText(bill.getBank().getBankname());
 //        Customer cust = bill.getCustomer();
@@ -420,7 +704,8 @@ public class DailyBillingController implements Initializable {
 //            txtCustomerName.setText(bill.getCustomer().getName());
 //        }
         billno=bill.getBillno();
-
+        showEditBanner(true);
+        refreshCounterBar();
     }
 
     private void clear2() {
@@ -436,17 +721,23 @@ public class DailyBillingController implements Initializable {
         txtPayble.setText(String.valueOf(0.0f));
         txtRecived.setText(String.valueOf(0.0f));
         txtRemaining.setText(String.valueOf(0.0f));
-        txtCustomerMobile.setText(String.valueOf(0.0f));
+        // empty, not "0.0": a new customer added on the next bill would be saved with mobile "0.0"
+        txtCustomerMobile.clear();
         bankService.getBankByIdOptional(1).ifPresent(bank -> autoCompleteBank.setText(bank.getBankname()));
         billno=null;
+        editingIndex=-1;
     }
 
     private void save() {
         try {
             if(!validateBill())return;
-            Customer custom = null;
-            custom =checkCustomer();
-            if(custom==null) custom = customerService.getCustomerByName(autoCompleteCustomerName.getText());
+            Customer custom = checkCustomer();
+            if(custom==null) {
+                // "Customer Not Found - add?" answered No: a credit bill must not be saved without its customer
+                alert.showError("Select an existing customer, or add the new one, before saving");
+                autoCompleteCustomerName.requestFocus();
+                return;
+            }
             float paid=0.0f,remain=0.0f;
             float remainVal = isNumeric(txtRemaining.getText()) ? Float.parseFloat(txtRemaining.getText()) : 0.0f;
             if(remainVal<0.0f)
@@ -462,36 +753,14 @@ public class DailyBillingController implements Initializable {
                     .grandtotal(Float.parseFloat(txtGrandTotal.getText()))
                     .login(loginService.getLoginByUserName("Admin"))
                     .nettotal(Float.parseFloat(txtNetTotal.getText()))
-                    .othercharges(Float.parseFloat(txtOther.getText()))
+                    .othercharges(isNumeric(txtOther.getText()) ? Float.parseFloat(txtOther.getText()) : 0.0f)
                     .paid(paid)
                     .transactions(new ArrayList<Transaction>())
                     .build();
 
-            if(billno!=null) {
+            if(editMode) {
+                if(billno==null) throw new IllegalStateException("Edited bill has no bill number");
                 bill.setBillno(billno);
-                //update stock add Old Stock in item stock
-                Bill oldBill = billService.getBillByBillNo(billno);
-//                addBankTransaction(BankTransaction.builder()
-//                        //.bank(oldBill.getBank())
-//                        .transactionid(oldBill.getBillno())
-//                        .particulars("Edit Bill "+oldBill.getBillno())
-//                        .debit(oldBill.getPaid())
-//                        .credit(0.0f)
-//                        .date(LocalDate.now())
-//                        .build());
-                ItemStock oldStock=null;
-                for(Transaction tr:oldBill.getTransactions())
-                {
-                    oldStock = ItemStock.builder().stock(tr.getQuantity())
-                            .barcode(tr.getBarcode())
-                            .itemname(tr.getItemname())
-                            .unit(tr.getUnit())
-                            .build();
-                    stockService.saveItemStock(oldStock);
-                    System.out.println("Stock Added "+oldStock);
-                    oldStock=null;
-                }
-
             }
             for(Transaction tr:trList)
             {
@@ -499,11 +768,10 @@ public class DailyBillingController implements Initializable {
                 tr.setBill(bill);
                 bill.getTransactions().add(tr);
             }
-            int result = billService.saveBill(bill);
-            if(result==1)
+            if(!editMode)
             {
-
-                reduceStock(bill.getTransactions());
+                // new bill from the current counter: bill, stock and clearing the counter in one DB transaction
+                billService.saveCounterBill(bill, currentCounter);
                 //Add in BankTransaction
 //                addBankTransaction(BankTransaction.builder()
 //                        //.bank(bill.getBank())
@@ -513,22 +781,22 @@ public class DailyBillingController implements Initializable {
 //                        .particulars("Add Bill "+bill.getBillno())
 //                        .transactionid(bill.getBillno())
 //                        .build());
-              //  printbill = new PrintBill();
-               // printbill.setBill(bill);
-               // printbill.createDoc();
+                clear();
+                clear2();
+                refreshCounterBar();
                 alert.showSuccess("Bill Save Success");
                 printbill.setBill(billService.getBillByBillNo(bill.getBillno()));
-                if(alert.showConfirmation("Print Bill", "Do you want to print the bill?")) {
+                if(shouldPrintAfterSave()) {
                     new PrintExample("D:\\Shopee\\bill.pdf");
                 }
                 loadTodaysBills();
-                clear2();
                 backupService.performAutoBackup();
 
             }
-            else if(result==2)
+            else
             {
-                reduceStock(bill.getTransactions());
+                // old lines' stock back, bill saved, new lines' stock out: one DB transaction
+                billService.saveEditedBill(bill);
 //                addBankTransaction(BankTransaction.builder()
 //                        .. .bank(bill.getBank())
 //                        .credit(bill.getPaid())
@@ -539,17 +807,20 @@ public class DailyBillingController implements Initializable {
 //                        .build());
                 alert.showSuccess("Bill  Updated Success");
                 printbill.setBill(billService.getBillByBillNo(bill.getBillno()));
-                if(alert.showConfirmation("Print Bill", "Do you want to print the bill?")) {
+                // back to the counter that was open before the edit, its bill untouched
+                exitEditMode();
+                if(shouldPrintAfterSave()) {
                     new PrintExample("D:\\Shopee\\bill.pdf");
                 }
                 loadTodaysBills();
-                clear2();
                 backupService.performAutoBackup();
             }
 
         }catch(Exception e){
         alert.showError("Error in Saving Bill "+e.getMessage());
         e.printStackTrace();
+        // nothing was saved (one DB transaction): give the lines their Sr. No. back, they stay on the counter
+        validateTrList();
         }
     }
 
@@ -582,21 +853,6 @@ public class DailyBillingController implements Initializable {
         billList.clear();
         billList.addAll(billService.getBillByDate(LocalDate.now()));
     }
-    void reduceStock(List<Transaction> list)
-    {
-        ItemStock stock = null;
-        for(Transaction tr:list)
-        {
-            stock = ItemStock.builder()
-                    .stock((tr.getQuantity()/(-1))).itemname(tr.getItemname())
-                    .barcode(tr.getBarcode())
-                    .unit(tr.getUnit())
-                    .build();
-            System.out.println("gon a reduce stock=> "+stock);
-            stockService.saveItemStock(stock);
-            stock=null;
-        }
-    }
     private boolean validateBill() {
         if (trList.size() == 0) {
             alert.showError("No Data to Save");
@@ -624,17 +880,21 @@ public class DailyBillingController implements Initializable {
         }
         if(autoCompleteCustomerName.getText().isEmpty())
         {
-            boolean result=true;
             float recivedAmt = isNumeric(txtRecived.getText()) ? Float.parseFloat(txtRecived.getText()) : 0.0f;
-            float remainingAmt = isNumeric(txtRemaining.getText()) ? Float.parseFloat(txtRemaining.getText()) : 0.0f;
-            if(txtRecived.getText().isEmpty()
-                    || recivedAmt<=0.0f
-                    || remainingAmt<0.0f)
+            if(recivedAmt<=0.0f)
             {
-                alert.showError("Enter Received Amount or Select Customer Name to Credit Bill");
-                result=false;
+                // walk-in cash customer with no amount typed: treat the bill as fully paid
+                txtRecived.setText(txtGrandTotal.getText());
+                return true;
             }
-            return result;
+            float remainingAmt = isNumeric(txtRemaining.getText()) ? Float.parseFloat(txtRemaining.getText()) : 0.0f;
+            if(remainingAmt<0.0f)
+            {
+                alert.showError("Received amount is less than bill total. Select Customer Name to give credit");
+                txtRecived.requestFocus();
+                return false;
+            }
+            return true;
         }
         if(!autoCompleteCustomerName.getText().isEmpty() && txtCustomerMobile.getText().isEmpty())
         {
@@ -651,6 +911,7 @@ public class DailyBillingController implements Initializable {
         if(table.getSelectionModel().getSelectedItem()==null)
             return;
         Transaction tr = table.getSelectionModel().getSelectedItem();
+        int index = table.getSelectionModel().getSelectedIndex();
         txtBarcode.setText(tr.getBarcode());
         txtItemName.setText(tr.getItemname());
         txtRate.setText(String.valueOf(tr.getSailingprice()));
@@ -658,6 +919,9 @@ public class DailyBillingController implements Initializable {
         txtAmount.setText(String.valueOf(tr.getAmount()));
         if(tr.getUnit().equals("naga")) cmbUnit.getSelectionModel().select(1);
         else cmbUnit.getSelectionModel().select(0);
+        // the barcode listener doesn't find lines without a barcode (or of a renamed item): ADD needs the item
+        item = itemService.findCurrentItem(tr.getItemname(), tr.getBarcode());
+        editingIndex = index;
     }
 
     private void clear() {
@@ -668,8 +932,7 @@ public class DailyBillingController implements Initializable {
         txtQty.setText("");
         txtRate.setText("");
         txtAmount.setText("");
-
-
+        editingIndex=-1;
     }
 
     private void remove() {
@@ -677,6 +940,7 @@ public class DailyBillingController implements Initializable {
             return;
         else {
             trList.remove(table.getSelectionModel().getSelectedItem());
+            editingIndex=-1;
             table.refresh();
             validateTrList();
 
@@ -869,9 +1133,20 @@ public class DailyBillingController implements Initializable {
             {
                 return;
             }
+            // an inactive item reached by barcode / code: it is back in the shop, so ask and make it active again
+            if(item != null && !item.isActiveItem()) {
+                if(!alert.showConfirmation("Inactive Item",
+                        "This item is marked inactive (not sold any more).\nBill it and make it active again?")) {
+                    return;
+                }
+                item.setActive(true);
+                itemService.saveItem(item);
+                createItemList();
+                refreshItemSearch();
+            }
                 //checking stock availability;
             if(appSettingsService.isStockCheckEnabled()) {
-                ItemStock stock = stockService.getItemStockByItemname(txtItemName.getText());
+                ItemStock stock = stockService.getItemStockByItemname(item.getItemname());
                 if (stock == null) {
                     Alert stockAlert = new Alert(Alert.AlertType.ERROR);
                     stockAlert.setTitle("Stock Not Available");
@@ -882,8 +1157,17 @@ public class DailyBillingController implements Initializable {
                     stockAlert.showAndWait();
                     return;
                 }
-                if (stock.getStock() < Float.parseFloat(txtQty.getText())) {
-                    alert.showError("Less Quantity Available " + stock.getStock() + " " + cmbUnit.getValue());
+                // count what this bill already has of the item (except the line being edited), and when editing
+                // a saved bill, the quantity it took from stock that saving gives back first
+                float onBill = 0.0f;
+                for (int i = 0; i < trList.size(); i++) {
+                    if (i != editingIndex && item.getItemname().equals(trList.get(i).getItemname()))
+                        onBill += trList.get(i).getQuantity();
+                }
+                float available = (stock.getStock() == null ? 0.0f : stock.getStock())
+                        + (editMode ? editedBillQty.getOrDefault(item.getItemname(), 0.0f) : 0.0f);
+                if (available < onBill + Float.parseFloat(txtQty.getText())) {
+                    alert.showError("Less Quantity Available " + (available - onBill) + " " + cmbUnit.getValue());
                     return;
                 }
             }
@@ -897,9 +1181,16 @@ public class DailyBillingController implements Initializable {
                     .quantity(Float.parseFloat(txtQty.getText()))
                     .rate(item.getRate())
                     .sailingprice(Float.parseFloat(txtRate.getText()))
-                    .amount(Float.parseFloat(txtAmount.getText())).build();
+                    .amount(round2(Float.parseFloat(txtAmount.getText()))).build();
 
-            addInTrList(tr);
+            if(editingIndex>=0 && editingIndex<trList.size()
+                    && trList.get(editingIndex).getItemname().equals(tr.getItemname())) {
+                // line loaded with UPDATE: replace it, merging used to add the new qty on top of the old one
+                trList.set(editingIndex, tr);
+            } else {
+                addInTrList(tr);
+            }
+            editingIndex=-1;
             validateTrList();
             txtBarcode.requestFocus();
             clear();
@@ -931,7 +1222,7 @@ public class DailyBillingController implements Initializable {
             else
             {
                 trList.get(index).setQuantity(trList.get(index).getQuantity()+tr.getQuantity());
-                trList.get(index).setAmount(trList.get(index).getQuantity()*trList.get(index).getSailingprice());
+                trList.get(index).setAmount(round2(trList.get(index).getQuantity()*trList.get(index).getSailingprice()));
                 table.refresh();
             }
         }catch(Exception e)
@@ -943,18 +1234,24 @@ public class DailyBillingController implements Initializable {
     private void validateTrList() {
 
         long id=0;
-        Float net=0.0f;
+        double sum=0;
         float mrp=0;
         for(Transaction trs:trList)
         {
             trList.get(trList.indexOf(trs)).setId(++id);
-            net+=trs.getAmount();
-            mrp+=(trs.getRate()*trs.getQuantity());
+            sum+=trs.getAmount();
+            // many client items have MRP (rate) 0 or below the selling price; count such lines at selling price
+            mrp+=(Math.max(trs.getRate(), trs.getSailingprice())*trs.getQuantity());
         }
+        // rounded: the float sum showed e.g. 3213.1401 on screen and on the saved bill
+        float net = round2((float) sum);
         txtNetTotal.setText(String.valueOf(net));
-        txtMrp.setText(String.valueOf(mrp));
-        txtDiscount.setText(String.valueOf(mrp-net));
+        // two decimals: float subtraction showed e.g. 15.399414 (Locale.ROOT keeps '.' for Float.parseFloat on save)
+        txtMrp.setText(String.format(java.util.Locale.ROOT, "%.2f", mrp));
+        txtDiscount.setText(String.format(java.util.Locale.ROOT, "%.2f", mrp - net));
         calculateGrandTotal();
+        // every change of the lines (add, merge, edit, remove) is kept on the counter right away
+        persistCounter();
     }
 
     private boolean validate() {
@@ -992,26 +1289,71 @@ public class DailyBillingController implements Initializable {
 
     }
 
+    /**
+     * Enter in the Barcode/Code box. Accepts a scanned barcode, an item short code ("101"),
+     * or quantity*code ("3*101" / "1.5*101") which adds the line in one step.
+     */
     private void barcodeAction() {
-        if(txtBarcode.getText().isEmpty()) {
+        String text = txtBarcode.getText() == null ? "" : txtBarcode.getText().trim();
+        if(text.isEmpty()) {
             txtItemName.requestFocus();
             return;
         }
-
-        item = itemService.getItemByBarcode(txtBarcode.getText());
-        if(item==null)
+        String code = text;
+        Float qty = null;
+        int star = text.indexOf('*');
+        if(star > 0) {
+            String qtyText = text.substring(0, star).trim();
+            code = text.substring(star + 1).trim();
+            if(!isNumeric(qtyText) || Float.parseFloat(qtyText) <= 0.0f) {
+                alert.showError("Wrong quantity: " + qtyText);
+                txtBarcode.selectAll();
+                return;
+            }
+            qty = Float.parseFloat(qtyText);
+        }
+        Item found = findItemByCode(code);
+        if(found == null) {
+            alert.showError("No item found for code " + code);
+            txtBarcode.selectAll();
             return;
-        else {
-            setItem(item);
-            txtQty.requestFocus();
+        }
+        setItem(found);
+        if(qty != null && found.getSailingprice() > 0.0f) {
+            txtQty.setText(String.valueOf(qty));
+            add();
+        } else {
+            if(qty != null) txtQty.setText(String.valueOf(qty));
+            Platform.runLater(() -> {
+                txtQty.requestFocus();
+                txtQty.selectAll();
+            });
         }
     }
+
+    private Item findItemByCode(String code) {
+        try {
+            Item found = itemService.getItemByBarcode(code);
+            if(found != null) return found;
+        } catch(Exception e) {
+            // same barcode on several items; fall through to short code
+            e.printStackTrace();
+        }
+        return itemService.getItemByShortCode(code);
+    }
+
     private void setItem(Item item)
     {
         if(item==null) return;
+        this.item = item;
         txtItemName.setText(item.getItemname());
         txtRate.setText(""+item.getSailingprice());
-        txtBarcode.setText(item.getBarcode());
+        suppressBarcodeListener = true;
+        try {
+            txtBarcode.setText(item.getBarcode() == null ? "" : item.getBarcode());
+        } finally {
+            suppressBarcodeListener = false;
+        }
 
         if(item.getUnit().equals("ik.ga`^."))
             cmbUnit.setValue("KG");
@@ -1027,32 +1369,37 @@ public class DailyBillingController implements Initializable {
     private void createItemList() {
         tabPaneFavorite.getTabs().clear();
 
-        // "All Items" tab
+        // "Top sellers" tab: filled automatically from recent sales, double-click to bill
+        Tab topTab = new Tab("TOP");
+        topTab.setStyle("-fx-font-size: 12pt; -fx-font-weight: bold;");
+        ListView<String> topList = new ListView<>();
+        topList.setStyle("-fx-font:18pt \"Kiran\"");
+        topList.getItems().addAll(itemService.getTopSellingNames(30, 40));
+        topList.setPlaceholder(new Label("No sales in the last 30 days"));
+        attachPickHandler(topList);
+        topTab.setContent(anchorFill(topList));
+        topTab.setClosable(false);
+        tabPaneFavorite.getTabs().add(topTab);
+
+        // "All Items" tab with category filter
         Tab allTab = new Tab("sava-");
         allTab.setStyle("-fx-font:14pt \"Kiran\"");
-        AnchorPane allPane = new AnchorPane();
         listItem = new ListView<>();
         listItem.setStyle("-fx-font:18pt \"Kiran\"");
-        if(appSettingsService.isStockCheckEnabled()) {
-            listItem.getItems().addAll(stockService.getItemNameByBarcode());
-        } else {
-            listItem.getItems().addAll(itemService.getAllItemNames());
-        }
-        AnchorPane.setTopAnchor(listItem, 0.0);
-        AnchorPane.setBottomAnchor(listItem, 0.0);
-        AnchorPane.setLeftAnchor(listItem, 0.0);
-        AnchorPane.setRightAnchor(listItem, 0.0);
-        allPane.getChildren().add(listItem);
-        listItem.setOnMouseClicked(e->{
-            if(e.getButton()== MouseButton.PRIMARY && e.getClickCount()==2){
-                setItem(itemService.getItemByName(listItem.getSelectionModel().getSelectedItem()));
-                autoCompleteItemName.hidePopup();
-                Platform.runLater(()->txtQty.requestFocus());
-            }
-        });
-        allTab.setContent(allPane);
+        attachPickHandler(listItem);
+        cmbCategory = new ComboBox<>();
+        cmbCategory.getItems().add(ALL_CATEGORIES);
+        cmbCategory.getItems().addAll(itemService.getCategories());
+        cmbCategory.setValue(ALL_CATEGORIES);
+        cmbCategory.setMaxWidth(Double.MAX_VALUE);
+        cmbCategory.setStyle("-fx-font-size: 12pt;");
+        cmbCategory.valueProperty().addListener((obs, o, n) -> refreshItemSearch());
+        VBox allBox = new VBox(4, cmbCategory, listItem);
+        VBox.setVgrow(listItem, Priority.ALWAYS);
+        allTab.setContent(anchorFill(allBox));
         allTab.setClosable(false);
         tabPaneFavorite.getTabs().add(allTab);
+        tabPaneFavorite.getSelectionModel().select(allTab);
 
         // Dynamic favorite category tabs
         List<FavoriteCategory> categories = favoriteCategoryService.getAllCategories();
@@ -1063,8 +1410,11 @@ public class DailyBillingController implements Initializable {
             ListView<String> catListView = new ListView<>();
             catListView.setStyle("-fx-font:18pt \"Kiran\"");
 
+            Set<String> activeNames = new HashSet<>(itemService.getActiveItemNames());
             List<String> itemNames = favoriteCategoryService.getItemNamesByCategory(category.getId());
-            catListView.getItems().addAll(itemNames);
+            // inactive items (no longer sold) are hidden here too
+            itemNames.stream().filter(activeNames::contains).forEach(catListView.getItems()::add);
+            attachHideMenu(catListView);
 
             AnchorPane.setTopAnchor(catListView, 0.0);
             AnchorPane.setBottomAnchor(catListView, 0.0);
@@ -1086,6 +1436,131 @@ public class DailyBillingController implements Initializable {
             tabPaneFavorite.getTabs().add(tab);
         }
     }
+    private AnchorPane anchorFill(javafx.scene.Node node) {
+        AnchorPane pane = new AnchorPane(node);
+        AnchorPane.setTopAnchor(node, 0.0);
+        AnchorPane.setBottomAnchor(node, 0.0);
+        AnchorPane.setLeftAnchor(node, 0.0);
+        AnchorPane.setRightAnchor(node, 0.0);
+        return pane;
+    }
+
+    private void attachPickHandler(ListView<String> list) {
+        list.setOnMouseClicked(e->{
+            if(e.getButton()== MouseButton.PRIMARY && e.getClickCount()==2){
+                String selectedName = list.getSelectionModel().getSelectedItem();
+                if(selectedName==null) return;
+                setItem(itemService.getItemByName(selectedName));
+                autoCompleteItemName.hidePopup();
+                Platform.runLater(()->txtQty.requestFocus());
+            }
+        });
+        attachHideMenu(list);
+    }
+
+    /** Right-click on an item: hide it from billing and purchase because the shop no longer sells it. */
+    private void attachHideMenu(ListView<String> list) {
+        MenuItem hide = new MenuItem("Mark inactive (no longer sold)");
+        hide.setOnAction(e -> {
+            String name = list.getSelectionModel().getSelectedItem();
+            Item selected = name == null ? null : itemService.getItemByName(name);
+            if (selected == null) return;
+            if (!alert.showConfirmation("Mark Inactive",
+                    "Hide this item from billing and purchase search?\n(Nothing is deleted. Purchase it again or tick 'Active' in Item Master to bring it back.)")) {
+                return;
+            }
+            itemService.deactivate(List.of(selected));
+            createItemList();
+            refreshItemSearch();
+            alert.showSuccess("Item hidden from billing");
+        });
+        list.setContextMenu(new ContextMenu(hide));
+    }
+
+    /**
+     * Reloads item suggestions: only active items, filtered by the selected category,
+     * searchable by English name / short code and ranked by recent sales.
+     */
+    private void refreshItemSearch() {
+        String category = cmbCategory == null ? null : cmbCategory.getValue();
+        boolean allCategories = category == null || ALL_CATEGORIES.equals(category);
+        List<String> names = itemService.getActiveItems().stream()
+                .filter(i -> allCategories || category.equals(i.getCategory()))
+                .map(Item::getItemname)
+                .filter(n -> n != null && !n.isBlank())
+                .distinct()
+                .collect(Collectors.toList());
+        autoCompleteItemName.setSuggestions(names);
+        autoCompleteItemName.setSearchKeys(itemService.getSearchKeys());
+        autoCompleteItemName.setRankScores(itemService.getSaleCounts(SALES_RANK_DAYS));
+
+        if(listItem != null) {
+            List<String> listNames = names;
+            if(appSettingsService.isStockCheckEnabled()) {
+                Set<String> allowed = new HashSet<>(names);
+                listNames = stockService.getItemNameByBarcode().stream()
+                        .filter(allowed::contains)
+                        .distinct()
+                        .collect(Collectors.toList());
+            }
+            listItem.getItems().setAll(listNames);
+        }
+    }
+
+    /** Enter in Amount: work out quantity from amount / rate (loose items sold by rupee value). */
+    private void amountAction() {
+        if(item == null || !isNumeric(txtAmount.getText()) || !isNumeric(txtRate.getText())) return;
+        float amount = Float.parseFloat(txtAmount.getText());
+        float rate = Float.parseFloat(txtRate.getText());
+        if(amount <= 0.0f || rate <= 0.0f) return;
+        float qty = Math.round((amount / rate) * 1000f) / 1000f;
+        updatingFromAmount = true;
+        try {
+            txtQty.setText(String.valueOf(qty));
+            txtAmount.setText(String.valueOf(amount));
+        } finally {
+            updatingFromAmount = false;
+        }
+        add();
+    }
+
+    private void handleShortcut(KeyEvent e) {
+        KeyCode code = e.getCode();
+        if(code == KeyCode.F2) {
+            txtBarcode.requestFocus();
+            txtBarcode.selectAll();
+        } else if(code == KeyCode.F3) {
+            txtItemName.requestFocus();
+        } else if(code == KeyCode.F4) {
+            txtRecived.requestFocus();
+        } else if(code == KeyCode.F5) {
+            stepCounter(-1);
+        } else if(code == KeyCode.F6) {
+            stepCounter(1);
+        } else if(e.isControlDown() && code.isDigitKey() && code != KeyCode.DIGIT0 && code != KeyCode.NUMPAD0) {
+            // Ctrl+1..9: n-th counter in the bar
+            int n = Integer.parseInt(code.getName().replaceAll("\\D", ""));
+            List<BillingCounter> counters = counterService.getActiveCounters();
+            if(n <= counters.size()) switchCounter(counters.get(n - 1).getCounterno());
+        } else if(code == KeyCode.F8) {
+            newBill();
+        } else if(code == KeyCode.F9 || (code == KeyCode.S && e.isControlDown())) {
+            save();
+        } else if(code == KeyCode.F10) {
+            btnPrint.fire();
+        } else {
+            return;
+        }
+        e.consume();
+    }
+
+    private boolean shouldPrintAfterSave() {
+        String mode = appSettingsService.getPrintMode();
+        if(AppSettingsService.PRINT_ALWAYS.equals(mode)) return true;
+        if(AppSettingsService.PRINT_NEVER.equals(mode)) return false;
+        return alert.showConfirmation("Print Bill", "Do you want to print the bill?");
+    }
+
     public static boolean isNumeric(String strNum) {
         if (strNum == null) {
             return false;
@@ -1103,12 +1578,26 @@ public class DailyBillingController implements Initializable {
             txtRecived.setText(String.valueOf(0.0));
         float netTotal = isNumeric(txtNetTotal.getText()) ? Float.parseFloat(txtNetTotal.getText()) : 0.0f;
         float other = isNumeric(txtOther.getText()) ? Float.parseFloat(txtOther.getText()) : 0.0f;
-        txtGrandTotal.setText(String.valueOf(netTotal + other));
+        txtGrandTotal.setText(String.valueOf(round2(netTotal + other)));
         float recived = isNumeric(txtRecived.getText()) ? Float.parseFloat(txtRecived.getText()) : 0.0f;
         float grandTotal = isNumeric(txtGrandTotal.getText()) ? Float.parseFloat(txtGrandTotal.getText()) : 0.0f;
-        txtRemaining.setText(String.valueOf(recived - grandTotal));
+        txtRemaining.setText(String.valueOf(round2(recived - grandTotal)));
         txtPayble.setText(txtGrandTotal.getText());
     }
+    private static float round2(float v) {
+        return Math.round(v * 100f) / 100f;
+    }
+    private void openSalesReturnForSelectedBill() {
+        Bill selected = tableOld.getSelectionModel().getSelectedItem();
+        if (selected == null) {
+            alert.showError("Select a bill from the list to return");
+            return;
+        }
+        Bill fullBill = billService.getBillByBillNo(selected.getBillno());
+        salesReturnController.preselectBill(fullBill);
+        stageManager.openInNewWindow(FxmlView.SALESRETURN);
+    }
+
     private void addBankTransaction(BankTransaction bankTransaction)
     {
         try {

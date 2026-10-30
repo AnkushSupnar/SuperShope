@@ -5,6 +5,7 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
@@ -12,6 +13,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="726.0" prefWidth="1312.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ankush.controller.transaction.DailyBillingController">
@@ -51,10 +53,10 @@
             <Font size="14.0" />
          </font>
       </TextField>
-      <Label layoutX="252.0" layoutY="70.0" text="Bar Code" style="-fx-text-fill: #212121; -fx-font-weight: bold; -fx-font-size: 13;" />
+      <Label layoutX="252.0" layoutY="70.0" text="Bar Code / Code" style="-fx-text-fill: #212121; -fx-font-weight: bold; -fx-font-size: 13;" />
       <HBox layoutX="252.0" layoutY="87.0" prefHeight="33.0" prefWidth="759.0">
          <children>
-            <TextField fx:id="txtBarcode" prefHeight="33.0">
+            <TextField fx:id="txtBarcode" prefHeight="33.0" promptText="Barcode / Code / 3*Code">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font></TextField>
@@ -72,7 +74,7 @@
                <font>
                   <Font name="System Bold" size="16.0" />
                </font></TextField>
-            <TextField fx:id="txtAmount" editable="false" prefHeight="33.0" prefWidth="100.0" promptText="Amount">
+            <TextField fx:id="txtAmount" prefHeight="33.0" prefWidth="100.0" promptText="Amount ₹">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font></TextField>
@@ -117,8 +119,19 @@
                   <Font name="Georgia" size="14.0" />
                </font>
             </Button>
+            <StackPane prefHeight="34.0" prefWidth="378.0" maxWidth="378.0">
+               <children>
+                  <ScrollPane fitToHeight="true" hbarPolicy="AS_NEEDED" vbarPolicy="NEVER" style="-fx-background-color: transparent; -fx-background: transparent; -fx-padding: 0;">
+                     <content>
+                        <HBox fx:id="counterBar" alignment="CENTER_LEFT" spacing="4.0" />
+                     </content>
+                  </ScrollPane>
+                  <Label fx:id="lblEditBanner" managed="false" maxHeight="Infinity" maxWidth="Infinity" visible="false" style="-fx-background-color: #C62828; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 13; -fx-padding: 0 8 0 8; -fx-background-radius: 5;" text="EDITING BILL" />
+               </children>
+            </StackPane>
          </children>
       </HBox>
+      <Label fx:id="lblShortcuts" layoutX="832.0" layoutY="4.0" prefWidth="188.0" wrapText="true" style="-fx-text-fill: #455A64; -fx-font-size: 11;" text="F2 Code  F3 Name  F4 Received  F5/F6 Counter  Ctrl+1-9 Counter  F8 New bill  F9 Save  F10 Print  Del Remove line" />
       <TableView fx:id="table" layoutX="249.0" layoutY="170.0" prefHeight="346.0" prefWidth="766.0" AnchorPane.bottomAnchor="210.0" AnchorPane.topAnchor="170.0">
         <columns>
           <TableColumn fx:id="colSrNo" minWidth="35.0" prefWidth="43.0" maxWidth="55.0" text="SR.NO" />
@@ -165,6 +178,14 @@
             <Button fx:id="btnClear2" mnemonicParsing="false" style="-fx-background-color: #455A64; -fx-text-fill: white; -fx-color: #455A64; -fx-background-insets: 0; -fx-background-radius: 5; -fx-border-color: transparent; -fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-effect: null;" text="CLEAR">
                <graphic>
                   <FontAwesomeIcon fill="WHITE" glyphName="RECYCLE" />
+               </graphic>
+               <font>
+                  <Font name="Georgia" size="18.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnSalesReturn" mnemonicParsing="false" style="-fx-background-color: #B71C1C; -fx-text-fill: white; -fx-color: #B71C1C; -fx-background-insets: 0; -fx-background-radius: 5; -fx-border-color: transparent; -fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-effect: null;" text="SALES RETURN">
+               <graphic>
+                  <FontAwesomeIcon fill="WHITE" glyphName="UNDO" />
                </graphic>
                <font>
                   <Font name="Georgia" size="18.0" />

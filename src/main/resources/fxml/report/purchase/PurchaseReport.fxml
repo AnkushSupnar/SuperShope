@@ -194,7 +194,7 @@
                         <HBox alignment="CENTER" spacing="10" prefHeight="50"
                               style="-fx-background-color: linear-gradient(to right, #42A5F5, #1565C0); -fx-background-radius: 10; -fx-padding: 10 22; -fx-effect: dropshadow(gaussian, rgba(21,101,192,0.3), 6, 0, 0, 2);">
                             <children>
-                                <FontAwesomeIcon fill="WHITE" glyphName="FILE_TEXT_O" size="1.2em"/>
+                                <FontAwesomeIcon fill="WHITE" glyphName="FILE_TEXT_ALT" size="1.2em"/>
                                 <VBox alignment="CENTER_LEFT" spacing="2">
                                     <children>
                                         <Label style="-fx-text-fill: rgba(255,255,255,0.8); -fx-font-size: 10px;" text="Total Invoices"/>

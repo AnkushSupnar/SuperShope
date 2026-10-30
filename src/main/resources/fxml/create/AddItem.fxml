@@ -3,8 +3,11 @@
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
@@ -39,7 +42,9 @@
             <HBox spacing="14.0" VBox.vgrow="ALWAYS">
                <children>
 
-                  <!-- LEFT: Form Card -->
+                  <!-- LEFT: Form Card (scrolls on small screens) -->
+                  <ScrollPane fitToWidth="true" hbarPolicy="NEVER" minWidth="400.0" prefWidth="400.0" style="-fx-background-color: transparent; -fx-background: transparent; -fx-padding: 0 6 0 0;">
+                     <content>
                   <VBox alignment="TOP_CENTER" prefWidth="380.0" spacing="0.0" style="-fx-background-color: linear-gradient(to bottom right, #FFFFFF, #FFF3E0); -fx-background-radius: 14; -fx-effect: dropshadow(gaussian, rgba(230,81,0,0.12), 12, 0, 0, 4); -fx-padding: 20;">
                      <children>
 
@@ -61,7 +66,7 @@
                         <!-- Item Name -->
                         <VBox alignment="TOP_LEFT" spacing="4.0">
                            <children>
-                              <Label text="Mmaalaacao naava">
+                              <Label style="-fx-text-fill: #263238;" text="Mmaalaacao naava">
                                  <graphic>
                                     <FontAwesomeIcon fill="#757575" glyphName="CUBE" size="0.9em" />
                                  </graphic>
@@ -83,7 +88,7 @@
                         <!-- Bar Code -->
                         <VBox alignment="TOP_LEFT" spacing="4.0">
                            <children>
-                              <Label text="baar kaoD">
+                              <Label style="-fx-text-fill: #263238;" text="baar kaoD">
                                  <graphic>
                                     <FontAwesomeIcon fill="#757575" glyphName="BARCODE" size="0.9em" />
                                  </graphic>
@@ -105,7 +110,7 @@
                         <!-- Unit Selection -->
                         <VBox alignment="TOP_LEFT" spacing="4.0">
                            <children>
-                              <Label text="yauinaT">
+                              <Label style="-fx-text-fill: #263238;" text="yauinaT">
                                  <graphic>
                                     <FontAwesomeIcon fill="#757575" glyphName="CUBES" size="0.9em" />
                                  </graphic>
@@ -116,7 +121,7 @@
                               <HBox alignment="CENTER_LEFT" spacing="8.0" style="-fx-background-color: #F5F5F5; -fx-background-radius: 6; -fx-border-color: #E0E0E0; -fx-border-radius: 6; -fx-padding: 8 14;">
                                  <children>
                                     <RadioButton fx:id="rdbtnKg" mnemonicParsing="false" />
-                                    <Label text="ik.ga`^.">
+                                    <Label style="-fx-text-fill: #263238;" text="ik.ga`^.">
                                        <font>
                                           <Font name="Kiran" size="22.0" />
                                        </font>
@@ -126,7 +131,7 @@
                                           <Insets left="20.0" />
                                        </HBox.margin>
                                     </RadioButton>
-                                    <Label text="naga">
+                                    <Label style="-fx-text-fill: #263238;" text="naga">
                                        <font>
                                           <Font name="Kiran" size="22.0" />
                                        </font>
@@ -142,7 +147,7 @@
                         <!-- Price -->
                         <VBox alignment="TOP_LEFT" spacing="4.0">
                            <children>
-                              <Label text="ikMmata">
+                              <Label style="-fx-text-fill: #263238;" text="ikMmata">
                                  <graphic>
                                     <FontAwesomeIcon fill="#757575" glyphName="MONEY" size="0.9em" />
                                  </graphic>
@@ -164,7 +169,7 @@
                         <!-- Rate -->
                         <VBox alignment="TOP_LEFT" spacing="4.0">
                            <children>
-                              <Label text="Baava">
+                              <Label style="-fx-text-fill: #263238;" text="Baava">
                                  <graphic>
                                     <FontAwesomeIcon fill="#757575" glyphName="TAG" size="0.9em" />
                                  </graphic>
@@ -186,7 +191,7 @@
                         <!-- Selling Price -->
                         <VBox alignment="TOP_LEFT" spacing="4.0">
                            <children>
-                              <Label text="ivak`I ikM mata">
+                              <Label style="-fx-text-fill: #263238;" text="ivak`I ikM mata">
                                  <graphic>
                                     <FontAwesomeIcon fill="#757575" glyphName="SHOPPING_CART" size="0.9em" />
                                  </graphic>
@@ -201,29 +206,79 @@
                               </TextField>
                            </children>
                            <VBox.margin>
-                              <Insets bottom="12.0" />
+                              <Insets bottom="8.0" />
                            </VBox.margin>
                         </VBox>
 
-                        <!-- Action Buttons -->
-                        <HBox alignment="CENTER" spacing="8.0">
+                        <!-- Short Code + Category -->
+                        <HBox spacing="8.0">
                            <children>
-                              <Button fx:id="btnSave" mnemonicParsing="false" prefHeight="36.0" prefWidth="82.0" style="-fx-background-color: linear-gradient(to right, #FFA726, #E65100); -fx-text-fill: white; -fx-background-radius: 8; -fx-font-size: 11px; -fx-font-weight: bold; -fx-cursor: hand; -fx-effect: dropshadow(gaussian, rgba(230,81,0,0.3), 4, 0, 0, 2);" text="SAVE">
+                              <VBox alignment="TOP_LEFT" spacing="4.0" prefWidth="120.0">
+                                 <children>
+                                    <Label style="-fx-text-fill: #263238; -fx-font-size: 13px; -fx-font-weight: bold;" text="Short Code">
+                                       <graphic>
+                                          <FontAwesomeIcon fill="#757575" glyphName="KEYBOARD_ALT" size="0.9em" />
+                                       </graphic>
+                                    </Label>
+                                    <TextField fx:id="txtShortCode" prefHeight="36.0" promptText="e.g. 101" style="-fx-background-color: #F5F5F5; -fx-background-radius: 6; -fx-border-color: #E0E0E0; -fx-border-radius: 6; -fx-font-size: 14px; -fx-font-weight: bold;" />
+                                 </children>
+                              </VBox>
+                              <VBox alignment="TOP_LEFT" spacing="4.0" HBox.hgrow="ALWAYS">
+                                 <children>
+                                    <Label style="-fx-text-fill: #263238; -fx-font-size: 13px; -fx-font-weight: bold;" text="Category">
+                                       <graphic>
+                                          <FontAwesomeIcon fill="#757575" glyphName="FOLDER" size="0.9em" />
+                                       </graphic>
+                                    </Label>
+                                    <ComboBox fx:id="cmbCategory" editable="true" maxWidth="1.7976931348623157E308" prefHeight="36.0" promptText="e.g. Dal, Oil, Soap" />
+                                 </children>
+                              </VBox>
+                           </children>
+                           <VBox.margin>
+                              <Insets bottom="8.0" />
+                           </VBox.margin>
+                        </HBox>
+
+                        <!-- English Search Name -->
+                        <VBox alignment="TOP_LEFT" spacing="4.0">
+                           <children>
+                              <Label style="-fx-text-fill: #263238; -fx-font-size: 13px; -fx-font-weight: bold;" text="English Search Name">
+                                 <graphic>
+                                    <FontAwesomeIcon fill="#757575" glyphName="SEARCH" size="0.9em" />
+                                 </graphic>
+                              </Label>
+                              <TextField fx:id="txtSearchName" prefHeight="36.0" promptText="e.g. tur dal toor" style="-fx-background-color: #F5F5F5; -fx-background-radius: 6; -fx-border-color: #E0E0E0; -fx-border-radius: 6; -fx-font-size: 14px;" />
+                           </children>
+                           <VBox.margin>
+                              <Insets bottom="8.0" />
+                           </VBox.margin>
+                        </VBox>
+
+                        <CheckBox fx:id="chkActive" selected="true" style="-fx-text-fill: #263238; -fx-font-size: 13px; -fx-font-weight: bold;" text="Active (show in billing search)">
+                           <VBox.margin>
+                              <Insets bottom="12.0" />
+                           </VBox.margin>
+                        </CheckBox>
+
+                        <!-- Action Buttons -->
+                        <HBox alignment="CENTER" spacing="6.0">
+                           <children>
+                              <Button fx:id="btnSave" mnemonicParsing="false" graphicTextGap="4.0" maxWidth="Infinity" prefHeight="36.0" HBox.hgrow="ALWAYS" style="-fx-padding: 4 6; -fx-background-color: linear-gradient(to right, #FFA726, #E65100); -fx-text-fill: white; -fx-background-radius: 8; -fx-font-size: 11px; -fx-font-weight: bold; -fx-cursor: hand; -fx-effect: dropshadow(gaussian, rgba(230,81,0,0.3), 4, 0, 0, 2);" text="SAVE">
                                  <graphic>
                                     <FontAwesomeIcon fill="white" glyphName="CHECK" size="1em" />
                                  </graphic>
                               </Button>
-                              <Button fx:id="btnUpdate" mnemonicParsing="false" prefHeight="36.0" prefWidth="82.0" style="-fx-background-color: transparent; -fx-text-fill: #E65100; -fx-border-color: #E65100; -fx-border-width: 1.5; -fx-background-radius: 8; -fx-border-radius: 8; -fx-font-size: 11px; -fx-font-weight: bold; -fx-cursor: hand;" text="UPDATE">
+                              <Button fx:id="btnUpdate" mnemonicParsing="false" graphicTextGap="4.0" maxWidth="Infinity" prefHeight="36.0" HBox.hgrow="ALWAYS" style="-fx-padding: 4 6; -fx-background-color: transparent; -fx-text-fill: #E65100; -fx-border-color: #E65100; -fx-border-width: 1.5; -fx-background-radius: 8; -fx-border-radius: 8; -fx-font-size: 11px; -fx-font-weight: bold; -fx-cursor: hand;" text="UPDATE">
                                  <graphic>
                                     <FontAwesomeIcon fill="#E65100" glyphName="EDIT" size="1em" />
                                  </graphic>
                               </Button>
-                              <Button fx:id="btnClear" mnemonicParsing="false" prefHeight="36.0" prefWidth="82.0" style="-fx-background-color: transparent; -fx-text-fill: #E65100; -fx-border-color: #E65100; -fx-border-width: 1.5; -fx-background-radius: 8; -fx-border-radius: 8; -fx-font-size: 11px; -fx-font-weight: bold; -fx-cursor: hand;" text="CLEAR">
+                              <Button fx:id="btnClear" mnemonicParsing="false" graphicTextGap="4.0" maxWidth="Infinity" prefHeight="36.0" HBox.hgrow="ALWAYS" style="-fx-padding: 4 6; -fx-background-color: transparent; -fx-text-fill: #E65100; -fx-border-color: #E65100; -fx-border-width: 1.5; -fx-background-radius: 8; -fx-border-radius: 8; -fx-font-size: 11px; -fx-font-weight: bold; -fx-cursor: hand;" text="CLEAR">
                                  <graphic>
                                     <FontAwesomeIcon fill="#E65100" glyphName="ERASER" size="1em" />
                                  </graphic>
                               </Button>
-                              <Button fx:id="btnExit" mnemonicParsing="false" prefHeight="36.0" prefWidth="82.0" style="-fx-background-color: transparent; -fx-text-fill: #455A64; -fx-border-color: #78909C; -fx-border-width: 1.5; -fx-background-radius: 8; -fx-border-radius: 8; -fx-font-size: 11px; -fx-font-weight: bold; -fx-cursor: hand;" text="BACK">
+                              <Button fx:id="btnExit" mnemonicParsing="false" graphicTextGap="4.0" maxWidth="Infinity" prefHeight="36.0" HBox.hgrow="ALWAYS" style="-fx-padding: 4 6; -fx-background-color: transparent; -fx-text-fill: #455A64; -fx-border-color: #78909C; -fx-border-width: 1.5; -fx-background-radius: 8; -fx-border-radius: 8; -fx-font-size: 11px; -fx-font-weight: bold; -fx-cursor: hand;" text="BACK">
                                  <graphic>
                                     <FontAwesomeIcon fill="#455A64" glyphName="ARROW_LEFT" size="1em" />
                                  </graphic>
@@ -233,6 +288,8 @@
 
                      </children>
                   </VBox>
+                     </content>
+                  </ScrollPane>
 
                   <!-- RIGHT: Search + Item Table -->
                   <AnchorPane fx:id="sidePane" HBox.hgrow="ALWAYS" style="-fx-background-color: transparent;">
@@ -255,6 +312,21 @@
                                     <FontAwesomeIcon fill="#E65100" glyphName="LIST" size="1em" />
                                  </graphic>
                               </Button>
+                              <Button fx:id="btnAutoCodes" mnemonicParsing="false" prefHeight="36.0" style="-fx-background-color: transparent; -fx-text-fill: #1565C0; -fx-border-color: #1565C0; -fx-border-width: 1.5; -fx-background-radius: 8; -fx-border-radius: 8; -fx-font-size: 12px; -fx-font-weight: bold; -fx-cursor: hand; -fx-padding: 6 14;" text="AUTO CODES">
+                                 <graphic>
+                                    <FontAwesomeIcon fill="#1565C0" glyphName="KEYBOARD_ALT" size="1em" />
+                                 </graphic>
+                              </Button>
+                              <Button fx:id="btnHideUnused" mnemonicParsing="false" prefHeight="36.0" style="-fx-background-color: transparent; -fx-text-fill: #C62828; -fx-border-color: #C62828; -fx-border-width: 1.5; -fx-background-radius: 8; -fx-border-radius: 8; -fx-font-size: 12px; -fx-font-weight: bold; -fx-cursor: hand; -fx-padding: 6 14;" text="HIDE UNUSED">
+                                 <graphic>
+                                    <FontAwesomeIcon fill="#C62828" glyphName="EYE_SLASH" size="1em" />
+                                 </graphic>
+                              </Button>
+                              <Button fx:id="btnMerge" mnemonicParsing="false" prefHeight="36.0" style="-fx-background-color: transparent; -fx-text-fill: #6A1B9A; -fx-border-color: #6A1B9A; -fx-border-width: 1.5; -fx-background-radius: 8; -fx-border-radius: 8; -fx-font-size: 12px; -fx-font-weight: bold; -fx-cursor: hand; -fx-padding: 6 14;" text="MERGE">
+                                 <graphic>
+                                    <FontAwesomeIcon fill="#6A1B9A" glyphName="COMPRESS" size="1em" />
+                                 </graphic>
+                              </Button>
                            </children>
                         </HBox>
 
@@ -265,6 +337,9 @@
                                  <columns>
                                     <TableColumn fx:id="colSr" minWidth="40.0" prefWidth="45.0" maxWidth="55.0" text="SR.NO" />
                                     <TableColumn fx:id="colName" minWidth="120.0" prefWidth="170.0" maxWidth="220.0" text="ITEM NAME" />
+                                    <TableColumn fx:id="colShortCode" minWidth="45.0" prefWidth="55.0" maxWidth="70.0" text="CODE" />
+                                    <TableColumn fx:id="colCategory" minWidth="70.0" prefWidth="90.0" maxWidth="130.0" text="CATEGORY" />
+                                    <TableColumn fx:id="colActive" minWidth="50.0" prefWidth="60.0" maxWidth="70.0" text="ACTIVE" />
                                     <TableColumn fx:id="colBarcode" minWidth="100.0" prefWidth="130.0" maxWidth="160.0" text="BAR CODE" />
                                     <TableColumn fx:id="colUnit" minWidth="55.0" prefWidth="70.0" maxWidth="85.0" text="UNIT" />
                                     <TableColumn fx:id="colPrize" minWidth="65.0" prefWidth="80.0" maxWidth="100.0" text="PRIZE" />

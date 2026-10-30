@@ -1,0 +1,202 @@
+/*
+ * App theme: the dashboard's look for the home shell and the menu pages.
+ * Page #EDE7F6, white cards with a soft indigo shadow, indigo titles, grey secondary text,
+ * one blue accent (#2a78d6) for icons and primary buttons.
+ */
+
+/* ---------- home shell: sidebar ---------- */
+
+.sidebar {
+    -fx-background-color: #1A237E;
+    -fx-effect: dropshadow(gaussian, rgba(26, 35, 126, 0.25), 12, 0, 2, 0);
+}
+
+.nav-item {
+    -fx-background-color: transparent;
+    -fx-background-radius: 10;
+    -fx-padding: 11 16 11 16;
+    -fx-cursor: hand;
+    -fx-border-color: transparent;
+    -fx-border-width: 0 0 0 3;
+    -fx-border-radius: 10;
+}
+
+.nav-item:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.08);
+}
+
+.nav-item-selected,
+.nav-item-selected:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.16);
+    -fx-border-color: transparent transparent transparent #5598e7;
+}
+
+.nav-icon {
+    -fx-background-color: rgba(255, 255, 255, 0.12);
+    -fx-background-radius: 8;
+    -fx-min-width: 34;
+    -fx-min-height: 34;
+    -fx-pref-width: 34;
+    -fx-pref-height: 34;
+    -fx-max-width: 34;
+    -fx-max-height: 34;
+}
+
+.nav-item-selected .nav-icon {
+    -fx-background-color: #2a78d6;
+}
+
+.nav-label {
+    -fx-text-fill: #E8EAF6;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+
+/* ---------- home shell: top bar ---------- */
+
+.topbar {
+    -fx-background-color: white;
+    -fx-border-color: transparent transparent #E3E0EE transparent;
+    -fx-border-width: 0 0 1 0;
+}
+
+.topbar-logo {
+    -fx-background-color: #EAF1FC;
+    -fx-background-radius: 12;
+    -fx-min-width: 44;
+    -fx-min-height: 44;
+    -fx-max-width: 44;
+    -fx-max-height: 44;
+}
+
+.topbar-shop {
+    -fx-text-fill: #1A237E;
+}
+
+.topbar-user {
+    -fx-background-color: #F3F1FA;
+    -fx-background-radius: 20;
+    -fx-padding: 6 14 6 6;
+    -fx-max-height: 44;
+}
+
+.topbar-avatar {
+    -fx-background-color: #1A237E;
+    -fx-background-radius: 16;
+    -fx-min-width: 32;
+    -fx-min-height: 32;
+    -fx-max-width: 32;
+    -fx-max-height: 32;
+}
+
+.topbar-user-name {
+    -fx-fill: #1F1F2E;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+
+/* ---------- menu pages ---------- */
+
+.page {
+    -fx-background-color: #EDE7F6;
+}
+
+.page-title {
+    -fx-text-fill: #1A237E;
+    -fx-font-size: 26px;
+    -fx-font-weight: bold;
+}
+
+.page-subtitle {
+    -fx-text-fill: #5F5E73;
+    -fx-font-size: 13px;
+}
+
+.menu-card {
+    -fx-background-color: white;
+    -fx-background-radius: 14;
+    -fx-padding: 24;
+    -fx-effect: dropshadow(gaussian, rgba(26, 35, 126, 0.08), 14, 0, 0, 4);
+    -fx-cursor: hand;
+}
+
+.menu-card:hover {
+    -fx-effect: dropshadow(gaussian, rgba(26, 35, 126, 0.18), 22, 0, 0, 8);
+}
+
+.menu-icon {
+    -fx-background-color: #EAF1FC;
+    -fx-background-radius: 12;
+    -fx-min-width: 52;
+    -fx-min-height: 52;
+    -fx-pref-width: 52;
+    -fx-pref-height: 52;
+    -fx-max-width: 52;
+    -fx-max-height: 52;
+}
+
+.menu-card-title {
+    -fx-text-fill: #1F1F2E;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+}
+
+.menu-card-text {
+    -fx-text-fill: #6B6A7E;
+    -fx-font-size: 13px;
+}
+
+.btn-primary {
+    -fx-background-color: #2a78d6;
+    -fx-text-fill: white;
+    -fx-background-radius: 8;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-padding: 10 16 10 16;
+    -fx-cursor: hand;
+}
+
+.btn-primary:hover {
+    -fx-background-color: #256abf;
+}
+
+.btn-primary:pressed {
+    -fx-background-color: #1c5cab;
+}
+
+.btn-secondary {
+    -fx-background-color: white;
+    -fx-text-fill: #1A237E;
+    -fx-border-color: #C5CAE9;
+    -fx-border-width: 1.5;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-padding: 9 16 9 16;
+    -fx-cursor: hand;
+}
+
+.btn-secondary:hover {
+    -fx-background-color: #E8EAF6;
+}
+
+/* report menu: category chips */
+.chip {
+    -fx-background-color: white;
+    -fx-background-radius: 20;
+    -fx-border-color: #C5CAE9;
+    -fx-border-radius: 20;
+    -fx-padding: 8 18 8 14;
+    -fx-cursor: hand;
+}
+
+.chip:hover {
+    -fx-background-color: #E8EAF6;
+}
+
+.chip-selected,
+.chip-selected:hover {
+    -fx-background-color: #1A237E;
+    -fx-border-color: #1A237E;
+}

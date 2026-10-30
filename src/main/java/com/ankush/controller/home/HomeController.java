@@ -50,15 +50,8 @@ public class HomeController implements Initializable {
     @FXML private HBox menuSupport;
     @FXML private HBox menuExit;
 
-    private static final String MENU_SELECTED_STYLE =
-            "-fx-background-color: rgba(255,255,255,0.25); -fx-background-radius: 10; " +
-            "-fx-padding: 12 20; -fx-cursor: hand; " +
-            "-fx-border-color: transparent transparent transparent #FFCA28; " +
-            "-fx-border-width: 0 0 0 3; -fx-border-radius: 10;";
-
-    private static final String MENU_DEFAULT_STYLE =
-            "-fx-background-color: rgba(255,255,255,0.05); -fx-background-radius: 10; " +
-            "-fx-padding: 12 20; -fx-cursor: hand;";
+    // selected sidebar item, see css/app-theme.css
+    private static final String NAV_SELECTED = "nav-item-selected";
 
     private Pane pane;
     private List<HBox> navMenuItems;
@@ -76,6 +69,13 @@ public class HomeController implements Initializable {
         }
 
         navMenuItems = Arrays.asList(menuDashboard, menuTransaction, menuMaster, menuReport, menuOther, menuSettings);
+        // every page put in the centre (by this menu or by the screens themselves) slides in, and its cards lift on hover
+        mainPane.centerProperty().addListener((obs, oldPage, newPage) -> {
+            if (newPage != null) {
+                UiMotion.enterPage(newPage);
+                UiMotion.liftCardsOnHover(newPage);
+            }
+        });
 
         menuDashboard.setOnMouseClicked(e->{
             setActiveMenu(menuDashboard);
@@ -111,15 +111,17 @@ public class HomeController implements Initializable {
             mainPane.setCenter(pane);
         });
 
-        // Set Dashboard as the default selected menu
+        // Set Dashboard as the default selected menu and show it (the page was left blank after login)
         setActiveMenu(menuDashboard);
+        pane = loader.getPage("/fxml/dashboard/Dashboard.fxml");
+        mainPane.setCenter(pane);
     }
 
     private void setActiveMenu(HBox activeMenu) {
         for (HBox menu : navMenuItems) {
-            menu.setStyle(MENU_DEFAULT_STYLE);
+            menu.getStyleClass().remove(NAV_SELECTED);
         }
-        activeMenu.setStyle(MENU_SELECTED_STYLE);
+        activeMenu.getStyleClass().add(NAV_SELECTED);
     }
 
     private void showSupportDialog() {

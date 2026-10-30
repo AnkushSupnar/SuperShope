@@ -1,9 +1,12 @@
 package com.ankush.data.service;
 
 import com.ankush.data.entities.Bill;
+import com.ankush.data.entities.ItemStock;
+import com.ankush.data.entities.Transaction;
 import com.ankush.data.repository.BillRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -12,6 +15,58 @@ import java.util.List;
 public class BillService {
     @Autowired
     private BillRepository repository;
+    @Autowired
+    private ItemStockService stockService;
+    @Autowired
+    private BillingCounterService counterService;
+
+    /**
+     * Final save of a new bill made on a counter: the bill, its stock reduction and the removal of the
+     * counter's temporary lines happen together, so a bill can't be saved while its lines stay on the
+     * counter (and get billed twice) or be lost.
+     */
+    @Transactional
+    public void saveCounterBill(Bill bill, Integer counterno) {
+        if (bill.getBillno() != null) throw new IllegalArgumentException("Not a new bill");
+        repository.save(bill);
+        for (Transaction tr : bill.getTransactions()) {
+            stockService.saveItemStock(ItemStock.builder()
+                    .stock(-tr.getQuantity())
+                    .itemname(tr.getItemname())
+                    .barcode(tr.getBarcode())
+                    .unit(tr.getUnit())
+                    .build());
+        }
+        if (counterno != null) counterService.clearCounter(counterno);
+    }
+
+    /**
+     * Save of an edited bill in one transaction: the old lines' stock is given back, the bill and its new
+     * lines are saved and their stock taken. If anything fails nothing changes (stock used to stay raised).
+     */
+    @Transactional
+    public void saveEditedBill(Bill bill) {
+        if (bill.getBillno() == null) throw new IllegalArgumentException("Not a saved bill");
+        Bill old = repository.findById(bill.getBillno())
+                .orElseThrow(() -> new IllegalArgumentException("Bill " + bill.getBillno() + " not found"));
+        for (Transaction tr : old.getTransactions()) {
+            stockService.saveItemStock(ItemStock.builder()
+                    .stock(tr.getQuantity())
+                    .itemname(tr.getItemname())
+                    .barcode(tr.getBarcode())
+                    .unit(tr.getUnit())
+                    .build());
+        }
+        repository.save(bill);
+        for (Transaction tr : bill.getTransactions()) {
+            stockService.saveItemStock(ItemStock.builder()
+                    .stock(-tr.getQuantity())
+                    .itemname(tr.getItemname())
+                    .barcode(tr.getBarcode())
+                    .unit(tr.getUnit())
+                    .build());
+        }
+    }
 
     public List<Bill>getAllBills(){return repository.findAll();}
     public Bill getBillByBillNo(long billNo){return repository.getById(billNo);}

@@ -18,6 +18,9 @@ public interface PurchaseInvoiceRepository extends JpaRepository<PurchaseInvoice
 
     List<PurchaseInvoice> findByPurchaseParty_Id(Integer id);
 
+    @Query("select coalesce(sum(p.grandtotal), 0) from PurchaseInvoice p where p.date between ?1 and ?2")
+    Double getPurchaseTotal(LocalDate start, LocalDate end);
+
     @Query("select p from PurchaseInvoice p where p.date between ?1 and ?2 ")
     List<PurchaseInvoice> getPurchaseInvoiceByDatePeriod(LocalDate dateStart, LocalDate dateEnd);
 }

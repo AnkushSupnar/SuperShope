@@ -29,7 +29,11 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
@@ -82,6 +86,11 @@ public class AutoCompleteTextField {
     // Callbacks
     @Setter
     private Consumer<String> onSelectionCallback;
+
+    // Optional extra searchable text per suggestion (e.g. English name / short code), lower-case
+    private Map<String, String> searchKeys = new HashMap<>();
+    // Optional popularity per suggestion; higher ranks first among equally good matches
+    private Map<String, Long> rankScores = new HashMap<>();
 
     // Debounce
     private final PauseTransition debounce = new PauseTransition(Duration.millis(150));
@@ -363,20 +372,16 @@ public class AutoCompleteTextField {
         // Filter based on configuration
         if (useContainsFilter) {
             filteredSuggestions = suggestions.stream()
-                .filter(s -> s.toLowerCase().contains(query))
-                .sorted((a, b) -> {
-                    // Prioritize startsWith matches
-                    boolean aStarts = a.toLowerCase().startsWith(query);
-                    boolean bStarts = b.toLowerCase().startsWith(query);
-                    if (aStarts && !bStarts) return -1;
-                    if (!aStarts && bStarts) return 1;
-                    return String.CASE_INSENSITIVE_ORDER.compare(a, b);
-                })
+                .filter(s -> matchScore(s, query) > 0)
+                .sorted(Comparator.comparingInt((String s) -> matchScore(s, query)).reversed()
+                    .thenComparing(Comparator.comparingLong((String s) -> rankScores.getOrDefault(s, 0L)).reversed())
+                    .thenComparing(String.CASE_INSENSITIVE_ORDER))
                 .collect(Collectors.toList());
         } else {
             filteredSuggestions = suggestions.stream()
                 .filter(s -> s.toLowerCase().startsWith(query))
-                .sorted(String.CASE_INSENSITIVE_ORDER)
+                .sorted(Comparator.comparingLong((String s) -> rankScores.getOrDefault(s, 0L)).reversed()
+                    .thenComparing(String.CASE_INSENSITIVE_ORDER))
                 .collect(Collectors.toList());
         }
 
@@ -388,9 +393,25 @@ public class AutoCompleteTextField {
         updateListAndShow();
     }
 
+    /**
+     * 0 = no match. Higher is better: exact search-key word (e.g. short code) > name starts with >
+     * search key starts with > name contains > search key contains.
+     */
+    private int matchScore(String suggestion, String query) {
+        String name = suggestion.toLowerCase();
+        String keys = searchKeys.getOrDefault(suggestion, "");
+        if (!keys.isEmpty() && Arrays.asList(keys.split("\\s+")).contains(query)) return 5;
+        if (name.startsWith(query)) return 4;
+        if (!keys.isEmpty() && (keys.startsWith(query) || keys.contains(" " + query))) return 3;
+        if (name.contains(query)) return 2;
+        if (!keys.isEmpty() && keys.contains(query)) return 1;
+        return 0;
+    }
+
     private void showAllSuggestions() {
         filteredSuggestions = new ArrayList<>(suggestions);
-        filteredSuggestions.sort(String.CASE_INSENSITIVE_ORDER);
+        filteredSuggestions.sort(Comparator.comparingLong((String s) -> rankScores.getOrDefault(s, 0L)).reversed()
+            .thenComparing(String.CASE_INSENSITIVE_ORDER));
 
         if (filteredSuggestions.isEmpty()) {
             hidePopup();
@@ -550,6 +571,21 @@ public class AutoCompleteTextField {
      */
     public void setSuggestions(List<String> suggestions) {
         this.suggestions = new ArrayList<>(suggestions);
+    }
+
+    /**
+     * Extra lower-case search text per suggestion (English name, short code...). Matching on these
+     * keys still inserts the suggestion itself, so the display font/name is unchanged.
+     */
+    public void setSearchKeys(Map<String, String> searchKeys) {
+        this.searchKeys = searchKeys == null ? new HashMap<>() : new HashMap<>(searchKeys);
+    }
+
+    /**
+     * Popularity per suggestion (e.g. number of times sold). Popular items are listed first.
+     */
+    public void setRankScores(Map<String, Long> rankScores) {
+        this.rankScores = rankScores == null ? new HashMap<>() : new HashMap<>(rankScores);
     }
 
     /**

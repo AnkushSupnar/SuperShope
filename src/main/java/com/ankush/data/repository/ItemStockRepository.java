@@ -11,7 +11,8 @@ public interface ItemStockRepository extends JpaRepository<ItemStock, Long> {
     @Query("select itemname from ItemStock where stock>0 ")
     List<String>getAllItemStockName();
     ItemStock getByItemnameAndBarcode(String itemname,String barcode);
-    ItemStock getByItemname(String itemname);
+    // list: an item can have several stock rows (one per barcode it has had)
+    List<ItemStock> getByItemname(String itemname);
     @Query("select itemname from ItemStock where stock>0 order by itemname")
     List<String>getItemNameByBarcode();
 

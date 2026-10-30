@@ -33,6 +33,7 @@ public class CreateManuController implements Initializable {
       @FXML private Button btnAddParty;
       @FXML private Button btnViewParty;
       @FXML private Button btnAddCustomer;
+      @FXML private Button btnCounters;
       private Pane menuPane;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -69,6 +70,11 @@ public class CreateManuController implements Initializable {
         btnAddCustomer.setOnAction(e -> {
             root = (BorderPane) pane.getParent();
             menuPane = loader.getPage("/fxml/create/AddCustomer.fxml");
+            root.setCenter(menuPane);
+        });
+        btnCounters.setOnAction(e -> {
+            root = (BorderPane) pane.getParent();
+            menuPane = loader.getPage("/fxml/create/AddCounter.fxml");
             root.setCenter(menuPane);
         });
     }

@@ -29,7 +29,7 @@ public class AlertNotification {
     {
         try {
             Notifications message = Notifications.create().
-                    title("Success Message").
+                    title("Error").
                     text(msg).hideAfter(Duration.seconds(5)).
                     position(Pos.TOP_CENTER);
             message.showError();

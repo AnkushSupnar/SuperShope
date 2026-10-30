@@ -36,3 +36,7 @@ build/
 nul
 cp.txt
 .claude/
+
+### Customer data (database dumps / backups) ###
+*.sql
+db_backups/

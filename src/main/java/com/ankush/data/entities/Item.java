@@ -35,4 +35,27 @@ public class Item {
 
     @Column(name = "sailingprice")
     private float sailingprice;
+
+    // Short numeric code (PLU) typed at the billing counter instead of searching by name
+    @Column(name = "shortcode", length = 10)
+    private String shortCode;
+
+    // English / alternate search text, so Marathi (Kiran) items can be found by typing e.g. "sugar"
+    @Column(name = "searchname")
+    private String searchName;
+
+    @Column(name = "category", length = 60)
+    private String category;
+
+    // null is treated as active so existing rows stay visible
+    @Column(name = "active")
+    private Boolean active;
+
+    // set when this item was merged into another: its barcode / short code then bring up that item
+    @Column(name = "replaced_by")
+    private Long replacedBy;
+
+    public boolean isActiveItem() {
+        return active == null || active;
+    }
 }

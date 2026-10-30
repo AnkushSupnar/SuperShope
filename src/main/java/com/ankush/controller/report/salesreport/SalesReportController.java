@@ -332,7 +332,8 @@ public class SalesReportController implements Initializable {
             }
 
             float netTotal = bill.getNettotal() != null ? bill.getNettotal() : 0f;
-            float discount = bill.getDiscount() != null ? bill.getDiscount() : 0f;
+            // older bills stored a negative discount when item MRP was missing; show those as no discount
+            float discount = bill.getDiscount() != null ? Math.max(0f, bill.getDiscount()) : 0f;
             float grandTotal = bill.getGrandtotal() != null ? bill.getGrandtotal() : 0f;
             float paid = bill.getPaid() != null ? bill.getPaid() : 0f;
 

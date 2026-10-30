@@ -57,10 +57,10 @@ public class ReportMenuController implements Initializable {
 
     private Pane menuPane;
 
-    private static final String CHIP_ACTIVE_STYLE =
-            "-fx-background-color: WHITE; -fx-background-radius: 20; -fx-padding: 8 22; -fx-cursor: hand; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 4, 0, 0, 1);";
-    private static final String CHIP_INACTIVE_STYLE =
-            "-fx-background-color: rgba(255,255,255,0.2); -fx-background-radius: 20; -fx-padding: 8 22; -fx-cursor: hand;";
+    // chip looks are in css/app-theme.css: white outlined chips, the selected one solid indigo
+    private static final String CHIP_SELECTED = "chip-selected";
+    private static final String CHIP_TEXT = "-fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: ";
+    private static final String INDIGO = "#1A237E";
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -108,42 +108,16 @@ public class ReportMenuController implements Initializable {
     }
 
     private void selectChip(String chip) {
-        // Reset all chips to inactive
-        chipSales.setStyle(CHIP_INACTIVE_STYLE);
-        chipPurchase.setStyle(CHIP_INACTIVE_STYLE);
-        chipCustomer.setStyle(CHIP_INACTIVE_STYLE);
-        chipSalesIcon.setFill(Color.WHITE);
-        chipPurchaseIcon.setFill(Color.WHITE);
-        chipCustomerIcon.setFill(Color.WHITE);
-        chipSalesLabel.setStyle("-fx-text-fill: WHITE; -fx-font-size: 13px; -fx-font-weight: bold;");
-        chipPurchaseLabel.setStyle("-fx-text-fill: WHITE; -fx-font-size: 13px; -fx-font-weight: bold;");
-        chipCustomerLabel.setStyle("-fx-text-fill: WHITE; -fx-font-size: 13px; -fx-font-weight: bold;");
+        setChip(chipSales, chipSalesIcon, chipSalesLabel, panelSales, "sales".equals(chip));
+        setChip(chipPurchase, chipPurchaseIcon, chipPurchaseLabel, panelPurchase, "purchase".equals(chip));
+        setChip(chipCustomer, chipCustomerIcon, chipCustomerLabel, panelCustomer, "customer".equals(chip));
+    }
 
-        // Hide all panels
-        panelSales.setVisible(false);
-        panelPurchase.setVisible(false);
-        panelCustomer.setVisible(false);
-
-        // Activate selected chip and show its panel
-        switch (chip) {
-            case "sales":
-                chipSales.setStyle(CHIP_ACTIVE_STYLE);
-                chipSalesIcon.setFill(Color.web("#1A237E"));
-                chipSalesLabel.setStyle("-fx-text-fill: #1A237E; -fx-font-size: 13px; -fx-font-weight: bold;");
-                panelSales.setVisible(true);
-                break;
-            case "purchase":
-                chipPurchase.setStyle(CHIP_ACTIVE_STYLE);
-                chipPurchaseIcon.setFill(Color.web("#1A237E"));
-                chipPurchaseLabel.setStyle("-fx-text-fill: #1A237E; -fx-font-size: 13px; -fx-font-weight: bold;");
-                panelPurchase.setVisible(true);
-                break;
-            case "customer":
-                chipCustomer.setStyle(CHIP_ACTIVE_STYLE);
-                chipCustomerIcon.setFill(Color.web("#1A237E"));
-                chipCustomerLabel.setStyle("-fx-text-fill: #1A237E; -fx-font-size: 13px; -fx-font-weight: bold;");
-                panelCustomer.setVisible(true);
-                break;
-        }
+    private void setChip(HBox box, FontAwesomeIcon icon, Label label, VBox panel, boolean selected) {
+        box.getStyleClass().remove(CHIP_SELECTED);
+        if (selected) box.getStyleClass().add(CHIP_SELECTED);
+        icon.setFill(selected ? Color.WHITE : Color.web(INDIGO));
+        label.setStyle(CHIP_TEXT + (selected ? "white;" : INDIGO + ";"));
+        panel.setVisible(selected);
     }
 }

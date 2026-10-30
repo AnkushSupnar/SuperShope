@@ -68,52 +68,64 @@ public class PrintBill {
         this.shopeeInfo = shopeeInfo;
     }
 
+    // Thermal-printer page width (~80mm in PDF points).
+    private static final float PAGE_WIDTH = 230f;
+    private static final float LEFT_MARGIN = -1f;
+    private static final float RIGHT_MARGIN = 0f;
+    private static final float TOP_MARGIN = 15f;
+    private static final float BOTTOM_MARGIN = 25f;
+
+    // Largest page PDF allows (200 inches); the measuring pass lays the bill out on a page this tall
+    private static final float MAX_PAGE_HEIGHT = 14400f;
+
+    /**
+     * Writes the bill as one page exactly as tall as its content. The content is laid out once on a
+     * very tall scratch page to measure the height it really uses (long Marathi names wrap, so a
+     * per-row estimate is never right), then written again at that height.
+     */
     public void createDoc() {
-        //this.bill=bill;
-        float left = 0;
-        float right = 0;
-        float top = 20;
-        float bottom = 0;
         try {
-            createDocument(addData());
-            doc.close();
-            System.out.println("Print Done");
+            int itemCount = (bill == null || bill.getTransactions() == null) ? 0 : bill.getTransactions().size();
+            float contentHeight = measureContentHeight();
+            float pageHeight = Math.min(MAX_PAGE_HEIGHT, TOP_MARGIN + contentHeight + BOTTOM_MARGIN);
+
+            doc = new Document(new Rectangle(PAGE_WIDTH, pageHeight), LEFT_MARGIN, RIGHT_MARGIN, TOP_MARGIN, BOTTOM_MARGIN);
+            try (OutputStream out = new FileOutputStream(new File(fileName))) {
+                PdfWriter.getInstance(doc, out);
+                doc.open();
+                renderContent();
+                doc.close();
+            }
+            System.out.println("Print Done; items=" + itemCount + " pageHeight=" + pageHeight);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    void createDocument(PdfPTable table) {
-        try {
-            //Rectangle pagesize = new Rectangle(216f, 400f+table.getTotalHeight());
-            System.out.println("table Height==" + table.getTotalHeight());
-            Rectangle pagesize = new Rectangle(230f, 10000f + table.getTotalHeight());
-            doc = new Document(pagesize, -1f, 0f, 15f, 180f);
-            OutputStream out = new FileOutputStream(new File(fileName));
-            PdfWriter.getInstance(doc, out);
-            doc.open();
+    private float measureContentHeight() throws DocumentException {
+        doc = new Document(new Rectangle(PAGE_WIDTH, MAX_PAGE_HEIGHT), LEFT_MARGIN, RIGHT_MARGIN, TOP_MARGIN, BOTTOM_MARGIN);
+        PdfWriter writer = PdfWriter.getInstance(doc, new java.io.ByteArrayOutputStream());
+        doc.open();
+        renderContent();
+        float used = (MAX_PAGE_HEIGHT - TOP_MARGIN) - writer.getVerticalPosition(true);
+        doc.close();
+        return used;
+    }
 
-            addHeader();
-            Paragraph p = new Paragraph();
-            //p.setLeading(25);
-           // p.setIndentationLeft(1);
-            p.add(table);
-
-            //doc.add(new Paragraph("..................."));
-             doc.add(p);
-             p = new Paragraph("         kRpayaa Aapalyaa vastau ibalaa pa`maaNao maaojauna Gyaavyaata.",f4);
-             p.setLeading(10);
-            doc.add(p);
-            p = new Paragraph("         AapaNa Aalaata AanaMd vaaTlaa paunha yaa!",f4);
-            p.setLeading(10);
-            doc.add(p);
-
-            p = new Paragraph("     SoftwareBy Ankush Supnar(8329394603)",small);
-            p.setLeading(10);
-            doc.add(p);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    private void renderContent() throws DocumentException {
+        addHeader();
+        Paragraph p = new Paragraph();
+        p.add(addData());
+        doc.add(p);
+        p = new Paragraph("         kRpayaa Aapalyaa vastau ibalaa pa`maaNao maaojauna Gyaavyaata.", f4);
+        p.setLeading(10);
+        doc.add(p);
+        p = new Paragraph("         AapaNa Aalaata AanaMd vaaTlaa paunha yaa!", f4);
+        p.setLeading(10);
+        doc.add(p);
+        p = new Paragraph("     SoftwareBy Ankush Supnar(8329394603)", small);
+        p.setLeading(10);
+        doc.add(p);
     }
 
     private void addHeader() throws DocumentException {

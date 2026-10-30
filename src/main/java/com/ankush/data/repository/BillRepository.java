@@ -37,4 +37,12 @@ public interface BillRepository extends JpaRepository<Bill, Long> {
 
     @Query("from Bill b where b.customer.id = :customerId")
     List<Bill> findByCustomerId(@Param("customerId") Integer customerId);
+
+    // [date, total sale, bill count] per day, for the dashboard charts
+    @Query("select b.date, sum(b.grandtotal), count(b) from Bill b where b.date between :start and :end group by b.date")
+    List<Object[]> getDailyTotals(@Param("start") LocalDate start, @Param("end") LocalDate end);
+
+    // [amount still to receive, number of bills] for bills not fully paid
+    @Query("select coalesce(sum(b.grandtotal - b.paid), 0), count(b) from Bill b where b.paid < b.grandtotal - 0.5")
+    List<Object[]> getUnpaidTotals();
 }

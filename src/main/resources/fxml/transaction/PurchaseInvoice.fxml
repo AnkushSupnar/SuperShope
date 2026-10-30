@@ -87,6 +87,11 @@
                         <Font size="14.0" />
                      </font>
                   </Label>
+                  <Label fx:id="lblSellingRate" prefWidth="85.0" text="Sell Rate">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
                   <Label prefWidth="85.0" text="Amount">
                      <font>
                         <Font size="14.0" />
@@ -118,6 +123,11 @@
                      </font>
                   </TextField>
                   <TextField fx:id="txtMrp" prefHeight="33.0" prefWidth="85.0" promptText="ikMmata" text="0.0">
+                     <font>
+                        <Font name="Kiran" size="20.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="txtSellingRate" prefHeight="33.0" prefWidth="85.0" promptText="vaikrI Baava" text="0.0">
                      <font>
                         <Font name="Kiran" size="20.0" />
                      </font>
@@ -163,6 +173,14 @@
                         <Font name="Georgia" size="14.0" />
                      </font>
                   </Button>
+                  <Button fx:id="btnEditItem" mnemonicParsing="false" style="-fx-background-color: #6A1B9A; -fx-text-fill: white; -fx-color: #6A1B9A; -fx-background-insets: 0; -fx-background-radius: 5; -fx-border-color: transparent; -fx-focus-color: transparent; -fx-faint-focus-color: transparent; -fx-effect: null;" text="EDIT ITEM (F7)">
+                     <graphic>
+                        <FontAwesomeIcon fill="WHITE" glyphName="PENCIL" />
+                     </graphic>
+                     <font>
+                        <Font name="Georgia" size="14.0" />
+                     </font>
+                  </Button>
                </children>
             </HBox>
             <TableView fx:id="table" layoutX="10.0" layoutY="179.0" prefHeight="366.0" prefWidth="741.0" AnchorPane.bottomAnchor="205.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="179.0">
@@ -173,6 +191,7 @@
                   <TableColumn fx:id="colQty" minWidth="50.0" prefWidth="72.0" maxWidth="85.0" text="QTY" />
                   <TableColumn fx:id="colUnit" minWidth="50.0" prefWidth="68.0" maxWidth="80.0" text="UNIT" />
                   <TableColumn fx:id="colRate" minWidth="60.0" prefWidth="77.0" maxWidth="95.0" text="PRICE" />
+                  <TableColumn fx:id="colSellingRate" minWidth="60.0" prefWidth="80.0" maxWidth="100.0" text="SELL RATE" />
                   <TableColumn fx:id="colAmount" minWidth="65.0" prefWidth="83.0" maxWidth="100.0" text="AMOUNT" />
               </columns>
             </TableView>

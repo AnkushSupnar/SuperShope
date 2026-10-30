@@ -15,6 +15,24 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
 
     Item getByItemname(String name);
     Item getItemByItemnameAndBarcode(String itemname,String barcode);
-    @Query("from Item where barcode=:barcode")
-    Item getByBarcode(@Param("barcode") String barcode);
+    // list, not single: client data has the same barcode on more than one item
+    @Query("from Item where barcode=:barcode order by id")
+    List<Item> getByBarcode(@Param("barcode") String barcode);
+
+    Item findFirstByShortCode(String shortCode);
+
+    @Query("select itemname from Item where active is null or active = true order by itemname")
+    List<String> getActiveItemNames();
+
+    @Query("from Item where active is null or active = true order by itemname")
+    List<Item> getActiveItems();
+
+    @Query("select distinct category from Item where category is not null and category <> '' order by category")
+    List<String> getCategories();
+
+    // [no selling price, no MRP, no short code] among active items, for the dashboard "needs attention" card
+    @Query("select sum(case when sailingprice <= 0 then 1 else 0 end), sum(case when rate <= 0 then 1 else 0 end), "
+            + "sum(case when shortCode is null or shortCode = '' then 1 else 0 end), count(id) "
+            + "from Item where active is null or active = true")
+    List<Object[]> getActiveItemGaps();
 }
